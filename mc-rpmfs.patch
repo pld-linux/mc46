@@ -47,7 +47,7 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
 +		TMP_DIR=${TMPDIR:-/tmp}/mctmpdir.$$
 +		mkdir $TMP_DIR || exit 1
 +		cd $TMP_DIR
-+		rpm2cpio "$1" | cpio -iumd --quiet "$2" >/dev/null
++		rpm2cpio "$1" | cpio -iumd --quiet "$2" "./$2" >/dev/null
 +		mv "$2" "$3"
 +		cd /
 +		rm -rf $TMP_DIR
