@@ -141,7 +141,7 @@ make confdir=/etc/X11/GNOME/
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{usr/sbin,etc/{rc.d/init.d,pam.d,profile.d}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 
 make install \
 	confdir=/etc/X11/GNOME/ \
@@ -251,150 +251,8 @@ fi
 %{_datadir}/mc
 
 %changelog
-* Fri May 14 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+* Fri May 21 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.31-1]
-- now package is FHS 2.0 compliant.
-
-* Sat Apr 24 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.5.30-2]
-- recompiles on new rpm.
-
-* Thu Mar 25 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.5.28-1]
-- ./configure with --with-included-slang,
-- gzipping %doc.
-
-* Sat Feb 27 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.5.22-1]
-- more locales (cs, da),
-- added more Requires for gmc (gtk+ = 1.2.1, esound = 0.2.8,
-  ORBit = 0.4.2, gnome-libs = 1.0.5)
-- removed man group from man pages.
-
-* Thu Feb 11 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [4.5.12-2d]
-- build with gmc subpackage,
-- compressed forgoten man pages && documentation,
-- fixed init script in mcserv.
-
-* Thu Jan 21 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.5.9-2d]
-- fixed Requires (glib = 1.1.7).
-- modifications %post, %preun for standarizing this section; this allow stop
-  service on uninstall and automatic restart on upgrade,
-- fixed Group in mcserv.
-
-* Wed Jan 20 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [4.5.9-1d]
-- updated to new version,
-- build without GNOME (description commented out) && ext2undel,
-- compressed %doc && man pages,
-- moved mcserv to %{_sbindir},
-- added Requires: glib >= 1.1.7 && pam >= 0.66 (in mcserv sub-package),
-- fixed mcserv.pamd (now as separate Surce1),
-- added Group(pl),
-- removed %ifos Linux %attr(4711,root,root) /usr/lib/mc/bin/cons.saver
-  fixed $TEMPDIR in mc.sh (by Micha³ Zalewski <lcamtuf@dione.ids.pl>)
-
-* Mon Nov 2 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [4.5.1-2d]
-- fixed pl translation,
-- build against static libcom_err.h
-- added pl.po
-  (by Arkadiusz Mi¶kiewicz <misiek@listar.zsz2.starachowice.pl>).
-
-* Sun Nov 1 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- addded "Conflicts: rpm <= 2.5.3" because "rpm -qplv" query output was
-  changed.
-
-* Wed Aug 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.1.35-3]
-- %%{version} macro instead %%{PACKAGE_VERSION},
-- added -q %setup parameter,
-- added patch with pl translation,
-- added pl translation for mc, mcserv (Wojtek ¦lusarczyk
-  <wojtek@shadow.eu.org>),
-- added using %%{name} macro in Buildroot and Source,
-- added %{_datadir}/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
-  package,
-- added patch which fix support for all languages,
-- added "Obsoletes: tkmc" for mc and gmc,
-- added "%ifos Linux .. %endif" for /usr/lib/mc/bin/cons.saver (it
-  neccessary for example for building on Solaris),
-- fixed dependences: "Requires: pam" and "Prereq: /sbin/chkconfig" moved
-  from mc to mcserv,
-- added full %attr description in %files,
-- added suid root on /usr/lib/mc/bin/cons.saver,
-- removed linking mcserv with not neccesary libs (XLib and term),
-- removed COPING from %doc (copyright statment is in Copyright field).
-
-* Fri Jul 31 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [4.1.35-3d]
-- build against libslang.so.1,
-- translation modified for pl.
-
-* Mon Jul 14 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [4.1.35-2d]
-- build against glibc-2.1,
-- removed gnome version of mc.
-
-* Wed Jul 12 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.1.35-3]
-- %%{version} macro instead %%{PACKAGE_VERSION},
-- added -q %setup parameter,
-- added patch with pl translation,
-- added pl translation for mc, mcserv (Wojtek ¦lusarczyk
-  <wojtek@shadow.eu.org>),
-- added using %%{name} macro in Buildroot and Source,
-- added %{_datadir}/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
-  package,
-- added patch which fix support for all languages,
-- added "Obsoletes: tkmc" for mc and gmc,
-- added "%ifos Linux .. %endif" for /usr/lib/mc/bin/cons.saver (it
-  neccessary for example for building on Solaris),
-- fixed dependences: "Requires: pam" and "Prereq: /sbin/chkconfig" moved
-  from mc to mcserv,
-- added full %attr description in %files,
-- added suid root on /usr/lib/mc/bin/cons.saver,
-- removed linking mcserv with not neccesary libs (XLib and term),
-- removed COPING from %doc (copyright statment is in Copyright field).
-
-* Sun Oct 26 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- updated to 4.1.6
-- added %attr macros in %files,
-- a few simplification in %install,
-- removed glibc patch,
-- fixed installing /etc/X11/wmconfig/tkmc.
-
-* Tue May 13 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- added new rpmfs script,
-- removed mcfn_install from mc (adding mc() to bash enviroment is in
-  /etc/profile.d/mc.sh),
-- /etc/profile.d/mc.sh changed to %config,
-- removed /usr/lib/mc/bin/create_vcs,
-- removed /usr/lib/mc/term.
-
-* Wed May 9 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- changed source url,
-- fixed link mcedit to mc,
-
-* Tue May 7 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- new version 3.5.27,
-- %dir /usr/lib/mc/icons and icons removed from tkmc,
-- added commented xmc part.
-
-* Tue Apr 22 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- FIX spec:
-  -- added URL field,
-  -- in mc added missing /usr/lib/mc/mc.ext, /usr/lib/mc/mc.hint,
-     /usr/lib/mc/mc.hlp, /usr/lib/mc/mc.lib, /usr/lib/mc/mc.menu.
-
-* Fri Apr 18 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-- added making packages: tkmc, mcserv (xmc not work yet),
-- gziped man pages,
-- added /etc/pamd.d/mcserv PAM config file.
-- added instaling icons,
-- added /etc/profile.d/mc.sh,
-- in %doc added NEWS README,
-- removed /usr/lib/mc/FAQ,
-- added mcserv.init script for mcserv (start/stop on level 86).
+- spec written by me,
+- pl translation by Wojtek ¦lusarczyk <wojtek@shadow.eu.org>.
+- package is FHS 2.0 compliant.
