@@ -1,9 +1,9 @@
 #
 # Conditional build:
-# bcond_off_gnome	- without GNOME support
-# bcond_on_ext2undel	- with ext2 undelete fs
-# bcond_on_samba	- with SAMBA vfs support
-# bcond_on_x		- with text edit in X support
+# _without_gnome	- without GNOME support
+# _with_ext2undel	- with ext2 undelete fs
+# _with_samba	- with SAMBA vfs support
+# _with_x		- with text edit in X support
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander 
@@ -42,23 +42,23 @@ Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
 Patch19:	%{name}-sh-quiet.patch
 Patch20:	%{name}-nobashism.patch
 URL:		http://mc.blackdown.org/mc/
-%{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
-%{!?bcond_off_gnome:BuildRequires:	esound-devel}
+%{!?_without_gnome:BuildRequires:	ORBit-devel}
+%{!?_without_gnome:BuildRequires:	esound-devel}
 BuildRequires:	gettext-devel
 BuildRequires:	glib-devel
-%{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
+%{!?_without_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
-%{!?bcond_off_gnome:BuildRequires:	imlib-devel}
+%{!?_without_gnome:BuildRequires:	imlib-devel}
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
 BuildRequires:	pam-devel
-%{?bcond_on_ext2undel:BuildRequires:	e2fsprogs-devel}
+%{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
 BuildRequires:	indent
 BuildRequires:	automake
 BuildRequires:	autoconf
-%{?bcond_on_x:BuildRequires:	XFree86-devel}
+%{?_with_x:BuildRequires:	XFree86-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
 Requires:	file
@@ -200,19 +200,19 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %build
 gettextize --copy --force
 aclocal -I \
-	%{!?bcond_off_gnome:%{_aclocaldir}/gnome}%{?bcond_off_gnome:macros}
+	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
 autoconf
 automake -a -c
 %configure \
-	%{?bcond_on_ext2undel:--with-ext2-undel}%{!?bcond_on_ext2undel:--without-ext2undel} \
+	%{?_with_ext2undel:--with-ext2-undel}%{!?_with_ext2undel:--without-ext2undel} \
 	--with-vfs \
 	--with-netrc \
 	--with-x \
-	%{?bcond_on_x:--with-tm-x-support} \
+	%{?_with_x:--with-tm-x-support} \
 	--without-debug \
 	--with-included-slang \
-	%{!?bcond_off_gnome:--with-gnome}%{?bcond_off_gnome:--without-gnome} \
-	%{?bcond_on_samba:--with-samba}
+	%{!?_without_gnome:--with-gnome}%{?_without_gnome:--without-gnome} \
+	%{?_with_samba:--with-samba}
 
 %{__make} confdir=%{_sysconfdir}/
 
@@ -314,16 +314,16 @@ fi
 %{_mandir}/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
 
-%{!?bcond_off_gnome:%files -n gmc}
-%{!?bcond_off_gnome:%defattr(644,root,root,755)}
+%{!?_without_gnome:%files -n gmc}
+%{!?_without_gnome:%defattr(644,root,root,755)}
 
-%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
-%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gmc*}
-%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
+%{!?_without_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
+%{!?_without_gnome:%attr(755,root,root) %{_bindir}/gmc*}
+%{!?_without_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
 
-%{!?bcond_off_gnome:%{_sysconfdir}/mc.global}
-%{!?bcond_off_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
-%{!?bcond_off_gnome:%{_libdir}/mc/layout}
-%{!?bcond_off_gnome:%{_datadir}/mime-info}
-%{!?bcond_off_gnome:%{_datadir}/pixmaps}
-%{!?bcond_off_gnome:%{_datadir}/mc}
+%{!?_without_gnome:%{_sysconfdir}/mc.global}
+%{!?_without_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
+%{!?_without_gnome:%{_libdir}/mc/layout}
+%{!?_without_gnome:%{_datadir}/mime-info}
+%{!?_without_gnome:%{_datadir}/pixmaps}
+%{!?_without_gnome:%{_datadir}/mc}
