@@ -276,6 +276,7 @@ else
 	fi;
 fi"
 %configure \
+	--enable-charset \
 	--with%{!?debug:out}-debug \
 	--with%{!?with_ext2undel:out}-ext2undel \
 	--with%{!?with_x:out}-x \
