@@ -38,7 +38,7 @@ Patch13:	%{name}-nobashism.patch
 Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
 Patch16:	%{name}-mo.patch
-Patch17:	%{name}-mc.ext-jar_war.patch
+Patch17:	%{name}-mc.ext-ear_war.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
