@@ -18,7 +18,7 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.6.0
-Release:	18
+Release:	19
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -36,28 +36,27 @@ Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
 Source8:	%{name}.png
 Patch0:		%{name}-rpmfs.patch
-Patch1:		%{name}-system_popt.patch
-Patch2:		%{name}-spec-syntax.patch
-Patch4:		%{name}-urar.patch
-Patch5:		%{name}-srpm.patch
-Patch6:		%{name}-home_etc2.patch
-Patch7:		%{name}-pl.patch
+Patch1:		%{name}-spec-syntax.patch
+Patch2:		%{name}-urar.patch
+Patch3:		%{name}-srpm.patch
+Patch4:		%{name}-home_etc2.patch
+Patch5:		%{name}-pl.patch
 # Advanced Midnight Commander patches
-Patch8:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
+Patch6:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
-Patch9:		amc-2.diff
-Patch10:	%{name}-no_ti_DATA.patch
-Patch11:	%{name}-mc.ext.patch
-Patch12:	%{name}-posix_sh.patch
-Patch13:	%{name}-sequences.patch
-Patch14:	%{name}-mo.patch
-Patch15:	%{name}-posix.patch
-Patch16:	%{name}-CAN-2003-1023.patch
-Patch17:	%{name}-tempfile.patch
-Patch18:	%{name}-localenames.patch
-Patch19:	%{name}-noperl-vfs.patch
+Patch7:		amc-2.diff
+Patch8:		%{name}-no_ti_DATA.patch
+Patch9:		%{name}-mc.ext.patch
+Patch10:	%{name}-posix_sh.patch
+Patch11:	%{name}-sequences.patch
+Patch12:	%{name}-mo.patch
+Patch13:	%{name}-posix.patch
+Patch14:	%{name}-CAN-2003-1023.patch
+Patch15:	%{name}-tempfile.patch
+Patch16:	%{name}-localenames.patch
+Patch17:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
-Patch20:	%{name}-pld-developerfriendly.patch
+Patch18:	%{name}-pld-developerfriendly.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -225,8 +224,9 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch4 -p1
 cp -f vfs/extfs/{rpm,srpm}
+%patch3 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -237,12 +237,10 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
+%patch15 -p0
 %patch16 -p1
-%patch17 -p0
+%{!?with_perl_vfs:%patch17 -p1}
 %patch18 -p1
-%{!?with_perl_vfs:%patch19 -p1}
-%patch20 -p1
 
 mv -f po/{no,nb}.po
 
