@@ -20,11 +20,11 @@ BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
 BuildRequires:	gettext-devel
-%{!?nognome:BuildRequires:	ORBit-devel}
-%{!?nognome:BuildRequires:	gnome-libs-devel}
-%{!?nognome:BuildRequires:	imlib-devel}
-%{!?nognome:BuildRequires:	gtk+-devel}
-%{!?nognome:BuildRequires:	esound-devel}
+%{!?no_gnome:BuildRequires:	ORBit-devel}
+%{!?no_gnome:BuildRequires:	gnome-libs-devel}
+%{!?no_gnome:BuildRequires:	imlib-devel}
+%{!?no_gnome:BuildRequires:	gtk+-devel}
+%{!?no_gnome:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -151,7 +151,7 @@ LDFLAGS="-s"; export LDFLAGS
 	--with-x \
 	--without-debug \
 	--with-included-slang \
-	%{!?nognome:--with-gnome}
+	%{!?no_gnome:--with-gnome}
 
 %{__make} confdir=%{_sysconfdir}/
 
@@ -246,16 +246,16 @@ fi
 %{_mandir}/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
 
-%{!?nognome:%files -n gmc}
-%{!?nognome:%defattr(644,root,root,755)}
+%{!?no_gnome:%files -n gmc}
+%{!?no_gnome:%defattr(644,root,root,755)}
 
-%{!?nognome:%attr(755,root,root) %{_bindir}/gmc}
-%{!?nognome:%attr(755,root,root) %{_bindir}/plain-gmc}
+%{!?no_gnome:%attr(755,root,root) %{_bindir}/gmc}
+%{!?no_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
 
-%{!?nognome:%{_sysconfdir}/mc.global}
-%{!?nognome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
-%{!?nognome:%{_libdir}/mc/layout}
-%{!?nognome:%{_libdir}/mc/mc-gnome.ext}
-%{!?nognome:%{_datadir}/mime-info}
-%{!?nognome:%{_datadir}/pixmaps}
-%{!?nognome:%{_datadir}/mc}
+%{!?no_gnome:%{_sysconfdir}/mc.global}
+%{!?no_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
+%{!?no_gnome:%{_libdir}/mc/layout}
+%{!?no_gnome:%{_libdir}/mc/mc-gnome.ext}
+%{!?no_gnome:%{_datadir}/mime-info}
+%{!?no_gnome:%{_datadir}/pixmaps}
+%{!?no_gnome:%{_datadir}/mc}
