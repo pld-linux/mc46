@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.51
-Release:	21
+Release:	22
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -39,11 +39,11 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
 BuildRequires:	gettext-devel
 BuildRequires:	indent
-%{!?no_gnome:BuildRequires:	ORBit-devel}
-%{!?no_gnome:BuildRequires:	gnome-libs-devel}
-%{!?no_gnome:BuildRequires:	imlib-devel}
-%{!?no_gnome:BuildRequires:	gtk+-devel}
-%{!?no_gnome:BuildRequires:	esound-devel}
+%{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
+%{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel}
+%{!?bcond_off_gnome:BuildRequires:	imlib-devel}
+%{!?bcond_off_gnome:BuildRequires:	gtk+-devel}
+%{!?bcond_off_gnome:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
 Obsoletes:	tkmc
@@ -188,7 +188,7 @@ gettextize --copy --force
 	--with-x \
 	--without-debug \
 	--with-included-slang \
-	%{!?no_gnome:--with-gnome}%{?no_gnome:--without-gnome}
+	%{!?bcond_off_gnome:--with-gnome}%{?bcond_off_gnome:--without-gnome}
 
 %{__make} confdir=%{_sysconfdir}/
 
@@ -282,17 +282,17 @@ fi
 %{_mandir}/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
 
-%{!?no_gnome:%files -n gmc}
-%{!?no_gnome:%defattr(644,root,root,755)}
+%{!?bcond_off_gnome:%files -n gmc}
+%{!?bcond_off_gnome:%defattr(644,root,root,755)}
 
-%{!?no_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
-%{!?no_gnome:%attr(755,root,root) %{_bindir}/gmc}
-%{!?no_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
+%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
+%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gmc}
+%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
 
-%{!?no_gnome:%{_sysconfdir}/mc.global}
-%{!?no_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
-%{!?no_gnome:%{_libdir}/mc/layout}
-%{!?no_gnome:%{_libdir}/mc/mc-gnome.ext}
-%{!?no_gnome:%{_datadir}/mime-info}
-%{!?no_gnome:%{_datadir}/pixmaps}
-%{!?no_gnome:%{_datadir}/mc}
+%{!?bcond_off_gnome:%{_sysconfdir}/mc.global}
+%{!?bcond_off_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
+%{!?bcond_off_gnome:%{_libdir}/mc/layout}
+%{!?bcond_off_gnome:%{_libdir}/mc/mc-gnome.ext}
+%{!?bcond_off_gnome:%{_datadir}/mime-info}
+%{!?bcond_off_gnome:%{_datadir}/pixmaps}
+%{!?bcond_off_gnome:%{_datadir}/mc}
