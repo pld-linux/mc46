@@ -22,7 +22,7 @@ Version:	4.5.55
 Release:	9
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
