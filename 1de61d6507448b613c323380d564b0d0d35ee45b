@@ -1,0 +1,1 @@
+- Added %%{name}-new_icons_am.patch (needed to "--without gnome" bcond)
