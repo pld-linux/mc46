@@ -93,13 +93,13 @@ Conflicts:	rpm < 4.0
 Midnight Commander is a visual shell much like a file manager, only
 with way more features. It is text mode, but also includes mouse
 support if you are running GPM. Its coolest feature is the ability to
-ftp, view tar, zip files, and poke into RPMs for specific files. :-)
+FTP, view tar, zip files, and poke into RPMs for specific files. :-)
 
 %description -l de
 Midnight Commander ist ein Visual-Shell, ähnlich einem Dateimanager,
 aber mit zusätzlichen Funktionen. Es läuft im Textmodus, kann jedoch
 eine Maus unterstützen, wenn GPM betrieben wird. Seine coolsten
-Fähigkeiten sind die ftp-Option, das Einsehen von tar- und zip-Dateien
+Fähigkeiten sind die FTP-Option, das Einsehen von tar- und zip-Dateien
 und das Herausfischen von spezifischen Dateien aus RPMs.
 
 %description -l es
@@ -144,7 +144,7 @@ específicos. :-)
 %description -l tr
 Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha
 yetenekli bir görsel kabuktur. Metin ekranda çalýþýr ve GPM
-çalýþýyorsa fare desteði vardýr. En hoþ özellikleri ftp yapabilmesi,
+çalýþýyorsa fare desteði vardýr. En hoþ özellikleri FTP yapabilmesi,
 tar, zip ve RPM dosyalarýnýn içeriklerini gösterebilmesidir.
 
 %package -n mcserv
