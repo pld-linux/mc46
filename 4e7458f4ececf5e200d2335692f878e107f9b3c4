@@ -1,0 +1,6 @@
+- updated to 4.5.44,
+- new rpmfs patch:
+  - back to old rpmfs behavior (display in root package full package file
+    list) and now CONTENTS.cpio is as additional entry in rpmfs,
+  - added INFO/SCRIPTS/TRIGGERSCRIPTS,
+- removed outdated enlightenment_keys patch.
