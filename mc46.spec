@@ -41,6 +41,8 @@ Patch17:	%{name}-samba.patch
 Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
 Patch19:	%{name}-sh-quiet.patch
 Patch20:	%{name}-nobashism.patch
+Patch21:	%{name}-BINDIR.patch
+Patch22:	%{name}-tinfo.patch
 URL:		http://www.gnome.org/mc/
 %{!?_without_gnome:BuildRequires:	ORBit-devel}
 %{!?_without_gnome:BuildRequires:	esound-devel}
@@ -196,6 +198,8 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
 %build
 gettextize --copy --force
