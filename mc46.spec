@@ -17,7 +17,7 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.6.0
-Release:	10
+Release:	11
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -40,7 +40,7 @@ Patch2:		%{name}-spec-syntax.patch
 Patch3:		%{name}-def_config.patch
 Patch4:		%{name}-urar.patch
 Patch5:		%{name}-srpm.patch
-Patch6:		%{name}-home_etc.patch
+Patch6:		%{name}-home_etc2.patch
 Patch7:		%{name}-pl.patch
 # Advanced Midnight Commander patches
 Patch8:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
@@ -221,7 +221,7 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %patch4 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch5 -p1
-#%patch6 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
