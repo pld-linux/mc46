@@ -7,10 +7,10 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
      echo "-r-xr-xr-x   1 root     root    39 $DATE UPGRADE"
      echo "dr-xr-xr-x   3 root     root	   0 $DATE INFO"
 -    echo "$FILEPREF 0 $DATE INFO/NAME-VERSION-RELEASE"
-+    if ["`rpm -qp --qf \"%{SERIAL}\" \"$1\"`" = "(none)" ]; then
-+	 echo "$FILEPREF 0 $DATE INFO/NAME-SERIAL:VERSION-RELEASE"
-+    else
++    if [ "`rpm -qp --qf \"%{SERIAL}\" \"$1\"`" = "(none)" ]; then
 +	echo "$FILEPREF 0 $DATE INFO/NAME-VERSION-RELEASE"
++    else
++	echo "$FILEPREF 0 $DATE INFO/NAME-SERIAL:VERSION-RELEASE"
 +    fi
      echo "$FILEPREF 0 $DATE INFO/GROUP"
      echo "$FILEPREF 0 $DATE INFO/BUILDHOST"
@@ -35,9 +35,9 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
  	UPGRADE) echo "# Run this to upgrade this RPM package" > "$3"; exit 0;;
  	ERROR) rpm -qip "$1" > /dev/null 2> "$3"; exit 0;;
 -	INFO/NAME-VERSION-RELEASE)	rpm -qp --qf "%{NAME}-%{VERSION}-%{RELEASE}\n" "$1" > "$3"; exit 0;;
-+	INFO/NAME-VERSION-RELEASE) \
++	INFO/NAME-VERSION-RELEASE)
 +		rpm -qp --qf "%{NAME}-%{VERSION}-%{RELEASE}\n" "$1" > "$3"; exit 0;;
-+	INFO/NAME-SERIAL:VERSION-RELEASE) \
++	INFO/NAME-SERIAL:VERSION-RELEASE)
 +		rpm -qp --qf "%{NAME}-%{SERIAL}:%{VERSION}-%{RELEASE}\n" "$1" > "$3"; exit 0;;
  	INFO/RELEASE)		rpm -qp --qf "%{RELEASE}\n" "$1" > "$3"; exit 0;;
  	INFO/GROUP)		rpm -qp --qf "%{GROUP}\n" "$1" > "$3"; exit 0;;
