@@ -120,25 +120,24 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --del mcserv
 
 %files
-%defattr(-, root, root)
+%defattr(644, root, root, 755)
 %doc FAQ NEWS README
-/usr/bin/mc
-/usr/bin/mcedit
-/usr/bin/mcmfmt
+%attr(755, root, root) /usr/bin/mc
+%attr(755, root, root) /usr/bin/mcedit
+%attr(755, root, root) /usr/bin/mcmfmt
 /usr/lib/mc/mc.ext
 /usr/lib/mc/mc.hint
 /usr/lib/mc/mc.hlp
 /usr/lib/mc/mc.lib
 /usr/lib/mc/mc.menu
-%ifos linux
-/usr/lib/mc/bin/cons.saver
+%ifos Linux
+%attr(4755, root, root) /usr/lib/mc/bin/cons.saver
 %endif
-/usr/lib/mc/extfs/*
-/usr/man/man1/*
+%attr(755, root, root) /usr/lib/mc/extfs
+%attr(644, root,  man) /usr/man/man1/*
 %config /etc/profile.d/*
 %dir /usr/lib/mc
 %dir /usr/lib/mc/bin
-%dir /usr/lib/mc/extfs
 %lang(es) /usr/share/locale/es/LC_MESSAGES/mc.mo
 %lang(fr) /usr/share/locale/fr/LC_MESSAGES/mc.mo
 %lang(it) /usr/share/locale/it/LC_MESSAGES/mc.mo
@@ -150,18 +149,17 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644, root, root)
 %config(noreplace) /etc/pam.d/mcserv
 %config /etc/rc.d/init.d/mcserv
-%attr(644, root, man) /usr/man/man8/mcserv.8
-/usr/bin/mcserv
+%attr(644, root,  man) /usr/man/man8/mcserv.8
+%attr(755, root, root) /usr/bin/mcserv
 
 %files -n gmc
 %defattr(644, root, root, 755)
 %attr(755, root, root) /usr/bin/gmc
 /usr/lib/mc/layout
-%dir /usr/share/icons/mc
-/usr/share/icons/mc/*
+/usr/share/icons/mc
 
 %changelog
-* Sun May 31 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+* Wed Aug 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.1.35-3]
 - %%{version} macro instead %%{PACKAGE_VERSION},
 - added -q %setup parameter,
@@ -172,9 +170,11 @@ rm -rf $RPM_BUILD_ROOT
 - added patch which fix support for all languages,
 - added "Obsoletes: tkmc" for mc and gmc,
 - added "%ifos Linux .. %endif" for /usr/lib/mc/bin/cons.saver (it
-  neccessary for egzample for building on Solaris whitch I use also),
+  neccessary for egzample for building on Solaris),
 - fixed dependences: "Requires: pam" and "Prereq: /sbin/chkconfig" moved
   from mc to mcserv,
+- added full %attr description in %files,
+- added suid root on /usr/lib/mc/bin/cons.saver,
 - removed COPING from %doc (copyright statment is in Copyright field).
 
 * Thu May 07 1998 Prospector System <bugs@redhat.com>
