@@ -12,7 +12,8 @@ Group(pl):	Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
-Patch:		mc-DESTDIR.patch
+Patch0:		mc-DESTDIR.patch
+Patch1:		mc-fixes.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	glib-devel
 BuildRequires:	gpm-devel
@@ -116,7 +117,8 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 gettextize --copy --force
