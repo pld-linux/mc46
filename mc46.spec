@@ -228,7 +228,7 @@ gettextize --copy --force
 aclocal -I \
 	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
 autoconf
-automake -a -c
+automake -a -c -f
 X11_WWW="
 if [ -f /usr/X11R6/bin/netscape ]; then
 	netscape;
