@@ -15,8 +15,6 @@ Version:	4.5.55
 Release:	5
 License:	GPL
 Group:		Applications/Shells
-Group(de):	Applikationen/Shells
-Group(pl):	Aplikacje/Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
@@ -104,8 +102,6 @@ Summary(fr):	Serveur réseau pour le gestionnaire de fichiers Midnight Commander
 Summary(pl):	Serwer plików Midnight Commandera
 Summary(tr):	Midnight Commander dosya sunucusu
 Group:		Daemons
-Group(de):	Server
-Group(pl):	Serwery
 Prereq:		/sbin/chkconfig
 Prereq:		rc-scripts
 Requires:	pam >= 0.66
@@ -149,11 +145,6 @@ Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
 Summary(pl):	Midnight Commander - wizualna pow³oka (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/Applications
-Group(de):	X11/Applikationen
-Group(es):	X11/Aplicaciones
-Group(pl):	X11/Aplikacje
-Group(pt_BR):	X11/Aplicações
-Group(pt):	X11/Aplicações
 Requires:	%{name}	= %{version}
 
 %description -n gmc
