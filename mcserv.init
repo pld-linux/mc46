@@ -23,9 +23,13 @@
 [ -f /etc/sysconfig/mcserv ] && . /etc/sysconfig/mcserv
 
 # Check that networking is up.
-if [ "${NETWORKING}" = "no" ]; then
-	echo "WARNING: Networking is down. Mcserv service can't be runed."
-	exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down mcserv
+		exit 1
+	fi
+else
+	exit 0
 fi
 
 
@@ -34,32 +38,36 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/mcserv ]; then
-		show Starting mcserv
+		msg_starting mcserv
 		is_yes $VERBOSE && OPTS="$OPTS -v"
 		is_yes $QUIET && OPTS="$OPTS -v"
 		[ "$PORT" != "" ] && OPTS="$POPTS -p $PORT"
 		daemon mcserv -d $OPTS
+		touch /var/lock/subsys/mcserv
 	else
-		echo "mcserv already is running"
+		msg_already_running mcserv
+		exit 1
 	fi
-	touch /var/lock/subsys/mcserv
 	;;
   status)
-        status mcserv
+	status mcserv
 	;;
   restart|reload)
-        $0 stop
+	$0 stop
 	$0 start
-        ;;
-  stop)
-        show Shutting down mcserv
-	killproc mcserv
-	rm -f /var/lock/subsys/mcserv
 	;;
+  stop)
+	if [ -f /var/lock/subsys/mcserv ]; then
+		msg_stopping mcserv
+		killproc mcserv
+		rm -f /var/lock/subsys/mcserv >/dev/null 2>&1
+	else
+		msg_not_running mcserv
+		exit 1
+	fi
   *)
-	echo "Usage: $0 {start|stop|status|restart|reload}"
+	msg_usage "$0 {start|stop|restart|reload|status}"
 	exit 1
 esac
 
 exit 0
-
