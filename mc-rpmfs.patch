@@ -7,7 +7,7 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
      echo "-r-xr-xr-x   1 root     root    39 $DATE UPGRADE"
      echo "dr-xr-xr-x   3 root     root	   0 $DATE INFO"
 -    echo "$FILEPREF 0 $DATE INFO/NAME-VERSION-RELEASE"
-+    test "`rpm -qp --qf \"%{SERIAL}\" \"$1\"`" = "(none)" ||
++    if ["`rpm -qp --qf \"%{SERIAL}\" \"$1\"`" = "(none)" ]; then
 +	 echo "$FILEPREF 0 $DATE INFO/NAME-SERIAL:VERSION-RELEASE"
 +    else
 +	echo "$FILEPREF 0 $DATE INFO/NAME-VERSION-RELEASE"
@@ -15,16 +15,22 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
      echo "$FILEPREF 0 $DATE INFO/GROUP"
      echo "$FILEPREF 0 $DATE INFO/BUILDHOST"
      echo "$FILEPREF 0 $DATE INFO/SOURCERPM"
-@@ -116,7 +120,7 @@
-         echo "$FILEPREF 0 $DATE INFO/CHANGELOG"
-     fi
- 
--    rpm -qlvp "$1" | sed -e 's/^\(..........\)[-t]* /\1 1 /'
-+    rpm -qlvp "$1" | sed -e 's/^\(..........\)[-t]* /\1 /'
-     echo "$FILEPREF 0 $DATE CONTENTS.cpio"
- }
- 
-@@ -127,7 +131,10 @@
+@@ -102,11 +106,14 @@
+ 	echo "$FILEPREF 0 $DATE INFO/REQUIRENAME"
+     rpm -qp --qf "[%{OBSOLETES}\n]" "$1" | grep "(none)" > /dev/null ||
+ 	echo "$FILEPREF 0 $DATE INFO/OBSOLETES"
++    rpm -qp --qf "[%{CONFLICTS}\n]" "$1" | grep "(none)" > /dev/null ||
++	echo "$FILEPREF 0 $DATE INFO/CONFLICTS"
+     rpm -qp --qf "[%{PROVIDES}\n]" "$1" | grep "(none)" > /dev/null ||
+ 	echo "$FILEPREF 0 $DATE INFO/PROVIDES"
+     test "`rpm -qp --qf \"%{CHANGELOGTEXT}\" \"$1\"`" = "(none)" ||
+        echo "$FILEPREF 0 $DATE INFO/CHANGELOG"
+     else 
++	echo "$FILEPREF 0 $DATE INFO/CONFLICTS"
+ 	echo "$FILEPREF 0 $DATE INFO/REQUIRENAME"
+ 	echo "$FILEPREF 0 $DATE INFO/OBSOLETES"
+ 	echo "$FILEPREF 0 $DATE INFO/PROVIDES"
+@@ -124,7 +131,10 @@
  	INSTALL) echo "# Run this to install this RPM package" > "$3"; exit 0;;
  	UPGRADE) echo "# Run this to upgrade this RPM package" > "$3"; exit 0;;
  	ERROR) rpm -qip "$1" > /dev/null 2> "$3"; exit 0;;
@@ -36,16 +42,30 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
  	INFO/RELEASE)		rpm -qp --qf "%{RELEASE}\n" "$1" > "$3"; exit 0;;
  	INFO/GROUP)		rpm -qp --qf "%{GROUP}\n" "$1" > "$3"; exit 0;;
  	INFO/DISTRIBUTION) 	rpm -qp --qf "%{DISTRIBUTION}\n" "$1" > "$3"; exit 0;;
-@@ -149,8 +156,10 @@
+@@ -139,19 +149,24 @@
+ 	INFO/COPYRIGHT)		rpm -qp --qf "%{COPYRIGHT}\n" "$1" >"$3"; exit 0;;
+ 	INFO/RPMVERSION)	rpm -qp --qf "%{RPMVERSION}\n" "$1" >"$3"; exit 0;;
+ 	INFO/REQUIRENAME)	rpm -qp --qf "[%{REQUIRENAME} %{REQUIREFLAGS:depflags} %{REQUIREVERSION}\n]" "$1" >"$3"; exit 0;;
++	INFO/OBSOLETES)		rpm -qp --qf "[%{OBSOLETES}\n]" "$1" >"$3"; exit 0;;
++	INFO/CONFLICTS)		rpm -qp --qf "[%{CONFLICTS}\n]" "$1" >"$3"; exit 0;;
+ 	INFO/PROVIDES)		rpm -qp --qf "[%{PROVIDES}\n]" "$1" >"$3"; exit 0;;
+ 	INFO/SCRIPTS/PREIN)	rpm -qp --qf "%{RPMTAG_PREIN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/POSTIN)	rpm -qp --qf "%{RPMTAG_POSTIN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/PREUN)	rpm -qp --qf "%{RPMTAG_PREUN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/POSTUN)	rpm -qp --qf "%{RPMTAG_POSTUN}\n" "$1" >"$3"; exit 0;;
 -	INFO/SCRIPTS/VERIFYSCRIPT)	rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
--	INFO/SCRIPTS/TRIGGERSCRIPTS)	rpm -qp --triggers "$1" > "$3"; exit 0;;
-+	INFO/SCRIPTS/VERIFYSCRIPT) \
++	INFO/SCRIPTS/VERIFYSCRIPT)
 +		rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
-+	INFO/SCRIPTS/TRIGGERSCRIPTS) \
++	INFO/SCRIPTS/TRIGGERSCRIPTS)
 +		rpm -qp --triggers "$1" > "$3"; exit 0;;
  	INFO/SCRIPTS/ALL)		rpm -qp --scripts "$1" > "$3"; exit 0;;
  	INFO/SUMMARY)		rpm -qp --qf "%{SUMMARY}\n" "$1" > "$3"; exit 0;;
  	INFO/OS)		rpm -qp --qf "%{OS}\n" "$1" > "$3"; exit 0;;
+ 	INFO/CHANGELOG)		rpm -qp --qf "[* %{CHANGELOGTIME:date} %{CHANGELOGNAME}\n%{CHANGELOGTEXT}\n\n]\n" "$1" > "$3"; exit 0;;
+ 	INFO/SIZE)		rpm -qp --qf "%{SIZE} bytes\n" "$1" > "$3"; exit 0;;
+ 	*)
+-	    TMPDIR=/tmp/mctmpdir.$$
++	    TMPDIR=${TMPDIR:-/tmp}/mctmpdir.$$
+ 	    mkdir $TMPDIR || exit 1
+ 	    cd $TMPDIR
+ 	    rpm2cpio "$1" | cpio -iumd --quiet "$2" >/dev/null
