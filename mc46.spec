@@ -17,7 +17,7 @@ Summary(uk):	‰…”–≈‘ﬁ≈“ ∆¡ Ã¶◊ Midnight Commander
 Summary(zh_CN):	“ª∏ˆ∑Ω±„ µ”√µƒŒƒº˛π‹¿Ì∆˜∫Õ–Èƒ‚Shell
 Name:		mc
 Version:	4.6.0
-Release:	14
+Release:	15
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -267,11 +267,14 @@ fi"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconfig}} \
-	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_pixmapsdir},%{_desktopdir}} \
+	$RPM_BUILD_ROOT/etc/{rc.d/init.d,pam.d,profile.d,sysconfig} \
+	$RPM_BUILD_ROOT%{_mandir}/man8
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install doc/mcserv.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
