@@ -11,13 +11,13 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.54
-Release:	8
+Version:	4.5.55
+Release:	1
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}.1.pl
@@ -28,25 +28,19 @@ Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
 Patch3:		%{name}-spec-syntax.patch
-Patch4:		%{name}-showagain.patch
-Patch5:		%{name}-gdeskpopt.patch
-Patch6:		%{name}-prototype.patch
-Patch7:		%{name}-stderr.patch
-Patch8:		%{name}-gnome-editor.patch
-Patch9:		%{name}-extention.patch
-Patch10:	%{name}-def_config.patch
-Patch11:	%{name}-rpmfs_rpm40.patch
-Patch12:	%{name}-mouse_in_rxvt.patch
-Patch13:	%{name}-use_old_sorting.patch
-Patch14:	%{name}-proxy.patch
-Patch15:	%{name}-nognome-amfix.patch
-Patch16:	%{name}-urar.patch
-Patch17:	%{name}-samba.patch
-Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
-Patch19:	%{name}-nobashism.patch
-Patch20:	%{name}-BINDIR.patch
-Patch21:	%{name}-tinfo.patch
-Patch22:	%{name}-vfs.patch
+Patch4:		%{name}-gdeskpopt.patch
+Patch5:		%{name}-prototype.patch
+Patch6:		%{name}-gnome-editor.patch
+Patch7:		%{name}-def_config.patch
+Patch8:		%{name}-rpmfs_rpm40.patch
+Patch9:		%{name}-mouse_in_rxvt.patch
+Patch10:	%{name}-proxy.patch
+Patch11:	%{name}-nognome-amfix.patch
+Patch12:	%{name}-urar.patch
+Patch13:	%{name}-samba.patch
+Patch14:	%{name}-nobashism.patch
+Patch15:	%{name}-tinfo.patch
+Patch16:	%{name}-vfs.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -60,7 +54,6 @@ BuildRequires:	popt-devel
 BuildRequires:	gpm-devel
 %endif
 %{!?_without_gnome:BuildRequires:	ORBit-devel}
-%{!?_without_gnome:BuildRequires:	esound-devel}
 %{!?_without_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
 %{!?_without_gnome:BuildRequires:	imlib-devel}
 %{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
@@ -205,12 +198,6 @@ nie jest ona jeszcze skoñczona.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
 
 %build
 gettextize --copy --force
@@ -237,6 +224,7 @@ fi"
 	%{?_with_x:--with-tm-x-support} \
 	--without-debug \
 	--with-included-slang \
+	--enable-mcserv-install \
 	%{!?_without_gnome:--with-gnome}%{?_without_gnome:--without-gnome} \
 	%{?_with_samba:--with-samba}
 
@@ -300,9 +288,13 @@ fi
 %{_libdir}/mc/mc.hint
 %lang(cs) %{_libdir}/mc/mc.hint.cs
 %lang(es) %{_libdir}/mc/mc.hint.es
+%lang(hu) %{_libdir}/mc/mc.hint.hu
 %lang(it) %{_libdir}/mc/mc.hint.it
+%lang(nl) %{_libdir}/mc/mc.hint.nl
 %lang(pl) %{_libdir}/mc/mc.hint.pl
 %lang(ru) %{_libdir}/mc/mc.hint.ru
+%lang(uk) %{_libdir}/mc/mc.hint.uk
+%lang(zh) %{_libdir}/mc/mc.hint.zh
 
 %attr(755,root,root) %{_libdir}/mc/bin/cons.saver
 
@@ -359,7 +351,6 @@ fi
 
 %{!?_without_gnome:%{_sysconfdir}/mc.global}
 %{!?_without_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
-%{!?_without_gnome:%{_libdir}/mc/layout}
 %{!?_without_gnome:%{_datadir}/mime-info}
 %{!?_without_gnome:%{_datadir}/pixmaps}
 %{!?_without_gnome:%{_datadir}/mc}
