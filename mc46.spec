@@ -19,14 +19,13 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.5.55
-Release:	13
+Release:	14
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/4.5/%{name}-%{version}.tar.gz
 # Source0-md5:	bb670d48589f26f00b7fce8d25f66bd6
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
-Source3:	%{name}-non-english-man-pages.tar.bz2
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
 Source4:	%{name}-srpm
