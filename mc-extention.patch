@@ -1,5 +1,15 @@
---- mc-4.5.51/lib/mc.ext.in.orig	Thu Aug 17 19:43:13 2000
-+++ mc-4.5.51/lib/mc.ext.in	Thu Aug 17 19:43:47 2000
+diff -Nru mc-4.5.51/lib/mc.ext.in mc-4.5.51.new/lib/mc.ext.in
+--- mc-4.5.51/lib/mc.ext.in	Sun Mar 11 14:45:21 2001
++++ mc-4.5.51.new/lib/mc.ext.in	Sun Mar 11 14:48:31 2001
+@@ -394,7 +394,7 @@
+ 	#View=%view{ascii} catdoc -w %f
+ 	View=%view{ascii} word2x -f text %f -
+ 	Icon=word.xpm
+-type/Microsoft Word Document
++type/Microsoft\ Word\ Document
+ 	#View=%view{ascii} catdoc -w %f
+ 	View=%view{ascii} word2x -f text %f -
+ 	Icon=word.xpm
 @@ -425,7 +425,7 @@
  	Start Emacs on this RMAIL file=emacs %f
  	Open=emacs %f
@@ -9,3 +19,30 @@
  	Open=elm -f %f
  	Icon=mail.xpm
  	View=%view{ascii} mcmfmt < %f
+@@ -556,7 +556,7 @@
+ 	Icon=cpio.xpm
+ 
+ # gzip
+-type/gzip
++type/gzip\ compressed\ data
+ 	Open=gzip -dc %f | %var{PAGER:more}
+ 	View=%view{ascii} gzip -dc %f 2>/dev/null
+ 	Edit=I=`date +%%s`; export I; gzip -cd %f >/tmp/gzed.$I && %var{EDITOR:vi} /tmp/gzed.$I && gzip -c /tmp/gzed.$I > %f; rm -f /tmp/gzed.$I
+@@ -564,7 +564,7 @@
+ 	Icon=compressed.xpm
+ 
+ # bzip2
+-type/bzip2
++type/bzip2\ compressed\ data
+ 	Open=bzip2 -dc %f | %var{PAGER:more}
+ 	View=%view{ascii} bzip2 -dc %f 2>/dev/null
+ 	Edit=I=`date +%%s`; export I; bzip2 -cd %f >/tmp/bzed.$I && %var{EDITOR:vi} /tmp/bzed.$I && bzip2 -c /tmp/bzed.$I > %f; rm -f /tmp/bzed.$I
+@@ -580,7 +580,7 @@
+ 	Icon=compressed.xpm
+ 
+ # compress
+-type/compress
++type/compress\'d\ data
+ 	Open=gzip -dc %f | %var{PAGER:more}
+ 	View=%view{ascii} gzip -dc %f 2>/dev/null
+ 	Edit=I=`date +%%s`; export I; gzip -cd %f >/tmp/gzed.$I && %var{EDITOR:vi} /tmp/gzed.$I && gzip -c /tmp/gzed.$I > %f; rm -f /tmp/gzed.$I
