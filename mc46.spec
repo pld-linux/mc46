@@ -135,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %attr(755, root, root) /usr/lib/mc/extfs
 %attr(644, root,  man) /usr/man/man1/*
-%config /etc/profile.d/*
+%attr(755, root, root) %config /etc/profile.d/*
 %dir /usr/lib/mc
 %dir /usr/lib/mc/bin
 %lang(es) /usr/share/locale/es/LC_MESSAGES/mc.mo
