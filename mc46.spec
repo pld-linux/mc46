@@ -254,7 +254,7 @@ fi"
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconfig}} \
-	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}}
+	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Utilities}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
