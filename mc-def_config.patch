@@ -39,15 +39,3 @@ diff -Nru mc-4.5.51/src/panel.h mc-4.5.51.new/src/panel.h
  
  /* This were in main: */
  void unmark_files (WPanel *panel);
-diff -Nru mc-4.5.51/src/screen.c mc-4.5.51.new/src/screen.c
---- mc-4.5.51/src/screen.c	Mon Jul  3 16:32:07 2000
-+++ mc-4.5.51.new/src/screen.c	Fri Nov 10 13:20:47 2000
-@@ -1475,7 +1475,7 @@
- 
-     default:
-     case list_full:
--	return "half type,name,|,size,|,mtime";
-+	return "half type,name,|,size";
-     }
- }
- 
