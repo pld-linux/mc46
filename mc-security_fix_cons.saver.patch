@@ -1,0 +1,43 @@
+diff -ruN mc-4.5.51.orig/src/cons.saver.c mc-4.5.51/src/cons.saver.c
+--- mc-4.5.51.orig/src/cons.saver.c	Mon Jul  3 16:32:11 2000
++++ mc-4.5.51/src/cons.saver.c	Wed Nov 15 19:08:13 2000
+@@ -116,12 +116,15 @@
+     if (fd == -1)
+ 	return -1;
+     
+-    if (fstat (fd, &stat_buf) == -1)
+-	return -1;
+-
++    if (fstat (fd, &stat_buf) == -1){
++      close(fd);
++      return -1;
++    }
++    
+     /* Must be character device */
+     if (!S_ISCHR (stat_buf.st_mode)){
+ 	*msg = "Not a character device";
++	close(fd);
+ 	return -1;
+     }
+ 
+@@ -132,17 +135,20 @@
+ 	/* Second time: must be console */
+ 	if ((stat_buf.st_rdev & 0xff00) != 0x0400){
+ 	    *msg = "Not a console";
++	    close(fd);
+ 	    return -1;
+ 	}
+     
+ 	if ((stat_buf.st_rdev & 0x00ff) > 63){
+ 	    *msg = "Minor device number too big";
++	    close(fd);
+ 	    return -1;
+ 	}
+ 	
+ 	/* Must be owned by the user */
+ 	if (stat_buf.st_uid != getuid ()){
+ 	    *msg = "Not a owner";
++	    close(fd);
+ 	    return -1;
+ 	}
+     }

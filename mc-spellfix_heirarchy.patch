@@ -1,0 +1,336 @@
+diff -ruN mc-4.5.51.orig/gnome/gscreen.c mc-4.5.51/gnome/gscreen.c
+--- mc-4.5.51.orig/gnome/gscreen.c	Mon Jul  3 16:32:13 2000
++++ mc-4.5.51/gnome/gscreen.c	Sun Oct 15 22:15:58 2000
+@@ -2277,7 +2277,7 @@
+ static GnomeUIInfo toolbar[] = {
+ 	GNOMEUIINFO_ITEM_STOCK (N_("Back"), N_("Go to the previously visited directory"),
+ 				panel_back, GNOME_STOCK_PIXMAP_BACK),
+-	GNOMEUIINFO_ITEM_STOCK (N_("Up"), N_("Go up a level in the directory heirarchy"),
++	GNOMEUIINFO_ITEM_STOCK (N_("Up"), N_("Go up a level in the directory hierarchy"),
+ 				panel_up, GNOME_STOCK_PIXMAP_UP),
+ 	GNOMEUIINFO_ITEM_STOCK (N_("Forward"), N_("Go to the next directory"),
+ 				panel_fwd, GNOME_STOCK_PIXMAP_FORWARD),
+diff -ruN mc-4.5.51.orig/po/ca.po mc-4.5.51/po/ca.po
+--- mc-4.5.51.orig/po/ca.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/ca.po	Sun Oct 15 22:17:06 2000
+@@ -1560,7 +1560,7 @@
+ msgstr "Amunt"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Puja un nivell a la jerarquia de directoris"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/cs.po mc-4.5.51/po/cs.po
+--- mc-4.5.51.orig/po/cs.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/cs.po	Sun Oct 15 22:17:06 2000
+@@ -1514,7 +1514,7 @@
+ msgstr "Nahoru"
+ 
+ #: gnome/gscreen.c:2247
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "O jeden adresáø v hiearchii vý¹"
+ 
+ #: gnome/gscreen.c:2249
+diff -ruN mc-4.5.51.orig/po/da.po mc-4.5.51/po/da.po
+--- mc-4.5.51.orig/po/da.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/da.po	Sun Oct 15 22:17:06 2000
+@@ -1556,7 +1556,7 @@
+ msgstr "Op"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Gå et niveau op i mappehierarkiet"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/de.po mc-4.5.51/po/de.po
+--- mc-4.5.51.orig/po/de.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/de.po	Sun Oct 15 22:17:06 2000
+@@ -1544,7 +1544,7 @@
+ msgstr "Aufwärts"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Eine Ebene in der Verzeichnishierarchie aufsteigen"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/el.po mc-4.5.51/po/el.po
+--- mc-4.5.51.orig/po/el.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/el.po	Sun Oct 15 22:17:06 2000
+@@ -1466,7 +1466,7 @@
+ msgstr "Ìåôáêßíçóç óôïí ðñïçãïýìåíï êáôÜëïãï"
+ 
+ #: gnome/gscreen.c:2307
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Ìåôáêßíçóç ðñïò ôá åðÜíò óôçí éåñáñ÷ßá êáôáëüãùí"
+ 
+ #: gnome/gscreen.c:2307
+diff -ruN mc-4.5.51.orig/po/es.po mc-4.5.51/po/es.po
+--- mc-4.5.51.orig/po/es.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/es.po	Sun Oct 15 22:17:06 2000
+@@ -1535,7 +1535,7 @@
+ msgstr "Subir"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Subir un nivel en la jerarquía de directorios"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/es_ES.po mc-4.5.51/po/es_ES.po
+--- mc-4.5.51.orig/po/es_ES.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/es_ES.po	Sun Oct 15 22:17:06 2000
+@@ -1535,7 +1535,7 @@
+ msgstr "Subir"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Subir un nivel en la jerarquía de directorios"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/fi.po mc-4.5.51/po/fi.po
+--- mc-4.5.51.orig/po/fi.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/fi.po	Sun Oct 15 22:17:06 2000
+@@ -1491,7 +1491,7 @@
+ msgstr "Palaa edelliseen vierailtuun hakemistoon"
+ 
+ #: gnome/gscreen.c:2307
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Palaa hakemistohierarkiassa ylöspäin"
+ 
+ #: gnome/gscreen.c:2307
+diff -ruN mc-4.5.51.orig/po/fr.po mc-4.5.51/po/fr.po
+--- mc-4.5.51.orig/po/fr.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/fr.po	Sun Oct 15 22:17:06 2000
+@@ -1526,7 +1526,7 @@
+ msgstr "Haut"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Remonter d'un niveau dans la hiérarchie"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/hu.po mc-4.5.51/po/hu.po
+--- mc-4.5.51.orig/po/hu.po	Mon Jul  3 16:33:07 2000
++++ mc-4.5.51/po/hu.po	Sun Oct 15 22:17:06 2000
+@@ -1493,7 +1493,7 @@
+ msgstr "Visszalép az elõzõleg látogatott könyvtárba"
+ 
+ #: gnome/gscreen.c:2307
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Fellép egy szintet a fájlrendszerben"
+ 
+ #: gnome/gscreen.c:2307
+diff -ruN mc-4.5.51.orig/po/it.po mc-4.5.51/po/it.po
+--- mc-4.5.51.orig/po/it.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/it.po	Sun Oct 15 22:17:06 2000
+@@ -1544,7 +1544,7 @@
+ msgstr "Su"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Sali un livello della directory"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/ja.po mc-4.5.51/po/ja.po
+--- mc-4.5.51.orig/po/ja.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/ja.po	Sun Oct 15 22:17:06 2000
+@@ -1545,7 +1545,7 @@
+ msgstr "¾å"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "°ì¤Ä¾å¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Ø°ÜÆ°"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/ko.po mc-4.5.51/po/ko.po
+--- mc-4.5.51.orig/po/ko.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/ko.po	Sun Oct 15 22:17:07 2000
+@@ -1531,7 +1531,7 @@
+ msgstr "À§·Î"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "À­ µð·ºÅä¸®À¸·Î °¡±â"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/nl.po mc-4.5.51/po/nl.po
+--- mc-4.5.51.orig/po/nl.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/nl.po	Sun Oct 15 22:17:07 2000
+@@ -1496,7 +1496,7 @@
+ msgstr "Ga terug naar de laatstbezochte directory"
+ 
+ #: gnome/gscreen.c:2307
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Ga een niveau hoger in de directoryboom"
+ 
+ #: gnome/gscreen.c:2307
+diff -ruN mc-4.5.51.orig/po/no.po mc-4.5.51/po/no.po
+--- mc-4.5.51.orig/po/no.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/no.po	Sun Oct 15 22:17:07 2000
+@@ -1545,7 +1545,7 @@
+ msgstr "Opp"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Gå opp ett nivå i kataloghierarkiet"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/pl.po mc-4.5.51/po/pl.po
+--- mc-4.5.51.orig/po/pl.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/pl.po	Sun Oct 15 22:17:07 2000
+@@ -1507,7 +1507,7 @@
+ msgstr "Góra"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Przechodzi do katalogu powy¿ej bie¿±cego w hierarhii"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/pt_BR.po mc-4.5.51/po/pt_BR.po
+--- mc-4.5.51.orig/po/pt_BR.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/pt_BR.po	Sun Oct 15 22:17:07 2000
+@@ -1805,7 +1805,7 @@
+ 
+ # gnome/gscreen.c:2341
+ #: gnome/gscreen.c:2247
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Sobe um nível nos diretórios"
+ 
+ # gnome/gscreen.c:2343
+diff -ruN mc-4.5.51.orig/po/ro.po mc-4.5.51/po/ro.po
+--- mc-4.5.51.orig/po/ro.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/ro.po	Sun Oct 15 22:17:07 2000
+@@ -1539,7 +1539,7 @@
+ msgstr "Sus"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Du-te un nivel mai sus în ierarhia de directoare"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/ru.po mc-4.5.51/po/ru.po
+--- mc-4.5.51.orig/po/ru.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/ru.po	Sun Oct 15 22:17:07 2000
+@@ -1551,7 +1551,7 @@
+ msgstr "÷×ÅÒÈ"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "ðÅÒÅÊÔÉ ××ÅÒÈ ÎÁ ÏÄÉÎ ÕÒÏ×ÅÎØ × ÉÅÒÁÒÈÉÉ ËÁÔÁÌÏÇÏ×"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/sk.po mc-4.5.51/po/sk.po
+--- mc-4.5.51.orig/po/sk.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/sk.po	Sun Oct 15 22:17:08 2000
+@@ -1508,7 +1508,7 @@
+ msgstr "Hore"
+ 
+ #: gnome/gscreen.c:2247
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Choï o úroveò vy¹¹ie v hierarchii adresárov"
+ 
+ #: gnome/gscreen.c:2249
+diff -ruN mc-4.5.51.orig/po/sl.po mc-4.5.51/po/sl.po
+--- mc-4.5.51.orig/po/sl.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/sl.po	Sun Oct 15 22:17:08 2000
+@@ -1547,7 +1547,7 @@
+ msgstr "Gor"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Pojdi nivo navzgor v hirarhiji imenikov"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/sv.po mc-4.5.51/po/sv.po
+--- mc-4.5.51.orig/po/sv.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/sv.po	Sun Oct 15 22:17:08 2000
+@@ -1565,7 +1565,7 @@
+ msgstr "Upp"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Gå upp en nivå i kataloghierarkin"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/tr.po mc-4.5.51/po/tr.po
+--- mc-4.5.51.orig/po/tr.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/tr.po	Sun Oct 15 22:17:08 2000
+@@ -1522,7 +1522,7 @@
+ msgstr "Yukarý"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Üst dizine geç"
+ 
+ #: gnome/gscreen.c:2262
+diff -ruN mc-4.5.51.orig/po/uk.po mc-4.5.51/po/uk.po
+--- mc-4.5.51.orig/po/uk.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/uk.po	Sun Oct 15 22:17:08 2000
+@@ -1524,7 +1524,7 @@
+ msgstr "÷ÇÏÒÕ"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "ð¦ÄÎÑÔÉÓØ ÎÁ Ò¦×ÅÎØ × ¦¤ÒÁÒÈ¦§ ËÁÔÁÌÏÇ¦×"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/wa.po mc-4.5.51/po/wa.po
+--- mc-4.5.51.orig/po/wa.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/wa.po	Sun Oct 15 22:17:08 2000
+@@ -1550,7 +1550,7 @@
+ msgstr "Dizeu"
+ 
+ #: gnome/gscreen.c:2280
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "Rimonter on schayon pus hôt sol schåle des ridants"
+ 
+ #: gnome/gscreen.c:2282
+diff -ruN mc-4.5.51.orig/po/zh_CN.GB2312.po mc-4.5.51/po/zh_CN.GB2312.po
+--- mc-4.5.51.orig/po/zh_CN.GB2312.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/zh_CN.GB2312.po	Sun Oct 15 22:17:08 2000
+@@ -1410,7 +1410,7 @@
+ msgstr "ÍùÉÏ"
+ 
+ #: gnome/gscreen.c:2393
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "µ½Ä¿Â¼½á¹¹µÄÉÏÒ»²ã"
+ 
+ #: gnome/gscreen.c:2395
+diff -ruN mc-4.5.51.orig/po/zh_TW.Big5.po mc-4.5.51/po/zh_TW.Big5.po
+--- mc-4.5.51.orig/po/zh_TW.Big5.po	Mon Jul  3 16:33:08 2000
++++ mc-4.5.51/po/zh_TW.Big5.po	Sun Oct 15 22:17:08 2000
+@@ -1520,7 +1520,7 @@
+ msgstr "©¹¤W"
+ 
+ #: gnome/gscreen.c:2260
+-msgid "Go up a level in the directory heirarchy"
++msgid "Go up a level in the directory hierarchy"
+ msgstr "¨ì¥Ø¿ýµ²ºcªº¤W¤@¼h"
+ 
+ #: gnome/gscreen.c:2262

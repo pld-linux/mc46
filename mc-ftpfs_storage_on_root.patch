@@ -1,0 +1,12 @@
+diff -ruN mc-4.5.51.orig/vfs/ftpfs.c mc-4.5.51/vfs/ftpfs.c
+--- mc-4.5.51.orig/vfs/ftpfs.c	Mon Jul  3 16:31:59 2000
++++ mc-4.5.51/vfs/ftpfs.c	Wed Nov  8 00:56:21 2000
+@@ -962,7 +962,7 @@
+     }
+     if (remote) {
+ 	char * remote_path = translate_path (me, super, remote);
+-	j = command (me, super, WAIT_REPLY, "%s /%s", cmd, remote_path);
++	j = command (me, super, WAIT_REPLY, "%s /%s", cmd, (*remote_path == '/') ? remote_path + 1 : remote_path);
+ 	g_free (remote_path);
+     } else
+     	j = command (me, super, WAIT_REPLY, "%s", cmd);

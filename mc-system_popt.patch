@@ -1,34 +1,59 @@
---- mc-4.6.0/src/Makefile.am.orig	Tue Oct 15 17:33:04 2002
-+++ mc-4.6.0/src/Makefile.am	Sun Feb 16 12:51:16 2003
-@@ -7,9 +7,9 @@
- if CONS_SAVER
- pkglib_PROGRAMS = cons.saver
- AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" \
--	-DLIBDIR=\""$(pkglibdir)"\"
-+	-DLIBDIR=\""$(pkglibdir)"\" -I/usr/include/popt
- else
--AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\"
-+AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" -I/usr/include/popt
- endif
+--- mc-4.5.55/src/Makefile.in.orig	Tue Jul 31 17:24:15 2001
++++ mc-4.5.55/src/Makefile.in	Sun Sep 16 04:14:56 2001
+@@ -8,12 +8,12 @@
+ @MCF@
  
- noinst_PROGRAMS = man2hlp
-@@ -38,7 +38,7 @@
- endif
+ CFLAGS   = $(XCFLAGS)
+-CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@
++CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@ -I/usr/include/popt
+ LDFLAGS  = $(XLDFLAGS)
+ DEFS     = $(XDEFS) -DREGEX_MALLOC -DLIBDIR=\""$(mclibdir)/"\" \
+ 	-DCONFDIR=\""$(confdir)/"\" -DLOCALEDIR=\""$(localedir)/"\"
+ LIBS     = @LSLANG@ @LEDIT@ @LVFS@ @LINTL@ @LGPM@ \
+-	$(XLIBS) $(XLIB) @TERMNET@ @MCLIBS@ @LIBICONV@
++	$(XLIBS) $(XLIB) @TERMNET@ @MCLIBS@ @LIBICONV@ -lpopt
+ DEPLIBS  = $(top_builddir)/vfs/@LIBVFS@ $(top_builddir)/slang/@LIBSLANG@ \
+ 	$(top_builddir)/edit/@LIBEDIT_A@ @INTLDEPS@
+ INSTALL  = @INSTALL@
+@@ -32,7 +32,7 @@
+ 	hotlist.c achown.c layout.c fsusage.c mountlist.c regex.c	\
+ 	complete.c slint.c command.c cmd.c panelize.c learn.c		\
+ 	listmode.c utilunix.c background.c rxvt.c			\
+-	text.c popt.c findme.c poptparse.c poptconfig.c popthelp.c	\
++	text.c \
+ 	filegui.c filenot.c fileopctx.c treestore.c textconf.c		\
+ 	charsets.c selcodepage.c
  
- mc_LDADD = $(EDITLIB) $(SLANGLIB) $(VFSLIB) \
--	$(INTLLIBS) $(GLIB_LIBS) $(MCLIBS) $(LIBICONV)
-+	$(INTLLIBS) $(GLIB_LIBS) $(MCLIBS) $(LIBICONV) -lpopt
+@@ -44,8 +44,8 @@
+ 	hotlist.h layout.h fsusage.h mountlist.h eregex.h complete.h	\
+ 	myslang.h command.h cmd.h tty.h fs.h panelize.h achown.h	\
+ 	learn.h listmode.h background.h					\
+-	x.h textconf.h i18n.h findme.h popt.h filegui.h keys.h		\
+-	poptint.h poptalloca.h fileopctx.h treestore.h			\
++	x.h textconf.h i18n.h findme.h filegui.h keys.h		\
++	fileopctx.h treestore.h			\
+ 	charsets.h selcodepage.h
  
- CHARSET_SRC = charsets.c charsets.h selcodepage.c selcodepage.h
+ OBJS =	dir.o util.o screen.o dialog.o key.o keyxdef.o menu.o		\
+@@ -55,8 +55,8 @@
+ 	terms.o boxes.o hotlist.o achown.o layout.o fsusage.o		\
+ 	mountlist.o @XCURSES@ regex.o complete.o slint.o command.o	\
+ 	cmd.o main.o panelize.o learn.o listmode.o utilunix.o		\
+-	background.o rxvt.o text.o popt.o findme.o poptparse.o		\
+-	poptconfig.o popthelp.o filegui.o filenot.o fileopctx.o		\
++	background.o rxvt.o text.o findme.o \
++	filegui.o filenot.o fileopctx.o		\
+ 	treestore.o textconf.o $(CHARSET_OBJS)
  
-@@ -53,8 +53,8 @@
- 	keyxdef.c layout.c layout.h learn.c learn.h listmode.c		\
- 	listmode.h main.c main.h menu.c menu.h				\
- 	mountlist.c mountlist.h mouse.c mouse.h myslang.h option.c	\
--	option.h panel.h panelize.c panelize.h poptalloca.h popt.c	\
--	poptconfig.c popt.h popthelp.c poptint.h poptparse.c profile.c	\
-+	option.h panel.h panelize.c panelize.h \
-+	profile.c	\
- 	profile.h regex.c rxvt.c screen.c setup.c setup.h slint.c	\
- 	subshell.c subshell.h terms.c text.c textconf.c textconf.h	\
- 	tree.c tree.h treestore.c treestore.h tty.h user.c user.h	\
+ #
+diff -urN mc-4.5.52.org/src/findme.c mc-4.5.52/src/findme.c
+--- mc-4.5.52.org/src/findme.c	Mon Mar 19 20:44:47 2001
++++ mc-4.5.52/src/findme.c	Mon Mar 19 20:46:49 2001
+@@ -6,7 +6,6 @@
+ #include "config.h"
+ #endif
+ 
+-#include "poptalloca.h"
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>

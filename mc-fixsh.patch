@@ -1,0 +1,8 @@
+--- mc-4.5.42/lib/mc.sh.fixsh	Wed Feb 23 23:31:35 2000
++++ mc-4.5.42/lib/mc.sh	Wed Feb 23 23:31:44 2000
+@@ -8,3 +8,5 @@
+ 	/bin/rm "$MC"
+         unset MC;
+ }
++
++export -f mc
