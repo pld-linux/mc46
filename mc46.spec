@@ -17,7 +17,7 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.6.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -25,6 +25,9 @@ Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
 Source4:	%{name}-srpm
+# Changelogs for Advanced Midnight Commander patches
+Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
+Source6:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
 Patch3:		%{name}-spec-syntax.patch
@@ -35,6 +38,10 @@ Patch15:	%{name}-vfs.patch
 Patch17:	%{name}-%{name}.ext-ear_war.patch
 Patch18:	%{name}-home_etc.patch
 Patch21:	%{name}-pl.patch
+# Advanced Midnight Commander patches
+Patch22:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
+#Patch23:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff - changed
+Patch23:	amc-2.diff
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -205,6 +212,8 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 #%patch17 -p1
 #%patch18 -p1 
 %patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 %build
 %{__gettextize}
@@ -342,6 +351,7 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/uha
 %attr(755,root,root) %{_datadir}/mc/extfs/ulha
 %attr(755,root,root) %{_datadir}/mc/extfs/urar
+%attr(755,root,root) %{_datadir}/mc/extfs/uesp
 %attr(755,root,root) %{_datadir}/mc/extfs/uzip
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
