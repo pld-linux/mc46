@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.51
-Release:	19
+Release:	20
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -26,6 +26,13 @@ Patch9:		%{name}-gnome-editor.patch
 Patch10:	%{name}-extention.patch
 Patch11:	%{name}-fixsh.patch
 Patch12:	%{name}-def_config.patch
+Patch13:	%{name}-rpmfs_rpm40.patch
+Patch14:	%{name}-ftpfs_storage_on_root.patch
+Patch15:	%{name}-editor_argument.patch
+Patch16:	%{name}-mouse_in_rxvt.patch
+Patch17:	%{name}-security_fix_cons.saver.patch
+Patch18:	%{name}-spellfix_heirarchy.patch
+Patch19:	%{name}-use_old_sorting.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
@@ -38,7 +45,7 @@ BuildRequires:	indent
 %{!?no_gnome:BuildRequires:	gtk+-devel}
 %{!?no_gnome:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:	rpm =< 2.5.3
+Conflicts:	rpm =< 4.0
 Obsoletes:	tkmc
 
 %define		_sysconfdir	/etc/X11/GNOME
@@ -165,6 +172,13 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 %build
 gettextize --copy --force
