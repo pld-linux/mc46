@@ -10,7 +10,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.52
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -34,10 +34,12 @@ Patch12:	%{name}-mouse_in_rxvt.patch
 Patch13:	%{name}-use_old_sorting.patch
 Patch14:	%{name}-proxy.patch
 Patch15:	%{name}-nognome-amfix.patch
+Patch16:	%{name}-urar.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
 BuildRequires:	gettext-devel
+BuildRequires:	glib-devel
 %{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
@@ -45,6 +47,8 @@ BuildRequires:	gpm-devel
 %{!?bcond_off_gnome:BuildRequires:	imlib-devel}
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
+BuildRequires:	pam-devel
+%{?bcond_on_ext2undel:BuildRequires:	e2fsprogs-devel}
 BuildRequires:	indent
 BuildRequires:	automake
 BuildRequires:	autoconf
@@ -179,6 +183,7 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 gettextize --copy --force
