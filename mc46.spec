@@ -152,7 +152,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
-mv $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT/usr/sbin 
+mv $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir} 
 
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
 	FAQ NEWS README
@@ -232,7 +232,7 @@ fi
 
 %attr(754,root,root) %config /etc/rc.d/init.d/mcserv
 %{_mandir}/man8/mcserv.8*
-%attr(755,root,root) /usr/sbin/mcserv
+%attr(755,root,root) %{_sbindir}/mcserv
 
 %files -n gmc
 %defattr(644,root,root,755)
@@ -289,7 +289,7 @@ fi
 - updated to new version,
 - build without GNOME (description commented out) && ext2undel,
 - compressed %doc && man pages,
-- moved mcserv to /usr/sbin,
+- moved mcserv to %{_sbindir},
 - added Requires: glib >= 1.1.7 && pam >= 0.66 (in mcserv sub-package),
 - fixed mcserv.pamd (now as separate Surce1),
 - added Group(pl),
