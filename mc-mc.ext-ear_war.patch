@@ -1,0 +1,12 @@
+diff -urN mc-4.5.55.orig/lib/mc.ext.in mc-4.5.55/lib/mc.ext.in
+--- mc-4.5.55.orig/lib/mc.ext.in	Sun Mar 17 12:22:04 2002
++++ mc-4.5.55/lib/mc.ext.in	Sun Mar 17 12:26:17 2002
+@@ -410,7 +410,7 @@
+ 	Extract=tar xf %f
+ 
+ # zip
+-regex/\.(zip|ZIP|jar|JAR)$
++regex/\.(zip|ZIP|jar|JAR|ear|EAR|war|WAR)$
+ 	Open=%cd %p#uzip
+ 	View=%view{ascii} unzip -v %f
+ 	Extract=unzip %f
