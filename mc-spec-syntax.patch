@@ -1,0 +1,151 @@
+diff -Nur mc-4.5.51.orig/gtkedit/syntax.c mc-4.5.51/gtkedit/syntax.c
+--- mc-4.5.51.orig/gtkedit/syntax.c	Wed Sep 27 21:51:02 2000
++++ mc-4.5.51/gtkedit/syntax.c	Wed Sep 27 21:49:34 2000
+@@ -1202,6 +1202,9 @@
+ "file ..\\*\\\\.(diff|rej|patch)$ Diff\\sOutput ^diff",
+ "include diff.syntax",
+ "",
++"file ..\\*\\\\.spec$ SPEC\\sFile",
++"include spec.syntax",
++"",
+ "file ..\\*\\\\.lsm$ LSM\\sFile",
+ "include lsm.syntax",
+ "",
+diff -Nur mc-4.5.51.orig/syntax/Makefile.in mc-4.5.51/syntax/Makefile.in
+--- mc-4.5.51.orig/syntax/Makefile.in	Mon Jul  3 16:32:17 2000
++++ mc-4.5.51/syntax/Makefile.in	Wed Sep 27 21:52:45 2000
+@@ -34,7 +34,8 @@
+ 	smalltalk.syntax	\
+ 	swig.syntax		\
+ 	texinfo.syntax		\
+-	unknown.syntax
++	unknown.syntax		\
++	spec.syntax
+ 
+ all:
+ 
+diff -Nur mc-4.5.51.orig/syntax/spec.syntax mc-4.5.51/syntax/spec.syntax
+--- mc-4.5.51.orig/syntax/spec.syntax	Thu Jan  1 01:00:00 1970
++++ mc-4.5.51/syntax/spec.syntax	Wed Sep 27 21:49:34 2000
+@@ -0,0 +1,121 @@
++context default
++    keyword whole Autoprov: green/6
++    keyword whole Autoreqprov: green/6
++    keyword whole Autoreq: green/6
++    keyword whole BuildRoot: green/6
++    keyword whole BuildRequires: green/6
++    keyword whole Conflicts: green/6
++    keyword whole Copyright: green/6
++    keyword whole Description: green/6    
++    keyword whole Epoch: green/6
++    keyword whole ExclusiveArch: green/6
++    keyword whole ExclusiveOS: green/6
++    keyword whole Group: green/6
++    keyword whole Group(\[abcdefghijklmnopqrstuwxyz\]): green/6
++    keyword whole Icon: green/6
++    keyword whole License: green/6
++    keyword whole Name: green/6    
++    keyword whole Obsoletes: green/6
++    keyword whole Packager: green/6
++    keyword whole Patch\[0123456789\]: green/6    
++    keyword whole Prefix: green/6
++    keyword whole Prereq: green/6    
++    keyword whole Provides: green/6    
++    keyword whole Release: green/6    
++    keyword whole Requires: green/6    
++    keyword whole Root: green/6    
++    keyword whole Source\[0123456789\]: green/6
++    keyword whole Summary: green/6
++    keyword whole Summary(\[abcdefghijklmnopqrstuwxyz\]): green/6
++    keyword whole Version: green/6
++    keyword whole URL: green/6
++
++    keyword whole linestart %build red/9
++    keyword whole linestart %clean red/9
++    keyword whole linestart %changelog red/9
++    keyword whole linestart %description red/9
++    keyword whole linestart %files red/9
++    keyword whole linestart %install red/9
++    keyword whole linestart %package red/9
++    keyword whole linestart %pre red/9
++    keyword whole linestart %prep red/9
++    keyword whole linestart %preun red/9
++    keyword whole linestart %post red/9
++    keyword whole linestart %postun red/9
++
++    keyword whole %define brightmagenta/23
++    keyword whole %dump brightmagenta/23
++    keyword whole %global brightmagenta/23
++    keyword whole %trace brightmagenta/23
++    keyword whole %undefine brightmagenta/23
++    keyword %\{qwertyuioplkjhgfdsazxcvbnm_QWERTYUIOPLKJHGFDSAZXCVBNM0123456789\}\[qwertyuioplkjhgfdsazxcvbnm_QWERTYUIOPLKJHGFDSAZXCVBNM0123456789\] brightred/23
++
++    keyword whole echo: brightmagenta/23
++    keyword whole warn: brightmagenta/23
++    keyword whole error: brightmagenta/23
++    keyword whole uncompress: brightmagenta/23
++    keyword whole expand: brightmagenta/23
++    keyword whole S: brightmagenta/23
++    keyword whole P: brightmagenta/23
++    keyword whole F: brightmagenta/23
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++        
++    keyword whole %triggerin magenta/23
++    keyword whole %triggerun magenta/23
++    keyword whole %triggerun magenta/23
++    
++    keyword \\\n yellow/26
++    keyword wholeright $+ brightgreen/16
++    keyword ftp://+ brightgreen/16
++    keyword http://+ brightgreen/16
++
++    keyword whole missingok brightblue/11
++    keyword whole noreplace brightblue/11
++
++    keyword whole PATCH\[0123456789\] cyan/14
++    keyword whole SOURCE\[0123456789\] cyan/14
++
++context linestart # \n brown/22
++context %( ) brightblue/23
++
++# Changelog
++context exclusive whole linestart %changelog EOF lightgray/13
++    keyword Revision*\n brightgreen/16
++    keyword \*\s\{MWTFS\}*\n brightgreen/16
++    keyword \s\s[*] brightgreen/16
++
++#sections
++context exclusive linestart %description \n lightgray/13
++    keyword -l brightred/18
++    keyword -n brightred/18
++
++context exclusive linestart %package \n lightgray/13
++    keyword -n brightred/18
++
++context exclusive linestart %files \n lightgray/13
++    keyword -n brightred/18
++    keyword -f brightred/18
++
++context exclusive linestart %preun \n lightgray/13
++    keyword -n brightred/18
++
++context exclusive linestart %post \n lightgray/13
++    keyword -n brightred/18
++
++#triggers
++context exclusive %triggerin \n lightgray/13
++    keyword -n brightmagenta/23
++    keyword -p brightmagenta/23
++    keyword -- brightmagenta/23
++
++context exclusive %triggerun \n lightgray/13
++    keyword -n brightmagenta/23
++    keyword -p brightmagenta/23
++    keyword -- brightmagenta/23
++
++context exclusive %triggerpostun \n lightgray/13
++    keyword -n brightmagenta/23
++    keyword -p brightmagenta/23
++    keyword -- brightmagenta/23
