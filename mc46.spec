@@ -218,6 +218,17 @@ aclocal -I \
 	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
 autoconf
 automake -a -c
+X11_WWW="
+if [ -f /usr/X11R6/bin/netscape ]; then  netscape; 
+else
+  if [ -f /usr/X11R6/bin/galeon ]; then galeon; 
+  else
+    if [ -f /usr/X11R6/bin/mozilla ]; then mozilla; 
+    else 
+      xterm -c lynx;
+    fi;
+  fi;
+fi"
 %configure \
 	%{?_with_ext2undel:--with-ext2-undel}%{!?_with_ext2undel:--without-ext2undel} \
 	--with-vfs \
