@@ -11,8 +11,8 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.52
-Release:	4
+Version:	4.5.54
+Release:	1
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -38,9 +38,9 @@ Patch14:	%{name}-proxy.patch
 Patch15:	%{name}-nognome-amfix.patch
 Patch16:	%{name}-urar.patch
 Patch17:	%{name}-samba.patch
-Patch18:	%{name}-gettext.patch
+Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
 Patch19:	%{name}-sh-quiet.patch
-Patch20:	%{name}-nognome-gettext.patch
+Patch20:	%{name}-nobashism.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
