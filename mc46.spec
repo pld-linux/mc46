@@ -4,7 +4,7 @@ Summary(fr):	Le shell Midnight Commander
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.24
+Version:	4.5.28
 Release:	1
 Copyright:	GPL
 Group:		Shells
@@ -13,7 +13,7 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
 URL:		http://mc.blackdown.org/mc/
-Requires:	glib = 1.2.0
+Requires:	glib = 1.2.1
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -109,10 +109,10 @@ Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/GNOME
 Group(pl):	X11/GNOME
 Requires:	%{name}	   = %{version}
-Requires:	gtk+       = 1.2.0
+Requires:	gtk+       = 1.2.1
 Requires:	esound     = 0.2.8
-Requires:	ORBit      = 0.4.0
-Requires:	gnome-libs = 01.0.2
+Requires:	ORBit      = 0.4.2
+Requires:	gnome-libs = 1.0.5
 
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
@@ -128,11 +128,11 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure \
 	--prefix=/usr \
 	--sysconfdir=/etc \
-	--with-slang \
 	--without-ext2undel \
 	--with-netrc \
 	--with-x \
 	--without-debug \
+	--with-included-slang \
 	--with-gnome
 
 make confdir=/etc/X11/GNOME/
@@ -152,8 +152,8 @@ install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
 mv $RPM_BUILD_ROOT/usr/bin/mcserv $RPM_BUILD_ROOT/usr/sbin 
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[18]/* 
-bzip2 -9 FAQ NEWS README
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man[18]/* \
+	FAQ NEWS README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -175,7 +175,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc FAQ.bz2 NEWS.bz2 README.bz2
+%doc *.gz
 
 %attr(755,root,root) /usr/bin/mc
 %attr(755,root,root) /usr/bin/mcedit
@@ -249,11 +249,16 @@ fi
 /usr/share/mc
 
 %changelog
+* Thu Mar 25 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [4.5.28-1]
+- ./configure with --with-included-slang,
+- gzipping %doc.
+
 * Sat Feb 27 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.22-1]
 - more locales (cs, da),
-- added more Requires for gmc (gtk+ = 1.2.0, esound = 0.2.8,
-  ORBit = 0.4.0, gnome-libs = 1.0.2)
+- added more Requires for gmc (gtk+ = 1.2.1, esound = 0.2.8,
+  ORBit = 0.4.2, gnome-libs = 1.0.5)
 - removed man group from man pages.
 
 * Thu Feb 11 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
