@@ -9,7 +9,7 @@ Release:	2
 Copyright:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
 Patch0:		mc-mimekeys.patch
