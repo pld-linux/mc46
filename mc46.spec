@@ -411,6 +411,8 @@ fi
 %{_desktopdir}/mc.desktop
 %{_pixmapsdir}/mc.png
 
+%{_datadir}/mc/mc.charsets
+
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
 %lang(hu) %{_mandir}/hu/man1/*
