@@ -19,7 +19,7 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.5.55
-Release:	10
+Release:	11
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
@@ -48,6 +48,7 @@ Patch17:	%{name}-%{name}.ext-ear_war.patch
 Patch18:	%{name}-home_etc.patch
 Patch19:	%{name}-tmout.patch
 Patch20:	%{name}-new_icons_am.patch
+Patch21:	%{name}-pl.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -300,6 +301,7 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 #%patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 
 %build
 %{__gettextize}
