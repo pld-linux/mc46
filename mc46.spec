@@ -331,7 +331,7 @@ fi
 %defattr(644,root,root,755)
 %doc FAQ NEWS README
 %attr(755,root,root) %{_bindir}/mc*
-%attr(755,root,root) %config /etc/shrc.d/*
+%config /etc/shrc.d/*
 %attr(755,root,root) %{_libdir}/mc/cons.saver
 %dir %{_libdir}/mc
 
