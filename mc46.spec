@@ -17,7 +17,7 @@ Summary(uk):	‰…”–≈‘ﬁ≈“ ∆¡ Ã¶◊ Midnight Commander
 Summary(zh_CN):	“ª∏ˆ∑Ω±„ µ”√µƒŒƒº˛π‹¿Ì∆˜∫Õ–Èƒ‚Shell
 Name:		mc
 Version:	4.6.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -28,6 +28,8 @@ Source3:	%{name}-non-english-man-pages.tar.bz2
 Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
 Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
 Source6:	%{name}serv.sysconfig
+Source7:	%{name}.desktop
+Source8:	%{name}.png
 Patch0:		%{name}-rpmfs.patch
 Patch1:		%{name}-system_popt.patch
 Patch2:		%{name}-spec-syntax.patch
@@ -40,6 +42,8 @@ Patch7:		%{name}-pl.patch
 Patch8:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
 Patch9:		amc-2.diff
+Patch10:	%{name}-no_ti_DATA.patch
+Patch11:	%{name}-mc.ext.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -54,12 +58,10 @@ BuildRequires:	gpm-devel
 %endif
 %{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
 %{?_with_x:BuildRequires:	XFree86-devel}
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:	rpm < 4.0
 Requires:	file
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
-
-%define		_sysconfdir	/etc/X11/GNOME
+Conflicts:	rpm < 4.0
 
 %description
 Midnight Commander is a visual shell much like a file manager, only
@@ -211,6 +213,8 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 %{__gettextize}
@@ -249,7 +253,8 @@ fi"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconfig}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconfig}} \
+	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -257,6 +262,8 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconf
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/sysconfig/mcserv
+install %{SOURCE7} $RPM_BUILD_ROOT%{_applnkdir}/Utilities
+install %{SOURCE8} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 for a in es pl ; do
 	for b in man1 man8 ; do
@@ -351,6 +358,8 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/uzip
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
+%{_applnkdir}/Utilities/*
+%{_pixmapsdir}/*
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
