@@ -60,6 +60,7 @@ Patch19:	%{name}-4.6.0-utf8.patch
 Patch20:	%{name}-4.6.0-utf8-input.patch
 Patch21:	%{name}-4.6.0-utf8-fix.patch
 Patch22:	%{name}-4.6.0-utf8-hints.patch
+Patch23:	%{name}-nolibs.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -251,6 +252,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch21 -p1
 %patch22 -p1
 %endif
+%patch23 -p1
 
 mv -f po/{no,nb}.po
 
