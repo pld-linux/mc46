@@ -111,6 +111,9 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" ./configure \
 	--with-gnome \
 	--without-debug
 
+# it is temporary hack for building mc on system with slang 1.2.x
+rm slang/slang.h
+
 make
 %install
 rm -rf $RPM_BUILD_ROOT
