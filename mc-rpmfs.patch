@@ -1,7 +1,7 @@
-diff -Nru mc-4.5.40/vfs/extfs/rpm mc-4.5.40.new/vfs/extfs/rpm
---- mc-4.5.40/vfs/extfs/rpm	Wed Sep 29 22:39:34 1999
-+++ mc-4.5.40.new/vfs/extfs/rpm	Tue Nov  2 02:02:02 1999
-@@ -93,6 +93,8 @@
+diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
+--- mc-4.5.44/vfs/extfs/rpm	Fri Apr  7 05:01:29 2000
++++ mc-4.5.44.new/vfs/extfs/rpm	Fri Apr  7 05:12:43 2000
+@@ -99,6 +99,8 @@
  	echo "$FILEPREF 0 $DATE INFO/REQUIRENAME"
      rpm -qp --qf "[%{OBSOLETES}\n]" "$1" | grep "(none)" > /dev/null ||
  	echo "$FILEPREF 0 $DATE INFO/OBSOLETES"
@@ -10,7 +10,7 @@ diff -Nru mc-4.5.40/vfs/extfs/rpm mc-4.5.40.new/vfs/extfs/rpm
      rpm -qp --qf "[%{PROVIDES}\n]" "$1" | grep "(none)" > /dev/null ||
  	echo "$FILEPREF 0 $DATE INFO/PROVIDES"
      test "`rpm -qp --qf \"%{CHANGELOGTEXT}\" \"$1\"`" = "(none)" ||
-@@ -100,6 +102,7 @@
+@@ -106,11 +108,12 @@
      else 
  	echo "$FILEPREF 0 $DATE INFO/REQUIRENAME"
  	echo "$FILEPREF 0 $DATE INFO/OBSOLETES"
@@ -18,7 +18,13 @@ diff -Nru mc-4.5.40/vfs/extfs/rpm mc-4.5.40.new/vfs/extfs/rpm
  	echo "$FILEPREF 0 $DATE INFO/PROVIDES"
          echo "$FILEPREF 0 $DATE INFO/CHANGELOG"
      fi
-@@ -128,6 +131,8 @@
+ 
+-#    rpm -qlvp "$1" | sed -e 's/^\(..........\)[-t]* /\1 1 /'
++    rpm -qlvp "$1" | sed -e 's/^\(..........\)[-t]* /\1 1 /'
+     echo "$FILEPREF 0 $DATE CONTENTS.cpio"
+ }
+ 
+@@ -135,6 +138,8 @@
  	INFO/COPYRIGHT)		rpm -qp --qf "%{COPYRIGHT}\n" "$1" >"$3"; exit 0;;
  	INFO/RPMVERSION)	rpm -qp --qf "%{RPMVERSION}\n" "$1" >"$3"; exit 0;;
  	INFO/REQUIRENAME)	rpm -qp --qf "[%{REQUIRENAME} %{REQUIREFLAGS:depflags} %{REQUIREVERSION}\n]" "$1" >"$3"; exit 0;;
@@ -27,3 +33,11 @@ diff -Nru mc-4.5.40/vfs/extfs/rpm mc-4.5.40.new/vfs/extfs/rpm
  	INFO/PROVIDES)		rpm -qp --qf "[%{PROVIDES}\n]" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/PREIN)	rpm -qp --qf "%{RPMTAG_PREIN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/POSTIN)	rpm -qp --qf "%{RPMTAG_POSTIN}\n" "$1" >"$3"; exit 0;;
+@@ -142,6 +147,7 @@
+ 	INFO/SCRIPTS/POSTUN)	rpm -qp --qf "%{RPMTAG_POSTUN}\n" "$1" >"$3"; exit 0;;
+ 	INFO/SCRIPTS/VERIFYSCRIPT)	rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
+ 	INFO/SCRIPTS/ALL)		rpm -qp --scripts "$1" > "$3"; exit 0;;
++	INFO/SCRIPTS/TRIGGERSCRIPTS)	rpm -qp --triggers "$1" > "$3"; exit 0;;
+ 	INFO/SUMMARY)		rpm -qp --qf "%{SUMMARY}\n" "$1" > "$3"; exit 0;;
+ 	INFO/OS)		rpm -qp --qf "%{OS}\n" "$1" > "$3"; exit 0;;
+ 	INFO/CHANGELOG)		rpm -qp --qf "[* %{CHANGELOGTIME:date} %{CHANGELOGNAME}\n%{CHANGELOGTEXT}\n\n]\n" "$1" > "$3"; exit 0;;
