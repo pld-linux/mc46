@@ -1,6 +1,6 @@
 diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
---- mc-4.5.44/vfs/extfs/rpm	Fri Apr  7 05:01:29 2000
-+++ mc-4.5.44.new/vfs/extfs/rpm	Fri Apr  7 05:12:43 2000
+--- mc-4.5.44/vfs/extfs/rpm	Fri Apr  7 05:58:19 2000
++++ mc-4.5.44.new/vfs/extfs/rpm	Fri Apr  7 05:55:44 2000
 @@ -99,6 +99,8 @@
  	echo "$FILEPREF 0 $DATE INFO/REQUIRENAME"
      rpm -qp --qf "[%{OBSOLETES}\n]" "$1" | grep "(none)" > /dev/null ||
@@ -33,7 +33,7 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
  	INFO/PROVIDES)		rpm -qp --qf "[%{PROVIDES}\n]" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/PREIN)	rpm -qp --qf "%{RPMTAG_PREIN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/POSTIN)	rpm -qp --qf "%{RPMTAG_POSTIN}\n" "$1" >"$3"; exit 0;;
-@@ -142,6 +147,7 @@
+@@ -142,11 +147,21 @@
  	INFO/SCRIPTS/POSTUN)	rpm -qp --qf "%{RPMTAG_POSTUN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/VERIFYSCRIPT)	rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/ALL)		rpm -qp --scripts "$1" > "$3"; exit 0;;
@@ -41,3 +41,17 @@ diff -Nru mc-4.5.44/vfs/extfs/rpm mc-4.5.44.new/vfs/extfs/rpm
  	INFO/SUMMARY)		rpm -qp --qf "%{SUMMARY}\n" "$1" > "$3"; exit 0;;
  	INFO/OS)		rpm -qp --qf "%{OS}\n" "$1" > "$3"; exit 0;;
  	INFO/CHANGELOG)		rpm -qp --qf "[* %{CHANGELOGTIME:date} %{CHANGELOGNAME}\n%{CHANGELOGTEXT}\n\n]\n" "$1" > "$3"; exit 0;;
+ 	INFO/SIZE)		rpm -qp --qf "%{SIZE} bytes\n" "$1" > "$3"; exit 0;;
+ 	CONTENTS.cpio)		rpm2cpio "$1" > "$3"; exit 0;;
++        *)
++		TMP_DIR=${TMPDIR:-/tmp}/mctmpdir.$$
++		mkdir $TMP_DIR || exit 1
++		cd $TMP_DIR
++		rpm2cpio "$1" | cpio -iumd --quiet "$2" >/dev/null
++		mv "$2" "$3"
++		cd /
++		rm -rf $TMP_DIR
++		;;
+     esac
+ }
+ 
