@@ -1,0 +1,8 @@
+--- mc-4.5.52/lib/mc.sh.in.chmou	Tue Oct  3 21:58:53 2000
++++ mc-4.5.52/lib/mc.sh.in	Thu Mar 22 15:11:11 2001
+@@ -9,4 +9,4 @@
+         unset MC;
+ }
+ 
+-export -f mc
++export mc
