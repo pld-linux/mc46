@@ -15,7 +15,7 @@ Summary(tr):	Midnight Commander görsel kabuğu
 Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Name:		mc
 Version:	4.5.55
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
