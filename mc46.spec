@@ -69,6 +69,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
 
+%define		specflags_ia32	"-fomit-frame-pointer"
+
 %description
 Midnight Commander is a visual shell much like a file manager, only
 with way more features. It is text mode, but also includes mouse
