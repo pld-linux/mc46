@@ -175,6 +175,7 @@ rm -rf $RPM_BUILD_ROOT
   from mc to mcserv,
 - added full %attr description in %files,
 - added suid root on /usr/lib/mc/bin/cons.saver,
+- removed linking mcserv with not neccesary libs (XLib and term),
 - removed COPING from %doc (copyright statment is in Copyright field).
 
 * Thu May 07 1998 Prospector System <bugs@redhat.com>
