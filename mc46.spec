@@ -5,12 +5,11 @@ Summary(pl): Midnight Commander wizualny shell
 Summary(tr): Midnight Commander görsel kabuðu
 Name:        mc
 Version:     4.5.1
-Release:     1
+Release:     2
 Copyright:   GPL
 Group:       Shells
 Source0:     ftp://peyote-asesino.nuclecu.unam.mx/linux/local/devel/%{name}-%{version}.tar.gz
 Patch0:      mc.patch
-Patch1:      mc-POTFILES.patch
 URL:         http://mc.blackdown.org/mc/
 Obsoletes:   tkmc
 BuildRoot:   /tmp/%{name}-%{version}-root
@@ -106,7 +105,6 @@ saðlar.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 autoconf
@@ -196,7 +194,7 @@ rm -rf $RPM_BUILD_ROOT
 - added patch which fix support for all languages,
 - added "Obsoletes: tkmc" for mc and gmc,
 - added "%ifos Linux .. %endif" for /usr/lib/mc/bin/cons.saver (it
-  neccessary for egzample for building on Solaris),
+  neccessary for example for building on Solaris),
 - fixed dependences: "Requires: pam" and "Prereq: /sbin/chkconfig" moved
   from mc to mcserv,
 - added full %attr description in %files,
