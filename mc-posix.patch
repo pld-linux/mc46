@@ -1,15 +1,3 @@
-diff -urN mc-4.6.0.org/vfs/extfs/trpm mc-4.6.0/vfs/extfs/trpm
---- mc-4.6.0.org/vfs/extfs/trpm	2004-01-31 00:41:36.945672964 +0100
-+++ mc-4.6.0/vfs/extfs/trpm	2004-01-31 00:42:15.705614005 +0100
-@@ -151,7 +151,7 @@
- 
- name=$2
- if [ ${name%%.trpm} = $name ]; then
--	name=`head -1 $name`
-+	name=`head -n 1 $name`
- fi
- #echo "TRPM: $@ ($name)" >> /tmp/tt
- #name=`echo $(basename $2 .trpm) | sed "s/^\(.*\)\.[^\.]*/\1/"`
 diff -urN mc-4.6.0.org/vfs/extfs/urar.in mc-4.6.0/vfs/extfs/urar.in
 --- mc-4.6.0.org/vfs/extfs/urar.in	2004-01-31 00:41:36.966668599 +0100
 +++ mc-4.6.0/vfs/extfs/urar.in	2004-01-31 00:41:55.401835560 +0100

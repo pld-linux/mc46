@@ -1,7 +1,7 @@
-diff -Nru mc-4.6.0.orig/doc/mc.1.in mc-4.6.0/doc/mc.1.in
---- mc-4.6.0.orig/doc/mc.1.in	Wed Feb  5 16:54:31 2003
-+++ mc-4.6.0/doc/mc.1.in	Wed Oct  8 18:52:58 2003
-@@ -3221,6 +3221,9 @@
+diff -urN mc-4.6.1-pre1.org/doc/mc.1.in mc-4.6.1-pre1/doc/mc.1.in
+--- mc-4.6.1-pre1.org/doc/mc.1.in	2004-06-06 23:19:36.014422424 +0200
++++ mc-4.6.1-pre1/doc/mc.1.in	2004-06-06 23:20:01.380566184 +0200
+@@ -3231,6 +3231,9 @@
  .IP
  The default system-wide extensions file.
  .PP
@@ -11,7 +11,7 @@ diff -Nru mc-4.6.0.orig/doc/mc.1.in mc-4.6.0/doc/mc.1.in
  .I ~/.mc/bindings
  .IP
  User's own extension, view configuration and edit configuration
-@@ -3240,6 +3243,9 @@
+@@ -3250,6 +3253,9 @@
  .\"Terminal databases"
  are loaded from mc.lib.
  .PP
@@ -21,7 +21,7 @@ diff -Nru mc-4.6.0.orig/doc/mc.1.in mc-4.6.0/doc/mc.1.in
  .I ~/.mc/ini
  .IP
  User's own setup. If this file is present then the setup is loaded
-@@ -3253,11 +3259,17 @@
+@@ -3263,11 +3269,17 @@
  .IP
  This file contains the default system-wide applications menu.
  .PP
@@ -39,34 +39,30 @@ diff -Nru mc-4.6.0.orig/doc/mc.1.in mc-4.6.0/doc/mc.1.in
  .I ~/.mc/Tree
  .IP
  The directory list for the directory tree and tree view features.
-diff -Nru mc-4.6.0.orig/doc/mcedit.1.in mc-4.6.0/doc/mcedit.1.in
---- mc-4.6.0.orig/doc/mcedit.1.in	Tue Jan 28 21:43:19 2003
-+++ mc-4.6.0/doc/mcedit.1.in	Wed Oct  8 18:54:47 2003
-@@ -472,16 +472,17 @@
- Global settings for the Midnight Commander.  Settings in this file
- affect all users, whether they have ~/.mc/ini or not.
+diff -urN mc-4.6.1-pre1.org/doc/mcedit.1.in mc-4.6.1-pre1/doc/mcedit.1.in
+--- mc-4.6.1-pre1.org/doc/mcedit.1.in	2004-06-06 23:19:36.031419840 +0200
++++ mc-4.6.1-pre1/doc/mcedit.1.in	2004-06-06 23:21:26.082689504 +0200
+@@ -479,11 +479,17 @@
+ The default system-wide syntax files for mcedit, used only if
+ the corresponding user's own ~/.mc/cedit/ file is missing.
  .PP
 +.I $HOME_ETC/.mc/ini
 +.IP
 +or
  .I $HOME/.mc/ini
  .IP
- User's own setup.  If this file is present, the setup is loaded from
- here instead of the system-wide startup file.
+ User's own setup.  If this file is present then the setup is loaded
+ from here instead of the system-wide setup file.
  .PP
--.I $HOME/.mc/ini
-+.I $HOME_ETC/.mc/cedit
- .IP
--User's own setup. If this file is present then the setup is loaded
--from here instead of the system-wide startup file.
--.PP
++.I $HOME_ETC/.mc/ini
++.IP
 +or
  .I $HOME/.mc/cedit/
  .IP
- User's own temporary directory where block commands are processed
-diff -Nru mc-4.6.0.orig/doc/mcview.1.in mc-4.6.0/doc/mcview.1.in
---- mc-4.6.0.orig/doc/mcview.1.in	Mon Jan 20 15:08:22 2003
-+++ mc-4.6.0/doc/mcview.1.in	Wed Oct  8 18:55:28 2003
+ User's own directory where block commands are processed and saved and
+diff -urN mc-4.6.1-pre1.org/doc/mcview.1.in mc-4.6.1-pre1/doc/mcview.1.in
+--- mc-4.6.1-pre1.org/doc/mcview.1.in	2004-06-06 23:19:36.018421816 +0200
++++ mc-4.6.1-pre1/doc/mcview.1.in	2004-06-06 23:20:01.387565120 +0200
 @@ -75,6 +75,9 @@
  Global settings for the Midnight Commander.  Settings in this file
  affect all users, whether they have ~/.mc/ini or not.
@@ -77,10 +73,10 @@ diff -Nru mc-4.6.0.orig/doc/mcview.1.in mc-4.6.0/doc/mcview.1.in
  .I $HOME/.mc/ini
  .IP
  User's own setup.  If this file is present, the setup is loaded from
-diff -Nru mc-4.6.0.orig/edit/edit.c mc-4.6.0/edit/edit.c
---- mc-4.6.0.orig/edit/edit.c	Wed Oct  8 17:46:13 2003
-+++ mc-4.6.0/edit/edit.c	Wed Oct  8 18:21:55 2003
-@@ -2708,7 +2708,7 @@
+diff -urN mc-4.6.1-pre1.org/edit/edit.c mc-4.6.1-pre1/edit/edit.c
+--- mc-4.6.1-pre1.org/edit/edit.c	2004-06-06 23:19:35.761460880 +0200
++++ mc-4.6.1-pre1/edit/edit.c	2004-06-06 23:20:01.398563448 +0200
+@@ -2682,7 +2682,7 @@
      int nomark;
      struct stat status;
      long start_mark, end_mark;
@@ -89,10 +85,10 @@ diff -Nru mc-4.6.0.orig/edit/edit.c mc-4.6.0/edit/edit.c
      int rc = 0;
  
      nomark = eval_marks (edit, &start_mark, &end_mark);
-diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
---- mc-4.6.0.orig/edit/editcmd.c	Thu Dec 19 14:01:34 2002
-+++ mc-4.6.0/edit/editcmd.c	Wed Oct  8 18:21:55 2003
-@@ -539,7 +539,7 @@
+diff -urN mc-4.6.1-pre1.org/edit/editcmd.c mc-4.6.1-pre1/edit/editcmd.c
+--- mc-4.6.1-pre1.org/edit/editcmd.c	2004-06-06 23:19:35.730465592 +0200
++++ mc-4.6.1-pre1/edit/editcmd.c	2004-06-06 23:20:01.417560560 +0200
+@@ -584,7 +584,7 @@
  {
      char *filename;
      int file;
@@ -101,7 +97,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
      if ((file = open (filename, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
  	return 0;
      close (file);
-@@ -575,7 +575,7 @@
+@@ -620,7 +620,7 @@
      if (saved_macros_loaded)
  	if ((j = macro_exists (k)) < 0)
  	    return 0;
@@ -110,7 +106,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
      if (!g) {
  /* This heads the delete macro error dialog box */
  	edit_error_dialog (_(" Delete macro "),
-@@ -609,7 +609,7 @@
+@@ -654,7 +654,7 @@
      }
      fclose (f);
      fclose (g);
@@ -119,7 +115,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  /* This heads the delete macro error dialog box */
  	edit_error_dialog (_(" Delete macro "),
  	   get_sys_error (_(" Cannot overwrite macro file ")));
-@@ -2115,7 +2115,7 @@
+@@ -2185,7 +2185,7 @@
  /* copies a block to clipboard file */
  static int edit_save_block_to_clip_file (WEdit * edit, long start, long finish)
  {
@@ -128,7 +124,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  }
  
  
-@@ -2152,7 +2152,7 @@
+@@ -2222,7 +2222,7 @@
  
  void edit_paste_from_X_buf_cmd (WEdit * edit)
  {
@@ -137,7 +133,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  }
  
  
-@@ -2204,7 +2204,7 @@
+@@ -2274,7 +2274,7 @@
      if (eval_marks (edit, &start_mark, &end_mark))
  	return 1;
      exp =
@@ -146,7 +142,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  			    _(" Save Block "));
      edit_push_action (edit, KEY_PRESS + edit->start_display);
      if (exp) {
-@@ -2233,7 +2233,7 @@
+@@ -2303,7 +2303,7 @@
  int
  edit_insert_file_cmd (WEdit *edit)
  {
@@ -155,7 +151,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  				    _(" Insert File "));
      edit_push_action (edit, KEY_PRESS + edit->start_display);
      if (exp) {
-@@ -2269,7 +2269,7 @@
+@@ -2339,7 +2339,7 @@
  	edit_error_dialog (_(" Sort block "), _(" You must first highlight a block of text. "));
  	return 0;
      }
@@ -164,7 +160,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  
      exp = old ? old : "";
  
-@@ -2282,7 +2282,7 @@
+@@ -2352,7 +2352,7 @@
  	g_free (old);
      old = exp;
  
@@ -173,7 +169,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
      if (e) {
  	if (e == -1 || e == 127) {
  	    edit_error_dialog (_(" Sort "), 
-@@ -2300,7 +2300,7 @@
+@@ -2370,7 +2370,7 @@
  
      if (edit_block_delete_cmd (edit))
  	return 1;
@@ -182,7 +178,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
      return 0;
  }
  
-@@ -2321,8 +2321,8 @@
+@@ -2423,8 +2423,8 @@
      char *quoted_name = NULL;
  
      o = catstrs (mc_home, shell_cmd, 0);	/* original source script */
@@ -193,7 +189,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  
      if (!(script_home = fopen (h, "r"))) {
  	if (!(script_home = fopen (h, "w"))) {
-@@ -2374,8 +2374,8 @@
+@@ -2476,8 +2476,8 @@
  	 *   $3 - file where error messages should be put
  	 *        (for compatibility with old scripts).
  	 */
@@ -204,7 +200,7 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  
      } else {
  	/*
-@@ -2383,7 +2383,7 @@
+@@ -2485,7 +2485,7 @@
  	 * Arguments:
  	 *   $1 - name of the edited file.
  	 */
@@ -213,10 +209,10 @@ diff -Nru mc-4.6.0.orig/edit/editcmd.c mc-4.6.0/edit/editcmd.c
  			 quoted_name, NULL));
      }
      g_free (quoted_name);
-diff -Nru mc-4.6.0.orig/edit/editwidget.c mc-4.6.0/edit/editwidget.c
---- mc-4.6.0.orig/edit/editwidget.c	Wed Dec 25 23:53:07 2002
-+++ mc-4.6.0/edit/editwidget.c	Wed Oct  8 18:21:55 2003
-@@ -166,7 +166,7 @@
+diff -urN mc-4.6.1-pre1.org/edit/editwidget.c mc-4.6.1-pre1/edit/editwidget.c
+--- mc-4.6.1-pre1.org/edit/editwidget.c	2004-06-06 23:19:35.769459664 +0200
++++ mc-4.6.1-pre1/edit/editwidget.c	2004-06-06 23:20:01.421559952 +0200
+@@ -176,7 +176,7 @@
  		sizeof (int));
      }
      if (!made_directory) {
@@ -225,10 +221,10 @@ diff -Nru mc-4.6.0.orig/edit/editwidget.c mc-4.6.0/edit/editwidget.c
  	made_directory = 1;
      }
  
-diff -Nru mc-4.6.0.orig/edit/syntax.c mc-4.6.0/edit/syntax.c
---- mc-4.6.0.orig/edit/syntax.c	Sun Dec 15 19:55:53 2002
-+++ mc-4.6.0/edit/syntax.c	Wed Oct  8 18:21:55 2003
-@@ -562,7 +562,7 @@
+diff -urN mc-4.6.1-pre1.org/edit/syntax.c mc-4.6.1-pre1/edit/syntax.c
+--- mc-4.6.1-pre1.org/edit/syntax.c	2004-06-06 23:19:35.731465440 +0200
++++ mc-4.6.1-pre1/edit/syntax.c	2004-06-06 23:20:01.430558584 +0200
+@@ -630,7 +630,7 @@
  	return fopen (filename, "r");
  
      g_free (error_file_name);
@@ -237,7 +233,7 @@ diff -Nru mc-4.6.0.orig/edit/syntax.c mc-4.6.0/edit/syntax.c
  				   filename, NULL);
      f = fopen (error_file_name, "r");
      if (f)
-@@ -974,7 +974,7 @@
+@@ -1092,7 +1092,7 @@
  	if (!*edit->filename && !type)
  	    return;
      }
@@ -246,9 +242,9 @@ diff -Nru mc-4.6.0.orig/edit/syntax.c mc-4.6.0/edit/syntax.c
      r = edit_read_syntax_file (edit, names, f, edit ? edit->filename : 0,
  			       get_first_editor_line (edit), type);
      if (r == -1) {
-diff -Nru mc-4.6.0.orig/man/pl/man1/mc.1 mc-4.6.0/man/pl/man1/mc.1
---- mc-4.6.0.orig/man/pl/man1/mc.1	Thu Jun 14 10:43:13 2001
-+++ mc-4.6.0/man/pl/man1/mc.1	Wed Oct  8 18:43:54 2003
+diff -urN mc-4.6.1-pre1.org/man/pl/man1/mc.1 mc-4.6.1-pre1/man/pl/man1/mc.1
+--- mc-4.6.1-pre1.org/man/pl/man1/mc.1	2004-06-06 23:19:36.088411176 +0200
++++ mc-4.6.1-pre1/man/pl/man1/mc.1	2004-06-06 23:20:01.437557520 +0200
 @@ -2758,10 +2758,14 @@
  .IP
  Standardowy plik rozszerzeñ plików.
@@ -313,9 +309,9 @@ diff -Nru mc-4.6.0.orig/man/pl/man1/mc.1 mc-4.6.0/man/pl/man1/mc.1
  .PP
  \&./.mc.menu
  .IP
-diff -Nru mc-4.6.0.orig/man/pl/man1/mcedit.1 mc-4.6.0/man/pl/man1/mcedit.1
---- mc-4.6.0.orig/man/pl/man1/mcedit.1	Sat Sep 30 19:08:37 2000
-+++ mc-4.6.0/man/pl/man1/mcedit.1	Wed Oct  8 18:48:17 2003
+diff -urN mc-4.6.1-pre1.org/man/pl/man1/mcedit.1 mc-4.6.1-pre1/man/pl/man1/mcedit.1
+--- mc-4.6.1-pre1.org/man/pl/man1/mcedit.1	2004-06-06 23:19:36.089411024 +0200
++++ mc-4.6.1-pre1/man/pl/man1/mcedit.1	2004-06-06 23:20:01.442556760 +0200
 @@ -418,15 +418,23 @@
  dla ka¿dej sesji Midnight Commandera. Przydatny do zdefiniowania ustawieñ
  terminala obowi±zuj±cych dla ca³ego systemu (site-global).
@@ -341,9 +337,9 @@ diff -Nru mc-4.6.0.orig/man/pl/man1/mcedit.1 mc-4.6.0/man/pl/man1/mcedit.1
  .SH LICENCJA
  Niniejszy program jest rozpowszechniany na warunkach licencji
  GNU General Public Licence opublikowanych przez Free Software Foundation.
-diff -Nru mc-4.6.0.orig/slang/sltermin.c mc-4.6.0/slang/sltermin.c
---- mc-4.6.0.orig/slang/sltermin.c	Mon Oct  7 13:08:16 2002
-+++ mc-4.6.0/slang/sltermin.c	Wed Oct  8 18:21:55 2003
+diff -urN mc-4.6.1-pre1.org/slang/sltermin.c mc-4.6.1-pre1/slang/sltermin.c
+--- mc-4.6.1-pre1.org/slang/sltermin.c	2004-06-06 23:19:35.596485960 +0200
++++ mc-4.6.1-pre1/slang/sltermin.c	2004-06-06 23:20:01.448555848 +0200
 @@ -265,7 +265,7 @@
     /* If we are on a termcap based system, use termcap */
     if (0 == tcap_getent (term, ti)) return ti;
@@ -353,10 +349,10 @@ diff -Nru mc-4.6.0.orig/slang/sltermin.c mc-4.6.0/slang/sltermin.c
       {
  	strncpy (home_ti, home, sizeof (home_ti) - 11);
  	home_ti [sizeof(home_ti) - 11] = 0;
-diff -Nru mc-4.6.0.orig/src/cmd.c mc-4.6.0/src/cmd.c
---- mc-4.6.0.orig/src/cmd.c	Wed Oct  8 17:46:13 2003
-+++ mc-4.6.0/src/cmd.c	Wed Oct  8 18:21:55 2003
-@@ -643,7 +643,7 @@
+diff -urN mc-4.6.1-pre1.org/src/cmd.c mc-4.6.1-pre1/src/cmd.c
+--- mc-4.6.1-pre1.org/src/cmd.c	2004-06-06 23:19:35.633480336 +0200
++++ mc-4.6.1-pre1/src/cmd.c	2004-06-06 23:20:01.455554784 +0200
+@@ -600,7 +600,7 @@
      extdir = concat_dir_and_file (mc_home, MC_LIB_EXT);
  
      if (dir == 0){
@@ -365,7 +361,7 @@ diff -Nru mc-4.6.0.orig/src/cmd.c mc-4.6.0/src/cmd.c
  	check_for_default (extdir, buffer);
  	do_edit (buffer);
  	g_free (buffer);
-@@ -679,7 +679,7 @@
+@@ -636,7 +636,7 @@
  	    break;
  
  	case 1:
@@ -374,7 +370,7 @@ diff -Nru mc-4.6.0.orig/src/cmd.c mc-4.6.0/src/cmd.c
  	    check_for_default (menufile, buffer);
  	    break;
  	
-@@ -746,7 +746,7 @@
+@@ -703,7 +703,7 @@
      extdir = concat_dir_and_file (mc_home, "syntax" PATH_SEP_STR "Syntax");
  
      if (dir == 0) {
@@ -383,10 +379,10 @@ diff -Nru mc-4.6.0.orig/src/cmd.c mc-4.6.0/src/cmd.c
  	check_for_default (extdir, buffer);
  	do_edit (buffer);
  	g_free (buffer);
-diff -Nru mc-4.6.0.orig/src/ext.c mc-4.6.0/src/ext.c
---- mc-4.6.0.orig/src/ext.c	Thu Nov 14 08:25:19 2002
-+++ mc-4.6.0/src/ext.c	Wed Oct  8 18:21:55 2003
-@@ -497,7 +497,7 @@
+diff -urN mc-4.6.1-pre1.org/src/ext.c mc-4.6.1-pre1/src/ext.c
+--- mc-4.6.1-pre1.org/src/ext.c	2004-06-06 23:19:35.645478512 +0200
++++ mc-4.6.1-pre1/src/ext.c	2004-06-06 23:20:01.458554328 +0200
+@@ -434,7 +434,7 @@
  	int mc_user_ext = 1;
  	int home_error = 0;
  
@@ -395,21 +391,21 @@ diff -Nru mc-4.6.0.orig/src/ext.c mc-4.6.0/src/ext.c
  	if (!exist_file (extension_file)) {
  	    g_free (extension_file);
  	  check_stock_mc_ext:
-diff -Nru mc-4.6.0.orig/src/global.h mc-4.6.0/src/global.h
---- mc-4.6.0.orig/src/global.h	Mon Dec 16 01:41:06 2002
-+++ mc-4.6.0/src/global.h	Wed Oct  8 18:21:55 2003
-@@ -141,6 +141,7 @@
- #include "textconf.h"
- #include "../vfs/vfs.h"
+diff -urN mc-4.6.1-pre1.org/src/global.h mc-4.6.1-pre1/src/global.h
+--- mc-4.6.1-pre1.org/src/global.h	2004-06-06 23:19:35.634480184 +0200
++++ mc-4.6.1-pre1/src/global.h	2004-06-06 23:20:01.461553872 +0200
+@@ -157,6 +157,7 @@
+ #include "vfsdummy.h"
+ #endif
  
 +extern char *etc_dir;
  extern char *home_dir;
  
  #ifdef min
-diff -Nru mc-4.6.0.orig/src/hotlist.c mc-4.6.0/src/hotlist.c
---- mc-4.6.0.orig/src/hotlist.c	Sat Dec 21 09:43:15 2002
-+++ mc-4.6.0/src/hotlist.c	Wed Oct  8 18:21:55 2003
-@@ -1363,7 +1363,7 @@
+diff -urN mc-4.6.1-pre1.org/src/hotlist.c mc-4.6.1-pre1/src/hotlist.c
+--- mc-4.6.1-pre1.org/src/hotlist.c	2004-06-06 23:19:35.661476080 +0200
++++ mc-4.6.1-pre1/src/hotlist.c	2004-06-06 23:20:01.470552504 +0200
+@@ -1384,7 +1384,7 @@
      }
  
      if (!hotlist_file_name)
@@ -418,12 +414,12 @@ diff -Nru mc-4.6.0.orig/src/hotlist.c mc-4.6.0/src/hotlist.c
      
      hotlist	       = new_hotlist ();
      hotlist->type      = HL_TYPE_GROUP;
-diff -Nru mc-4.6.0.orig/src/main.c mc-4.6.0/src/main.c
---- mc-4.6.0.orig/src/main.c	Wed Oct  8 17:46:13 2003
-+++ mc-4.6.0/src/main.c	Wed Oct  8 18:21:55 2003
-@@ -248,6 +248,9 @@
- char *program_name;
- #endif
+diff -urN mc-4.6.1-pre1.org/src/main.c mc-4.6.1-pre1/src/main.c
+--- mc-4.6.1-pre1.org/src/main.c	2004-06-06 23:19:35.720467112 +0200
++++ mc-4.6.1-pre1/src/main.c	2004-06-06 23:20:01.482550680 +0200
+@@ -229,6 +229,9 @@
+ /* We need to paint it after CONSOLE_RESTORE, see: load_prompt */
+ int update_prompt = 0;
  
 +/* Configuration directory */
 +char *etc_dir;
@@ -431,7 +427,7 @@ diff -Nru mc-4.6.0.orig/src/main.c mc-4.6.0/src/main.c
  /* The home directory */
  char *home_dir;
  
-@@ -2395,7 +2398,7 @@
+@@ -2090,7 +2093,7 @@
  do_mc_filename_rename (char *mc_dir, char *o_name, char *n_name)
  {
      char *full_o_name = concat_dir_and_file (home_dir, o_name);
@@ -440,7 +436,7 @@ diff -Nru mc-4.6.0.orig/src/main.c mc-4.6.0/src/main.c
      int move;
  
      move = 0 == rename (full_o_name, full_n_name);
-@@ -2409,7 +2412,7 @@
+@@ -2104,7 +2107,7 @@
  {
      struct stat s;
      int move = 0;
@@ -449,7 +445,7 @@ diff -Nru mc-4.6.0.orig/src/main.c mc-4.6.0/src/main.c
  
      if (stat (mc_dir, &s) && (errno == ENOENT)
  	&& (mkdir (mc_dir, 0777) != -1)) {
-@@ -2448,11 +2451,13 @@
+@@ -2142,11 +2145,13 @@
      OS_Setup ();
  
      /* This variable is used by the subshell */
@@ -464,9 +460,9 @@ diff -Nru mc-4.6.0.orig/src/main.c mc-4.6.0/src/main.c
  
      vfs_init ();
  
-diff -Nru mc-4.6.0.orig/src/poptconfig.c mc-4.6.0/src/poptconfig.c
---- mc-4.6.0.orig/src/poptconfig.c	Thu Oct 24 12:02:40 2002
-+++ mc-4.6.0/src/poptconfig.c	Wed Oct  8 18:21:55 2003
+diff -urN mc-4.6.1-pre1.org/src/poptconfig.c mc-4.6.1-pre1/src/poptconfig.c
+--- mc-4.6.1-pre1.org/src/poptconfig.c	2004-06-06 23:19:35.689471824 +0200
++++ mc-4.6.1-pre1/src/poptconfig.c	2004-06-06 23:20:01.484550376 +0200
 @@ -134,8 +134,10 @@
      rc = poptReadConfigFile(con, "/etc/popt");
      if (rc) return rc;
@@ -479,10 +475,10 @@ diff -Nru mc-4.6.0.orig/src/poptconfig.c mc-4.6.0/src/poptconfig.c
  	fn = alloca(strlen(home) + 20);
  	strcpy(fn, home);
  	strcat(fn, "/.popt");
-diff -Nru mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
---- mc-4.6.0.orig/src/setup.c	Wed Oct  8 17:46:13 2003
-+++ mc-4.6.0/src/setup.c	Wed Oct  8 18:21:55 2003
-@@ -269,7 +269,7 @@
+diff -urN mc-4.6.1-pre1.org/src/setup.c mc-4.6.1-pre1/src/setup.c
+--- mc-4.6.1-pre1.org/src/setup.c	2004-06-06 23:19:35.635480032 +0200
++++ mc-4.6.1-pre1/src/setup.c	2004-06-06 23:20:01.489549616 +0200
+@@ -264,7 +264,7 @@
      int  i;
      char buffer [BUF_TINY];
  
@@ -491,7 +487,7 @@ diff -Nru mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
  
      /* Save integer options */
      for (i = 0; layout [i].opt_name; i++){
-@@ -286,7 +286,7 @@
+@@ -281,7 +281,7 @@
      char *profile;
      int  i;
  
@@ -500,7 +496,7 @@ diff -Nru mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
  
      /* Save integer options */
      for (i = 0; options [i].opt_name; i++)
-@@ -329,7 +329,7 @@
+@@ -324,7 +324,7 @@
      char *profile;
  
      saving_setup = 1;
@@ -509,7 +505,7 @@ diff -Nru mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
  
      save_configure ();
  
-@@ -467,7 +467,7 @@
+@@ -462,7 +462,7 @@
      if (profile_name)
  	    return profile_name;
  
@@ -518,10 +514,10 @@ diff -Nru mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
      if (!exist_file (profile)){
  	inifile = concat_dir_and_file (mc_home, "mc.ini");
  	if (exist_file (inifile)){
-diff -Nru mc-4.6.0.orig/src/treestore.c mc-4.6.0/src/treestore.c
---- mc-4.6.0.orig/src/treestore.c	Mon Sep 23 08:43:23 2002
-+++ mc-4.6.0/src/treestore.c	Wed Oct  8 18:21:55 2003
-@@ -272,7 +272,7 @@
+diff -urN mc-4.6.1-pre1.org/src/treestore.c mc-4.6.1-pre1/src/treestore.c
+--- mc-4.6.1-pre1.org/src/treestore.c	2004-06-06 23:19:35.666475320 +0200
++++ mc-4.6.1-pre1/src/treestore.c	2004-06-06 23:20:01.495548704 +0200
+@@ -263,7 +263,7 @@
      char *name;
      int retval;
  
@@ -530,7 +526,7 @@ diff -Nru mc-4.6.0.orig/src/treestore.c mc-4.6.0/src/treestore.c
      retval = tree_store_load_from(name);
      g_free(name);
  
-@@ -377,7 +377,7 @@
+@@ -368,7 +368,7 @@
      char *name;
      int retval;
  
@@ -539,7 +535,7 @@ diff -Nru mc-4.6.0.orig/src/treestore.c mc-4.6.0/src/treestore.c
      retval = tree_store_save_to(tmp);
  
      if (retval) {
-@@ -385,7 +385,7 @@
+@@ -376,7 +376,7 @@
  	return retval;
      }
  
@@ -548,10 +544,10 @@ diff -Nru mc-4.6.0.orig/src/treestore.c mc-4.6.0/src/treestore.c
      retval = rename(tmp, name);
  
      g_free(tmp);
-diff -Nru mc-4.6.0.orig/src/user.c mc-4.6.0/src/user.c
---- mc-4.6.0.orig/src/user.c	Fri Nov 29 04:03:53 2002
-+++ mc-4.6.0/src/user.c	Wed Oct  8 18:21:55 2003
-@@ -219,7 +219,7 @@
+diff -urN mc-4.6.1-pre1.org/src/user.c mc-4.6.1-pre1/src/user.c
+--- mc-4.6.1-pre1.org/src/user.c	2004-06-06 23:19:35.688471976 +0200
++++ mc-4.6.1-pre1/src/user.c	2004-06-06 23:20:01.500547944 +0200
+@@ -218,7 +218,7 @@
      case 'k':			/* block file name */
      case 'b':			/* block file name / strip extension */  {
  	    if (edit_widget) {
@@ -560,7 +556,7 @@ diff -Nru mc-4.6.0.orig/src/user.c mc-4.6.0/src/user.c
  		fname = (*quote_func) (file, 0);
  		g_free (file);
  		return fname;
-@@ -688,7 +688,7 @@
+@@ -699,7 +699,7 @@
      if (!exist_file (menu) || !menu_file_own (menu)){
  	g_free (menu);
          menu = concat_dir_and_file \
@@ -569,10 +565,10 @@ diff -Nru mc-4.6.0.orig/src/user.c mc-4.6.0/src/user.c
  	if (!exist_file (menu)){
  	    g_free (menu);
  	    menu = concat_dir_and_file \
-diff -Nru mc-4.6.0.orig/src/util.c mc-4.6.0/src/util.c
---- mc-4.6.0.orig/src/util.c	Tue Jan 28 23:58:23 2003
-+++ mc-4.6.0/src/util.c	Wed Oct  8 18:21:55 2003
-@@ -1266,7 +1266,7 @@
+diff -urN mc-4.6.1-pre1.org/src/util.c mc-4.6.1-pre1/src/util.c
+--- mc-4.6.1-pre1.org/src/util.c	2004-06-06 23:19:35.638479576 +0200
++++ mc-4.6.1-pre1/src/util.c	2004-06-06 23:20:01.506547032 +0200
+@@ -1305,7 +1305,7 @@
      *column = 0;
  
      /* open file with positions */
@@ -581,7 +577,7 @@ diff -Nru mc-4.6.0.orig/src/util.c mc-4.6.0/src/util.c
      f = fopen (fn, "r");
      g_free (fn);
      if (!f)
-@@ -1309,8 +1309,8 @@
+@@ -1348,8 +1348,8 @@
  
      len = strlen (filename);
  
@@ -592,19 +588,19 @@ diff -Nru mc-4.6.0.orig/src/util.c mc-4.6.0/src/util.c
  
      /* open temporary file */
      t = fopen (tmp, "w");
-diff -Nru mc-4.6.0.orig/src/widget.c mc-4.6.0/src/widget.c
---- mc-4.6.0.orig/src/widget.c	Thu Dec 26 00:15:48 2002
-+++ mc-4.6.0/src/widget.c	Wed Oct  8 18:30:39 2003
-@@ -815,7 +815,7 @@
- 	return 0;
+diff -urN mc-4.6.1-pre1.org/src/widget.c mc-4.6.1-pre1/src/widget.c
+--- mc-4.6.1-pre1.org/src/widget.c	2004-06-06 23:19:35.650477752 +0200
++++ mc-4.6.1-pre1/src/widget.c	2004-06-06 23:22:25.357678336 +0200
+@@ -820,7 +820,7 @@
+ 	return NULL;
      if (!*input_name)
- 	return 0;
+ 	return NULL;
 -    profile = concat_dir_and_file (home_dir, HISTORY_FILE_NAME);
 +    profile = concat_dir_and_file (etc_dir, HISTORY_FILE_NAME);
      for (i = 0;; i++) {
  	char key_name[BUF_TINY];
  	char this_entry[BUF_LARGE];
-@@ -852,7 +852,7 @@
+@@ -858,7 +858,7 @@
      if (!num_history_items_recorded)	/* this is how to disable */
  	return;
  
@@ -613,10 +609,10 @@ diff -Nru mc-4.6.0.orig/src/widget.c mc-4.6.0/src/widget.c
  
      if ((i = open (profile, O_CREAT | O_EXCL, S_IRUSR | S_IWUSR)) != -1)
  	close (i);
-diff -Nru mc-4.6.0.orig/vfs/ftpfs.c mc-4.6.0/vfs/ftpfs.c
---- mc-4.6.0.orig/vfs/ftpfs.c	Thu Dec 26 03:21:43 2002
-+++ mc-4.6.0/vfs/ftpfs.c	Wed Oct  8 18:21:55 2003
-@@ -1954,7 +1954,7 @@
+diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
+--- mc-4.6.1-pre1.org/vfs/ftpfs.c	2004-06-06 23:19:36.011422880 +0200
++++ mc-4.6.1-pre1/vfs/ftpfs.c	2004-06-06 23:20:01.534542776 +0200
+@@ -1834,7 +1834,7 @@
      }
  
      /* Load current .netrc */

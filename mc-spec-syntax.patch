@@ -1,22 +1,21 @@
-diff -Nur mc-4.6.0.orig/syntax/spec.syntax mc-4.6.0.chng/syntax/spec.syntax
---- mc-4.6.0.orig/syntax/spec.syntax	Sun Sep 29 20:22:25 2002
-+++ mc-4.6.0.chng/syntax/spec.syntax	Thu Feb  6 19:15:00 2003
-@@ -2,37 +2,36 @@
+diff -urN mc-4.6.1-pre1.org/syntax/spec.syntax mc-4.6.1-pre1/syntax/spec.syntax
+--- mc-4.6.1-pre1.org/syntax/spec.syntax	2004-06-06 23:14:14.290331920 +0200
++++ mc-4.6.1-pre1/syntax/spec.syntax	2004-06-06 23:17:52.591145152 +0200
+@@ -2,25 +2,25 @@
      keyword whole Auto\{Pp\}rov: green
      keyword whole Auto\{Rr\}eq\{Pp\}rov: green
      keyword whole Auto\{Rr\}eq: green
+-    keyword whole BuildArch: green
 -    keyword whole BuildPre\{Rr\}eq: green
--    keyword whole Build\{Rr\}oot: green
--    keyword whole BuildRequires: green
 +    keyword whole Build\{Aa\}rch: green
 +    keyword whole Build\{Cc\}onflicts: green
 +    keyword whole Build\{Pp\}re\{Rr\}eq: green
 +    keyword whole Build\{Rr\}equires: green
-+    keyword whole Build\{Rr\}oot: green    
+     keyword whole Build\{Rr\}oot: green
+-    keyword whole BuildRequires: green
      keyword whole Conflicts: green
      keyword whole Copyright: green
--    keyword whole Description: green    
-+    keyword whole Description: green
+     keyword whole Description: green    
      keyword whole Distribution: green    
      keyword whole Doc\{Dd\}ir: green    
      keyword whole Epoch: green
@@ -30,32 +29,22 @@ diff -Nur mc-4.6.0.orig/syntax/spec.syntax mc-4.6.0.chng/syntax/spec.syntax
 -    keyword whole Group(\[abcdefghijklmnopqrstuvwxyz\]_\[ABCDEFGHIJKLMNOPQRSTUVWXYZ\]): green
      keyword whole Icon: green
      keyword whole License: green
--    keyword whole Name: green    
-+    keyword whole Name: green   
+     keyword whole Name: green    
 +    keyword whole NoSource\[0123456789\]: green
      keyword whole Obsoletes: green
      keyword whole Packager: green
--    keyword whole Patch\[0123456789\]: green    
-+    keyword whole Patch\[0123456789\]: green
-     keyword whole Prefix: green
--    keyword whole Pre\{Rr\}eq: green    
--    keyword whole Provides: green    
--    keyword whole Release: green    
--    keyword whole Requires: green    
--    keyword whole Root: green    
-+    keyword whole Pre\{Rr\}eq: green
-+    keyword whole Provides: green
-+    keyword whole Release: green
-+    keyword whole Requires: green
-+    keyword whole Root: green
+     keyword whole Patch\[0123456789\]: green    
+@@ -32,9 +32,6 @@
+     keyword whole Root: green    
      keyword whole Source\[0123456789\]: green
      keyword whole Summary: green
 -    keyword whole Summary(\[abcdefghijklmnopqrstuvwxyz\]): green
 -    keyword whole Summary(\[abcdefghijklmnopqrstuvwxyz\]_\[ABCDEFGHIJKLMNOPQRSTUVWXYZ\]): green
+-    keyword whole Summary(\[abcdefghijklmnopqrstuvwxyz\]_\[ABCDEFGHIJKLMNOPQRSTUVWXYZ\].\[ABCDEFGHIJKLMNOPQRSTUVWXYZ-1234567890\]): green
      keyword whole Vendor: green
      keyword whole Version: green
      keyword whole URL: green
-@@ -77,6 +76,7 @@
+@@ -80,6 +77,7 @@
      keyword wholeright $+ brightgreen
      keyword ftp://+ brightgreen
      keyword http://+ brightgreen
@@ -63,7 +52,7 @@ diff -Nur mc-4.6.0.orig/syntax/spec.syntax mc-4.6.0.chng/syntax/spec.syntax
  
      keyword whole missingok brightblue
      keyword whole noreplace brightblue
-@@ -84,6 +84,189 @@
+@@ -87,6 +85,189 @@
      keyword whole PATCH\[0123456789\] cyan
      keyword whole SOURCE\[0123456789\] cyan
  
@@ -253,7 +242,7 @@ diff -Nur mc-4.6.0.orig/syntax/spec.syntax mc-4.6.0.chng/syntax/spec.syntax
  context linestart # \n brown
  context %( ) brightblue
  
-@@ -92,109 +275,109 @@
+@@ -95,109 +276,109 @@
      keyword Revision*\n brightgreen
      keyword \*\s\{MWTFS\}*\n brightgreen
      keyword \s\s[*] brightgreen

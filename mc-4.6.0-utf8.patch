@@ -1,0 +1,1715 @@
+--- mc-4.6.0/src/util.c.jj	2003-01-28 17:58:23.000000000 -0500
++++ mc-4.6.0/src/util.c	2003-02-21 08:36:36.000000000 -0500
+@@ -35,6 +35,7 @@
+ #include <string.h>
+ #include <ctype.h>
+ 
++#include "tty.h"
+ #include "global.h"
+ #include "profile.h"
+ #include "main.h"		/* mc_home */
+@@ -47,6 +48,10 @@
+ #include "charsets.h"
+ #endif
+ 
++#ifdef UTF8
++#include <wctype.h>
++#endif
++
+ static const char app_text [] = "Midnight-Commander";
+ int easy_patterns = 1;
+ 
+@@ -73,8 +78,31 @@ is_8bit_printable (unsigned char c)
+ }
+ 
+ int
++mbstrlen (const char *str)
++{
++#ifdef UTF8
++    if (SLsmg_Is_Unicode) {
++	static mbstate_t s;
++	int len;
++
++	len = mbsrtowcs (NULL, &str, -1, &s);
++	if (len < 0) {
++	    memset (&s, 0, sizeof (s));
++	    return -1;
++	}
++	return len;
++    } else
++#endif
++	return strlen (str);
++}
++
++int
+ is_printable (int c)
+ {
++#ifdef UTF8
++    if (SLsmg_Is_Unicode)
++	return iswprint (c);
++#endif
+     c &= 0xff;
+ 
+ #ifdef HAVE_CHARSET
+@@ -217,25 +245,90 @@ char *
+ name_trunc (const char *txt, int trunc_len)
+ {
+     static char x[MC_MAXPATHLEN + MC_MAXPATHLEN];
+-    int txt_len;
++    int txt_len, first, skip;
+     char *p;
++    const char *str;
+ 
+     if (trunc_len > sizeof (x) - 1) {
+ 	trunc_len = sizeof (x) - 1;
+     }
+-    txt_len = strlen (txt);
+-    if (txt_len <= trunc_len) {
+-	strcpy (x, txt);
+-    } else {
+-	int y = (trunc_len / 2) + (trunc_len % 2);
+-	strncpy (x, txt, y);
+-	strncpy (x + y, txt + txt_len - (trunc_len / 2), trunc_len / 2);
+-	x[y] = '~';
+-    }
+-    x[trunc_len] = 0;
+-    for (p = x; *p; p++)
+-	if (!is_printable (*p))
+-	    *p = '?';
++    txt_len = mbstrlen (txt);
++    first = 0;
++    skip = 0;
++    if (txt_len > trunc_len) {
++	first = trunc_len / 2;
++	skip = txt_len - trunc_len + 1;
++    }
++
++#ifdef UTF8
++    if (SLsmg_Is_Unicode) {
++	mbstate_t s;
++	int mbmax;
++
++	str = txt;
++	memset (&s, 0, sizeof (s));
++	mbmax = MB_CUR_MAX;
++	p = x;
++	while (p < x + sizeof (x) - 1 && trunc_len) {
++	    wchar_t wc;
++	    int len;
++
++	    len = mbrtowc (&wc, str, mbmax, &s);
++	    if (!len)
++		break;
++	    if (len < 0) {
++		memset (&s, 0, sizeof (s));
++		*p = '?';
++		len = 1;
++		str++;
++	    } else if (!is_printable (wc)) {
++		*p = '?';
++		str += len;
++		len = 1;
++	    } else if (p >= x + sizeof (x) - len)
++		break;
++	    else {
++		memcpy (p, str, len);
++		str += len;
++	    }
++	    if (first) {
++		--trunc_len;
++		--first;
++		p += len;
++		if (!first && p < x + sizeof (x) - 1 && trunc_len) {
++		    *p++ = '~';
++		    --trunc_len;
++		}
++	    } else if (skip)
++		--skip;
++	    else {
++		--trunc_len;
++		p += len;
++	    }
++	}
++    } else
++#endif
++    {
++	str = txt;
++	p = x;
++	while (p < x + sizeof (x) - 1) {
++	    if (*str == '\0')
++		break;
++	    else if (!is_printable (*str))
++		*p++ = '?';
++	    else
++		*p++ = *str;
++	    ++str;
++	    if (first) {
++		--first;
++		if (!first) {
++		    *p++ = '~';
++		    str += skip;
++		}
++	    }
++	}
++    }
++    *p = '\0';
+     return x;
+ }
+ 
+@@ -664,12 +757,14 @@ short-month-name sizes for different loc
+ size_t i18n_checktimelength (void)
+ {
+     size_t length, a, b;
+-    char buf [MAX_I18NTIMELENGTH + 1];
++    char buf [4 * MAX_I18NTIMELENGTH + 1];
+     time_t testtime = time (NULL);
+     
+-    a = strftime (buf, sizeof(buf)-1, _("%b %e %H:%M"), localtime(&testtime));
+-    b = strftime (buf, sizeof(buf)-1, _("%b %e  %Y"), localtime(&testtime));
+-    
++    strftime (buf, sizeof(buf)-1, _("%b %e %H:%M"), localtime(&testtime));
++    a = mbstrlen (buf);
++    strftime (buf, sizeof(buf)-1, _("%b %e  %Y"), localtime(&testtime));
++    b = mbstrlen (buf);
++
+     length = max (a, b);
+     
+     /* Don't handle big differences. Use standard value (email bug, please) */
+@@ -681,15 +776,12 @@ size_t i18n_checktimelength (void)
+ 
+ char *file_date (time_t when)
+ {
+-    static char timebuf [MAX_I18NTIMELENGTH + 1];
++    static char timebuf [4 * MAX_I18NTIMELENGTH + 1];
+     time_t current_time = time ((time_t) 0);
+-    static size_t i18n_timelength = 0;
+     static char *fmtyear, *fmttime;
+     char *fmt;
+ 
+-    if (i18n_timelength == 0){
+-	i18n_timelength = i18n_checktimelength() + 1;
+-	
++    if (fmtyear == NULL){
+ 	/* strftime() format string for old dates */
+ 	fmtyear = _("%b %e  %Y");
+ 	/* strftime() format string for recent dates */
+@@ -709,7 +801,7 @@ char *file_date (time_t when)
+     else
+ 	fmt = fmttime;
+     
+-    strftime (timebuf, i18n_timelength, fmt, localtime(&when));
++    strftime (timebuf, sizeof (timebuf) - 1, fmt, localtime(&when));
+     return timebuf;
+ }
+ 
+--- mc-4.6.0/src/menu.c.jj	2002-12-25 21:21:43.000000000 -0500
++++ mc-4.6.0/src/menu.c	2003-02-21 08:39:31.000000000 -0500
+@@ -51,35 +51,104 @@ create_menu (char *name, menu_entry *ent
+ {
+     Menu *menu;
+     char *cp;
++    int wlen = 0;
++    mbstate_t s;
+ 
+     menu = (Menu *) g_malloc (sizeof (*menu));
+     menu->count = count;
+     menu->max_entry_len = 20;
+     menu->entries = entries;
++    menu->name = g_strdup (name);
++    menu_scan_hotkey (menu);
++#ifdef UTF8
++    menu->wentries = NULL;
++    menu->wname = NULL;
++    if (SLsmg_Is_Unicode) {
++	const char *str = menu->name;
++	memset (&s, 0, sizeof (s));
++	wlen = mbsrtowcs (NULL, &str, -1, &s);
++	if (wlen > 0)
++	    ++wlen;
++	else {
++	    wlen = 0;
++	    memset (&s, 0, sizeof (s));
++	}
++    }
++#endif
+ 
+     if (entries != (menu_entry*) NULL) {
+ 	register menu_entry* mp;
+ 	for (mp = entries; count--; mp++) {
+ 	    if (mp->text[0] != '\0') {
++		int len;
+ #ifdef ENABLE_NLS
+ 	        mp->text = _(mp->text);
+ #endif /* ENABLE_NLS */
+ 	        cp = strchr (mp->text,'&');
+ 
++#ifdef UTF8
++		if (SLsmg_Is_Unicode) {
++		    const char *str = mp->text;
++
++		    len = mbsrtowcs (NULL, &str, -1, &s);
++		    if (len > 0) {
++			wlen += len + 1;
++		    } else {
++			++wlen;
++			memset (&s, 0, sizeof (s));
++		    }
++		} else
++#endif
++		    len = strlen (mp->text);
++
+ 		if (cp != NULL && *(cp+1) != '\0') {
++		    /* FIXME: XXX */
+ 		    mp->hot_key = tolower (*(cp+1));
+-		    menu->max_entry_len = max (strlen (mp->text) - 1,
+-			menu->max_entry_len);
++		    menu->max_entry_len = max (len - 1, menu->max_entry_len);
+ 		} else {
+-		    menu->max_entry_len = max (strlen (mp->text),
+-			menu->max_entry_len);
++		    menu->max_entry_len = max (len, menu->max_entry_len);
+ 		}
+ 	    }
+ 	}
+     }
+ 
+-    menu->name = g_strdup (name);
+-    menu_scan_hotkey(menu);
++#ifdef UTF8
++    if (wlen) {
++	wchar_t *wp;
++	const char *str;
++	int len;
++
++	menu->wentries = (wchar_t **)
++			 g_malloc (sizeof (wchar_t *) * menu->count
++				   + wlen * sizeof (wchar_t));
++	wp = (wchar_t *) (menu->wentries + menu->count);
++	str = menu->name;
++	len = mbsrtowcs (wp, &str, wlen, &s);
++	if (len > 0) {
++	    menu->wname = wp;
++	    wlen -= len + 1;
++	    wp += len + 1;
++	} else
++	    memset (&s, 0, sizeof (s));
++	if (menu->entries != NULL)
++	    for (count = 0; count < menu->count; ++count)
++		if (menu->entries[count].text[0] != '\0') {
++		    str = menu->entries[count].text;
++		    menu->wentries[count] = wp;
++		    len = mbsrtowcs (wp, &str, wlen, &s);
++		    if (len > 0) {
++			wlen -= len + 1;
++			wp += len + 1;
++		    } else {
++			memset (&s, 0, sizeof (s));
++			*wp++ = L'\0';
++			--wlen;
++		    }
++		}
++	
++    }
++#endif
++
+     menu->start_x = 0;
+     menu->help_node = g_strdup (help_node);
+     return menu;
+@@ -110,8 +179,26 @@ static void menubar_paint_idx (WMenu *me
+ 	unsigned char *text;
+ 
+ 	addch((unsigned char)menu->entries [idx].first_letter);
+-	for (text = menu->entries [idx].text; *text; text++)
+-	{
++#ifdef UTF8
++	if (menu->wentries) {
++	    wchar_t *wtext, *wp;
++
++	    for (wtext = wp = menu->wentries [idx]; *wtext; wtext++) {
++		if (*wtext == L'&') {
++		    if (wtext > wp)
++			SLsmg_write_nwchars (wp, wtext - wp);
++		    attrset (color == MENU_SELECTED_COLOR ?
++			MENU_HOTSEL_COLOR : MENU_HOT_COLOR);
++		    SLsmg_write_nwchars (++wtext, 1);
++		    attrset (color);
++		    wp = wtext + 1;
++		}
++	    }
++	    if (wtext > wp)
++		SLsmg_write_nwchars (wp, wtext - wp);
++	} else
++#endif
++	    for (text = menu->entries [idx].text; *text; text++) {
+ 		if (*text != '&')
+ 		    addch(*text);
+ 		else {
+@@ -120,7 +207,7 @@ static void menubar_paint_idx (WMenu *me
+ 		    addch(*(++text));
+ 		    attrset(color);
+ 		}
+-	}
++	    }
+     }
+     widget_move (&menubar->widget, y, x + 1);
+ }
+@@ -168,7 +255,13 @@ static void menubar_draw (WMenu *menubar
+ 	if (menubar->active)
+ 	    attrset(i == menubar->selected?MENU_SELECTED_COLOR:SELECTED_COLOR);
+ 	widget_move (&menubar->widget, 0, menubar->menu [i]->start_x);
+-	printw ("%s", menubar->menu [i]->name);
++#ifdef UTF8
++	if (menubar->menu [i]->wname)
++	    SLsmg_write_nwchars (menubar->menu [i]->wname,
++				 wcslen (menubar->menu [i]->wname));
++	else
++#endif
++	    printw ("%s", menubar->menu [i]->name);
+     }
+ 
+     if (menubar->dropped)
+@@ -495,7 +588,13 @@ menubar_arrange(WMenu* menubar)
+ 
+ 	for (i = 0; i < items; i++)
+ 	{
+-		int len = strlen(menubar->menu[i]->name);
++		int len;
++#ifdef UTF8
++		if (menubar->menu[i]->wname)
++		    len = wcslen (menubar->menu[i]->wname);
++		else
++#endif		
++		    len = strlen(menubar->menu[i]->name);
+ 		menubar->menu[i]->start_x = start_x;
+ 		start_x += len + gap;
+ 	}
+@@ -508,7 +607,13 @@ menubar_arrange(WMenu* menubar)
+ 	for (i = 0; i < items; i++)
+ 	{
+ 		/* preserve length here, to be used below */
+-		gap -= (menubar->menu[i]->start_x = strlen(menubar->menu[i]->name));
++#ifdef UTF8
++		if (menubar->menu[i]->wname)
++		    menubar->menu[i]->start_x = wcslen (menubar->menu[i]->wname);
++		else
++#endif
++		    menubar->menu[i]->start_x = strlen (menubar->menu[i]->name);
++		gap -= menubar->menu[i]->start_x;
+ 	}
+ 
+ 	gap /= (items - 1);
+@@ -532,6 +637,9 @@ menubar_arrange(WMenu* menubar)
+ void
+ destroy_menu (Menu *menu)
+ {
++#ifdef UTF8
++    g_free (menu->wentries);
++#endif
+     g_free (menu->name);
+     g_free (menu->help_node);
+     g_free (menu);
+--- mc-4.6.0/src/option.c.jj	2002-12-07 23:16:30.000000000 -0500
++++ mc-4.6.0/src/option.c	2003-02-21 09:13:43.000000000 -0500
+@@ -155,12 +155,12 @@ init_configure (void)
+ 	title2 = _(" Pause after run... ");
+ 	title3 = _(" Other options ");
+ 
+-	first_width = strlen (title1) + 1;
+-	second_width = strlen (title3) + 1;
++	first_width = mbstrlen (title1) + 1;
++	second_width = mbstrlen (title3) + 1;
+ 
+ 	for (i = 0; check_options[i].text; i++) {
+ 	    check_options[i].text = _(check_options[i].text);
+-	    l1 = strlen (check_options[i].text) + 7;
++	    l1 = mbstrlen (check_options[i].text) + 7;
+ 	    if (i >= OTHER_OPTIONS) {
+ 		if (l1 > first_width)
+ 		    first_width = l1;
+@@ -173,23 +173,23 @@ init_configure (void)
+ 	i = sizeof (pause_options) / sizeof (char *);
+ 	while (i--) {
+ 	    pause_options[i] = _(pause_options[i]);
+-	    l1 = strlen (pause_options[i]) + 7;
++	    l1 = mbstrlen (pause_options[i]) + 7;
+ 	    if (l1 > first_width)
+ 		first_width = l1;
+ 	}
+ 
+-	l1 = strlen (title2) + 1;
++	l1 = mbstrlen (title2) + 1;
+ 	if (l1 > first_width)
+ 	    first_width = l1;
+ 
+-	l1 = 11 + strlen (ok_button)
+-	    + strlen (save_button)
+-	    + strlen (cancel_button);
++	l1 = 11 + mbstrlen (ok_button)
++	    + mbstrlen (save_button)
++	    + mbstrlen (cancel_button);
+ 
+ 	i = (first_width + second_width - l1) / 4;
+ 	b1 = 5 + i;
+-	b2 = b1 + strlen (ok_button) + i + 6;
+-	b3 = b2 + strlen (save_button) + i + 4;
++	b2 = b1 + mbstrlen (ok_button) + i + 6;
++	b3 = b2 + mbstrlen (save_button) + i + 4;
+ 
+ 	i18n_config_flag = 1;
+     }
+--- mc-4.6.0/src/achown.c.jj	2002-12-07 23:16:30.000000000 -0500
++++ mc-4.6.0/src/achown.c	2003-02-21 09:54:35.000000000 -0500
+@@ -96,13 +96,16 @@ static char *fname;
+ static void get_ownership (void)
+ {				/* set buttons  - ownership */
+     char *name_t;
++    int len;
+ 
+     name_t = name_trunc (get_owner (sf_stat->st_uid), 15);
+-    memset (b_user->text, ' ', 15);
+-    strncpy (b_user->text, name_t, strlen (name_t));
++    len = mbstrlen (name_t);
++    strcpy (b_user->text, name_t);
++    memset (strchr (b_user->text, '\0'), ' ', 15 - len);
+     name_t = name_trunc (get_group (sf_stat->st_gid), 15);
+-    memset (b_group->text, ' ', 15);
+-    strncpy (b_group->text, name_t, strlen (name_t));
++    len = mbstrlen (name_t);
++    strcpy (b_group->text, name_t);
++    memset (strchr (b_group->text, '\0'), ' ', 15 - len);
+ }
+ 
+ 
+@@ -562,6 +565,12 @@ init_chown_advanced (void)
+     b_att[2] = button_new (XTRACT (6));
+     b_user = button_new (XTRACT (5));
+     b_group = button_new (XTRACT (4));
++#ifdef UTF8
++    if (SLsmg_Is_Unicode) {
++	b_user->text = g_realloc (b_user->text, MB_CUR_MAX * 15 + 1);
++	b_group->text = g_realloc (b_group->text, MB_CUR_MAX * 15 + 1);
++    }
++#endif
+ 
+     add_widget (ch_dlg, b_group);
+     add_widget (ch_dlg, b_user);
+--- mc-4.6.0/src/boxes.c.jj	2002-12-07 23:16:30.000000000 -0500
++++ mc-4.6.0/src/boxes.c	2003-02-21 09:32:59.000000000 -0500
+@@ -149,23 +149,23 @@ display_init (int radio_sel, char *init_
+ 	display_title = _(display_title);
+ 	for (i = 0; i < LIST_TYPES; i++) {
+ 	    displays[i] = _(displays[i]);
+-	    if ((l = strlen (displays[i])) > maxlen)
++	    if ((l = mbstrlen (displays[i])) > maxlen)
+ 		maxlen = l;
+ 	}
+ 
+-	i = strlen (ok_button) + 5;
+-	l = strlen (cancel_button) + 3;
++	i = mbstrlen (ok_button) + 5;
++	l = mbstrlen (cancel_button) + 3;
+ 	l = max (i, l);
+ 
+ 	i = maxlen + l + 16;
+ 	if (i > DISPLAY_X)
+ 	    DISPLAY_X = i;
+ 
+-	i = strlen (user_mini_status) + 13;
++	i = mbstrlen (user_mini_status) + 13;
+ 	if (i > DISPLAY_X)
+ 	    DISPLAY_X = i;
+ 
+-	i = strlen (display_title) + 10;
++	i = mbstrlen (display_title) + 10;
+ 	if (i > DISPLAY_X)
+ 	    DISPLAY_X = i;
+ 
+@@ -286,20 +286,20 @@ sort_box (sortfn *sort_fn, int *reverse,
+ 		for (i = SORT_TYPES-1; i >= 0; i--)
+ 		{
+ 			sort_orders_names [i] = _(sort_orders [i].sort_name);
+-			r = strlen (sort_orders_names [i]);
++			r = mbstrlen (sort_orders_names [i]);
+ 			if (r > maxlen)
+ 				maxlen = r;
+ 		}
+ 
+ 		check_pos = maxlen + 9;
+ 
+-		r = strlen (reverse_label) + 4;
+-		i = strlen (case_label) + 4;
++		r = mbstrlen (reverse_label) + 4;
++		i = mbstrlen (case_label) + 4;
+ 		if (i > r)
+ 			r = i;
+ 		
+-		l = strlen (ok_button) + 6;
+-		i = strlen (cancel_button) + 4;
++		l = mbstrlen (ok_button) + 6;
++		i = mbstrlen (cancel_button) + 4;
+ 		if (i > l)
+ 			l = i;
+ 			
+@@ -308,7 +308,7 @@ sort_box (sortfn *sort_fn, int *reverse,
+ 		if (i > SORT_X)
+ 			SORT_X = i;
+ 
+-		i = strlen (sort_title) + 6;
++		i = mbstrlen (sort_title) + 6;
+ 		if (i > SORT_X)
+ 			SORT_X = i;
+ 
+@@ -403,7 +403,7 @@ confirm_box (void)
+ 		while (i--)
+ 		{
+ 			conf_widgets [i].text = _(conf_widgets [i].text);
+-			l1 = strlen (conf_widgets [i].text) + 3;
++			l1 = mbstrlen (conf_widgets [i].text) + 3;
+ 			if (l1 > maxlen)
+ 				maxlen = l1;
+ 		}
+@@ -418,8 +418,8 @@ confirm_box (void)
+ 		 * And this for the case when buttons with some space to the right
+ 		 * do not fit within 2/6
+ 		 */
+-		l1 = strlen (conf_widgets [0].text) + 3;
+-		i = strlen (conf_widgets [1].text) + 5;
++		l1 = mbstrlen (conf_widgets [0].text) + 3;
++		i = mbstrlen (conf_widgets [1].text) + 5;
+ 		if (i > l1)
+ 			l1 = i;
+ 
+@@ -490,11 +490,11 @@ display_bits_box (void)
+ 		{
+ 			display_widgets [i].text = _(display_widgets[i].text);
+ 			display_bits_str [i] = _(display_bits_str [i]);
+-			l1 = strlen (display_bits_str [i]);
++			l1 = mbstrlen (display_bits_str [i]);
+ 			if (l1 > maxlen)
+ 				maxlen = l1;
+ 		}
+-		l1 = strlen (display_widgets [2].text);
++		l1 = mbstrlen (display_widgets [2].text);
+ 		if (l1 > maxlen)
+ 			maxlen = l1;
+ 		
+@@ -502,8 +502,8 @@ display_bits_box (void)
+ 		display_bits.xlen = (maxlen + 5) * 6 / 4;
+ 
+ 		/* See above confirm_box */
+-		l1 = strlen (display_widgets [0].text) + 3;
+-		i = strlen (display_widgets [1].text) + 5;
++		l1 = mbstrlen (display_widgets [0].text) + 3;
++		i = mbstrlen (display_widgets [1].text) + 5;
+ 		if (i > l1)
+ 			l1 = i;
+ 
+@@ -593,7 +593,7 @@ init_disp_bits_box (void)
+ 
+     cpname = _("&Select");
+     add_widget( dbits_dlg,
+-		button_new( 4, DISPX - 8 - strlen(cpname) , B_USER,
++		button_new( 4, DISPX - 8 - mbstrlen(cpname) , B_USER,
+ 			    NORMAL_BUTTON, cpname,
+ 			    sel_charset_button, 0, NULL ) );
+ 
+@@ -802,7 +802,7 @@ cd_dialog (void)
+     quick_widgets [1].y_divisions =
+ 	quick_widgets [0].y_divisions = Quick_input.ylen = 5;
+ 
+-    len = strlen (quick_widgets [1].text);
++    len = mbstrlen (quick_widgets [1].text);
+ 
+     quick_widgets [0].relative_x =
+ 	quick_widgets [1].relative_x + len + 1;
+@@ -956,7 +956,7 @@ jobs_cmd (void)
+ 		{
+ 			job_buttons [i].name = _(job_buttons [i].name);
+ 
+-			len = strlen (job_buttons [i].name) + 4;
++			len = mbstrlen (job_buttons [i].name) + 4;
+ 			JOBS_X = max (JOBS_X, startx + len + 3);
+ 
+ 			job_buttons [i].xpos = startx;
+@@ -965,7 +965,7 @@ jobs_cmd (void)
+ 
+ 		/* Last button - Ok a.k.a. Cancel :) */
+ 		job_buttons [n_buttons - 1].xpos =
+-			JOBS_X - strlen (job_buttons [n_buttons - 1].name) - 7;
++			JOBS_X - mbstrlen (job_buttons [n_buttons - 1].name) - 7;
+ 
+ 		i18n_flag = 1;
+ 	}
+@@ -1024,7 +1024,7 @@ vfs_smb_get_authinfo (const char *host, 
+         
+         while (i--)
+         {
+-            l1 = strlen (labs [i] = _(labs [i]));
++            l1 = mbstrlen (labs [i] = _(labs [i]));
+             if (l1 > maxlen)
+                 maxlen = l1;
+         }
+@@ -1034,7 +1034,7 @@ vfs_smb_get_authinfo (const char *host, 
+         
+         for (i = sizeof(buts)/sizeof(buts[0]), l1 = 0; i--; )
+         {
+-            l1 += strlen (buts [i] = _(buts [i]));
++            l1 += mbstrlen (buts [i] = _(buts [i]));
+         }
+         l1 += 15;
+         if (l1 > dialog_x)
+@@ -1043,7 +1043,7 @@ vfs_smb_get_authinfo (const char *host, 
+         ilen = dialog_x - 7 - maxlen; /* for the case of very long buttons :) */
+         istart = dialog_x - 3 - ilen;
+         
+-        b2 = dialog_x - (strlen(buts[1]) + 6);
++        b2 = dialog_x - (mbstrlen(buts[1]) + 6);
+         
+         i18n_flag = 1;
+     }
+--- mc-4.6.0/src/filegui.c.jj	2002-12-09 00:03:45.000000000 -0500
++++ mc-4.6.0/src/filegui.c	2003-02-21 09:39:35.000000000 -0500
+@@ -577,8 +577,8 @@ init_replace (FileOpContext *ctx, enum O
+ 	 * longest of "Overwrite..." labels 
+ 	 * (assume "Target date..." are short enough)
+ 	 */
+-	l1 = max (strlen (rd_widgets[6].text),
+-		  strlen (rd_widgets[11].text));
++	l1 = max (mbstrlen (rd_widgets[6].text),
++		  mbstrlen (rd_widgets[11].text));
+ 
+ 	/* longest of button rows */
+ 	i = sizeof (rd_widgets) / sizeof (rd_widgets[0]);
+@@ -589,7 +589,7 @@ init_replace (FileOpContext *ctx, enum O
+ 		    l2 = max (l2, l);
+ 		    l = 0;
+ 		}
+-		l += strlen (rd_widgets[i].text) + 4;
++		l += mbstrlen (rd_widgets[i].text) + 4;
+ 	    }
+ 	}
+ 	l2 = max (l2, l);	/* last row */
+@@ -607,12 +607,12 @@ init_replace (FileOpContext *ctx, enum O
+ 		    l = l1;
+ 		}
+ 		rd_widgets[i].xpos = l;
+-		l += strlen (rd_widgets[i].text) + 4;
++		l += mbstrlen (rd_widgets[i].text) + 4;
+ 	    }
+ 	}
+ 	/* Abort button is centered */
+ 	rd_widgets[1].xpos =
+-	    (rd_xlen - strlen (rd_widgets[1].text) - 3) / 2;
++	    (rd_xlen - mbstrlen (rd_widgets[1].text) - 3) / 2;
+     }
+ #endif				/* ENABLE_NLS */
+ 
+@@ -631,7 +631,7 @@ init_replace (FileOpContext *ctx, enum O
+ 
+     ADD_RD_LABEL (ui, 0,
+ 		  name_trunc (ui->replace_filename,
+-			      rd_trunc - strlen (rd_widgets[0].text)), 0);
++			      rd_trunc - mbstrlen (rd_widgets[0].text)), 0);
+     ADD_RD_BUTTON (1);
+ 
+     ADD_RD_BUTTON (2);
+@@ -818,36 +818,36 @@ fmd_init_i18n (int force)
+ 	if (fmd_widgets[i].text[0] != '\0')
+ 	    fmd_widgets[i].text = _(fmd_widgets[i].text);
+ 
+-    len = strlen (fmd_widgets[FMCB11].text)
+-	+ strlen (fmd_widgets[FMCB21].text) + 15;
++    len = mbstrlen (fmd_widgets[FMCB11].text)
++	+ mbstrlen (fmd_widgets[FMCB21].text) + 15;
+     fmd_xlen = max (fmd_xlen, len);
+ 
+-    len = strlen (fmd_widgets[FMCB12].text)
+-	+ strlen (fmd_widgets[FMCB22].text) + 15;
++    len = mbstrlen (fmd_widgets[FMCB12].text)
++	+ mbstrlen (fmd_widgets[FMCB22].text) + 15;
+     fmd_xlen = max (fmd_xlen, len);
+ 
+-    len = strlen (fmd_widgets[FMBRGT].text)
+-	+ strlen (fmd_widgets[FMBLFT].text) + 11;
++    len = mbstrlen (fmd_widgets[FMBRGT].text)
++	+ mbstrlen (fmd_widgets[FMBLFT].text) + 11;
+ 
+ #ifdef FMBMID
+-    len += strlen (fmd_widgets[FMBMID].text) + 6;
++    len += mbstrlen (fmd_widgets[FMBMID].text) + 6;
+ #endif
+ 
+     fmd_xlen = max (fmd_xlen, len + 4);
+ 
+     len = (fmd_xlen - (len + 6)) / 2;
+     i = fmd_widgets[FMBLFT].relative_x = len + 3;
+-    i += strlen (fmd_widgets[FMBLFT].text) + 8;
++    i += mbstrlen (fmd_widgets[FMBLFT].text) + 8;
+ 
+ #ifdef FMBMID
+     fmd_widgets[FMBMID].relative_x = i;
+-    i += strlen (fmd_widgets[FMBMID].text) + 6;
++    i += mbstrlen (fmd_widgets[FMBMID].text) + 6;
+ #endif
+ 
+     fmd_widgets[FMBRGT].relative_x = i;
+ 
+ #define	chkbox_xpos(i) \
+-	fmd_widgets [i].relative_x = fmd_xlen - strlen (fmd_widgets [i].text) - 6
++	fmd_widgets [i].relative_x = fmd_xlen - mbstrlen (fmd_widgets [i].text) - 6
+ 
+     chkbox_xpos (FMCB0);
+     chkbox_xpos (FMCB21);
+--- mc-4.6.0/src/find.c.jj	2002-12-24 06:28:26.000000000 -0500
++++ mc-4.6.0/src/find.c	2003-02-21 09:41:05.000000000 -0500
+@@ -186,7 +186,7 @@ find_parameters (char **start_dir, char 
+ 	int l1, maxlen = 0;
+ 
+ 	while (i--) {
+-	    l1 = strlen (labs[i] = _(labs[i]));
++	    l1 = mbstrlen (labs[i] = _(labs[i]));
+ 	    if (l1 > maxlen)
+ 		maxlen = l1;
+ 	}
+@@ -195,7 +195,7 @@ find_parameters (char **start_dir, char 
+ 	    FIND_X = i;
+ 
+ 	for (i = sizeof (buts) / sizeof (buts[0]), l1 = 0; i--;) {
+-	    l1 += strlen (buts[i] = _(buts[i]));
++	    l1 += mbstrlen (buts[i] = _(buts[i]));
+ 	}
+ 	l1 += 21;
+ 	if (l1 > FIND_X)
+@@ -204,8 +204,8 @@ find_parameters (char **start_dir, char 
+ 	ilen = FIND_X - 7 - maxlen;	/* for the case of very long buttons :) */
+ 	istart = FIND_X - 3 - ilen;
+ 
+-	b1 = b0 + strlen (buts[0]) + 7;
+-	b2 = FIND_X - (strlen (buts[2]) + 6);
++	b1 = b0 + mbstrlen (buts[0]) + 7;
++	b2 = FIND_X - (mbstrlen (buts[2]) + 6);
+ 
+ 	i18n_flag = 1;
+ 	case_label = _(case_label);
+@@ -760,7 +760,7 @@ setup_gui (void)
+     if (!i18n_flag) {
+ 	register int i = sizeof (fbuts) / sizeof (fbuts[0]);
+ 	while (i--)
+-	    fbuts[i].len = strlen (fbuts[i].text = _(fbuts[i].text)) + 3;
++	    fbuts[i].len = mbstrlen (fbuts[i].text = _(fbuts[i].text)) + 3;
+ 	fbuts[2].len += 2;	/* DEFPUSH_BUTTON */
+ 	i18n_flag = 1;
+     }
+--- mc-4.6.0/src/hotlist.c.jj	2002-12-21 03:43:15.000000000 -0500
++++ mc-4.6.0/src/hotlist.c	2003-02-21 09:45:25.000000000 -0500
+@@ -529,7 +529,7 @@ init_i18n_stuff(int list_type, int cols)
+ 
+ 			row = hotlist_but [i].y;
+ 			++count [row];
+-			len [row] += strlen (hotlist_but [i].text) + 5;
++			len [row] += mbstrlen (hotlist_but [i].text) + 5;
+ 			if (hotlist_but [i].flags == DEFPUSH_BUTTON)
+ 				len [row] += 2;
+ 		}
+@@ -554,12 +554,12 @@ init_i18n_stuff(int list_type, int cols)
+ 				/* not first int the row */
+ 				if (!strcmp (hotlist_but [i].text, cancel_but))
+ 					hotlist_but [i].x = 
+-						cols - strlen (hotlist_but [i].text) - 13;
++						cols - mbstrlen (hotlist_but [i].text) - 13;
+ 				else
+ 					hotlist_but [i].x = cur_x [row];
+ 			}
+ 
+-			cur_x [row] += strlen (hotlist_but [i].text) + 2
++			cur_x [row] += mbstrlen (hotlist_but [i].text) + 2
+ 				+ (hotlist_but [i].flags == DEFPUSH_BUTTON ? 5 : 3);
+ 		}
+ 	}
+@@ -787,7 +787,7 @@ static void add_widgets_i18n(QuickWidget
+ 	for (i = 0; i < 3; i++)
+ 	{
+ 		qw [i].text = _(qw [i].text);
+-		l[i] = strlen (qw [i].text) + 3;
++		l[i] = mbstrlen (qw [i].text) + 3;
+ 	}
+ 	space = (len - 4 - l[0] - l[1] - l[2]) / 4;
+ 
+@@ -832,7 +832,7 @@ static int add_new_entry_input (char *he
+ 	static int i18n_flag = 0;
+ #endif /* ENABLE_NLS */
+ 
+-    len = max (strlen (header), msglen (text1, &lines1));
++    len = max (mbstrlen (header), msglen (text1, &lines1));
+     len = max (len, msglen (text2, &lines2)) + 4;
+     len = max (len, 64);
+ 
+@@ -923,7 +923,7 @@ static int add_new_group_input (char *he
+ 	static int i18n_flag = 0;
+ #endif /* ENABLE_NLS */
+     
+-    len = max (strlen (header), msglen (label, &lines)) + 4;
++    len = max (mbstrlen (header), msglen (label, &lines)) + 4;
+     len = max (len, 64);
+ 
+ #ifdef ENABLE_NLS
+@@ -980,7 +980,7 @@ void add2hotlist_cmd (void)
+ {
+     char *prompt, *label;
+     char *cp = _("Label for \"%s\":");
+-    int l = strlen (cp);
++    int l = mbstrlen (cp);
+ 
+     prompt = g_strdup_printf (cp, name_trunc (cpanel->cwd, COLS-2*UX-(l+8)));
+     label = input_dialog (_(" Add to hotlist "), prompt, cpanel->cwd);
+--- mc-4.6.0/src/layout.c.jj	2003-02-05 10:54:34.000000000 -0500
++++ mc-4.6.0/src/layout.c	2003-02-21 09:46:57.000000000 -0500
+@@ -375,7 +375,7 @@ static void init_layout (void)
+ 		while (i--)
+ 		{
+ 		    s_split_direction [i] = _(s_split_direction [i]);
+-			l1 = strlen (s_split_direction [i]) + 7;
++			l1 = mbstrlen (s_split_direction [i]) + 7;
+ 			if (l1 > first_width)
+ 				first_width = l1;
+ 		}
+@@ -383,31 +383,31 @@ static void init_layout (void)
+ 		for (i = 0; i <= 8; i++)
+ 		{
+ 			check_options[i].text = _(check_options[i].text);
+-			l1 = strlen (check_options[i].text) + 7;
++			l1 = mbstrlen (check_options[i].text) + 7;
+ 			if (l1 > first_width)
+ 				first_width = l1;
+ 		}
+ 
+-		l1 = strlen (title1) + 1;
++		l1 = mbstrlen (title1) + 1;
+ 		if (l1 > first_width)
+ 			first_width = l1;
+ 		
+-		l1 = strlen (title2) + 1;
++		l1 = mbstrlen (title2) + 1;
+ 		if (l1 > first_width)
+ 			first_width = l1;
+ 		
+ 
+-		second_width = strlen (title3) + 1;
++		second_width = mbstrlen (title3) + 1;
+ 		for (i = 0; i < 6; i++)
+ 		{
+ 			check_options[i].text = _(check_options[i].text);
+-			l1 = strlen (check_options[i].text) + 7;
++			l1 = mbstrlen (check_options[i].text) + 7;
+ 			if (l1 > second_width)
+ 				second_width = l1;
+ 		}
+ 		if (console_flag)
+ 		{
+-			l1 = strlen (output_lines_label) + 13;
++			l1 = mbstrlen (output_lines_label) + 13;
+ 			if (l1 > second_width)
+ 				second_width = l1;
+ 		}
+@@ -421,14 +421,14 @@ static void init_layout (void)
+ 		 *
+ 		 * Now the last thing to do - properly space buttons...
+ 		 */
+-		l1 = 11 + strlen (ok_button)   /* 14 - all brackets and inner space */
+-		 	+ strlen (save_button)     /* notice: it is 3 char less because */
+-			+ strlen (cancel_button);  /* of '&' char in button text */
++		l1 = 11 + mbstrlen (ok_button)   /* 14 - all brackets and inner space */
++		 	+ mbstrlen (save_button)     /* notice: it is 3 char less because */
++			+ mbstrlen (cancel_button);  /* of '&' char in button text */
+ 		
+ 		i = (first_width + second_width - l1) / 4;
+ 		b1 = 5 + i;
+-		b2 = b1 + strlen(ok_button) + i + 6;
+-		b3 = b2 + strlen(save_button) + i + 4;
++		b2 = b1 + mbstrlen(ok_button) + i + 6;
++		b3 = b2 + mbstrlen(save_button) + i + 4;
+ 
+ 		i18n_layt_flag = 1;
+     }
+@@ -677,7 +677,7 @@ setup_panels (void)
+     panel_do_cols (0);
+     panel_do_cols (1);
+ 
+-    promptl = strlen (prompt);
++    promptl = mbstrlen (prompt);
+ 
+     widget_set_size (&the_menubar->widget, 0, 0, 1, COLS);
+ 
+--- mc-4.6.0/src/learn.c.jj	2002-10-21 18:54:21.000000000 -0400
++++ mc-4.6.0/src/learn.c	2003-02-21 09:48:29.000000000 -0500
+@@ -240,7 +240,7 @@ static void init_learn (void)
+ 		learn_but [0].x = 78 / 2 + 4;
+ 
+ 		learn_but [1].text = _(learn_but [1].text);
+-		learn_but [1].x = 78 / 2 - (strlen (learn_but [1].text) + 9);
++		learn_but [1].x = 78 / 2 - (mbstrlen (learn_but [1].text) + 9);
+ 
+ 		for (i = 0; i < BUTTONS; i++)
+ 		{
+--- mc-4.6.0/src/panelize.c.jj	2002-12-07 23:16:30.000000000 -0500
++++ mc-4.6.0/src/panelize.c	2003-02-21 09:50:54.000000000 -0500
+@@ -134,7 +134,7 @@ static void init_panelize (void)
+ 		while (i--)
+ 		{
+ 			panelize_but [i].text = _(panelize_but [i].text);
+-			maxlen += strlen (panelize_but [i].text) + 5;
++			maxlen += mbstrlen (panelize_but [i].text) + 5;
+ 		}
+ 		maxlen += 10;
+ 
+@@ -143,11 +143,11 @@ static void init_panelize (void)
+ 	panelize_cols = max(panelize_cols, maxlen);
+ 		
+ 	panelize_but [2].x = panelize_but [3].x 
+-		+ strlen (panelize_but [3].text) + 7;
++		+ mbstrlen (panelize_but [3].text) + 7;
+ 	panelize_but [1].x = panelize_but [2].x 
+-		+ strlen (panelize_but [2].text) + 5;
++		+ mbstrlen (panelize_but [2].text) + 5;
+ 	panelize_but [0].x = panelize_cols 
+-		- strlen (panelize_but[0].text) - 8 - BX;
++		- mbstrlen (panelize_but[0].text) - 8 - BX;
+ 
+ #endif /* ENABLE_NLS */
+     
+--- mc-4.6.0/src/wtools.c.jj	2002-11-14 02:25:19.000000000 -0500
++++ mc-4.6.0/src/wtools.c	2003-02-21 09:53:34.000000000 -0500
+@@ -59,11 +59,11 @@ Listbox *create_listbox_window (int cols
+     /* Adjust sizes */
+     lines = (lines > LINES-6) ? LINES - 6 : lines;
+ 
+-	if (title && (cols < (len = strlen(title) + 2)))
++	if (title && (cols < (len = mbstrlen(title) + 2)))
+ 		cols = len;
+ 
+ 	/* no &, but 4 spaces around button for brackets and such */
+-	if (cols < (len = strlen(cancel_string) + 3))
++	if (cols < (len = mbstrlen(cancel_string) + 3))
+ 		cols = len;
+ 	
+     cols = cols > COLS-6 ? COLS-6 : cols;
+@@ -136,7 +136,7 @@ int query_dialog (char *header, char *te
+ 	for (i = 0; i < count; i++)
+ 	{
+ 		char* cp = va_arg (ap, char *);
+-		win_len += strlen (cp) + 6;
++		win_len += mbstrlen (cp) + 6;
+ 		if (strchr (cp, '&') != NULL)
+ 			win_len--;
+ 	}
+@@ -144,7 +144,7 @@ int query_dialog (char *header, char *te
+     }
+ 
+     /* count coordinates */
+-    cols = 6 + max (win_len, max (strlen (header), msglen (text, &lines)));
++    cols = 6 + max (win_len, max (mbstrlen (header), msglen (text, &lines)));
+     lines += 4 + (count > 0 ? 2 : 0);
+     xpos = COLS/2 - cols/2;
+     ypos = LINES/3 - (lines-3)/2;
+@@ -159,7 +159,7 @@ int query_dialog (char *header, char *te
+ 	va_start (ap, count);
+ 	for (i = 0; i < count; i++){
+ 	    cur_name = va_arg (ap, char *);
+-	    xpos = strlen (cur_name)+6;
++	    xpos = mbstrlen (cur_name)+6;
+ 		if (strchr(cur_name, '&') != NULL)
+ 			xpos--;
+ 	    add_widget (query_dlg, button_new
+@@ -416,7 +416,7 @@ real_input_dialog_help (char *header, ch
+     tk_name[63] = '\0';
+     quick_widgets[2].tkname = tk_name;
+ 
+-    len = max (strlen (header), msglen (text, &lines)) + 4;
++    len = max (mbstrlen (header), msglen (text, &lines)) + 4;
+     len = max (len, 64);
+ 
+     /* The special value of def_text is used to identify password boxes
+@@ -436,7 +436,7 @@ real_input_dialog_help (char *header, ch
+      */
+     quick_widgets[0].relative_x = len / 2 + 4;
+     quick_widgets[1].relative_x =
+-	len / 2 - (strlen (_(quick_widgets[1].text)) + 9);
++	len / 2 - (mbstrlen (_(quick_widgets[1].text)) + 9);
+     quick_widgets[0].x_divisions = quick_widgets[1].x_divisions = len;
+ #endif				/* ENABLE_NLS */
+ 
+--- mc-4.6.0/src/view.c.jj	2002-12-27 01:48:33.000000000 -0500
++++ mc-4.6.0/src/view.c	2003-02-21 11:32:56.000000000 -0500
+@@ -807,7 +807,7 @@ view_status (WView *view, gboolean updat
+ 
+     if (!i18n_adjust) {
+ 	file_label = _("File: %s");
+-	i18n_adjust = strlen (file_label) - 2;
++	i18n_adjust = mbstrlen (file_label) - 2;
+     }
+ 
+     if (w < i18n_adjust + 6)
+--- mc-4.6.0/src/menu.h.jj	2002-11-14 01:30:17.000000000 -0500
++++ mc-4.6.0/src/menu.h	2003-02-20 18:50:51.000000000 -0500
+@@ -22,6 +22,8 @@ typedef struct Menu {
+     menu_entry *entries;
+     int    start_x;		/* position relative to menubar start */
+     char   *help_node;
++    wchar_t **wentries;
++    wchar_t *wname;
+ } Menu;
+ 
+ extern int menubar_visible;
+--- mc-4.6.0/src/myslang.h.jj	2002-11-14 20:35:13.000000000 -0500
++++ mc-4.6.0/src/myslang.h	2003-02-20 18:50:51.000000000 -0500
+@@ -11,6 +11,10 @@
+ #    include "slang/include/slang.h"
+ #endif /* !HAVE_SYSTEM_SLANG */
+ 
++#ifdef UTF8
++#    include <wchar.h>
++#endif
++
+ enum {
+     KEY_BACKSPACE = 400,
+     KEY_END, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT,
+--- mc-4.6.0/src/screen.c.jj	2003-01-28 17:58:22.000000000 -0500
++++ mc-4.6.0/src/screen.c	2003-02-20 18:50:51.000000000 -0500
+@@ -170,22 +170,59 @@ add_permission_string (char *dest, int w
+ static const char *
+ string_file_name (file_entry *fe, int len)
+ {
+-    static char buffer [BUF_SMALL];
+     int i;
++#ifdef UTF8
++    static char buffer [BUF_SMALL * 4];
++    mbstate_t s;
++    int mbmax = MB_CUR_MAX;
++    const char *str = fe->fname;
+ 
+-    for (i = 0; i < sizeof(buffer) - 1; i++) {
+-	char c;
++    memset (&s, 0, sizeof (s));
++#else
++    static char buffer [BUF_SMALL];
++#endif
+ 
+-	c = fe->fname[i];
++#ifdef UTF8
++    if (SLsmg_Is_Unicode)
++	for (i = 0; i < sizeof (buffer) - 1; i++) {
++	    wchar_t wc;
++	    int len;
+ 
+-	if (!c)
+-	    break;
++	    len = mbrtowc (&wc, str, mbmax, &s);
++	    if (!len)
++		break;
++	    if (len < 0) {
++		memset (&s, 0, sizeof (s));
++		buffer[i] = '?';
++		str++;
++		continue;
++	    }
++	    if (!is_printable (wc)) {
++		buffer[i] = '?';
++		str++;
++		continue;
++	    }
++	    if (i >= sizeof (buffer) - len)
++		break;
++	    memcpy (buffer + i, str, len);
++	    i += len - 1;
++	    str += len;
++	}
++    else
++#endif
++	for (i = 0; i < sizeof(buffer) - 1; i++) {
++	    char c;
+ 
+-	if (!is_printable(c))
+-	    c = '?';
++	    c = fe->fname[i];
+ 
+-	buffer[i] = c;
+-    }
++	    if (!c)
++		break;
++
++	    if (!is_printable(c))
++		c = '?';
++
++	    buffer[i] = c;
++	}
+ 
+     buffer[i] = 0;
+     return buffer;
+@@ -424,42 +461,6 @@ static struct {
+ { "dot",   1,  0, J_RIGHT,	" ",		0, string_dot,		   NULL },
+ };
+ 
+-static char *
+-to_buffer (char *dest, int just_mode, int len, const char *txt)
+-{
+-    int txtlen = strlen (txt);
+-    int still, over;
+-
+-    /* Fill buffer with spaces */
+-    memset (dest, ' ', len);
+-
+-    still = (over=(txtlen > len)) ? (txtlen - len) : (len - txtlen);
+-
+-    switch (HIDE_FIT(just_mode)){
+-        case J_LEFT:
+-	    still = 0;
+-	    break;
+-	case J_CENTER:
+-	    still /= 2;
+-	    break;
+-	case J_RIGHT:
+-	default:
+-	    break;
+-    }
+-
+-    if (over){
+-	if (IS_FIT(just_mode))
+-	    strcpy (dest, name_trunc(txt, len));
+-	else
+-	    strncpy (dest, txt+still, len);
+-    } else
+-	strncpy (dest+still, txt, txtlen);
+-
+-    dest[len] = '\0';
+-
+-    return (dest + len);
+-}
+-
+ static int
+ file_compute_color (int attr, file_entry *fe)
+ {
+@@ -511,14 +512,17 @@ file_compute_color (int attr, file_entry
+ 
+ /* Formats the file number file_index of panel in the buffer dest */
+ static void
+-format_file (char *dest, int limit, WPanel *panel, int file_index, int width, int attr, int isstatus)
++format_file (WPanel *panel, int file_index, int width, int attr, int isstatus)
+ {
+     int      color, length, empty_line;
+     const char *txt;
+-    char     *old_pos;
+-    char     *cdest = dest;
+     format_e *format, *home;
+     file_entry *fe;
++#ifdef UTF8
++    char     buffer[BUF_MEDIUM * sizeof (wchar_t)];
++#else
++    char     buffer[BUF_MEDIUM];
++#endif
+ 
+     length     = 0;
+     empty_line = (file_index >= panel->count);
+@@ -536,34 +540,105 @@ format_file (char *dest, int limit, WPan
+ 	    break;
+ 
+ 	if (format->string_fn){
+-	    int len;
++	    int len, still, over, perm, txtlen, wide;
+ 
+ 	    if (empty_line)
+ 		txt = " ";
+ 	    else
+ 		txt = (*format->string_fn)(fe, format->field_len);
+ 
+-	    old_pos = cdest;
+-
+ 	    len = format->field_len;
+ 	    if (len + length > width)
+ 		len = width - length;
+-	    if (len + (cdest - dest) > limit)
+-		len = limit - (cdest - dest);
++	    if (len >= BUF_MEDIUM)
++		len = BUF_MEDIUM - 1;
+ 	    if (len <= 0)
+ 		break;
+-	    cdest = to_buffer (cdest, format->just_mode, len, txt);
+-	    length += len;
+ 
+-            attrset (color);
++	    perm = 0;
++            if (permission_mode) {
++		if (!strcmp(format->id, "perm"))
++		    perm = 1;
++		else if (!strcmp(format->id, "mode"))
++		    perm = 2;
++	    }
+ 
+-            if (permission_mode && !strcmp(format->id, "perm"))
+-                add_permission_string (old_pos, format->field_len, fe, attr, color, 0);
+-            else if (permission_mode && !strcmp(format->id, "mode"))
+-                add_permission_string (old_pos, format->field_len, fe, attr, color, 1);
+-            else
+-		addstr (old_pos);
++	    wide = 0;
++#ifdef UTF8
++	    if (SLsmg_Is_Unicode && !empty_line && !perm) {
++		mbstate_t s;
++		const char *str = txt;
++
++		memset (&s, 0, sizeof (s));
++		txtlen = mbsrtowcs ((wchar_t *) buffer, &str,
++				    sizeof (buffer) / sizeof (wchar_t), &s);
++		if (txtlen < 0) {
++		    txt = " ";
++		    txtlen = 1;
++		} else
++		    wide = 1;
++	    } else
++#endif
++		txtlen = strlen (txt);
++
++	    over = txtlen > len;
++	    still = over ? txtlen - len : len - txtlen;
++
++	    switch (HIDE_FIT(format->just_mode)) {
++	    case J_LEFT:
++		still = 0;
++		break;
++	    case J_CENTER:
++		still /= 2;
++		break;
++	    case J_RIGHT:
++	    default:
++		break;
++	    }
+ 
++	    attrset (color);
++
++	    if (wide) {
++#ifdef UTF8
++		if (over) {
++		    if (IS_FIT (format->just_mode)) {
++			int len2 = len / 2 - 1 + (len % 2);
++
++			SLsmg_write_nwchars ((wchar_t *) buffer,
++					     len / 2);
++			SLsmg_write_nwchars (L"~", 1);
++			SLsmg_write_nwchars (((wchar_t *) buffer)
++					     + txtlen - len2, len2);
++		    } else
++			SLsmg_write_nwchars ((wchar_t *) buffer, len);
++		} else {
++		    printw ("%*s", still, "");
++		    SLsmg_write_nwchars ((wchar_t *) buffer, txtlen);
++		    printw ("%*s", len - txtlen - still, "");
++		}
++#endif
++	    } else {
++		if (over) {
++		    if (IS_FIT (format->just_mode))
++			strcpy (buffer, name_trunc(txt, len));
++		    else
++			memcpy (buffer, txt + still, len);
++		} else {
++		    memset (buffer, ' ', still);
++		    memcpy (buffer + still, txt, txtlen);
++		    memset (buffer + still + txtlen, ' ',
++			    len - txtlen - still);
++		}
++		buffer[len] = '\0';
++
++		if (perm)
++		    add_permission_string (buffer, format->field_len, fe,
++					   attr, color, perm - 1);
++		else
++		    addstr (buffer);
++	    }
++
++	    length += len;
+ 	} else {
+             if (attr == SELECTED || attr == MARKED_SELECTED)
+                 attrset (SELECTED_COLOR);
+@@ -586,7 +661,6 @@ repaint_file (WPanel *panel, int file_in
+ {
+     int    second_column = 0;
+     int	   width, offset;
+-    char   buffer [BUF_MEDIUM];
+ 
+     offset = 0;
+     if (!isstatus && panel->split){
+@@ -615,7 +689,7 @@ repaint_file (WPanel *panel, int file_in
+ 	    widget_move (&panel->widget, file_index - panel->top_file + 2, 1);
+     }
+ 
+-    format_file (buffer, sizeof(buffer), panel, file_index, width, attr, isstatus);
++    format_file (panel, file_index, width, attr, isstatus);
+ 
+     if (!isstatus && panel->split){
+ 	if (second_column)
+@@ -720,7 +794,7 @@ mini_info_separator (WPanel *panel)
+     widget_move (&panel->widget, llines (panel) + 2, 1);
+ #ifdef HAVE_SLANG
+     attrset (NORMAL_COLOR);
+-    hline (ACS_HLINE, panel->widget.cols - 2);
++    hline (ACS_HLINE, panel->widget.cols - 3);
+ #else
+     hline ((slow_terminal ? '-' : ACS_HLINE) | NORMAL_COLOR,
+ 	   panel->widget.cols - 2);
+@@ -1039,13 +1113,21 @@ panel_reload (WPanel *panel)
+ }
+ 
+ static void
+-paint_frame (WPanel *panel)
++paint_frame (WPanel *panel) 
+ {
+     int  header_len;
+     int  spaces, extra;
+     int  side, width;
+ 
+-    char *txt, buffer[30]; /*Hope that this is enough ;-) */
++    char *txt;
++#ifdef UTF8
++    char buffer[30 * sizeof (wchar_t)];
++    mbstate_t s;
++
++    memset (&s, 0, sizeof (s));
++#else
++    char buffer[30]; /*Hope that this is enough ;-) */
++#endif
+     if (!panel->split)
+ 	adjust_top_file (panel);
+ 
+@@ -1070,20 +1152,41 @@ paint_frame (WPanel *panel)
+             if (format->string_fn){
+                 txt = format->title;
+ 
++                attrset (MARKED_COLOR);
++		width -= format->field_len;
++#ifdef UTF8
++		if (SLsmg_Is_Unicode) {
++		    const char *str = txt;
++		    header_len = mbsrtowcs ((wchar_t *) buffer, &str,
++					    sizeof (buffer) / sizeof (wchar_t),
++					    &s);
++		    if (header_len < 0) {
++			memset (&s, 0, sizeof (s));
++			printw ("%*s", format->field_len, "");
++			continue;
++		    }
++		    if (header_len > format->field_len)
++			header_len = format->field_len;
++		    spaces = (format->field_len - header_len) / 2;
++		    extra  = (format->field_len - header_len) % 2;
++		    printw ("%*s", spaces, "");
++		    SLsmg_write_nwchars ((wchar_t *) buffer, header_len);
++		    printw ("%*s", spaces + extra, "");
++		    continue;
++		}
++#endif
+ 		header_len = strlen (txt);
+ 		if (header_len > format->field_len){
+-		    strcpy (buffer, txt);
++		    strncpy (buffer, txt, format->field_len);
+ 		    txt = buffer;
+ 		    txt [format->field_len] = 0;
+-		    header_len = strlen (txt);
++		    header_len = format->field_len;
+ 		}
+ 
+-                attrset (MARKED_COLOR);
+                 spaces = (format->field_len - header_len) / 2;
+                 extra  = (format->field_len - header_len) % 2;
+ 		printw ("%*s%-s%*s", spaces, "",
+ 			 txt, spaces+extra, "");
+-		width -= 2 * spaces + extra + header_len;
+ 	    } else {
+ 		attrset (NORMAL_COLOR);
+ 		one_vline ();
+--- mc-4.6.0/src/util.h.jj	2003-01-27 16:07:29.000000000 -0500
++++ mc-4.6.0/src/util.h	2003-02-20 18:50:51.000000000 -0500
+@@ -47,6 +47,8 @@ void init_uid_gid_cache (void);
+ char *get_group (int);
+ char *get_owner (int);
+ 
++int mbstrlen (const char *);
++
+ #define MAX_I18NTIMELENGTH 14
+ #define MIN_I18NTIMELENGTH 10
+ #define STD_I18NTIMELENGTH 12
+--- mc-4.6.0/src/widget.c.jj	2002-12-25 18:15:48.000000000 -0500
++++ mc-4.6.0/src/widget.c	2003-02-20 18:50:51.000000000 -0500
+@@ -133,7 +133,11 @@ button_callback (WButton *b, int Msg, in
+ 	if (b->hotpos >= 0){
+ 	    attrset ((b->selected) ? HOT_FOCUSC : HOT_NORMALC);
+ 	    widget_move (&b->widget, 0, b->hotpos+off);
++#ifdef UTF8
++	    SLsmg_write_nwchars (&b->hotwc, 1);
++#else
+ 	    addch ((unsigned char)b->text [b->hotpos]);
++#endif
+         }
+ 	if (Msg == WIDGET_FOCUS)
+ 	    break;
+@@ -168,7 +172,7 @@ button_destroy (WButton *b)
+ static int
+ button_len (const char *text, unsigned int flags)
+ {
+-    int ret = strlen (text);
++    int ret = mbstrlen (text);
+     switch (flags){
+ 	case DEFPUSH_BUTTON:
+ 	    ret += 6;
+@@ -191,14 +195,35 @@ button_len (const char *text, unsigned i
+  * the button text is g_malloc()ed, we can safely change and shorten it.
+  */
+ static void
+-button_scan_hotkey(WButton* b)
++scan_hotkey(char *text, int *hotposp, int *hotkeyp, wchar_t *hotwcp)
+ {
+-    char* cp = strchr (b->text, '&');
++    char* cp = strchr (text, '&');
+ 
+     if (cp != NULL && cp[1] != '\0'){
++#ifdef UTF8
++	if (SLsmg_Is_Unicode) {
++	    mbstate_t s;
++	    int len;
++
++	    *cp = '\0';
++	    memset (&s, 0, sizeof (s));
++	    len = mbrtowc (hotwcp, cp + 1, MB_CUR_MAX, &s);
++	    if (len > 0) {
++		*hotposp = mbstrlen (text);
++		if (*hotposp < 0) {
++		    *hotposp = -1;
++		} else {
++		    /* FIXME */
++		    *hotkeyp = tolower (*hotwcp);
++		}
++	    }
++	} else
++#endif
++	{
++	    *hotkeyp = tolower (*cp);
++	    *hotposp = cp - text;
++	}
+ 	strcpy (cp, cp+1);
+-	b->hotkey = tolower (*cp);
+-	b->hotpos = cp - b->text;
+     }
+ }
+ 
+@@ -221,18 +246,19 @@ button_new (int y, int x, int action, in
+     widget_want_hotkey (b->widget, 1);
+     b->hotkey = 0;
+     b->hotpos = -1;
++    b->hotwc = L'\0';
+ 
+-    button_scan_hotkey(b);
++    scan_hotkey(b->text, &b->hotpos, &b->hotkey, &b->hotwc);
+     return b;
+ }
+ 
+ void
+ button_set_text (WButton *b, char *text)
+ {
+-   g_free (b->text);
++    g_free (b->text);
+     b->text = g_strdup (text);
+     b->widget.cols = button_len (text, b->flags);
+-    button_scan_hotkey(b);
++    scan_hotkey(b->text, &b->hotpos, &b->hotkey, &b->hotwc);
+     dlg_redraw (b->widget.parent);
+ }
+ 
+@@ -306,22 +332,40 @@ radio_callback (WRadio *r, int Msg, int 
+     case WIDGET_DRAW:
+ 	for (i = 0; i < r->count; i++){
+ 		register unsigned char* cp;
+-	    attrset ((i==r->pos && Msg==WIDGET_FOCUS) ? FOCUSC :NORMALC);
+-	    widget_move (&r->widget, i, 0);
++		attrset ((i==r->pos && Msg==WIDGET_FOCUS) ? FOCUSC :NORMALC);
++		widget_move (&r->widget, i, 0);
+ 
+ 		printw("(%c) ", (r->sel == i) ? '*' : ' ');
+-		for (cp =  r->texts[i]; *cp; cp++)
+-		{
+-			if (*cp == '&')
+-			{
+-				attrset ((i==r->pos && Msg==WIDGET_FOCUS) 
+-					? HOT_FOCUSC : HOT_NORMALC);
+-				addch(*++cp);
+-				attrset ((i==r->pos && Msg==WIDGET_FOCUS) ? FOCUSC : NORMALC);
++		cp = strchr (r->texts[i], '&');
++		if (cp != NULL) {
++#ifdef UTF8
++		    mbstate_t s;
++		    wchar_t wc;
++		    int len;
++#endif
++		    printw ("%.*s", (char *) cp - r->texts[i], r->texts[i]);
++		    attrset ((i==r->pos && Msg==WIDGET_FOCUS) 
++			     ? HOT_FOCUSC : HOT_NORMALC);
++#ifdef UTF8
++		    if (SLsmg_Is_Unicode) {
++			memset (&s, 0, sizeof (s));
++			len = mbrtowc (&wc, cp + 1, MB_CUR_MAX, &s);
++			++cp;
++			if (len > 0) {
++			    printw ("%.*s", len, cp);
++			    cp += len;
+ 			}
+-			else
+-				addch(*cp);
+-		}
++		    } else
++#endif
++		    {
++			addch (*++cp);
++			++cp;
++		    }
++		    attrset ((i==r->pos && Msg==WIDGET_FOCUS) 
++			     ? FOCUSC : NORMALC);
++		} else
++		    cp = r->texts[i];
++		addstr (cp);
+ 	}
+ 	return 1;
+ 	break;
+@@ -356,7 +400,7 @@ radio_new (int y, int x, int count, char
+     /* Compute the longest string */
+     max = 0;
+     for (i = 0; i < count; i++){
+-	m = strlen (texts [i]);
++	m = mbstrlen (texts [i]);
+ 	if (m > max)
+ 	    max = m;
+     }
+@@ -419,7 +463,11 @@ check_callback (WCheck *c, int Msg, int 
+ 	if (c->hotpos >= 0){
+ 	    attrset ((Msg == WIDGET_FOCUS) ? HOT_FOCUSC : HOT_NORMALC);
+ 	    widget_move (&c->widget, 0, + c->hotpos+4);
++#ifdef UTF8
++	    SLsmg_write_nwchars (&c->hotwc, 1);
++#else
+ 	    addch ((unsigned char)c->text [c->hotpos]);
++#endif
+ 	}
+ 	return 1;
+     }
+@@ -453,31 +501,18 @@ WCheck *
+ check_new (int y, int x, int state, char *text, char *tkname)
+ {
+     WCheck *c =  g_new (WCheck, 1);
+-    char *s, *t;
+     
+-    init_widget (&c->widget, y, x, 1, strlen (text),
++    init_widget (&c->widget, y, x, 1, mbstrlen (text),
+ 		 (callback_fn)check_callback,
+ 		 (destroy_fn)check_destroy, (mouse_h) check_event, tkname);
+     c->state = state ? C_BOOL : 0;
+     c->text = g_strdup (text);
+     c->hotkey = 0;
+     c->hotpos = -1;
++    c->hotwc = L'\0';
+     widget_want_hotkey (c->widget, 1);
+ 
+-    /* Scan for the hotkey */
+-    for (s = text, t = c->text; *s; s++, t++){
+-	if (*s != '&'){
+-	    *t = *s;
+-	    continue;
+-	}
+-	s++;
+-	if (*s){
+-	    c->hotkey = tolower (*s);
+-	    c->hotpos = t - c->text;
+-	}
+-	*t = *s;
+-    }
+-    *t = 0;
++    scan_hotkey (c->text, &c->hotpos, &c->hotkey, &c->hotwc);
+     return c;
+ }
+ 
+@@ -512,7 +547,7 @@ label_callback (WLabel *l, int Msg, int 
+ 	    }
+ 	    widget_move (&l->widget, y, 0);
+ 	    printw ("%s", p);
+-	    xlen = l->widget.cols - strlen (p);
++	    xlen = l->widget.cols - mbstrlen (p);
+ 	    if (xlen > 0)
+ 		printw ("%*s", xlen, " ");
+ 	    if (!q)
+@@ -540,7 +575,7 @@ label_set_text (WLabel *label, char *tex
+     if (text){
+ 	label->text = g_strdup (text);
+ 	if (label->auto_adjust_cols) {
+-	    newcols = strlen (text);
++	    newcols = mbstrlen (text);
+ 	    if (newcols > label->widget.cols)
+ 	    label->widget.cols = newcols;
+ 	}
+@@ -571,7 +606,7 @@ label_new (int y, int x, const char *tex
+     if (!text || strchr(text, '\n'))
+ 	width = 1;
+     else
+-	width = strlen (text);
++	width = mbstrlen (text);
+ 
+     l = g_new (WLabel, 1);
+     init_widget (&l->widget, y, x, 1, width,
+@@ -734,7 +769,7 @@ update_input (WInput *in, int clear_firs
+     int has_history = 0;
+     int    i, j;
+     unsigned char   c;
+-    int    buf_len = strlen (in->buffer);
++    int    buf_len = mbstrlen (in->buffer);
+ 
+     if (should_show_history_button (in))
+ 	has_history = HISTORY_BUTTON_WIDTH;
+@@ -908,7 +943,7 @@ char *
+ show_hist (Hist * history, int widget_x, int widget_y)
+ {
+     Hist *hi, *z;
+-    size_t maxlen = strlen (i18n_htitle ()), i, count = 0;
++    size_t maxlen = mbstrlen (i18n_htitle ()), i, count = 0;
+     int x, y, w, h;
+     char *q, *r = 0;
+     Dlg_head *query_dlg;
+@@ -922,7 +957,7 @@ show_hist (Hist * history, int widget_x,
+ 	z = z->prev;
+     hi = z;
+     while (hi) {
+-	if ((i = strlen (hi->text)) > maxlen)
++	if ((i = mbstrlen (hi->text)) > maxlen)
+ 	    maxlen = i;
+ 	count++;
+ 	hi = hi->next;
+@@ -1124,7 +1159,7 @@ insert_char (WInput *in, int c_code)
+ 	    strcpy (narea, in->buffer);
+ 	    in->buffer = narea;
+ 	    in->current_max_len += in->field_len;
+-	   g_free (p);
++	    g_free (p);
+ 	}
+     }
+     if (strlen (in->buffer)+1 < in->current_max_len){
+--- mc-4.6.0/src/widget.h.jj	2002-11-12 21:27:01.000000000 -0500
++++ mc-4.6.0/src/widget.h	2003-02-20 18:50:51.000000000 -0500
+@@ -22,6 +22,7 @@ typedef struct WButton {
+     char *text;			/* text of button */
+     int  hotkey;                /* hot KEY */
+     int  hotpos;                /* offset hot KEY char in text */
++    wchar_t hotwc;
+     int  (*callback)(int, void*); /* Callback function */
+     void *callback_data;
+ } WButton;
+@@ -41,6 +42,7 @@ typedef struct WCheck {
+     char *text;			/* text of check button */
+     int hotkey;                 /* hot KEY */                    
+     int hotpos;			/* offset hot KEY char in text */
++    wchar_t hotwc;
+ } WCheck;
+ 
+ typedef struct WGauge {
