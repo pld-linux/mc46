@@ -16,7 +16,7 @@ Summary(pt_BR):	Interpretador de comandos visual Midnight Commander
 Summary(ru):	äÉÓĞÅÔŞÅÒ ÆÁÊÌÏ× Midnight Commander
 Summary(tr):	Midnight Commander görsel kabuğu
 Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
-Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell.
+Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.5.55
 Release:	10
