@@ -3,7 +3,6 @@
 # _with_ext2undel	- with ext2 undelete fs
 # _with_samba		- with SAMBA vfs support
 # _with_x		- with text edit in X support
-# _with_mo		- alters the M-o functionality
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -37,7 +36,6 @@ Patch12:	%{name}-samba.patch
 Patch13:	%{name}-nobashism.patch
 Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
-Patch16:	%{name}-mo.patch
 Patch17:	%{name}-%{name}.ext-ear_war.patch
 Patch18:	%{name}-home_etc.patch
 Patch19:	%{name}-tmout.patch
@@ -215,7 +213,6 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 #%patch13 -p1
 #%patch14 -p1
 #%patch15 -p1
-#%{?_with_mo:%patch16 -p1}
 #%patch17 -p1
 #%patch19 -p1 merged?
 #%patch20 -p1
