@@ -39,7 +39,8 @@ Patch15:	%{name}-nognome-amfix.patch
 Patch16:	%{name}-urar.patch
 Patch17:	%{name}-samba.patch
 Patch18:	%{name}-gettext.patch
-Patch19:	%{name}-shquiet.patch
+Patch19:	%{name}-sh-quiet.patch
+Patch20:	%{name}-nognome-gettext.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
@@ -193,14 +194,14 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 gettextize --copy --force
-automake -a -c
 aclocal -I \
 	%{!?bcond_off_gnome:%{_aclocaldir}/gnome}%{?bcond_off_gnome:macros}
-
 autoconf
+automake -a -c
 %configure \
 	%{?bcond_on_ext2undel:--with-ext2-undel}%{!?bcond_on_ext2undel:--without-ext2undel} \
 	--with-vfs \

@@ -1,0 +1,18 @@
+--- mc-4.5.52.orig/macros/gnome-gettext.m4	Thu Feb  8 23:16:24 2001
++++ mc-4.5.52/macros/gnome-gettext.m4	Sun Apr 15 01:53:57 2001
+@@ -21,6 +21,7 @@
+     AC_MSG_RESULT($USE_NLS)
+     AC_SUBST(USE_NLS)
+ 
++    BUILD_INCLUDED_LIBINTL=no
+     USE_INCLUDED_LIBINTL=no
+ 
+     dnl If we use NLS figure out what method
+@@ -197,6 +198,7 @@
+     done
+ 
+     dnl Make all variables we use known to autoconf.
++    AC_SUBST(BUILD_INCLUDED_LIBINTL)
+     AC_SUBST(USE_INCLUDED_LIBINTL)
+     AC_SUBST(CATALOGS)
+     AC_SUBST(CATOBJEXT)
