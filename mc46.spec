@@ -21,11 +21,11 @@ Release:	6
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
-# Source0-md5: 70804dc9e2049e24f294ff7090a82a12
+# Source0-md5:	70804dc9e2049e24f294ff7090a82a12
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source3-md5: 17d7b574e1b85ad6f8ddceda9e841f19
+# Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
 # Changelogs for Advanced Midnight Commander patches
 Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
 # Source4-md5:	bcf001d40a63f15848a3763cf5e29f6d
@@ -174,7 +174,7 @@ distante possède le programme mcserv et que celui-ci est activé.
 Mcserv apporte aux machines clientes qui font tourner Midnight
 Commander un accès aux fichiers situés sur l'hôte.
 
-%description -l ja
+%description -n mcserv -l ja
 Midnight Commander
 ¤Î¥Õ¥¡¥¤¥ë´ÉÍý¥·¥¹¥Æ¥à¤Ï¡¢¥ê¥â¡¼¥È¥Þ¥·¥ó¤Ë¤¢¤ë¥Õ¥¡¥¤¥ë¤ò
 ¥í¡¼¥«¥ë¤Ë¤¢¤ë¤«¤Î¤è¤¦¤Ë°·¤¦¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£¤³¤Îµ¡Ç½¤Ï mcserv
