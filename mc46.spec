@@ -215,16 +215,16 @@ fi
 %dir %{_libdir}/mc/bin
 %dir %{_libdir}/mc/extfs
 
-%lang(cs) /usr/share/locale/cs/LC_MESSAGES/mc.mo
-%lang(da) /usr/share/locale/da/LC_MESSAGES/mc.mo
-%lang(de) /usr/share/locale/de/LC_MESSAGES/mc.mo
-%lang(es) /usr/share/locale/es/LC_MESSAGES/mc.mo
-%lang(fr) /usr/share/locale/fr/LC_MESSAGES/mc.mo
-%lang(it) /usr/share/locale/it/LC_MESSAGES/mc.mo
-%lang(ko) /usr/share/locale/ko/LC_MESSAGES/mc.mo
-%lang(no) /usr/share/locale/no/LC_MESSAGES/mc.mo
-%lang(pl) /usr/share/locale/pl/LC_MESSAGES/mc.mo
-%lang(ru) /usr/share/locale/ru/LC_MESSAGES/mc.mo
+%lang(cs) %{_datadir}/locale/cs/LC_MESSAGES/mc.mo
+%lang(da) %{_datadir}/locale/da/LC_MESSAGES/mc.mo
+%lang(de) %{_datadir}/locale/de/LC_MESSAGES/mc.mo
+%lang(es) %{_datadir}/locale/es/LC_MESSAGES/mc.mo
+%lang(fr) %{_datadir}/locale/fr/LC_MESSAGES/mc.mo
+%lang(it) %{_datadir}/locale/it/LC_MESSAGES/mc.mo
+%lang(ko) %{_datadir}/locale/ko/LC_MESSAGES/mc.mo
+%lang(no) %{_datadir}/locale/no/LC_MESSAGES/mc.mo
+%lang(pl) %{_datadir}/locale/pl/LC_MESSAGES/mc.mo
+%lang(ru) %{_datadir}/locale/ru/LC_MESSAGES/mc.mo
 
 %files -n mcserv
 %defattr(644,root,root,755)
@@ -245,10 +245,10 @@ fi
 %{_libdir}/mc/layout
 %{_libdir}/mc/mc-gnome.ext
 %{_libdir}/mc/term
-/usr/share/mime-info
-/usr/share/idl
-/usr/share/pixmaps
-/usr/share/mc
+%{_datadir}/mime-info
+%{_datadir}/idl
+%{_datadir}/pixmaps
+%{_datadir}/mc
 
 %changelog
 * Fri May 14 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
@@ -315,7 +315,7 @@ fi
 - added pl translation for mc, mcserv (Wojtek ¦lusarczyk
   <wojtek@shadow.eu.org>),
 - added using %%{name} macro in Buildroot and Source,
-- added /usr/share/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
+- added %{_datadir}/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
   package,
 - added patch which fix support for all languages,
 - added "Obsoletes: tkmc" for mc and gmc,
@@ -346,7 +346,7 @@ fi
 - added pl translation for mc, mcserv (Wojtek ¦lusarczyk
   <wojtek@shadow.eu.org>),
 - added using %%{name} macro in Buildroot and Source,
-- added /usr/share/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
+- added %{_datadir}/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
   package,
 - added patch which fix support for all languages,
 - added "Obsoletes: tkmc" for mc and gmc,
