@@ -4,7 +4,7 @@ Summary(fr):	Le shell Midnight Commander
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.31
+Version:	4.5.33
 Release:	1
 Copyright:	GPL
 Group:		Shells
