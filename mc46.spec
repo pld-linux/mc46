@@ -23,6 +23,7 @@ Source2:	%{name}serv.init
 Source3:	%{name}.1.pl
 Source4:	%{name}edit.1.pl
 Source5:	%{name}serv.8.pl
+Source6:	%{name}-srpm
 Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
@@ -45,6 +46,7 @@ Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
 Patch19:	%{name}-nobashism.patch
 Patch20:	%{name}-BINDIR.patch
 Patch21:	%{name}-tinfo.patch
+Patch22:	%{name}-vfs.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -208,6 +210,7 @@ nie jest ona jeszcze skoñczona.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 %build
 gettextize --copy --force
@@ -242,6 +245,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 install -D %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mc.1
 install -D %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mcedit.1
 install -D %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mcserv.8
+install %{SOURCE6} $RPM_BUILD_ROOT%{_libdir}/mc/extfs/srpm
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
@@ -291,6 +295,7 @@ fi
 
 %attr(755,root,root) %{_libdir}/mc/bin/cons.saver
 
+%{_libdir}/mc/extfs/README
 %attr(755,root,root) %{_libdir}/mc/extfs/a
 %attr(755,root,root) %{_libdir}/mc/extfs/apt
 %attr(755,root,root) %{_libdir}/mc/extfs/audio
@@ -311,6 +316,7 @@ fi
 %attr(755,root,root) %{_libdir}/mc/extfs/urar
 %attr(755,root,root) %{_libdir}/mc/extfs/uzip
 %attr(755,root,root) %{_libdir}/mc/extfs/uzoo
+%attr(755,root,root) %{_libdir}/mc/extfs/srpm
 %{_libdir}/mc/extfs/extfs.ini
 %{_libdir}/mc/extfs/sfs.ini
 %{_libdir}/mc/syntax
