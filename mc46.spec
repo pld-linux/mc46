@@ -17,7 +17,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.0
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -48,6 +48,7 @@ Patch8:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
 Patch9:		amc-2.diff
 Patch10:	%{name}-no_ti_DATA.patch
 Patch11:	%{name}-mc.ext.patch
+Patch12:	%{name}-posix_sh.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -223,6 +224,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 %{__gettextize}
