@@ -5,8 +5,8 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.42
-Release:	1
-Copyright:	GPL
+Release:	3
+License:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
@@ -27,13 +27,13 @@ BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
 
-%define		sysconfdir	/etc
+%define		_sysconfdir	/etc/X11/GNOME
 
 %description
-Midnight Commander is a visual shell much like a file manager, only with way
-more features. It is text mode, but also includes mouse support if you are
-running GPM. Its coolest feature is the ability to ftp, view tar, zip files,
-and poke into RPMs for specific files.  :-)
+Midnight Commander is a visual shell much like a file manager, only with
+way more features. It is text mode, but also includes mouse support if you
+are running GPM. Its coolest feature is the ability to ftp, view tar, zip
+files, and poke into RPMs for specific files.  :-)
 
 %description -l de
 Midnight Commander ist ein Visual-Shell, ähnlich einem Dateimanager, aber
@@ -48,22 +48,22 @@ beaucoup du gestionnaire de fichiers, mais est bien plus puissant. Il
 fonctionne en mode console (texte), mais peut être contrôlé à la souris si
 GPM est présent. Ses caractéristiques les plus remarquables sont la
 possibilité de se connecter à un serveur FTP, de visualiser des archives
-tar, de compresser des fichiers avec zip, de récupérer des fichiers dans les
-packages RPM, et tout ceci simplement.
+tar, de compresser des fichiers avec zip, de récupérer des fichiers dans
+les packages RPM, et tout ceci simplement.
 
 %description -l pl
 Midnight Commander jest wizualnym shellem podobnym do Norton Commandera.
 Pracuje w trybie tekstowym, ale ma tak¿e wspomaganie dla myszki. Jest super
 ;) MC ma wbudowanego klienta ftp, mo¿e zagl±daæ do skompresowanego archiwum
 tarowego, do *.zip oraz *.rpm. Teraz równie¿ ma wspomaganie dla urz±dzeñ
-/dev/pts/{0-2048} - standard Unix98.  
+/dev/pts/{0-2048} - standard Unix98.
 
 %description -l tr
 Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha yetenekli
 bir görsel kabuktur. Metin ekranda çalýþýr ve GPM çalýþýyorsa fare desteði
 vardýr. En hoþ özellikleri ftp yapabilmesi, tar, zip ve RPM dosyalarýnýn
 içeriklerini gösterebilmesidir.
- 
+
 %package -n mcserv
 Summary:	Server for the Midnight Commander network file management system
 Summary(de):	Midnight Commander File-Server 
@@ -83,10 +83,12 @@ the files on a remote machine as if they were local.  This is only possible
 if the remote machine is running the mcserv server program. Mcserv provides
 clients running Midnight Commander with access to the host's file systems.
 
+
 %description -l de -n mcserv
-mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight Commander.
-Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients, die das
-Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file manager).
+mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight
+Commander. Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients,
+die das Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file
+manager).
 
 %description -l fr -n mcserv
 Le système de gestion de fichier Midnight Commander vous permet de manipuler
@@ -175,7 +177,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post -n mcserv
 /sbin/chkconfig --add mcserv
-if test -r /var/run/mcserv.pid; then
+if [ -f /var/lock/subsys/mcserv]; then
 	/etc/rc.d/init.d/mcserv restart >&2
 else
 	echo "Run \"/etc/rc.d/init.d/mcserv start\" to start mcserv daemon."
@@ -183,8 +185,10 @@ fi
 
 %preun -n mcserv
 if [ "$1" = "0" ]; then
+	if [-f /var/lock/subsys/mcserv ]; then
+		/etc/rc.d/init.d/mcserv stop >&2
+	fi
 	/sbin/chkconfig --del mcserv
-	/etc/rc.d/init.d/mcserv stop >&2
 fi
 
 %files -f %{name}.lang
