@@ -57,6 +57,8 @@ Patch16:	%{name}-CAN-2003-1023.patch
 Patch17:	%{name}-tempfile.patch
 Patch18:	%{name}-localenames.patch
 Patch19:	%{name}-noperl-vfs.patch
+# at now syntax highligthing for PLD-update-TODO and CVSROOT/users
+Patch20:	%{name}-pld-developerfriendly.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -242,6 +244,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch17 -p0
 %patch18 -p1
 %{!?with_perl_vfs:%patch19 -p1}
+%patch20 -p1
 
 mv -f po/{no,nb}.po
 
