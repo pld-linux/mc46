@@ -227,8 +227,8 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 gettextize --copy --force
 aclocal -I \
 	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
-autoconf
-automake -a -c -f
+%{__autoconf}
+%{__automake}
 X11_WWW="
 if [ -f /usr/X11R6/bin/netscape ]; then
 	netscape;
