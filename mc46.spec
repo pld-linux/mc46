@@ -16,10 +16,8 @@ Patch0:		mc-mimekeys.patch
 Patch1:		mc-rpmfs.patch
 Patch2:		mc-system_popt.patch
 URL:		http://mc.blackdown.org/mc/
-BuildRequires:	glib-devel
 BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	XFree86-devel
 BuildRequires:	ORBit-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	imlib-devel
