@@ -1,0 +1,32 @@
+--- mc-4.5.54/configure.in~	Fri Jul 13 08:29:25 2001
++++ mc-4.5.54/configure.in	Fri Jul 13 09:11:37 2001
+@@ -395,7 +395,7 @@
+ 	then
+ 		search_ncurses=true
+ 	else
+-		LIBS="$LIBS -L$withval/lib -lncurses"
++		LIBS="$LIBS -L$withval/lib -ltinfo"
+ 		CPPFLAGS="$CPPFLAGS -I$withval/include"
+ 		search_ncurses=false
+ 		screen_manager="ncurses"
+@@ -775,14 +775,14 @@
+ then
+     AC_CHECKING([location of ncurses.h file])
+ 
+-    AC_NCURSES(/usr/include, ncurses.h, -lncurses,, "ncurses on /usr/include")
+-    AC_NCURSES(/usr/include/ncurses, ncurses.h, -lncurses, -I/usr/include/ncurses, "ncurses on /usr/include/ncurses")
+-    AC_NCURSES(/usr/local/include, ncurses.h, -L/usr/local/lib -lncurses, -I/usr/local/include, "ncurses on /usr/local")
+-    AC_NCURSES(/usr/local/include/ncurses, ncurses.h, -L/usr/local/lib -L/usr/local/lib/ncurses -lncurses, -I/usr/local/include/ncurses, "ncurses on /usr/local/include/ncurses")
++    AC_NCURSES(/usr/include, ncurses.h, -ltinfo,, "ncurses on /usr/include")
++    AC_NCURSES(/usr/include/ncurses, ncurses.h, -ltinfo, -I/usr/include/ncurses, "ncurses on /usr/include/ncurses")
++    AC_NCURSES(/usr/local/include, ncurses.h, -L/usr/local/lib -ltinfo, -I/usr/local/include, "ncurses on /usr/local")
++    AC_NCURSES(/usr/local/include/ncurses, ncurses.h, -L/usr/local/lib -L/usr/local/lib/ncurses -ltinfo, -I/usr/local/include/ncurses, "ncurses on /usr/local/include/ncurses")
+ 
+-    AC_NCURSES(/usr/local/include/ncurses, curses.h, -L/usr/local/lib -lncurses, -I/usr/local/include/ncurses -DRENAMED_NCURSES, "renamed ncurses on /usr/local/.../ncurses")
++    AC_NCURSES(/usr/local/include/ncurses, curses.h, -L/usr/local/lib -ltinfo, -I/usr/local/include/ncurses -DRENAMED_NCURSES, "renamed ncurses on /usr/local/.../ncurses")
+ 
+-    AC_NCURSES(/usr/include/ncurses, curses.h, -lncurses, -I/usr/include/ncurses -DRENAMED_NCURSES, "renamed ncurses on /usr/include/ncurses")
++    AC_NCURSES(/usr/include/ncurses, curses.h, -ltinfo, -I/usr/include/ncurses -DRENAMED_NCURSES, "renamed ncurses on /usr/include/ncurses")
+ 
+     dnl
+     dnl We couldn't find ncurses, try SysV curses
