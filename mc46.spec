@@ -89,7 +89,7 @@ Midnight Commander jest wizualn± pow³ok± podobn± do Norton
 Commandera. Pracuje w trybie tekstowym, ale ma tak¿e wspomaganie dla
 myszki. Jest super ;) MC ma wbudowanego klienta ftp, mo¿e zagl±daæ do
 skompresowanego archiwum tarowego, do *.zip oraz *.rpm. Teraz równie¿
-ma wspomaganie dla urz±dzeñ /dev/pts/{0-2048} - standard Unix98.
+pracuje z urz±dzeniami /dev/pts/{0-2048} - standard Unix98.
 
 %description -l tr
 Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha
