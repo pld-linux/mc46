@@ -25,7 +25,6 @@ BuildRequires:	popt-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+-devel
 BuildRequires:	esound-devel
-BuildRequires:	bonobo-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
