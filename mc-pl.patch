@@ -282,7 +282,7 @@
  #: src/cmd.c:651
  msgid "Extension file edit"
 -msgstr "Modyfikuj plik rozszerzeñ"
-+msgstr "Edytucja pliku rozszerzeñ"
++msgstr "Edycja pliku rozszerzeñ"
  
  #: src/cmd.c:652
  msgid " Which extension file you want to edit? "
@@ -534,7 +534,7 @@
  #: vfs/ftpfs.c:1101 vfs/ftpfs.c:1108
  msgid "ftpfs: couldn't resolve symlink"
 -msgstr "ftpts: nie mo¿na odnale¼æ pliku docelowego dowi±zania symbolicznego"
-+msgstr "ftpts: nie mo¿na odnale¼æ pliku docelowego skrótu"
++msgstr "ftpfs: nie mo¿na odnale¼æ pliku docelowego skrótu"
  
  #: vfs/ftpfs.c:1159
  msgid "Resolving symlink..."
