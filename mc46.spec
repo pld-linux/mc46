@@ -111,8 +111,6 @@ Group(pl):	X11/GNOME
 Requires:	%{name}	   = %{version}
 Requires:	gtk+       = 1.2.1
 Requires:	esound     = 0.2.8
-Requires:	ORBit      = 0.4.2
-Requires:	gnome-libs = 1.0.5
 
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
