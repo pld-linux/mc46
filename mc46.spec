@@ -68,6 +68,7 @@ BuildRequires:	gpm-devel
 %{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
 %{?_with_x:BuildRequires:	XFree86-devel}
 Requires:	file
+Requires:	pam >= 0.77.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
