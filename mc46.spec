@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.51
-Release:	20
+Release:	21
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -45,7 +45,7 @@ BuildRequires:	indent
 %{!?no_gnome:BuildRequires:	gtk+-devel}
 %{!?no_gnome:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:	rpm =< 4.0
+Conflicts:	rpm < 4.0
 Obsoletes:	tkmc
 
 %define		_sysconfdir	/etc/X11/GNOME
