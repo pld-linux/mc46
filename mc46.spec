@@ -250,20 +250,10 @@ gzip -9nf FAQ NEWS README
 rm -rf $RPM_BUILD_ROOT
 
 %post -n mcserv
-/sbin/chkconfig --add mcserv
-if [ -f /var/lock/subsys/mcserv ]; then
-	/etc/rc.d/init.d/mcserv restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/mcserv start\" to start mcserv daemon."
-fi
+NAME=mcserv; DESC="mcserv daemon"; %chkconfig_add
 
 %preun -n mcserv
-if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mcserv ]; then
-		/etc/rc.d/init.d/mcserv stop >&2
-	fi
-	/sbin/chkconfig --del mcserv
-fi
+NAME=mcserv; %chkconfig_del
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
