@@ -58,6 +58,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
+BuildRequires:	rpm-perlprov
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
