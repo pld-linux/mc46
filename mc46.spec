@@ -10,7 +10,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.51
-Release:	22
+Release:	26
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -38,17 +38,20 @@ Patch16:	%{name}-mouse_in_rxvt.patch
 Patch17:	%{name}-security_fix_cons.saver.patch
 Patch18:	%{name}-spellfix_heirarchy.patch
 Patch19:	%{name}-use_old_sorting.patch
+Patch20:	%{name}-proxy.patch
+Patch21:	%{name}-time.patch
 URL:		http://mc.blackdown.org/mc/
+%{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
+%{!?bcond_off_gnome:BuildRequires:	esound-devel}
+BuildRequires:	gettext-devel
+%{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel}
+%ifnarch s390 s390x
 BuildRequires:	gpm-devel
+%endif
+%{!?bcond_off_gnome:BuildRequires:	imlib-devel}
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
-BuildRequires:	gettext-devel
 BuildRequires:	indent
-%{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
-%{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel}
-%{!?bcond_off_gnome:BuildRequires:	imlib-devel}
-%{!?bcond_off_gnome:BuildRequires:	gtk+-devel}
-%{!?bcond_off_gnome:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
 Obsoletes:	tkmc
@@ -184,6 +187,8 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
 
 %build
 gettextize --copy --force
