@@ -126,7 +126,7 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure \
+./configure %{_target} \
 	--prefix=/usr \
 	--sysconfdir=/etc \
 	--without-ext2undel \
