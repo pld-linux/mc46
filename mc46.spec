@@ -205,11 +205,11 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %patch3 -p1
 %patch4 -p1
 cp -f vfs/extfs/{rpm,srpm}
+%patch5 -p1
 #%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch5 -p1
 
 %build
 %{__gettextize}
