@@ -157,6 +157,8 @@ mv $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir}
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
 	FAQ NEWS README
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -175,7 +177,7 @@ if [ "$1" = "0" ]; then
 	/etc/rc.d/init.d/mcserv stop >&2
 fi
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc *.gz
 
@@ -216,17 +218,6 @@ fi
 %dir %{_libdir}/mc
 %dir %{_libdir}/mc/bin
 %dir %{_libdir}/mc/extfs
-
-%lang(cs) %{_datadir}/locale/cs/LC_MESSAGES/mc.mo
-%lang(da) %{_datadir}/locale/da/LC_MESSAGES/mc.mo
-%lang(de) %{_datadir}/locale/de/LC_MESSAGES/mc.mo
-%lang(es) %{_datadir}/locale/es/LC_MESSAGES/mc.mo
-%lang(fr) %{_datadir}/locale/fr/LC_MESSAGES/mc.mo
-%lang(it) %{_datadir}/locale/it/LC_MESSAGES/mc.mo
-%lang(ko) %{_datadir}/locale/ko/LC_MESSAGES/mc.mo
-%lang(no) %{_datadir}/locale/no/LC_MESSAGES/mc.mo
-%lang(pl) %{_datadir}/locale/pl/LC_MESSAGES/mc.mo
-%lang(ru) %{_datadir}/locale/ru/LC_MESSAGES/mc.mo
 
 %files -n mcserv
 %defattr(644,root,root,755)
