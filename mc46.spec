@@ -142,8 +142,8 @@ Summary(tr):	Midnight Commander dosya sunucusu
 Summary(uk):	Midnight Commander 屏侍-优易乓
 Summary(zh_CN):	mc 网络文件管理系统的服务器。
 Group:		Daemons
-PreReq:		/sbin/chkconfig
 PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	pam >= 0.66
 Requires:	portmap
 
