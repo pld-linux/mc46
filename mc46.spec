@@ -2,11 +2,11 @@
 # Conditional build:
 # _without_gnome	- without GNOME support
 # _with_ext2undel	- with ext2 undelete fs
-# _with_samba	- with SAMBA vfs support
+# _with_samba		- with SAMBA vfs support
 # _with_x		- with text edit in X support
 #
 Summary:	A user-friendly file manager and visual shell
-Summary(de):	Visuelle Shell Midnight Commander 
+Summary(de):	Visuelle Shell Midnight Commander
 Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
@@ -44,22 +44,22 @@ Patch20:	%{name}-nobashism.patch
 Patch21:	%{name}-BINDIR.patch
 Patch22:	%{name}-tinfo.patch
 URL:		http://www.gnome.org/mc/
-%{!?_without_gnome:BuildRequires:	ORBit-devel}
-%{!?_without_gnome:BuildRequires:	esound-devel}
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	glib-devel
-%{!?_without_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
+BuildRequires:	indent
+BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	pam-devel
+BuildRequires:	popt-devel
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
+%{!?_without_gnome:BuildRequires:	ORBit-devel}
+%{!?_without_gnome:BuildRequires:	esound-devel}
+%{!?_without_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
 %{!?_without_gnome:BuildRequires:	imlib-devel}
-BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	popt-devel
-BuildRequires:	pam-devel
 %{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
-BuildRequires:	indent
-BuildRequires:	automake
-BuildRequires:	autoconf
 %{?_with_x:BuildRequires:	XFree86-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
@@ -105,7 +105,7 @@ tar, zip ve RPM dosyalarýnýn içeriklerini gösterebilmesidir.
 
 %package -n mcserv
 Summary:	Server for the Midnight Commander network file management system
-Summary(de):	Midnight Commander File-Server 
+Summary(de):	Midnight Commander File-Server
 Summary(fr):	Serveur réseau pour le gestionnaire de fichiers Midnight Commander
 Summary(pl):	Serwer plików Midnight Commandera
 Summary(tr):	Midnight Commander dosya sunucusu
@@ -150,7 +150,7 @@ sistemine eriþimini saðlar.
 
 %package -n gmc
 Summary:	Midnight Commander visual shell (GNOME version)
-Summary(de):	Midnight Commander Visual-Shell (GNOME Version) 
+Summary(de):	Midnight Commander Visual-Shell (GNOME Version)
 Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
 Summary(pl):	Midnight Commander - wizualny shell (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
@@ -233,7 +233,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir} 
+mv -f $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir}
 
 gzip -9nf FAQ NEWS README
 
