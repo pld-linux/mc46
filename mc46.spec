@@ -200,10 +200,12 @@ fi
 %attr(755,root,root) %{_bindir}/mcmfmt
 
 %{_libdir}/mc/mc.ext
-%{_libdir}/mc/mc.hint
 %{_libdir}/mc/mc.hlp
 %{_libdir}/mc/mc.lib
 %{_libdir}/mc/mc.menu
+%{_libdir}/mc/mc.hint
+%lang(cs) %{_libdir}/mc/mc.hint.cs
+%lang(es) %{_libdir}/mc/mc.hint.es
 
 %attr(755,root,root) %{_libdir}/mc/bin/cons.saver
 
@@ -247,11 +249,10 @@ fi
 %attr(755,root,root) %{_bindir}/gmc
 %attr(755,root,root) %{_bindir}/plain-gmc
 
-/etc/X11/GNOME/mc.global
-/etc/CORBA/servers/gmc.gnorba
+%{_sysconfdir}/mc.global
+%{_sysconfdir}/CORBA/servers/gmc.gnorba
 %{_libdir}/mc/layout
 %{_libdir}/mc/mc-gnome.ext
-%{_libdir}/mc/term
 %{_datadir}/mime-info
 %{_datadir}/pixmaps
 %{_datadir}/mc
