@@ -25,7 +25,7 @@ BuildRequires:	ORBit-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	imlib-devel
 BuildRequires:	popt-devel
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
 
@@ -84,7 +84,6 @@ The Midnight Commander file management system will allow you to manipulate
 the files on a remote machine as if they were local.  This is only possible
 if the remote machine is running the mcserv server program. Mcserv provides
 clients running Midnight Commander with access to the host's file systems.
-
 
 %description -l de -n mcserv
 mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight
