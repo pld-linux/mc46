@@ -49,6 +49,7 @@ Patch18:	%{name}-home_etc.patch
 Patch19:	%{name}-tmout.patch
 Patch20:	%{name}-new_icons_am.patch
 Patch21:	%{name}-pl.patch
+Patch22:	%{name}-zh.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -302,6 +303,10 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
+
+mv -f po/zh_CN{.GB2312,}.po
+mv -f po/zh_TW{.Big5,}.po
 
 %build
 %{__gettextize}
