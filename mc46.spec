@@ -95,7 +95,7 @@ visualiser des archives tar, de compresser des fichiers avec zip, de
 récupérer des fichiers dans les packages RPM, et tout ceci simplement.
 
 %description -l pl
-Midnight Commander jest wizualnym shellem podobnym do Norton
+Midnight Commander jest wizualn± pow³ok± podobn± do Norton
 Commandera. Pracuje w trybie tekstowym, ale ma tak¿e wspomaganie dla
 myszki. Jest super ;) MC ma wbudowanego klienta ftp, mo¿e zagl±daæ do
 skompresowanego archiwum tarowego, do *.zip oraz *.rpm. Teraz równie¿
@@ -156,7 +156,7 @@ sistemine eriþimini saðlar.
 Summary:	Midnight Commander visual shell (GNOME version)
 Summary(de):	Midnight Commander Visual-Shell (GNOME Version)
 Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
-Summary(pl):	Midnight Commander - wizualny shell (wersja GNOME)
+Summary(pl):	Midnight Commander - wizualna pow³oka (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/Applications
 Group(de):	X11/Applikationen
@@ -180,7 +180,7 @@ zip, et de récupérer des fichiers dans les packages RPM. La version
 GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 
 %description -n gmc -l pl
-Midnight Commander jest wizualnym shellem, posiadaj±cym znacznie
+Midnight Commander jest wizualn± pow³ok±, posiadaj±c± znacznie
 wiêcej funkcji ni¿ samo zarz±dzanie plikami. Ma wbudowanego klienta
 ftp, potrafi przegl±daæ pliki tar, zip oraz siêgaæ do konkretnych
 plików pakietów rpm. To jest wersja pracuj±ca pod GNOME. Niestety
