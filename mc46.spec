@@ -154,7 +154,7 @@ install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
 mv $RPM_BUILD_ROOT/usr/bin/mcserv $RPM_BUILD_ROOT/usr/sbin 
 
-gzip -9fn $RPM_BUILD_ROOT/usr/share/man/man[18]/* \
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
 	FAQ NEWS README
 
 %clean
@@ -208,7 +208,7 @@ fi
 /usr/lib/mc/extfs/extfs.ini
 /usr/lib/mc/extfs/sfs.ini
 
-/usr/share/man/man1/*
+%{_mandir}/man1/*
 %attr(755,root,root) %config /etc/profile.d/*
 
 %dir /usr/lib/mc
@@ -231,7 +231,7 @@ fi
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
 
 %attr(754,root,root) %config /etc/rc.d/init.d/mcserv
-/usr/share/man/man8/mcserv.8*
+%{_mandir}/man8/mcserv.8*
 %attr(755,root,root) /usr/sbin/mcserv
 
 %files -n gmc
