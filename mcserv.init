@@ -65,6 +65,7 @@ case "$1" in
 	else
 		msg_not_running mcserv
 	fi
+	;;
   *)
 	msg_usage "$0 {start|stop|restart|force-reload|status}"
 	exit 3
