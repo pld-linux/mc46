@@ -1,22 +1,44 @@
-diff -urN mc-4.5.55.orig/src/screen.c mc-4.5.55/src/screen.c
---- mc-4.5.55.orig/src/screen.c	Sun Aug 19 19:33:26 2001
-+++ mc-4.5.55/src/screen.c	Wed Mar  6 00:14:17 2002
-@@ -2195,17 +2195,12 @@
-     if (get_other_type () != view_listing)
- 	return;
- 
--    if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
--	new_dir = concat_dir_and_file (panel->cwd, "..");
--    else
--	new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
-+    new_dir = concat_dir_and_file (panel->cwd, ".");
- 
-     change_panel ();
-     do_cd (new_dir, cd_exact);
-     change_panel ();
- 
--    move_down (panel);
--
-     g_free (new_dir);
+diff -ur mc-4.6.0-pre2/src/screen.c mc-4.6.0-pre1/src/screen.c
+--- mc-4.6.0-pre2/src/screen.c	2002-12-26 16:20:51.000000000 +0000
++++ mc-4.6.0-pre1/src/screen.c	2002-08-18 22:07:09.000000000 +0000
+@@ -1974,25 +2013,26 @@
+     return do_enter_on_file_entry (selection (panel));
  }
  
+-/*
+- * Make the current directory of the current panel also the current
+- * directory of the other panel.  Put the other panel to the listing
+- * mode if needed.  If the current panel is panelized, the other panel
+- * doesn't become panelized.
+- */
+ static void
+ chdir_other_panel (WPanel *panel)
+ {
+-    if (get_other_type () != view_listing) {
+-	set_display_type (get_other_index (), view_listing);
+-    }
++    char *new_dir;
+ 
+-    do_panel_cd (opanel, cpanel->cwd, cd_exact);
++    if (get_other_type () != view_listing)
++	return;
+ 
+-    /* try to select current filename on the other panel */
+-    if (!panel->is_panelized) {
+-	try_to_select (other_panel, selection (panel)->fname);
+-    }
++    if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
++	new_dir = concat_dir_and_file (panel->cwd, "..");
++    else
++	new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
++
++    change_panel ();
++    do_cd (new_dir, cd_exact);
++    change_panel ();
++
++    move_down (panel);
++
++    g_free (new_dir);
+ }
+ 
+ static void
