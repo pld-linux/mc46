@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.51
-Release:	1
+Release:	19
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -17,6 +17,15 @@ Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
 Patch3:		%{name}-spec-syntax.patch
+Patch4:		%{name}-showagain.patch
+Patch5:		%{name}-gdeskpopt.patch
+Patch6:		%{name}-prototype.patch
+Patch7:		%{name}-stderr.patch
+Patch8:		%{name}-fixrescan.patch
+Patch9:		%{name}-gnome-editor.patch
+Patch10:	%{name}-extention.patch
+Patch11:	%{name}-fixsh.patch
+Patch12:	%{name}-def_config.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
@@ -120,9 +129,9 @@ Summary(de):	Midnight Commander Visual-Shell (GNOME Version)
 Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
 Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
-Group:		X11/GNOME
-Group(de):	X11/GNOME
-Group(pl):	X11/GNOME
+Group:		X11/Applications
+Group(de):	X11/Applikationen
+Group(pl):	X11/Aplikacje
 Requires:	%{name}	= %{version}
 
 %description -n gmc
@@ -147,6 +156,15 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 gettextize --copy --force
@@ -253,6 +271,7 @@ fi
 %{!?no_gnome:%files -n gmc}
 %{!?no_gnome:%defattr(644,root,root,755)}
 
+%{!?no_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
 %{!?no_gnome:%attr(755,root,root) %{_bindir}/gmc}
 %{!?no_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
 
