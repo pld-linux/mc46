@@ -6,9 +6,9 @@
 #
 # description:	The Midnight Commander server allows users on remote machines \
 #		to use the Midnight Commander file manager to manipulate their \
-#		files on the machine running the server. The server  \
-#       	authenticates the user through PAM, which by default requires \
-#       	a username/password combination before allowing access.
+#		files on the machine running the server. The server \
+#		authenticates the user through PAM, which by default requires \
+#		a username/password combination before allowing access.
 #
 # processname:	mcserv
 
@@ -46,15 +46,16 @@ case "$1" in
 		touch /var/lock/subsys/mcserv
 	else
 		msg_already_running mcserv
-		exit 1
 	fi
 	;;
   status)
 	status mcserv
+	exit $?
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   stop)
 	if [ -f /var/lock/subsys/mcserv ]; then
@@ -63,11 +64,10 @@ case "$1" in
 		rm -f /var/lock/subsys/mcserv >/dev/null 2>&1
 	else
 		msg_not_running mcserv
-		exit 1
 	fi
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit 0
