@@ -171,7 +171,7 @@ Midnight Commander
 ¥¯¥é¥¤¥¢¥ó¥È¤ËÂĞ¤·¤Æ¡¢¤³¤Î¥Û¥¹¥È¤Î¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¤òÄó¶¡¤·¤Ş¤¹¡£
 
 %description -n mcserv -l pl
-Mcserv jest aplikacj± dla sieciowego systemy plików Midnight
+Mcserv jest aplikacj± dla sieciowego systemu plików Midnight
 Commandera. Pozwala na dostêp do systemu plików dla klienta
 pracuj±cego pod MC i u¿ywaj±cego jego systemu plików.
 
@@ -206,7 +206,7 @@ Commander. ÷ÏÎÁ ÚÁÂÅÚĞÅŞÕ¤ ÄÏÓÔÕĞ ÄÏ ×¦ÄÄÁÌÅÎÏ§ ÆÁÊÌÏ×Ï§ ÓÉÓÔÅÍÉ
 %patch4 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch5 -p1
-#%patch6 -p1 
+#%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
