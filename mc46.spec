@@ -52,6 +52,7 @@ BuildRequires:	glib2-devel
 BuildRequires:	indent
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
