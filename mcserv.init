@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # skeleton      Example file to build /etc/init.d scripts.
 #
@@ -18,11 +18,16 @@
 # Source function library.
 . /etc/rc.d/init.d/functions
 
+# Try get sysconfig.
+if [ -f /etc/sysconfig/mscerv ]; then
+    . /etc/sysconfig/mscerv 
+fi
+
 # See how we were called.
 case "$1" in
   start)
         show Starting mcserv
-	daemon +5 mcserv -d
+	daemon mcserv $OPTIONS
 	touch /var/lock/subsys/mcserv
 	;;
   status)
