@@ -4,6 +4,7 @@
 # _with_ext2undel	- with ext2 undelete fs
 # _with_samba		- with SAMBA vfs support
 # _with_x		- with text edit in X support
+# _with_mo		- alters the M-o functionality
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -36,6 +37,7 @@ Patch12:	%{name}-samba.patch
 Patch13:	%{name}-nobashism.patch
 Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
+Patch16:	%{name}-mo.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -188,6 +190,8 @@ nie jest ona jeszcze skoñczona.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%{?_with_mo:%patch16 -p1}
+
 
 %build
 gettextize --copy --force
