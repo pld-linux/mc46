@@ -302,7 +302,6 @@ fi
 
 %{_datadir}/mc/bin
 %{_datadir}/mc/syntax
-%{_datadir}/mc/term
 
 %{_datadir}/mc/mc.ext
 %{_datadir}/mc/cedit*
