@@ -4,7 +4,7 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.48
+Version:	4.5.49
 Release:	1
 License:	GPL
 Group:		Shells
