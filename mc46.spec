@@ -22,10 +22,13 @@ Version:	4.5.55
 Release:	12
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/4.5/%{name}-%{version}.tar.gz
+# Source0-md5:	bb670d48589f26f00b7fce8d25f66bd6
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
+Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+# Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
 Source4:	%{name}-srpm
 Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
@@ -49,6 +52,7 @@ Patch18:	%{name}-home_etc.patch
 Patch19:	%{name}-tmout.patch
 Patch20:	%{name}-new_icons_am.patch
 Patch21:	%{name}-pl.patch
+Patch22:	%{name}-zh.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -302,6 +306,10 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
+
+mv -f po/zh_CN{.GB2312,}.po
+mv -f po/zh_TW{.Big5,}.po
 
 %build
 %{__gettextize}

@@ -1,0 +1,18 @@
+--- mc-4.6.0/vfs/direntry.c.orig	Thu Dec 26 03:21:43 2002
++++ mc-4.6.0/vfs/direntry.c	Mon Feb  2 15:46:17 2004
+@@ -373,6 +373,7 @@
+ 	}
+     }
+ 
++#if 0	/* VULNERABLE CODE - CAN-2003-1023 */
+     /* Convert absolute paths to relative ones */
+     if (*linkname == PATH_SEP) {
+ 	char *p, *q;
+@@ -391,6 +392,7 @@
+ 	}
+ 	linkname = buf;
+     }
++#endif
+ 
+     return (MEDATA->find_entry) (me, entry->dir, linkname, follow - 1, 0);
+ }
