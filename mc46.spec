@@ -1,6 +1,7 @@
 Summary:     Midnight Commander visual shell
 Summary(de): Visuelle Shell Midnight Commander 
 Summary(fr): Le shell Midnight Commander
+Summary(pl): Midnight Commander wizualny shell
 Summary(tr): Midnight Commander görsel kabuðu
 Name:        mc
 Version:     4.1.35
@@ -34,6 +35,14 @@ Sa caractéristique la plus agréable est la possibilité de faire du ftp, de
 visualiser les fichiers tar et zip et de parcourir les RPMs pour rechercher
 des fichiers précis. :-)
 
+%description -l pl
+Midnight Commander jest wizualnym shellem podobnym do Nortona Commandera.
+Pracuje w trybie tekstowym i mo¿na w trakcie pracy z nim na koncoli czy
+pod xtermem wykorzystywaæ myszkê. Mc ma wbudwan± obs³ugê kilku wirtualnych
+systemów plikowych jak ftpfs, tarfs, rpmfs i inne, czyli mo¿e on s³u¿yæ
+jako klient ftp, a tak¿e z jego pomoc± mo¿na przegl±daæ archwa w ró¿nych
+formatach, które to archiwa mo¿na przegl±daæ jak podkatalogi.
+
 %description -l tr
 Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha yetenekli
 bir görsel kabuktur. Metin ekranda çalýþýr ve GPM çalýþýyorsa fare desteði
@@ -44,10 +53,12 @@ içeriklerini gösterebilmesidir.
 Summary:     Midnight Commander visual shell (GNOME version)
 Summary(de): Midnight Commander Visual-Shell (GNOME Version) 
 Summary(fr): shell visuel Midnight Commander (version GNOME)
+Summary(pl): Midnight Commander wizualny shell (wersja GNOME)
 Summary(tr): Midnight Commander görsel kabuðu (GNOME sürümü)
-Requires:    mc = %{version}
+Requires:    %{name} = %{version}
 Obsoletes:   tkmc
 Group:       X11/Shells
+
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
 way more features.  This is the GNOME version. It's coolest feature is the
@@ -58,6 +69,7 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 Summary:     Midnight Commander file server
 Summary(de): Midnight Commander File-Server 
 Summary(fr): Serveur de fichier de Midnight Commander
+Summary(pl): Serwer plików Midnight Commander'a
 Summary(tr): Midnight Commander dosya sunucusu
 Group:       X11/Shells
 Requires:    portmap, pam >= 0.64
@@ -67,10 +79,6 @@ Prereq:      /sbin/chkconfig
 mcserv is the server program for the Midnight Commander networking file
 system. It provides access to the host file system to clients running the
 Midnight file system (currently, only the Midnight Commander file manager).
-%description -l de -n mcserv
-mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight Commander.
-Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients, die das
-Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file manager).
 
 %description -l de -n mcserv
 mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight Commander.
@@ -82,6 +90,11 @@ mcserv est un programme pour les système de fichiers réseau de
 Midnight Commander. Il fournit un accès au systéme de fichiers de l'hôte
 aux clients sur lesquelles tourne le systéme de fichiers Midnight
 (actuellement, Midnight Commander est le seul).
+
+%description -l pl -n mcserv
+Mcserv jest aplikacj± dla sieciowego systemy plików Midnight Commander'a.
+Pozwala na dostêp do systemu plików dla klienta pracuj±cego pod MC i 
+u¿ywaj±cego jego systemu plików.
 
 %description -l tr -n mcserv
 mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr. Midnight
@@ -164,6 +177,8 @@ rm -rf $RPM_BUILD_ROOT
 - %%{version} macro instead %%{PACKAGE_VERSION},
 - added -q %setup parameter,
 - added patch with pl translation,
+- added pl translation for mc, mcserv (Wojtek ¦lusarczyk
+  <wojtek@shadow.eu.org>),
 - added using %%{name} macro in Buildroot and Source,
 - added /usr/share/locale/*/LC_MESSAGES/mc.mo with %lang macros to mc
   package,
