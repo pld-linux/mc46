@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.40
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
@@ -14,6 +14,7 @@ Source1:	mcserv.pamd
 Source2:	mcserv.init
 Patch0:		mc-mimekeys.patch
 Patch1:		mc-enlightenment_keys.patch
+Patch2:		mc-rpmfs.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	glib-devel
 BuildRequires:	gpm-devel
@@ -134,6 +135,7 @@ terminée cependant. :-(
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 gettextize --copy --force
