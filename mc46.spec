@@ -16,8 +16,8 @@ BuildRoot:   /tmp/%{name}-%{version}-root
 
 %description
 Midnight Commander is a visual shell much like a file manager, only with way
-more features.  It is text mode, but also includes mouse support if you are
-running GPM.  Its coolest feature is the ability to ftp, view tar, zip
+more features. It is text mode, but also includes mouse support if you are
+running GPM. Its coolest feature is the ability to ftp, view tar, zip
 files, and poke into RPMs for specific files.  :-)
 
 %description -l de
@@ -213,7 +213,6 @@ rm -rf $RPM_BUILD_ROOT
 - Added dependency on portmap
 
 * Wed Oct 29 1997 Michael K. Johnson <johnsonm@redhat.com>
-
 - fixed spec file.
 - Updated to 4.1.8
 
@@ -226,27 +225,22 @@ rm -rf $RPM_BUILD_ROOT
 - fixed installing /etc/X11/wmconfig/tkmc.
 
 * Thu Oct 23 1997 Michael K. Johnson <johnsonm@redhat.com>
-
 - updated to 4.1.5
 - added wmconfig
 
 * Wed Oct 15 1997 Erik Troan <ewt@redhat.com>
-
 - chkconfig is for mcserv package, not mc one
 
 * Tue Oct 14 1997 Erik Troan <ewt@redhat.com>
-
 - patched init script for chkconfig
 - don't turn on the service by default
 
 * Fri Oct 10 1997 Michael K. Johnson <johnsonm@redhat.com>
-
 - Converted to new PAM conventions.
 - Updated to 4.1.3
 - No longer needs glibc patch.
 
 * Thu May 22 1997 Michele Marziani <marziani@fe.infn.it>
-
 - added support for mc alias in /etc/profile.d/mc.csh (for csh and tcsh)
 - lowered number of SysV init scripts in /etc/rc.d/rc[0,1,6].d
   (mcserv needs to be killed before inet)
@@ -255,14 +249,12 @@ rm -rf $RPM_BUILD_ROOT
 - minor cleanup of spec file: redundant directives and comments removed
 
 * Sun May 18 1997 Michele Marziani <marziani@fe.infn.it>
-
 - removed all references to non-existent mc.rpmfs
 - added mcedit.1 to the %files section
 - reverted to un-gzipped man pages (RedHat style)
 - removed double install line for mcserv.pamd
 
 * Tue May 13 1997 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
-
 - added new rpmfs script,
 - removed mcfn_install from mc (adding mc() to bash enviroment is in
   /etc/profile.d/mc.sh),
@@ -271,25 +263,21 @@ rm -rf $RPM_BUILD_ROOT
 - removed /usr/lib/mc/term.
 
 * Wed May 9 1997 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
-
 - changed source url,
 - fixed link mcedit to mc,
 
 * Tue May 7 1997 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
-
 - new version 3.5.27,
 - %dir /usr/lib/mc/icons and icons removed from tkmc,
 - added commented xmc part.
 
 * Tue Apr 22 1997 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
-
 - FIX spec:
    - added URL field,
    - in mc added missing /usr/lib/mc/mc.ext, /usr/lib/mc/mc.hint,
      /usr/lib/mc/mc.hlp, /usr/lib/mc/mc.lib, /usr/lib/mc/mc.menu.
 
 * Fri Apr 18 1997 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
-
 - added making packages: tkmc, mcserv (xmc not work yet),
 - gziped man pages,
 - added /etc/pamd.d/mcserv PAM config file.
