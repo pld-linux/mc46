@@ -1,0 +1,22 @@
+diff -urN mc-4.5.55.orig/src/screen.c mc-4.5.55/src/screen.c
+--- mc-4.5.55.orig/src/screen.c	Sun Aug 19 19:33:26 2001
++++ mc-4.5.55/src/screen.c	Wed Mar  6 00:14:17 2002
+@@ -2195,17 +2195,12 @@
+     if (get_other_type () != view_listing)
+ 	return;
+ 
+-    if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
+-	new_dir = concat_dir_and_file (panel->cwd, "..");
+-    else
+-	new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
++    new_dir = concat_dir_and_file (panel->cwd, ".");
+ 
+     change_panel ();
+     do_cd (new_dir, cd_exact);
+     change_panel ();
+ 
+-    move_down (panel);
+-
+     g_free (new_dir);
+ }
+ 
