@@ -1,44 +1,159 @@
-diff -ur mc-4.6.0-pre2/src/screen.c mc-4.6.0-pre1/src/screen.c
---- mc-4.6.0-pre2/src/screen.c	2002-12-26 16:20:51.000000000 +0000
-+++ mc-4.6.0-pre1/src/screen.c	2002-08-18 22:07:09.000000000 +0000
-@@ -1974,25 +2013,26 @@
-     return do_enter_on_file_entry (selection (panel));
- }
+diff -ur mc-4.6.0.orig/doc/mc.1.in mc-4.6.0/doc/mc.1.in
+--- mc-4.6.0.orig/doc/mc.1.in	Fri Nov 21 22:58:36 2003
++++ mc-4.6.0/doc/mc.1.in	Fri Nov 21 23:55:51 2003
+@@ -431,10 +431,14 @@
+ move the selection bar one page up.
+ .TP
+ .B M-o
+-make the current directory of the current panel also the current
+-directory of the other panel.  Put the other panel to the listing mode
+-if needed.  If the current panel is panelized, the other panel doesn't
+-become panelized.
++depending of the 'chdir other panel' option: If the other panel is a listing
++panel and you are standing on a directory in the current panel, then the other
++panel contents are set to the contents of the currently selected directory
++(like Emacs' dired C-o key) otherwise the other panel contents are set to the
++parent dir of the current dir.  Or make the current directory of the current
++panel also the current directory of the other panel.  Put the other panel to
++the listing mode if needed. If the current panel is panelized, the other panel
++doesn't become panelized.
+ .TP
+ .B C-PageUp, C-PageDown
+ only when supported by the terminal: change to ".." and to the currently
+@@ -1556,6 +1560,16 @@
+ Panel Options, Pause after run and Other Options.
+ .PP
+ .B Panel Options
++.PP
++.I chdir Other Panel.
++Controls M-O behaviour.
++If enabled, the Midnight Commander will set the contents
++of the other panel to the contents of the currently selected
++directory (like Emacs' dired C-o key) or the other panel contents
++are set to the parent dir of the current dir depending if you are
++standing on a directory in the current panel.
++If disabled the Midnight Commander will make the current directory
++of the current panel also the current directory of the other panel.
+ .PP
+ .I Show Backup Files.
+ If enabled, the Midnight Commander will show files ending with a tilde.
+diff -ur mc-4.6.0.orig/doc/pl/mc.1.in mc-4.6.0/doc/pl/mc.1.in
+--- mc-4.6.0.orig/doc/pl/mc.1.in	Thu Jan 16 11:30:58 2003
++++ mc-4.6.0/doc/pl/mc.1.in	Fri Nov 21 23:55:51 2003
+@@ -1322,6 +1322,15 @@
+ .PP
+ .B Opcje panelu
+ .PP
++.I chdir Other Panel.
++Wyznacza zachowanie M-O.
++Jesli jest w³±czona, Midnight Commander wy¶wietli w drugim panelu
++zawarto¶æ aktualnie zaznaczonego katalogu (tak jak kombinaca C-o
++w Emacsie) albo katalog o jedno piêtro wy¿szy od aktualnego jesli
++aktualnie nie jest zaznaczony katalog.
++Jesli opcja jest wy³±czona Midnight Commander wy¶wietli w drugim panelu
++zawarto¶æ tego samego katalogu co w aktualnym.
++.PP
+ .I Show Backup Files.
+ Standardowo Midnight Commander nie wy¶wietla plików koñcz±cych siê znakiem
+ '~' (tak jak komenda ls -B w wersji GNU).
+diff -ur mc-4.6.0.orig/src/main.c mc-4.6.0/src/main.c
+--- mc-4.6.0.orig/src/main.c	Fri Nov 21 22:58:37 2003
++++ mc-4.6.0/src/main.c	Fri Nov 21 23:55:51 2003
+@@ -133,6 +133,9 @@
+ /* If true, marking a files moves the cursor down */
+ int mark_moves_down = 1;
  
--/*
-- * Make the current directory of the current panel also the current
-- * directory of the other panel.  Put the other panel to the listing
-- * mode if needed.  If the current panel is panelized, the other panel
-- * doesn't become panelized.
-- */
++/* If true chdir up or down in other panel on alt-o (pre 5.6.0 behaviour */
++int chdir_other_panel_old = 1;
++
+ /* If true, at startup the user-menu is invoked */
+ int auto_menu = 0;
+ 
+diff -ur mc-4.6.0.orig/src/main.h mc-4.6.0/src/main.h
+--- mc-4.6.0.orig/src/main.h	Wed Feb  5 16:54:34 2003
++++ mc-4.6.0/src/main.h	Fri Nov 21 23:55:51 2003
+@@ -35,6 +35,7 @@
+ 
+ /* See main.c for details on these variables */
+ extern int mark_moves_down;
++extern int chdir_other_panel_old;
+ extern int auto_menu;
+ extern int pause_after_run;
+ extern int auto_save_setup;
+diff -ur mc-4.6.0.orig/src/option.c mc-4.6.0/src/option.c
+--- mc-4.6.0.orig/src/option.c	Sun Dec  8 05:16:30 2002
++++ mc-4.6.0/src/option.c	Fri Nov 21 23:55:51 2003
+@@ -77,12 +77,13 @@
+    {N_("ma&Rk moves down"),   &mark_moves_down,   TOGGLE_VARIABLE,       0, "mark-moves" },
+    {N_("show &Hidden files"), &show_dot_files,    toggle_show_hidden,    0, "show-hidden" },
+    {N_("show &Backup files"), &show_backups,      toggle_show_backup,    0, "show-backup" },
++   {N_("chdir &Other panel"), &chdir_other_panel_old,TOGGLE_VARIABLE,    0, "chdir-old" },
+    { 0, 0, 0, 0 }
+ };
+ 
+ /* Make sure this corresponds to the check_options structure */
+ #define OTHER_OPTIONS 12
+-#define PANEL_OPTIONS 6
++#define PANEL_OPTIONS 7
+ 
+ static WRadio *pause_radio;
+ 
+@@ -229,7 +230,7 @@
+     /* Add checkboxes for "panel options" */
+     for (i = 0; i < PANEL_OPTIONS; i++) {
+ 	check_options[i + OTHER_OPTIONS].widget =
+-	    check_new (PY + (6 - i), PX + 2, XTRACT (i + OTHER_OPTIONS));
++	    check_new (PY + (PANEL_OPTIONS - i), PX + 2, XTRACT (i + OTHER_OPTIONS));
+ 	add_widget (conf_dlg, check_options[i + OTHER_OPTIONS].widget);
+     }
+ }
+diff -ur mc-4.6.0.orig/src/screen.c mc-4.6.0/src/screen.c
+--- mc-4.6.0.orig/src/screen.c	Fri Nov 21 22:58:37 2003
++++ mc-4.6.0/src/screen.c	Fri Nov 21 23:55:51 2003
+@@ -1996,15 +1996,32 @@
  static void
  chdir_other_panel (WPanel *panel)
  {
--    if (get_other_type () != view_listing) {
--	set_display_type (get_other_index (), view_listing);
--    }
 +    char *new_dir;
++
+     if (get_other_type () != view_listing) {
+ 	set_display_type (get_other_index (), view_listing);
+     }
  
--    do_panel_cd (opanel, cpanel->cwd, cd_exact);
-+    if (get_other_type () != view_listing)
-+	return;
+     do_panel_cd (opanel, cpanel->cwd, cd_exact);
  
 -    /* try to select current filename on the other panel */
 -    if (!panel->is_panelized) {
 -	try_to_select (other_panel, selection (panel)->fname);
--    }
-+    if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
-+	new_dir = concat_dir_and_file (panel->cwd, "..");
-+    else
-+	new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
++    if ( chdir_other_panel_old ) {
++	if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
++	    new_dir = concat_dir_and_file (panel->cwd, "..");
++	else
++	    new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
 +
-+    change_panel ();
-+    do_cd (new_dir, cd_exact);
-+    change_panel ();
++	change_panel ();
++	do_cd (new_dir, cd_exact);
++	change_panel ();
 +
-+    move_down (panel);
++	move_down (panel);
 +
-+    g_free (new_dir);
++	g_free (new_dir);
++    } else {
++	/* try to select current filename on the other panel */
++	if (!panel->is_panelized) {
++	    try_to_select (other_panel, selection (panel)->fname);
++	}
+     }
  }
  
- static void
+diff -ur mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
+--- mc-4.6.0.orig/src/setup.c	Fri Nov 21 22:58:37 2003
++++ mc-4.6.0/src/setup.c	Sat Nov 22 00:04:46 2003
+@@ -141,6 +141,7 @@
+     char *opt_name;
+     int  *opt_addr;
+ } options [] = {
++    { "chdir_other_panel", &chdir_other_panel_old },
+     { "show_backups", &show_backups },
+     { "show_dot_files", &show_dot_files },
+     { "verbose", &verbose },
