@@ -33,6 +33,7 @@ Patch11:	%{name}-rpmfs_rpm40.patch
 Patch12:	%{name}-mouse_in_rxvt.patch
 Patch13:	%{name}-use_old_sorting.patch
 Patch14:	%{name}-proxy.patch
+Patch15:	%{name}-nognome-amfix.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
@@ -177,6 +178,7 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 %build
 gettextize --copy --force
