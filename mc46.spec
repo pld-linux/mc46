@@ -17,7 +17,7 @@ Summary(uk):	‰…”–≈‘ﬁ≈“ ∆¡ Ã¶◊ Midnight Commander
 Summary(zh_CN):	“ª∏ˆ∑Ω±„ µ”√µƒŒƒº˛π‹¿Ì∆˜∫Õ–Èƒ‚Shell
 Name:		mc
 Version:	4.6.0
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -49,6 +49,7 @@ Patch9:		amc-2.diff
 Patch10:	%{name}-no_ti_DATA.patch
 Patch11:	%{name}-mc.ext.patch
 Patch12:	%{name}-posix_sh.patch
+Patch13:	%{name}-sequences.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -225,6 +226,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 %{__gettextize}
@@ -248,8 +250,7 @@ fi"
 %configure \
 	--with%{!?debug:out}-debug \
 	--with%{!?_with_ext2undel:out}-ext2undel \
-	%{?_with_x:--with-x} \
-	%{!?_with_x:--without-x} \
+	--with%{!?_with_x:out}-x \
 	--with-vfs \
 	--with-mcfs \
 	%{?_with_samba:--with-samba} \
