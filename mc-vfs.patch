@@ -1,0 +1,33 @@
+diff -urN mc-4.5.54/lib/mc.ext.in mc-4.5.54.new/lib/mc.ext.in
+--- mc-4.5.54/lib/mc.ext.in	Mon Sep  3 18:29:36 2001
++++ mc-4.5.54.new/lib/mc.ext.in	Mon Sep  3 18:36:43 2001
+@@ -373,6 +373,9 @@
+ 
+ ### Miscellaneous ###
+ 
++regex/\.(patch|diff)$
++	Open=%cd %p#patchfs
++
+ shell/^RMAIL$
+ 	Start Emacs on this RMAIL file=emacs %f
+ 	Open=emacs %f
+@@ -551,7 +554,7 @@
+ 
+ # Source RPMs (SuSE uses *.spm, others use *.src.rpm)
+ regex/\.(spm|src\.rpm)$
+-	Open=%cd %p#rpm
++	Open=%cd %p#srpm
+ 	Install this RPM=rpm -i %f
+ 	Rebuild this RPM=rpm --rebuild %f
+ 	Check signature=rpm --checksig %f
+diff -urN mc-4.5.54/vfs/extfs/extfs.ini mc-4.5.54.new/vfs/extfs/extfs.ini
+--- mc-4.5.54/vfs/extfs/extfs.ini	Fri Oct 27 22:41:01 2000
++++ mc-4.5.54.new/vfs/extfs/extfs.ini	Mon Sep  3 18:33:00 2001
+@@ -18,6 +18,7 @@
+ # Packages from popular Linux distributions
+ rpm
+ deb
++srpm
+ 
+ # a: - mtools filesystem
+ a:
