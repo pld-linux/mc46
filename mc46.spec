@@ -17,7 +17,7 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.6.0
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -25,23 +25,16 @@ Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
 Source4:	%{name}-srpm
-Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
+Patch3:		%{name}-spec-syntax.patch
 Patch7:		%{name}-def_config.patch
-Patch8:		%{name}-mouse_in_rxvt.patch
 Patch9:		%{name}-proxy.patch
 Patch11:	%{name}-urar.patch
-Patch12:	%{name}-samba.patch
-Patch13:	%{name}-nobashism.patch
-Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
 Patch17:	%{name}-%{name}.ext-ear_war.patch
 Patch18:	%{name}-home_etc.patch
-Patch19:	%{name}-tmout.patch
-Patch20:	%{name}-new_icons_am.patch
 Patch21:	%{name}-pl.patch
-Patch22:	%{name}-zh.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -202,22 +195,16 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 
 %prep
 %setup -q -a3
-#%patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
-#%patch7 -p1 - prawdopodobnie merged
-#%patch8 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch7 -p1
 #%patch9 -p1
 %patch11 -p1
-#%patch12 -p1
-#%patch13 -p1
-#%patch14 -p1
 #%patch15 -p1
 #%patch17 -p1
-#%patch19 -p1 merged?
-#%patch20 -p1
-#%patch21 -p1
-#%patch22 -p1
+#%patch18 -p1 
+%patch21 -p1
 
 %build
 %{__gettextize}
