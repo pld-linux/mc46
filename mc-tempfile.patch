@@ -40,9 +40,9 @@
  		;;
  	  *)
 @@ -126,7 +127,7 @@
- 	set %t
+ 	set %u
  	while [ -n "$1" ]; do
- 	  CHECK=`awk '{print $1 ; exit}' $1` 2>/dev/null
+ 	  CHECK=`sed 1q < $1|awk '{print $1}'` 2>/dev/null
 -	  WFILE=/tmp/${1}.$$
 +	  WFILE=`mktemp /tmp/news.XXXXXX`; export WFILE;
  	  case $CHECK in
