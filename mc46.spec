@@ -223,7 +223,7 @@ cp -f vfs/extfs/{rpm,srpm}
 
 %build
 %{__gettextize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
 X11_WWW="
