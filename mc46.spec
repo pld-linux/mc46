@@ -9,8 +9,8 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.51
-Release:	26
+Version:	4.5.52
+Release:	1
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -26,25 +26,18 @@ Patch4:		%{name}-showagain.patch
 Patch5:		%{name}-gdeskpopt.patch
 Patch6:		%{name}-prototype.patch
 Patch7:		%{name}-stderr.patch
-Patch8:		%{name}-fixrescan.patch
-Patch9:		%{name}-gnome-editor.patch
-Patch10:	%{name}-extention.patch
-Patch11:	%{name}-fixsh.patch
-Patch12:	%{name}-def_config.patch
-Patch13:	%{name}-rpmfs_rpm40.patch
-Patch14:	%{name}-ftpfs_storage_on_root.patch
-Patch15:	%{name}-editor_argument.patch
-Patch16:	%{name}-mouse_in_rxvt.patch
-Patch17:	%{name}-security_fix_cons.saver.patch
-Patch18:	%{name}-spellfix_heirarchy.patch
-Patch19:	%{name}-use_old_sorting.patch
-Patch20:	%{name}-proxy.patch
-Patch21:	%{name}-time.patch
+Patch8:		%{name}-gnome-editor.patch
+Patch9:		%{name}-extention.patch
+Patch10:	%{name}-def_config.patch
+Patch11:	%{name}-rpmfs_rpm40.patch
+Patch12:	%{name}-mouse_in_rxvt.patch
+Patch13:	%{name}-use_old_sorting.patch
+Patch14:	%{name}-proxy.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
 BuildRequires:	gettext-devel
-%{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel}
+%{!?bcond_off_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
@@ -52,6 +45,8 @@ BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
 BuildRequires:	indent
+BuildRequires:	automake
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
 Obsoletes:	tkmc
@@ -182,18 +177,17 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
 
 %build
 gettextize --copy --force
+automake -a -c
+aclocal -I \
+	%{!?bcond_off_gnome:%{_aclocaldir}/gnome}%{?bcond_off_gnome:macros}
+
+autoconf
 %configure \
 	%{?bcond_on_ext2undel:--with-ext2-undel}%{!?bcond_on_ext2undel:--without-ext2undel} \
+	--with-vfs \
 	--with-netrc \
 	--with-x \
 	--without-debug \
@@ -244,31 +238,39 @@ fi
 %defattr(644,root,root,755)
 %doc *.gz
 
-%attr(755,root,root) %{_bindir}/mc
-%attr(755,root,root) %{_bindir}/mcedit
-%attr(755,root,root) %{_bindir}/mcmfmt
+%attr(755,root,root) %{_bindir}/mc*
 
 %{_libdir}/mc/mc.ext
+
 %{_libdir}/mc/mc.hlp
+%lang(hu) %{_libdir}/mc/mc.hlp.hu
 %{_libdir}/mc/mc.lib
 %{_libdir}/mc/mc.menu
 %{_libdir}/mc/mc.hint
 %lang(cs) %{_libdir}/mc/mc.hint.cs
 %lang(es) %{_libdir}/mc/mc.hint.es
+%lang(it) %{_libdir}/mc/mc.hint.it
+%lang(pl) %{_libdir}/mc/mc.hint.pl
+%lang(ru) %{_libdir}/mc/mc.hint.ru
 
 %attr(755,root,root) %{_libdir}/mc/bin/cons.saver
 
 %attr(755,root,root) %{_libdir}/mc/extfs/a
-%attr(755,root,root) %{_libdir}/mc/extfs/deb
+%attr(755,root,root) %{_libdir}/mc/extfs/apt
+%attr(755,root,root) %{_libdir}/mc/extfs/audio
+%attr(755,root,root) %{_libdir}/mc/extfs/bpp
+%attr(755,root,root) %{_libdir}/mc/extfs/deb*
+%attr(755,root,root) %{_libdir}/mc/extfs/dpkg
 %attr(755,root,root) %{_libdir}/mc/extfs/ftplist
 %attr(755,root,root) %{_libdir}/mc/extfs/hp48
 %attr(755,root,root) %{_libdir}/mc/extfs/lslR
 %attr(755,root,root) %{_libdir}/mc/extfs/mailfs
 %attr(755,root,root) %{_libdir}/mc/extfs/patchfs
-%attr(755,root,root) %{_libdir}/mc/extfs/rpm
-%attr(755,root,root) %{_libdir}/mc/extfs/uar
-%attr(755,root,root) %{_libdir}/mc/extfs/uarj
+%attr(755,root,root) %{_libdir}/mc/extfs/rpm*
+%attr(755,root,root) %{_libdir}/mc/extfs/trpm
+%attr(755,root,root) %{_libdir}/mc/extfs/uar*
 %attr(755,root,root) %{_libdir}/mc/extfs/ucpio
+%attr(755,root,root) %{_libdir}/mc/extfs/uha
 %attr(755,root,root) %{_libdir}/mc/extfs/ulha
 %attr(755,root,root) %{_libdir}/mc/extfs/urar
 %attr(755,root,root) %{_libdir}/mc/extfs/uzip
@@ -296,13 +298,12 @@ fi
 %{!?bcond_off_gnome:%defattr(644,root,root,755)}
 
 %{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
-%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gmc}
+%{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/gmc*}
 %{!?bcond_off_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
 
 %{!?bcond_off_gnome:%{_sysconfdir}/mc.global}
 %{!?bcond_off_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
 %{!?bcond_off_gnome:%{_libdir}/mc/layout}
-%{!?bcond_off_gnome:%{_libdir}/mc/mc-gnome.ext}
 %{!?bcond_off_gnome:%{_datadir}/mime-info}
 %{!?bcond_off_gnome:%{_datadir}/pixmaps}
 %{!?bcond_off_gnome:%{_datadir}/mc}
