@@ -61,6 +61,7 @@ BuildRequires:	autoconf
 %{?bcond_on_x:BuildRequires:	XFree86-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
+Requires:	file
 Obsoletes:	tkmc
 
 %define		_sysconfdir	/etc/X11/GNOME
