@@ -17,7 +17,7 @@ Summary(uk):	‰…”–≈‘ﬁ≈“ ∆¡ Ã¶◊ Midnight Commander
 Summary(zh_CN):	“ª∏ˆ∑Ω±„ µ”√µƒŒƒº˛π‹¿Ì∆˜∫Õ–Èƒ‚Shell
 Name:		mc
 Version:	4.6.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -27,6 +27,7 @@ Source3:	%{name}-non-english-man-pages.tar.bz2
 # Changelogs for Advanced Midnight Commander patches
 Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
 Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
+Source6:	%{name}serv.sysconfig
 Patch0:		%{name}-rpmfs.patch
 Patch1:		%{name}-system_popt.patch
 Patch2:		%{name}-spec-syntax.patch
@@ -248,13 +249,14 @@ fi"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconfig}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
+install %{SOURCE6} $RPM_BUILD_ROOT/etc/sysconfig/mcserv
 
 for a in es pl ; do
 	for b in man1 man8 ; do
@@ -362,7 +364,8 @@ fi
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
 
-%attr(754,root,root) %config /etc/rc.d/init.d/mcserv
+%attr(754,root,root) /etc/rc.d/init.d/mcserv
+%attr(644,root,root) %config /etc/sysconfig/mcserv
 %{_mandir}/man8/mcserv.8*
 %lang(es) %{_mandir}/es/man8/mcserv.8*
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
