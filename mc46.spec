@@ -12,7 +12,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.55
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -20,10 +20,8 @@ Group(pl):	Aplikacje/Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
-Source3:	%{name}.1.pl
-Source4:	%{name}edit.1.pl
-Source5:	%{name}serv.8.pl
-Source6:	%{name}-srpm
+Source3:	%{name}-non-english-man-pages.tar.bz2
+Source4:	%{name}-srpm
 Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
@@ -179,7 +177,7 @@ plików pakietów rpm. To jest wersja pracuj±ca pod GNOME. Niestety
 nie jest ona jeszcze skoñczona.
 
 %prep
-%setup -q
+%setup -q -a3
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -240,10 +238,16 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
-install -D %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mc.1
-install -D %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mcedit.1
-install -D %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mcserv.8
-install %{SOURCE6} $RPM_BUILD_ROOT%{_libdir}/mc/extfs/srpm
+for a in es pl ; do
+	for b in $a/man[18] ; do
+		install -d $RPM_BUILD_ROOT%{_mandir}/{$a,$b}
+		for c in $b/* ; do
+			install man/$c $RPM_BUILD_ROOT%{_mandir}/$c
+		done
+	done
+done
+
+install %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/mc/extfs/srpm
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
@@ -324,6 +328,7 @@ fi
 %{_libdir}/mc/syntax
 
 %{_mandir}/man1/*
+%lang(es) %{_mandir}/es/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 
 %attr(755,root,root) %config /etc/profile.d/*
@@ -338,6 +343,7 @@ fi
 
 %attr(754,root,root) %config /etc/rc.d/init.d/mcserv
 %{_mandir}/man8/mcserv.8*
+%lang(es) %{_mandir}/es/man8/mcserv.8*
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
 
