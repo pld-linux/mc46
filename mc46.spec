@@ -38,7 +38,6 @@ Source8:	%{name}.png
 Patch0:		%{name}-rpmfs.patch
 Patch1:		%{name}-system_popt.patch
 Patch2:		%{name}-spec-syntax.patch
-Patch3:		%{name}-def_config.patch
 Patch4:		%{name}-urar.patch
 Patch5:		%{name}-srpm.patch
 Patch6:		%{name}-home_etc2.patch
@@ -226,7 +225,6 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch5 -p1
