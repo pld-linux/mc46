@@ -4,7 +4,7 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.44
+Version:	4.5.45
 Release:	1
 License:	GPL
 Group:		Shells
@@ -35,7 +35,7 @@ Obsoletes:	tkmc
 Midnight Commander is a visual shell much like a file manager, only with
 way more features. It is text mode, but also includes mouse support if you
 are running GPM. Its coolest feature is the ability to ftp, view tar, zip
-files, and poke into RPMs for specific files.  :-)
+files, and poke into RPMs for specific files. :-)
 
 %description -l de
 Midnight Commander ist ein Visual-Shell, ähnlich einem Dateimanager, aber
@@ -81,7 +81,7 @@ Requires:	pam >= 0.66
 
 %description -n mcserv
 The Midnight Commander file management system will allow you to manipulate
-the files on a remote machine as if they were local.  This is only possible
+the files on a remote machine as if they were local. This is only possible
 if the remote machine is running the mcserv server program. Mcserv provides
 clients running Midnight Commander with access to the host's file systems.
 
@@ -92,16 +92,16 @@ die das Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file
 manager).
 
 %description -l fr -n mcserv
-Le système de gestion de fichier Midnight Commander vous permet de manipuler
-des fichiers sur une machine distante comme si ils étaient sur votre propre
-machine. Ceci est possible seulement si la machine distante possède le
-programme mcserv et que celui-ci est activé. Mcserv apporte aux machines
-clientes qui font tourner Midnight Commander un accès aux fichiers situés
-sur l'hôte.
+Le système de gestion de fichier Midnight Commander vous permet de
+manipuler des fichiers sur une machine distante comme si ils étaient sur
+votre propre machine. Ceci est possible seulement si la machine distante
+possède le programme mcserv et que celui-ci est activé. Mcserv apporte aux
+machines clientes qui font tourner Midnight Commander un accès aux fichiers
+situés sur l'hôte.
 
 %description -l pl -n mcserv
 Mcserv jest aplikacj± dla sieciowego systemy plików Midnight Commandera.
-Pozwala na dostêp do systemu plików dla klienta pracuj±cego pod MC i 
+Pozwala na dostêp do systemu plików dla klienta pracuj±cego pod MC i
 u¿ywaj±cego jego systemu plików.
 
 %description -l tr -n mcserv
@@ -121,7 +121,7 @@ Requires:	%{name}	= %{version}
 
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
-way more features.  This is the GNOME version. It's coolest feature is the
+way more features. This is the GNOME version. It's coolest feature is the
 ability to ftp, view tar, zip files and poke into RPMs for specific files.
 The GNOME version of Midnight Commander is not yet finished though. :-(
 
@@ -151,14 +151,14 @@ LDFLAGS="-s"; export LDFLAGS
 	--with-included-slang \
 	--with-gnome
 
-make confdir=/etc/X11/GNOME/
+make confdir=%{_sysconfdir}/
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 
 make install \
-	confdir=/etc/X11/GNOME/ \
+	confdir=%{_sysconfdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
@@ -168,7 +168,7 @@ install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
 mv $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir} 
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
 	FAQ NEWS README
 
 %find_lang %{name}
