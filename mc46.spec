@@ -188,7 +188,7 @@ gettextize --copy --force
 	--with-x \
 	--without-debug \
 	--with-included-slang \
-	%{!?no_gnome:--with-gnome}
+	%{!?no_gnome:--with-gnome}%{?no_gnome:--without-gnome}
 
 %{__make} confdir=%{_sysconfdir}/
 
