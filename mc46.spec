@@ -204,7 +204,7 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %setup -q -a3
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 %patch7 -p1
 #%patch9 -p1
 %patch11 -p1
