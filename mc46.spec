@@ -113,9 +113,9 @@ Group:		Daemons
 Group(de):	Server
 Group(pl):	Serwery
 Prereq:		/sbin/chkconfig
-Requires:	portmap
 Prereq:		rc-scripts
 Requires:	pam >= 0.66
+Requires:	portmap
 
 %description -n mcserv
 The Midnight Commander file management system will allow you to
@@ -124,13 +124,13 @@ is only possible if the remote machine is running the mcserv server
 program. Mcserv provides clients running Midnight Commander with
 access to the host's file systems.
 
-%description -l de -n mcserv
+%description -n mcserv -l de
 mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight
 Commander. Es ermöglicht den Zugriff auf das Host-Dateisystem für
 Clients, die das Midnight-Dateisystem ausführen (z.Zt. nur Midnight
 Commander file manager).
 
-%description -l fr -n mcserv
+%description -n mcserv -l fr
 Le système de gestion de fichier Midnight Commander vous permet de
 manipuler des fichiers sur une machine distante comme si ils étaient
 sur votre propre machine. Ceci est possible seulement si la machine
@@ -138,12 +138,12 @@ distante possède le programme mcserv et que celui-ci est activé.
 Mcserv apporte aux machines clientes qui font tourner Midnight
 Commander un accès aux fichiers situés sur l'hôte.
 
-%description -l pl -n mcserv
+%description -n mcserv -l pl
 Mcserv jest aplikacj± dla sieciowego systemy plików Midnight
 Commandera. Pozwala na dostêp do systemu plików dla klienta
 pracuj±cego pod MC i u¿ywaj±cego jego systemu plików.
 
-%description -l tr -n mcserv
+%description -n mcserv -l tr
 mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr.
 Midnight dosya sistemini çalýþtýran istemcilerin sunucu dosya
 sistemine eriþimini saðlar.
@@ -166,7 +166,7 @@ feature is the ability to ftp, view tar, zip files and poke into RPMs
 for specific files. The GNOME version of Midnight Commander is not yet
 finished though. :-(
 
-%description -l fr -n gmc
+%description -n gmc -l fr
 Midnight Commander est une interface pour la ligne de commande qui
 tient beaucoup du gestionnaire de fichiers, mais est bien plus
 puissant. Ceci est la version pour GNOME. Ses caractéristiques les
@@ -174,6 +174,13 @@ plus remarquables sont la possibilité de se connecter à un serveur
 FTP, de visualiser des archives tar, de compresser des fichiers avec
 zip, et de récupérer des fichiers dans les packages RPM. La version
 GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
+
+%description -n gmc -l pl
+Midnight Commander jest wizualnym shellem, posiadaj±cym znacznie
+wiêcej funkcji ni¿ samo zarz±dzanie plikami. Ma wbudowanego klienta
+ftp, potrafi przegl±daæ pliki tar, zip oraz siêgaæ do konkretnych
+plików pakietów rpm. To jest wersja pracuj±ca pod GNOME. Niestety
+nie jest ona jeszcze skoñczona.
 
 %prep
 %setup -q
