@@ -17,7 +17,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.0
-Release:	9
+Release:	10
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -328,8 +328,8 @@ fi
 %{_datadir}/mc/cedit*
 %{_datadir}/mc/edit.*
 %{_datadir}/mc/mc.hlp
-%lang(hu) %{_datadir}/mc/mc.hlp.hu
 %lang(es) %{_datadir}/mc/mc.hlp.es
+%lang(hu) %{_datadir}/mc/mc.hlp.hu
 %lang(it) %{_datadir}/mc/mc.hlp.it
 %lang(pl) %{_datadir}/mc/mc.hlp.pl
 %lang(ru) %{_datadir}/mc/mc.hlp.ru
@@ -377,9 +377,9 @@ fi
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
-%lang(pl) %{_mandir}/pl/man1/*
 %lang(hu) %{_mandir}/hu/man1/*
 %lang(it) %{_mandir}/it/man1/*
+%lang(pl) %{_mandir}/pl/man1/*
 %lang(ru) %{_mandir}/ru/man1/*
 
 %files -n mcserv
