@@ -73,8 +73,8 @@
  EXTFS_MISC  = README extfs.ini sfs.ini
  
  # Scripts hat don't need adaptation to the local system
--EXTFS_CONST = bpp rpm trpm
-+EXTFS_CONST = bpp rpm trpm srpm
+-EXTFS_CONST = bpp rpm trpm uesp
++EXTFS_CONST = bpp rpm trpm uesp srpm
  
  # Scripts that need adaptation to the local system - source files
  EXTFS_IN    = 			\
