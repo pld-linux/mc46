@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_with	ext2undel	# with ext2 undelete fs
+%bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_with	x		# with text edit in X support
 #
@@ -55,6 +56,7 @@ Patch15:	%{name}-posix.patch
 Patch16:	%{name}-CAN-2003-1023.patch
 Patch17:	%{name}-tempfile.patch
 Patch18:	%{name}-localenames.patch
+Patch19:	%{name}-noperl-vfs.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -73,6 +75,7 @@ BuildRequires:	gpm-devel
 %{?with_x:BuildRequires:	XFree86-devel}
 Requires:	file
 Requires:	pam >= 0.77.3
+# Needed? %%{?with_perl_vfs:Requires:	perl-base}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
@@ -238,6 +241,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch16 -p1
 %patch17 -p0
 %patch18 -p1
+%{!?with_perl_vfs:%patch19 -p1}
 
 mv -f po/{no,nb}.po
 
@@ -363,26 +367,29 @@ fi
 %{_datadir}/mc/extfs/README
 %{_datadir}/mc/extfs/extfs.ini
 %{_datadir}/mc/extfs/sfs.ini
+%if %{with perl_vfs}
 %attr(755,root,root) %{_datadir}/mc/extfs/a
 %attr(755,root,root) %{_datadir}/mc/extfs/apt
-%attr(755,root,root) %{_datadir}/mc/extfs/audio
-%attr(755,root,root) %{_datadir}/mc/extfs/bpp
 %attr(755,root,root) %{_datadir}/mc/extfs/deb*
 %attr(755,root,root) %{_datadir}/mc/extfs/dpkg
 #%attr(755,root,root) %{_datadir}/mc/extfs/ftplist
-%attr(755,root,root) %{_datadir}/mc/extfs/hp48
-%attr(755,root,root) %{_datadir}/mc/extfs/lslR
 %attr(755,root,root) %{_datadir}/mc/extfs/mailfs
 %attr(755,root,root) %{_datadir}/mc/extfs/patchfs
-%attr(755,root,root) %{_datadir}/mc/extfs/rpm*
+%attr(755,root,root) %{_datadir}/mc/extfs/rpms
+#%attr(755,root,root) %{_datadir}/mc/extfs/ucpio
+%attr(755,root,root) %{_datadir}/mc/extfs/uzip
+%endif
+%attr(755,root,root) %{_datadir}/mc/extfs/audio
+%attr(755,root,root) %{_datadir}/mc/extfs/bpp
+%attr(755,root,root) %{_datadir}/mc/extfs/hp48
+%attr(755,root,root) %{_datadir}/mc/extfs/lslR
+%attr(755,root,root) %{_datadir}/mc/extfs/rpm
 %attr(755,root,root) %{_datadir}/mc/extfs/trpm
 %attr(755,root,root) %{_datadir}/mc/extfs/uar*
-#%attr(755,root,root) %{_datadir}/mc/extfs/ucpio
 %attr(755,root,root) %{_datadir}/mc/extfs/uha
 %attr(755,root,root) %{_datadir}/mc/extfs/ulha
 %attr(755,root,root) %{_datadir}/mc/extfs/urar
 %attr(755,root,root) %{_datadir}/mc/extfs/uesp
-%attr(755,root,root) %{_datadir}/mc/extfs/uzip
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
 %{_desktopdir}/mc.desktop
