@@ -1,0 +1,43 @@
+diff -urN mc-4.6.0.orig/src/key.c mc-4.6.0/src/key.c
+--- mc-4.6.0.orig/src/key.c	2003-09-07 21:24:59.000000000 +0200
++++ mc-4.6.0/src/key.c	2003-09-07 21:24:43.000000000 +0200
+@@ -215,6 +215,24 @@
+     { KEY_M_SHIFT | KEY_LEFT,  ESC_STR "O2D",   MCKEY_NOACTION },
+     { KEY_M_CTRL  | KEY_PPAGE, ESC_STR "[5;5~", MCKEY_NOACTION },
+     { KEY_M_CTRL  | KEY_NPAGE, ESC_STR "[6;5~", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_IC,    ESC_STR "[2;5~", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_DC,    ESC_STR "[3;5~", MCKEY_NOACTION },
++
++    /* xterm (by Thomas Dickey) keys with modifiers */
++    { KEY_M_SHIFT | KEY_UP,    ESC_STR "[1;2A", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_DOWN,  ESC_STR "[1;2B", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_RIGHT, ESC_STR "[1;2C", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_LEFT,  ESC_STR "[1;2D", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_HOME,  ESC_STR "[1;5H", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_END,   ESC_STR "[1;5F", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_HOME,  ESC_STR "[1;2H", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_END,   ESC_STR "[1;2F", MCKEY_NOACTION },
++
++    { KEY_M_CTRL  | KEY_UP,    ESC_STR "[1;5A", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_DOWN,  ESC_STR "[1;5B", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_RIGHT, ESC_STR "[1;5C", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_LEFT,  ESC_STR "[1;5D", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_IC,    ESC_STR "[2;2~", MCKEY_NOACTION },
+ 
+     /* rxvt keys with modifiers */
+     { KEY_M_SHIFT | KEY_UP,    ESC_STR "[a",  MCKEY_NOACTION },
+@@ -227,6 +245,14 @@
+     { KEY_M_CTRL  | KEY_END,   ESC_STR "[8^", MCKEY_NOACTION },
+     { KEY_M_SHIFT | KEY_HOME,  ESC_STR "[7$", MCKEY_NOACTION },
+     { KEY_M_SHIFT | KEY_END,   ESC_STR "[8$", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_IC,    ESC_STR "[2^", MCKEY_NOACTION },
++    { KEY_M_CTRL  | KEY_DC,    ESC_STR "[3^", MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_DC,    ESC_STR "[3$", MCKEY_NOACTION },
++
++    /* konsole keys with modifiers */
++    { KEY_M_SHIFT | KEY_HOME,  ESC_STR "O2H",   MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_END,   ESC_STR "O2F",   MCKEY_NOACTION },
++    { KEY_M_SHIFT | KEY_DC,    ESC_STR "[3;2~", MCKEY_NOACTION },
+ 
+     { 0, 0, MCKEY_NOACTION },
+ };
