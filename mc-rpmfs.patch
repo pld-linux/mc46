@@ -69,8 +69,9 @@ diff -uNr mc-4.5.54.orig/vfs/extfs/rpm mc-4.5.54/vfs/extfs/rpm
  	    mkdir $TMPDIR || exit 1
  	    cd $TMPDIR
 -	    rpm2cpio "$1" | cpio -iumd --quiet "$2" >/dev/null
+-	    mv "$2" "$3"
 +	    rpm2cpio "$1" | cpio -iumd --quiet "$2" "./$2" >/dev/null
- 	    mv "$2" "$3"
++	    mv -f "$2" "$3"
  	    cd /
  	    rm -rf $TMPDIR;;
  
