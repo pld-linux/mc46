@@ -1,0 +1,53 @@
+diff -Nru mc-4.5.51/src/dir.c mc-4.5.51.new/src/dir.c
+--- mc-4.5.51/src/dir.c	Mon Jul  3 16:32:07 2000
++++ mc-4.5.51.new/src/dir.c	Fri Nov 10 13:19:10 2000
+@@ -44,7 +44,7 @@
+ #endif
+ 
+ /* If true show files ending in ~ */
+-int show_backups = 0;
++int show_backups = 1;
+ 
+ /* If false then directories are shown separately from files */
+ int mix_all_files = 0;
+diff -Nru mc-4.5.51/src/main.c mc-4.5.51.new/src/main.c
+--- mc-4.5.51/src/main.c	Mon Jul  3 16:32:07 2000
++++ mc-4.5.51.new/src/main.c	Fri Nov 10 13:17:19 2000
+@@ -211,11 +211,11 @@
+ int auto_save_setup = 1;
+ 
+ /* If true, be eight bit clean */
+-int eight_bit_clean = 0;
++int eight_bit_clean = 1;
+ 
+ /* If true, then display chars 0-255, else iso-8859-1,
+    requires eight_bit_clean */
+-int full_eight_bits = 0;
++int full_eight_bits = 1;
+ 
+ /* If true use the internal viewer */
+ int use_internal_view = 1;
+diff -Nru mc-4.5.51/src/panel.h mc-4.5.51.new/src/panel.h
+--- mc-4.5.51/src/panel.h	Mon Jul  3 16:32:05 2000
++++ mc-4.5.51.new/src/panel.h	Fri Nov 10 13:21:31 2000
+@@ -292,7 +292,7 @@
+ 
+ void try_to_select (WPanel *panel, char *name);
+ 
+-#define DEFAULT_USER_FORMAT "half type,name,|,size,|,perm"
++#define DEFAULT_USER_FORMAT "half type,name,|,mtime,|,perm"
+ 
+ /* This were in main: */
+ void unmark_files (WPanel *panel);
+diff -Nru mc-4.5.51/src/screen.c mc-4.5.51.new/src/screen.c
+--- mc-4.5.51/src/screen.c	Mon Jul  3 16:32:07 2000
++++ mc-4.5.51.new/src/screen.c	Fri Nov 10 13:20:47 2000
+@@ -1475,7 +1475,7 @@
+ 
+     default:
+     case list_full:
+-	return "half type,name,|,size,|,mtime";
++	return "half type,name,|,size";
+     }
+ }
+ 
