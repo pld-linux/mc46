@@ -1,7 +1,7 @@
-diff -urN mc-4.5.52.org/gtkedit/syntax.c mc-4.5.52/gtkedit/syntax.c
---- mc-4.5.52.org/gtkedit/syntax.c	Mon Mar 19 20:44:45 2001
-+++ mc-4.5.52/gtkedit/syntax.c	Mon Mar 19 20:48:50 2001
-@@ -1201,6 +1201,9 @@
+diff -Nur mc-4.5.55.orig/gtkedit/syntax.c mc-4.5.55.chng/gtkedit/syntax.c
+--- mc-4.5.55.orig/gtkedit/syntax.c	Fri Aug 24 04:58:42 2001
++++ mc-4.5.55.chng/gtkedit/syntax.c	Wed Nov 20 19:37:53 2002
+@@ -1208,6 +1208,9 @@
  "file ..\\*\\\\.(diff|rej|patch)$ Diff\\sOutput ^diff",
  "include diff.syntax",
  "",
@@ -11,11 +11,11 @@ diff -urN mc-4.5.52.org/gtkedit/syntax.c mc-4.5.52/gtkedit/syntax.c
  "file ..\\*\\\\.lsm$ LSM\\sFile",
  "include lsm.syntax",
  "",
-diff -urN mc-4.5.52.org/syntax/Makefile.am mc-4.5.52/syntax/Makefile.am
---- mc-4.5.52.org/syntax/Makefile.am	Mon Mar 19 20:44:46 2001
-+++ mc-4.5.52/syntax/Makefile.am	Mon Mar 19 20:49:18 2001
-@@ -22,6 +22,7 @@
- 	smalltalk.syntax	\
+diff -Nur mc-4.5.55.orig/syntax/Makefile.am mc-4.5.55.chng/syntax/Makefile.am
+--- mc-4.5.55.orig/syntax/Makefile.am	Fri Aug 17 14:23:48 2001
++++ mc-4.5.55.chng/syntax/Makefile.am	Wed Nov 20 19:37:53 2002
+@@ -25,6 +25,7 @@
+ 	slang.syntax		\
  	swig.syntax		\
  	texinfo.syntax		\
 -	unknown.syntax
@@ -23,14 +23,16 @@ diff -urN mc-4.5.52.org/syntax/Makefile.am mc-4.5.52/syntax/Makefile.am
 +	spec.syntax
  
  EXTRA_DIST = $(syntax_DATA)
-diff -urN mc-4.5.52.org/syntax/spec.syntax mc-4.5.52/syntax/spec.syntax
---- mc-4.5.52.org/syntax/spec.syntax	Thu Jan  1 01:00:00 1970
-+++ mc-4.5.52/syntax/spec.syntax	Mon Mar 19 20:48:50 2001
-@@ -0,0 +1,194 @@
+diff -Nur mc-4.5.55.orig/syntax/spec.syntax mc-4.5.55.chng/syntax/spec.syntax
+--- mc-4.5.55.orig/syntax/spec.syntax	Thu Jan  1 00:00:00 1970
++++ mc-4.5.55.chng/syntax/spec.syntax	Wed Nov 20 19:33:34 2002
+@@ -0,0 +1,291 @@
 +context default
 +    keyword whole Autoprov: green/6
 +    keyword whole Autoreqprov: green/6
 +    keyword whole Autoreq: green/6
++    keyword whole BuildArch: green/6
++    keyword whole BuildConflicts: green/6
 +    keyword whole BuildRoot: green/6
 +    keyword whole BuildRequires: green/6
 +    keyword whole Conflicts: green/6
@@ -40,10 +42,10 @@ diff -urN mc-4.5.52.org/syntax/spec.syntax mc-4.5.52/syntax/spec.syntax
 +    keyword whole ExclusiveArch: green/6
 +    keyword whole ExclusiveOS: green/6
 +    keyword whole Group: green/6
-+    keyword whole Group(\[abcdefghijklmnopqrstuwxyz\]): green/6
 +    keyword whole Icon: green/6
 +    keyword whole License: green/6
 +    keyword whole Name: green/6    
++    keyword whole NoSource\[0123456789\]: green/6
 +    keyword whole Obsoletes: green/6
 +    keyword whole Packager: green/6
 +    keyword whole Patch\[0123456789\]: green/6    
@@ -55,7 +57,6 @@ diff -urN mc-4.5.52.org/syntax/spec.syntax mc-4.5.52/syntax/spec.syntax
 +    keyword whole Root: green/6    
 +    keyword whole Source\[0123456789\]: green/6
 +    keyword whole Summary: green/6
-+    keyword whole Summary(\[abcdefghijklmnopqrstuwxyz\]): green/6
 +    keyword whole Vendor: green/6
 +    keyword whole Version: green/6
 +    keyword whole URL: green/6
@@ -107,117 +108,213 @@ diff -urN mc-4.5.52.org/syntax/spec.syntax mc-4.5.52/syntax/spec.syntax
 +    keyword whole PATCH\[0123456789\] cyan/14
 +    keyword whole SOURCE\[0123456789\] cyan/14
 +
++context Requires( ): green/6
++	keyword whole post yellow/26
++	keyword whole pre yellow/26
++	keyword whole postun yellow/26
++	keyword whole preun yellow/26
++	keyword , lightgray/22
++
++context Summary( ): green/6
++	keyword whole af yellow/26
++	keyword whole az yellow/26
++	keyword whole bg yellow/26
++#br - breton???
++	keyword whole br yellow/26	
++	keyword whole ca yellow/26
++	keyword whole ca_ES yellow/26
++	keyword whole cs yellow/26
++	keyword whole cs_CZ yellow/26
++	keyword whole da yellow/26
++	keyword whole da_DK yellow/26
++	keyword whole de yellow/26
++	keyword whole de_AT yellow/26
++	keyword whole de_DE yellow/26
++	keyword whole el yellow/26
++	keyword whole el_GR yellow/26
++	keyword whole en yellow/26
++	keyword whole en_GB yellow/26
++	keyword whole eo yellow/26
++	keyword whole es yellow/26
++	keyword whole es_ES yellow/26
++	keyword whole et yellow/26
++	keyword whole et_EE yellow/26
++	keyword whole eu yellow/26
++	keyword whole fi yellow/26
++	keyword whole fi_FI yellow/26
++	keyword whole fr yellow/26
++	keyword whole fr_FR yellow/26
++	keyword whole gl yellow/26
++	keyword whole gl_ES yellow/26
++	keyword whole gr yellow/26
++	keyword whole he yellow/26
++	keyword whole he_IL yellow/26
++	keyword whole hi yellow/26
++	keyword whole hr yellow/26
++	keyword whole hr_HR yellow/26
++	keyword whole hu yellow/26
++	keyword whole hu_HU yellow/26
++	keyword whole id yellow/26
++	keyword whole is yellow/26
++	keyword whole is_IS yellow/26
++	keyword whole it yellow/26
++	keyword whole it_IT yellow/26
++	keyword whole ja yellow/26
++	keyword whole ja_JP yellow/26
++	keyword whole ja_JP.SJIS yellow/26
++	keyword whole ko yellow/26
++	keyword whole ko_KR yellow/26
++	keyword whole lt yellow/26
++	keyword whole lt_LT yellow/26
++	keyword whole lv yellow/26
++	keyword whole ms yellow/26
++	keyword whole nb yellow/26
++	keyword whole nl yellow/26
++	keyword whole nl_NL yellow/26
++	keyword whole nn yellow/26
++	keyword whole nn_NO yellow/26
++	keyword whole no yellow/26
++	keyword whole no_NO yellow/26
++	keyword whole pl yellow/26
++	keyword whole pl_PL yellow/26
++	keyword whole pt yellow/26
++	keyword whole pt_BR yellow/26
++	keyword whole pt_PT yellow/26
++	keyword whole ro yellow/26
++	keyword whole ro_RO yellow/26
++	keyword whole ru yellow/26
++	keyword whole ru_RU yellow/26
++	keyword whole sk yellow/26
++	keyword whole sk_SK yellow/26
++	keyword whole sl yellow/26
++	keyword whole sl_SI yellow/26
++	keyword whole sr yellow/26
++	keyword whole sv yellow/26
++	keyword whole sv_SE yellow/26
++	keyword whole ta yellow/26
++	keyword whole th_TH yellow/26
++	keyword whole tr yellow/26
++	keyword whole tr_TR yellow/26
++	keyword whole uk yellow/26
++	keyword whole vi yellow/26
++	keyword whole wa yellow/26
++	keyword whole zh yellow/26
++	keyword whole zh_CN yellow/26
++	keyword whole zh_CN.GB2312 yellow/26
++	keyword whole zh_TW yellow/26
++	keyword whole zh_TW.Big5 yellow/26
++
 +context linestart # \n brown/22
-+context %( ) brightblue/23
++context %( ) brightblue/11
 +
 +# Changelog
 +context exclusive whole linestart %changelog EOF lightgray/13
 +    keyword Revision*\n brightgreen/16
 +    keyword \*\s\{MWTFS\}*\n brightgreen/16
 +    keyword \s\s[*] brightgreen/16
-+    keyword $Log*\n brightred/18
++    keyword $Log*$\n brightred/18
 +
 +#sections
 +context exclusive linestart %build \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %clean \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %description \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %files \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %install \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %package \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %pre \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %prep \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %preun \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %post \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +context exclusive linestart %postun \n yellow/24
-+    keyword -l brightred/18
-+    keyword -n brightred/18
-+    keyword -p brightred/18
++    keyword whole -l brightred/18
++    keyword whole -n brightred/18
++    keyword whole -p brightred/18
 +    keyword %{ brightcyan/14
 +    keyword { brightcyan/14
 +    keyword } brightcyan/14
 +
 +#triggers
 +context exclusive %triggerin \n lightgray/13
-+    keyword -n brightmagenta/23
-+    keyword -p brightmagenta/23
-+    keyword -- brightmagenta/23
++    keyword whole -n brightmagenta/23
++    keyword whole -p brightmagenta/23
++    keyword whole -- brightmagenta/23
 +
 +context exclusive %triggerun \n lightgray/13
-+    keyword -n brightmagenta/23
-+    keyword -p brightmagenta/23
-+    keyword -- brightmagenta/23
++    keyword whole -n brightmagenta/23
++    keyword whole -p brightmagenta/23
++    keyword whole -- brightmagenta/23
 +
 +context exclusive %triggerpostun \n lightgray/13
-+    keyword -n brightmagenta/23
-+    keyword -p brightmagenta/23
-+    keyword -- brightmagenta/23
++    keyword whole -n brightmagenta/23
++    keyword whole -p brightmagenta/23
++    keyword whole -- brightmagenta/23
