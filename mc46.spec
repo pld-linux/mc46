@@ -225,7 +225,7 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 %patch18 -p1
 
 %build
-gettextize --copy --force
+%{__gettextize}
 aclocal -I \
 	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
 %{__autoconf}
