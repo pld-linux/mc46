@@ -1,0 +1,20 @@
+--- ChangeLog
++++ ChangeLog
+@@ -1 +1,6 @@
++2002-07-03  Pavel Roskin  <proski@gnu.org>
++
++       * subshell.c (sigchld_handler): Remove subshell_pty from the
++       channel list if the subshell has died.
++
+ 2002-07-03  Andrew V. Samoilov  <kai@cmail.ru>
+--- subshell.c
++++ subshell.c
+@@ -912,6 +912,7 @@ void sigchld_handler (int sig)
+ #  endif
+        {
+            subshell_alive = FALSE;
++           delete_select_channel (subshell_pty);
+            if (WIFEXITED (status) && WEXITSTATUS (status) != FORK_FAILURE)
+                quit |= SUBSHELL_EXIT;  /* Exited normally */
+        }
+
