@@ -1,0 +1,12 @@
+diff -ruN mc-4.5.51.orig/src/main.c mc-4.5.51/src/main.c
+--- mc-4.5.51.orig/src/main.c	Mon Jul  3 16:32:07 2000
++++ mc-4.5.51/src/main.c	Wed Oct 18 21:58:17 2000
+@@ -2394,7 +2394,7 @@
+ 	termvalue = "";
+     }
+ #ifndef HAVE_X
+-    if (force_xterm || (strncmp (termvalue, "xterm", 5) == 0 || strcmp (termvalue, "dtterm") == 0)){
++    if (force_xterm || (strncmp (termvalue, "xterm", 5) == 0 || strcmp (termvalue, "dtterm") == 0 || strncmp (termvalue, "rxvt", 4) == 0)){
+ 	use_mouse_p = XTERM_MOUSE;
+ 	xterm_flag = 1;
+ #    ifdef SET_TITLE

@@ -1,0 +1,12 @@
+diff -ruN mc-4.5.51.orig/src/dir.c mc-4.5.51/src/dir.c
+--- mc-4.5.51.orig/src/dir.c	Mon Jul  3 16:32:07 2000
++++ mc-4.5.51/src/dir.c	Mon Aug 14 22:12:54 2000
+@@ -76,7 +76,7 @@
+     { N_("&Group"),       sort_group }
+ };
+ 
+-#define string_sortcomp(a,b) (case_sensitive ? strcoll (a,b) : g_strcasecmp (a,b))
++#define string_sortcomp(a,b) (case_sensitive ? strcmp (a,b) : g_strcasecmp (a,b))
+ 
+ int
+ unsorted (const file_entry *a, const file_entry *b)
