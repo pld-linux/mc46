@@ -15,7 +15,7 @@ Summary(tr):	Midnight Commander gЖrsel kabuПu
 Summary(uk):	Диспетчер файл╕в Midnight Commander
 Name:		mc
 Version:	4.5.55
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
@@ -41,6 +41,7 @@ Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
 Patch16:	%{name}-mo.patch
 Patch17:	%{name}-%{name}.ext-ear_war.patch
+Patch18:	%{name}-home_etc.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -109,8 +110,8 @@ Summary(ru):	Midnight Commander файл-сервер
 Summary(tr):	Midnight Commander dosya sunucusu
 Summary(uk):	Midnight Commander файл-сервер
 Group:		Daemons
-Prereq:		/sbin/chkconfig
-Prereq:		rc-scripts
+PreReq:		/sbin/chkconfig
+PreReq:		rc-scripts
 Requires:	pam >= 0.66
 Requires:	portmap
 
@@ -221,7 +222,7 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 %patch15 -p1
 %{?_with_mo:%patch16 -p1}
 %patch17 -p1
-
+%patch18 -p1
 
 %build
 gettextize --copy --force
