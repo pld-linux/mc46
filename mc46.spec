@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow這ka wizualna
 Summary(tr):	Midnight Commander g顤sel kabu繠
 Name:		mc
 Version:	4.5.30
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		Shells
 Group(pl):	Pow這ki
@@ -14,6 +14,11 @@ Source1:	mcserv.pamd
 Source2:	mcserv.init
 URL:		http://mc.blackdown.org/mc/
 BuildPrereq:	glib-devel
+BuildPrereq:	gpm-devel
+BuildPrereq:	ncurses-devel
+BuildPrereq:	XFree86-devel
+BuildPrereq:	ORBit-devel
+BuildPrereq:	gnome-libs-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -245,6 +250,10 @@ fi
 /usr/share/mc
 
 %changelog
+* Sat Apr 24 1999 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
+  [4.5.30-2]
+- recompiles on new rpm.
+
 * Thu Mar 25 1999 Tomasz K這czko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.28-1]
 - ./configure with --with-included-slang,
