@@ -27,7 +27,7 @@ diff -Nur mc-4.5.51.orig/syntax/Makefile.in mc-4.5.51/syntax/Makefile.in
 diff -Nur mc-4.5.51.orig/syntax/spec.syntax mc-4.5.51/syntax/spec.syntax
 --- mc-4.5.51.orig/syntax/spec.syntax	Thu Jan  1 01:00:00 1970
 +++ mc-4.5.51/syntax/spec.syntax	Wed Sep 27 21:49:34 2000
-@@ -0,0 +1,121 @@
+@@ -0,0 +1,194 @@
 +context default
 +    keyword whole Autoprov: green/6
 +    keyword whole Autoreqprov: green/6
@@ -49,7 +49,7 @@ diff -Nur mc-4.5.51.orig/syntax/spec.syntax mc-4.5.51/syntax/spec.syntax
 +    keyword whole Packager: green/6
 +    keyword whole Patch\[0123456789\]: green/6    
 +    keyword whole Prefix: green/6
-+    keyword whole Prereq: green/6    
++    keyword whole PreReq: green/6    
 +    keyword whole Provides: green/6    
 +    keyword whole Release: green/6    
 +    keyword whole Requires: green/6    
@@ -57,6 +57,7 @@ diff -Nur mc-4.5.51.orig/syntax/spec.syntax mc-4.5.51/syntax/spec.syntax
 +    keyword whole Source\[0123456789\]: green/6
 +    keyword whole Summary: green/6
 +    keyword whole Summary(\[abcdefghijklmnopqrstuwxyz\]): green/6
++    keyword whole Vendor: green/6
 +    keyword whole Version: green/6
 +    keyword whole URL: green/6
 +
@@ -115,24 +116,96 @@ diff -Nur mc-4.5.51.orig/syntax/spec.syntax mc-4.5.51/syntax/spec.syntax
 +    keyword Revision*\n brightgreen/16
 +    keyword \*\s\{MWTFS\}*\n brightgreen/16
 +    keyword \s\s[*] brightgreen/16
++    keyword $Log*\n brightred/18
 +
 +#sections
-+context exclusive linestart %description \n lightgray/13
++context exclusive linestart %build \n yellow/24
 +    keyword -l brightred/18
 +    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
 +
-+context exclusive linestart %package \n lightgray/13
++context exclusive linestart %clean \n yellow/24
++    keyword -l brightred/18
 +    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
 +
-+context exclusive linestart %files \n lightgray/13
++context exclusive linestart %description \n yellow/24
++    keyword -l brightred/18
 +    keyword -n brightred/18
-+    keyword -f brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
 +
-+context exclusive linestart %preun \n lightgray/13
++context exclusive linestart %files \n yellow/24
++    keyword -l brightred/18
 +    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
 +
-+context exclusive linestart %post \n lightgray/13
++context exclusive linestart %install \n yellow/24
++    keyword -l brightred/18
 +    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++
++context exclusive linestart %package \n yellow/24
++    keyword -l brightred/18
++    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++
++context exclusive linestart %pre \n yellow/24
++    keyword -l brightred/18
++    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++
++context exclusive linestart %prep \n yellow/24
++    keyword -l brightred/18
++    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++
++context exclusive linestart %preun \n yellow/24
++    keyword -l brightred/18
++    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++
++context exclusive linestart %post \n yellow/24
++    keyword -l brightred/18
++    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
++
++context exclusive linestart %postun \n yellow/24
++    keyword -l brightred/18
++    keyword -n brightred/18
++    keyword -p brightred/18
++    keyword %{ brightcyan/14
++    keyword { brightcyan/14
++    keyword } brightcyan/14
 +
 +#triggers
 +context exclusive %triggerin \n lightgray/13
