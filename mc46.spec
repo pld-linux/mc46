@@ -13,12 +13,12 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
 URL:		http://mc.blackdown.org/mc/
-BuildPrereq:	glib-devel
-BuildPrereq:	gpm-devel
-BuildPrereq:	ncurses-devel
-BuildPrereq:	XFree86-devel
-BuildPrereq:	ORBit-devel
-BuildPrereq:	gnome-libs-devel
+BuildRequires:	glib-devel
+BuildRequires:	gpm-devel
+BuildRequires:	ncurses-devel
+BuildRequires:	XFree86-devel
+BuildRequires:	ORBit-devel
+BuildRequires:	gnome-libs-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
