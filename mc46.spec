@@ -6,6 +6,8 @@
 # _with_x		- with text edit in X support
 # _with_mo		- alters the M-o functionality
 #
+%define ver	4.6.0
+%define sver	pre1
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
 Summary(es):	Interpretador de comandos visual Midnight Commander
@@ -18,11 +20,11 @@ Summary(tr):	Midnight Commander gЖrsel kabuПu
 Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell.
 Name:		mc
-Version:	4.5.55
-Release:	9
+Version:	%{ver}_%{sver}
+Release:	1
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{ver}-%{sver}.tar.gz
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
@@ -277,42 +279,42 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 ╕нтерфейс десктопу GNOME.
 
 %prep
-%setup -q -a3
-%patch0 -p1
+%setup -q -a3 -n %{name}-%{ver}-%{sver}
+#%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+#%patch2 -p1
+#%patch3 -p1
+#%patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+#%patch6 -p1
+#%patch7 -p1
+#%patch8 -p1
+#%patch9 -p1
+#%patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+#%patch12 -p1
+#%patch13 -p1
+#%patch14 -p1
+#%patch15 -p1
 %{?_with_mo:%patch16 -p1}
-%patch17 -p1
+#%patch17 -p1
 #%patch18 -p1
-%patch19 -p1
+#%patch19 -p1
 
 %build
 %{__gettextize}
-aclocal -I \
-	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
+%{__aclocal} \
+	%{!?_without_gnome:-I %{_aclocaldir}/gnome}
 %{__autoconf}
 %{__automake}
 X11_WWW="
-if [ -f /usr/X11R6/bin/netscape ]; then
+if [ -f %{_prefix}/X11R6/bin/netscape ]; then
 	netscape;
 else
-	if [ -f /usr/X11R6/bin/galeon ]; then
+if [ -f %{_prefix}/X11R6/bin/galeon ]; then
 		galeon
 	else
-		if [ -f /usr/X11R6/bin/mozilla ]; then
+if [ -f %{_prefix}/X11R6/bin/mozilla ]; then
 			mozilla
 		else
 			xterm -c lynx
@@ -358,8 +360,6 @@ install %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/mc/extfs/srpm
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir}
-
 %find_lang %{name}
 
 %clean
@@ -391,6 +391,9 @@ fi
 
 %{_libdir}/mc/mc.hlp
 %lang(hu) %{_libdir}/mc/mc.hlp.hu
+%lang(es) %{_libdir}/mc/mc.hlp.es
+%lang(it) %{_libdir}/mc/mc.hlp.it
+%lang(ru) %{_libdir}/mc/mc.hlp.ru
 %{_libdir}/mc/mc.lib
 %{_libdir}/mc/mc.menu
 %{_libdir}/mc/mc.hint
@@ -431,11 +434,13 @@ fi
 %{_libdir}/mc/extfs/extfs.ini
 %{_libdir}/mc/extfs/sfs.ini
 %{_libdir}/mc/syntax
+%{_libdir}/mc/*.rc
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
-
+%lang(it) %{_mandir}/it/man1/*
+%lang(ru) %{_mandir}/ru/man1/*
 %attr(755,root,root) %config /etc/profile.d/*
 
 %dir %{_libdir}/mc
