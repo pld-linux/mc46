@@ -18,7 +18,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.0
-Release:	19
+Release:	20
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -74,6 +74,7 @@ BuildRequires:	gpm-devel
 %{?with_x:BuildRequires:	XFree86-devel}
 Requires:	file
 Requires:	pam >= 0.77.3
+Requires:	setup >= 2.4.6-2
 # Needed? %%{?with_perl_vfs:Requires:	perl-base}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
@@ -280,7 +281,7 @@ fi"
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_pixmapsdir},%{_desktopdir}} \
-	$RPM_BUILD_ROOT/etc/{rc.d/init.d,pam.d,profile.d,sysconfig} \
+	$RPM_BUILD_ROOT/etc/{rc.d/init.d,pam.d,shrc.d,sysconfig} \
 	$RPM_BUILD_ROOT%{_mandir}/man8
 
 %{__make} install \
@@ -303,7 +304,7 @@ for a in es pl ; do
 	done
 done
 
-install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
+install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/shrc.d
 
 %find_lang %{name}
 
@@ -330,7 +331,7 @@ fi
 %defattr(644,root,root,755)
 %doc FAQ NEWS README
 %attr(755,root,root) %{_bindir}/mc*
-%attr(755,root,root) %config /etc/profile.d/*
+%attr(755,root,root) %config /etc/shrc.d/*
 %attr(755,root,root) %{_libdir}/mc/cons.saver
 %dir %{_libdir}/mc
 
