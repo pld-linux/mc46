@@ -1,0 +1,8 @@
+--- mc-4.5.52.orig/lib/mc.sh.in	Tue Oct  3 21:58:53 2000
++++ mc-4.5.52/lib/mc.sh.in	Sat Apr 14 19:01:27 2001
+@@ -9,4 +9,4 @@
+         unset MC;
+ }
+ 
+-export -f mc
++export -f mc 2>/dev/null

@@ -38,6 +38,8 @@ Patch14:	%{name}-proxy.patch
 Patch15:	%{name}-nognome-amfix.patch
 Patch16:	%{name}-urar.patch
 Patch17:	%{name}-samba.patch
+Patch18:	%{name}-gettext.patch
+Patch19:	%{name}-shquiet.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
@@ -189,6 +191,8 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 %build
 gettextize --copy --force
