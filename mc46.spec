@@ -10,7 +10,9 @@ Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
 Summary(fr):	Un gestionnaire de fichiers puissant et agrИable en mode console
 Summary(pl):	Midnight Commander - powЁoka wizualna
+Summary(ru):	Диспетчер файлов Midnight Commander
 Summary(tr):	Midnight Commander gЖrsel kabuПu
+Summary(uk):	Диспетчер файл╕в Midnight Commander
 Name:		mc
 Version:	4.5.55
 Release:	6
@@ -38,7 +40,7 @@ Patch13:	%{name}-nobashism.patch
 Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
 Patch16:	%{name}-mo.patch
-Patch17:	%{name}-mc.ext-ear_war.patch
+Patch17:	%{name}-%{name}.ext-ear_war.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -86,9 +88,9 @@ visualiser des archives tar, de compresser des fichiers avec zip, de
 rИcupИrer des fichiers dans les packages RPM, et tout ceci simplement.
 
 %description -l pl
-Midnight Commander jest wizualn╠ powЁok╠ podobn╠ do Norton
-Commandera. Pracuje w trybie tekstowym, ale ma tak©e wspomaganie dla
-myszki. Jest super ;) MC ma wbudowanego klienta ftp, mo©e zagl╠daФ do
+Midnight Commander jest wizualn╠ powЁok╠ podobn╠ do Norton Commandera.
+Pracuje w trybie tekstowym, ale ma tak©e wspomaganie dla myszki. Jest
+super ;) MC ma wbudowanego klienta ftp, mo©e zagl╠daФ do
 skompresowanego archiwum tarowego, do *.zip oraz *.rpm. Teraz rСwnie©
 pracuje z urz╠dzeniami /dev/pts/{0-2048} - standard Unix98.
 
@@ -103,7 +105,9 @@ Summary:	Server for the Midnight Commander network file management system
 Summary(de):	Midnight Commander File-Server
 Summary(fr):	Serveur rИseau pour le gestionnaire de fichiers Midnight Commander
 Summary(pl):	Serwer plikСw Midnight Commandera
+Summary(ru):	Midnight Commander файл-сервер
 Summary(tr):	Midnight Commander dosya sunucusu
+Summary(uk):	Midnight Commander файл-сервер
 Group:		Daemons
 Prereq:		/sbin/chkconfig
 Prereq:		rc-scripts
@@ -136,17 +140,31 @@ Mcserv jest aplikacj╠ dla sieciowego systemy plikСw Midnight
 Commandera. Pozwala na dostЙp do systemu plikСw dla klienta
 pracuj╠cego pod MC i u©ywaj╠cego jego systemu plikСw.
 
+%description -n mcserv -l ru
+mcserv - это серверная программа для сетевой файловой системы Midnight
+Commander. Она обеспечивает доступ к удаленной файловой системе
+клиентам, поддерживающим файловую систему Midnight Commander (в
+настоящее время только собственно Midnight Commander).
+
 %description -n mcserv -l tr
 mcserv, Midnight Commander aП dosya sisteminin sunucu programЩdЩr.
 Midnight dosya sistemini ГalЩЧtЩran istemcilerin sunucu dosya
 sistemine eriЧimini saПlar.
+
+%description -n mcserv -l uk
+mcserv - це серверна програма для мережево╖ файлово╖ системи Midnight
+Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
+кл╕╓нтам, що п╕дтримують файлову систему Midnight Commander (нараз╕
+т╕льки власне Midnight Commander).
 
 %package -n gmc
 Summary:	Midnight Commander visual shell (GNOME version)
 Summary(de):	Midnight Commander Visual-Shell (GNOME Version)
 Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
 Summary(pl):	Midnight Commander - wizualna powЁoka (wersja GNOME)
+Summary(ru):	GNOME версия файлового менеджера Midnight Commander
 Summary(tr):	Midnight Commander gЖrsel kabuПu (GNOME sЭrЭmЭ)
+Summary(uk):	GNOME верс╕я файлового менеджера Midnight Commander
 Group:		X11/Applications
 Requires:	%{name}	= %{version}
 
@@ -167,11 +185,21 @@ zip, et de rИcupИrer des fichiers dans les packages RPM. La version
 GNOME de Midnight Commander n'est pas encore terminИe cependant. :-(
 
 %description -n gmc -l pl
-Midnight Commander jest wizualn╠ powЁok╠, posiadaj╠c╠ znacznie
-wiЙcej funkcji ni© samo zarz╠dzanie plikami. Ma wbudowanego klienta
-ftp, potrafi przegl╠daФ pliki tar, zip oraz siЙgaФ do konkretnych
-plikСw pakietСw rpm. To jest wersja pracuj╠ca pod GNOME. Niestety
-nie jest ona jeszcze skoЯczona.
+Midnight Commander jest wizualn╠ powЁok╠, posiadaj╠c╠ znacznie wiЙcej
+funkcji ni© samo zarz╠dzanie plikami. Ma wbudowanego klienta ftp,
+potrafi przegl╠daФ pliki tar, zip oraz siЙgaФ do konkretnych plikСw
+pakietСw rpm. To jest wersja pracuj╠ca pod GNOME. Niestety nie jest
+ona jeszcze skoЯczona.
+
+%description -n gmc -l ru
+GMC (GNU Midnight Commander) - это файловый менеджер, основанный на
+терминальной версии Midnight Commander и добавляющий к нему
+графический интерфейс десктопа GNOME.
+
+%description -n gmc -l uk
+GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
+терм╕нальн╕й верс╕╖ Midnight Commander та дода╓ до нього граф╕чний
+╕нтерфейс десктопу GNOME.
 
 %prep
 %setup -q -a3
@@ -202,15 +230,18 @@ aclocal -I \
 autoconf
 automake -a -c
 X11_WWW="
-if [ -f /usr/X11R6/bin/netscape ]; then netscape;
+if [ -f /usr/X11R6/bin/netscape ]; then
+	netscape;
 else
-  if [ -f /usr/X11R6/bin/galeon ]; then galeon;
-  else
-    if [ -f /usr/X11R6/bin/mozilla ]; then mozilla;
-    else
-      xterm -c lynx;
-    fi;
-  fi;
+	if [ -f /usr/X11R6/bin/galeon ]; then
+		galeon
+	else
+		if [ -f /usr/X11R6/bin/mozilla ]; then
+			mozilla
+		else
+			xterm -c lynx
+		fi;
+	fi;
 fi"
 %configure \
 	%{?_with_ext2undel:--with-ext2-undel}%{!?_with_ext2undel:--without-ext2undel} \
