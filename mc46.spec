@@ -1,8 +1,8 @@
 #
 # Conditional build:
-# _with_ext2undel	- with ext2 undelete fs
-# _with_samba		- with SAMBA vfs support
-# _with_x		- with text edit in X support
+%bcond_with	ext2undel	# with ext2 undelete fs
+%bcond_with	samba		# with SAMBA vfs support
+%bcond_with	x		# with text edit in X support
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -17,7 +17,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.0
-Release:	16
+Release:	17
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -52,6 +52,9 @@ Patch12:	%{name}-posix_sh.patch
 Patch13:	%{name}-sequences.patch
 Patch14:	%{name}-mo.patch
 Patch15:	%{name}-posix.patch
+Patch16:	%{name}-CAN-2003-1023.patch
+Patch17:	%{name}-tempfile.patch
+Patch18:	%{name}-localenames.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -66,8 +69,8 @@ BuildRequires:	rpm-perlprov
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
-%{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
-%{?_with_x:BuildRequires:	XFree86-devel}
+%{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
+%{?with_x:BuildRequires:	XFree86-devel}
 Requires:	file
 Requires:	pam >= 0.77.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -232,6 +235,11 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
+%patch17 -p0
+%patch18 -p1
+
+mv -f po/{no,nb}.po
 
 %build
 %{__gettextize}
@@ -254,11 +262,11 @@ else
 fi"
 %configure \
 	--with%{!?debug:out}-debug \
-	--with%{!?_with_ext2undel:out}-ext2undel \
-	--with%{!?_with_x:out}-x \
+	--with%{!?with_ext2undel:out}-ext2undel \
+	--with%{!?with_x:out}-x \
 	--with-vfs \
 	--with-mcfs \
-	%{?_with_samba:--with-samba} \
+	%{?with_samba:--with-samba} \
 	--with-configdir=/etc/samba \
 	--with-codepagedir=/etc/samba/codepages \
 	--with-gpm-mouse \
