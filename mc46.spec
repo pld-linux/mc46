@@ -4,7 +4,7 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.43
+Version:	4.5.44
 Release:	1
 License:	GPL
 Group:		Shells
@@ -13,9 +13,8 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.
 Source1:	mcserv.pamd
 Source2:	mcserv.init
 Patch0:		mc-mimekeys.patch
-Patch1:		mc-enlightenment_keys.patch
-Patch2:		mc-rpmfs.patch
-Patch3:		mc-system_popt.patch
+Patch1:		mc-rpmfs.patch
+Patch2:		mc-system_popt.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	glib-devel
 BuildRequires:	gpm-devel
@@ -139,7 +138,6 @@ terminée cependant. :-(
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 gettextize --copy --force
