@@ -1,33 +1,41 @@
 #!/bin/sh
 #
-# skeleton      Example file to build /etc/init.d scripts.
+# mcserv	The Midnight Commander file server
 #
-# Version:      @(#) /etc/init.d/mcserv  09-Apr-1997
+# chkconfig:	345 86 30
 #
-# Author:       Tomasz K³oczko, <kloczek@rudy.mif.pg.gda.pl>
-#               Michele Marziani <marziani@fe.infn.it>
+# description:	The Midnight Commander server allows users on remote machines \
+#		to use the Midnight Commander file manager to manipulate their \
+#		files on the machine running the server. The server  \
+#       	authenticates the user through PAM, which by default requires \
+#       	a username/password combination before allowing access.
 #
-# chkconfig: - 86 30
-# description: The Midnight Commander server allows users on remote machines \
-#	       to use the Midnight Commander file manager to manipulate their \
-#	       files on the machine running the server. The server  \
-#              authenticates the user through PAM, which by default requires \
-#              a username/password combination before allowing access.
-# processname: mcserv
+# processname:	mcserv
 
-# Source function library.
+
+# Source function library
 . /etc/rc.d/init.d/functions
 
-# Try get sysconfig.
-if [ -f /etc/sysconfig/mscerv ]; then
-    . /etc/sysconfig/mscerv 
-fi
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+[ -f /etc/sysconfig/mscerv ] && . /etc/sysconfig/mscerv
+
+# Check that networking is up.
+[ "${NETWORKING}" = "no" ] && echo "Error: Networking is down"; exit 0
+
 
 # See how we were called.
 case "$1" in
   start)
-        show Starting mcserv
-	daemon mcserv $OPTIONS
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/mcserv ]; then
+		show Starting mcserv
+		daemon mcserv $OPTIONS
+	else
+		echo "mcserv already is running"
+	fi
 	touch /var/lock/subsys/mcserv
 	;;
   status)
