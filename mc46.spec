@@ -2,6 +2,7 @@
 # Conditional build:
 # bcond_off_gnome	- without GNOME support
 # bcond_on_ext2undel	- with ext2 undelete fs
+# bcond_on_samba	- with SAMBA vfs support
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander 
@@ -35,6 +36,7 @@ Patch13:	%{name}-use_old_sorting.patch
 Patch14:	%{name}-proxy.patch
 Patch15:	%{name}-nognome-amfix.patch
 Patch16:	%{name}-urar.patch
+Patch17:	%{name}-samba.patch
 URL:		http://mc.blackdown.org/mc/
 %{!?bcond_off_gnome:BuildRequires:	ORBit-devel}
 %{!?bcond_off_gnome:BuildRequires:	esound-devel}
@@ -184,6 +186,7 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 gettextize --copy --force
@@ -197,9 +200,11 @@ autoconf
 	--with-vfs \
 	--with-netrc \
 	--with-x \
+	--with-tm-x-support \
 	--without-debug \
 	--with-included-slang \
-	%{!?bcond_off_gnome:--with-gnome}%{?bcond_off_gnome:--without-gnome}
+	%{!?bcond_off_gnome:--with-gnome}%{?bcond_off_gnome:--without-gnome} \
+	%{?bcond_on_samba:--with-samba}
 
 %{__make} confdir=%{_sysconfdir}/
 
