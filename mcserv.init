@@ -20,7 +20,7 @@
 . /etc/sysconfig/network
 
 # Get service config
-[ -f /etc/sysconfig/mscerv ] && . /etc/sysconfig/mscerv
+[ -f /etc/sysconfig/mcserv ] && . /etc/sysconfig/mcserv
 
 # Check that networking is up.
 if [ "${NETWORKING}" = "no" ]; then
@@ -35,7 +35,10 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/mcserv ]; then
 		show Starting mcserv
-		daemon mcserv $OPTIONS
+		is_yes $VERBOSE && OPTS="$OPTS -v"
+		is_yes $QUIET && OPTS="$OPTS -v"
+		[ "$PORT" != "" ] && OPTS="$POPTS -p $PORT"
+		daemon mcserv -d $OPTS
 	else
 		echo "mcserv already is running"
 	fi
