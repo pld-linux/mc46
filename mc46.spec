@@ -239,10 +239,10 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
 for a in es pl ; do
-	for b in $a/man[18] ; do
-		install -d $RPM_BUILD_ROOT%{_mandir}/{$a,$b}
-		for c in $b/* ; do
-			install man/$c $RPM_BUILD_ROOT%{_mandir}/$c
+	for b in man1 man8 ; do
+		install -d $RPM_BUILD_ROOT%{_mandir}/{$a,$a/$b}
+		for c in man/$a/$b/* ; do
+			install $c $RPM_BUILD_ROOT%{_mandir}/$a/$b
 		done
 	done
 done
