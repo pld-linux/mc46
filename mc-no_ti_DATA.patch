@@ -14,8 +14,11 @@
  
  pkgdata_DATA = $(LIBFILES_CONST) $(LIBFILES_ADD) $(LIBFILES_OUT)
  
-@@ -35,6 +33,7 @@
- 	$(ti_DATA) \
+@@ -32,9 +30,9 @@
+ EXTRA_DIST = \
+ 	$(LIBFILES_CONST) \
+ 	$(SCRIPTS_IN) \
+-	$(ti_DATA) \
  	$(noinst_DATA) \
  	$(noinst_SCRIPTS) \
 +	README.xterm linux.ti xterm.ad xterm.ti ansi.ti vt100.ti xterm.tcap \
