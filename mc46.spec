@@ -12,7 +12,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.54
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -42,10 +42,9 @@ Patch15:	%{name}-nognome-amfix.patch
 Patch16:	%{name}-urar.patch
 Patch17:	%{name}-samba.patch
 Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
-Patch19:	%{name}-sh-quiet.patch
-Patch20:	%{name}-nobashism.patch
-Patch21:	%{name}-BINDIR.patch
-Patch22:	%{name}-tinfo.patch
+Patch19:	%{name}-nobashism.patch
+Patch20:	%{name}-BINDIR.patch
+Patch21:	%{name}-tinfo.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -209,7 +208,6 @@ nie jest ona jeszcze skoñczona.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-%patch22 -p1
 
 %build
 gettextize --copy --force
