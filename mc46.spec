@@ -12,7 +12,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.55
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -339,7 +339,7 @@ fi
 
 %files -n mcserv
 %defattr(644,root,root,755)
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
 
 %attr(754,root,root) %config /etc/rc.d/init.d/mcserv
 %{_mandir}/man8/mcserv.8*
