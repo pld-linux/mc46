@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.42
-Release:	3
+Release:	4
 License:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
@@ -15,6 +15,7 @@ Source2:	mcserv.init
 Patch0:		mc-mimekeys.patch
 Patch1:		mc-enlightenment_keys.patch
 Patch2:		mc-rpmfs.patch
+Patch3:		mc-system_popt.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	glib-devel
 BuildRequires:	gpm-devel
@@ -23,6 +24,7 @@ BuildRequires:	XFree86-devel
 BuildRequires:	ORBit-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	imlib-devel
+BuildRequires:	popt-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -138,6 +140,7 @@ terminée cependant. :-(
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 gettextize --copy --force
