@@ -1,0 +1,10 @@
+--- mc-4.5.55/new_icons/Makefile.am.orig	Tue Aug 21 06:43:07 2001
++++ mc-4.5.55/new_icons/Makefile.am	Mon Oct 21 19:29:51 2002
+@@ -81,6 +81,7 @@
+ icondir = $(datadir)/pixmaps/mc
+ icon_DATA = $(ALLICONS)
+ else
++icondir = 
+ icon_DATA =
+ endif
+ 
