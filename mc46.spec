@@ -12,7 +12,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.55
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
