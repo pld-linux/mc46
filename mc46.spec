@@ -272,7 +272,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconf
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/sysconfig/mcserv
-install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}/Utilities
+install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE8} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 for a in es pl ; do
