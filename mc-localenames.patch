@@ -1,0 +1,11 @@
+--- mc-4.6.0/configure.in.orig	Wed Feb  5 19:03:56 2003
++++ mc-4.6.0/configure.in	Mon Feb  2 15:50:10 2004
+@@ -71,7 +71,7 @@
+ AC_FUNC_MMAP
+ 
+ ALL_LINGUAS="az be bg ca cs da de el es eu fi fr hu it ja ko lv \
+-nl no pl pt pt_BR ro ru sk sl sv uk ta tr wa zh_CN zh_TW"
++nl nb pl pt pt_BR ro ru sk sl sv uk ta tr wa zh_CN zh_TW"
+ 
+ dnl
+ dnl Internationalization
