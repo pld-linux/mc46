@@ -4,8 +4,8 @@ Summary(fr):	Le shell Midnight Commander
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.30
-Release:	2
+Version:	4.5.31
+Release:	1
 Copyright:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
@@ -57,7 +57,7 @@ bir görsel kabuktur. Metin ekranda çalýþýr ve GPM çalýþýyorsa fare desteði
 vardýr. En hoþ özellikleri ftp yapabilmesi, tar, zip ve RPM dosyalarýnýn
 içeriklerini gösterebilmesidir.
  
-%package	-n mcserv
+%package -n mcserv
 Summary:	Midnight Commander file server
 Summary(de):	Midnight Commander File-Server 
 Summary(fr):	Serveur de fichier de Midnight Commander
@@ -105,7 +105,7 @@ mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr. Midnight
 dosya sistemini çalýþtýran istemcilerin sunucu dosya sistemine eriþimini
 saðlar.
 
-%package	-n gmc
+%package -n gmc
 Summary:	Midnight Commander visual shell (GNOME version)
 Summary(de):	Midnight Commander Visual-Shell (GNOME Version) 
 Summary(fr):	shell visuel Midnight Commander (version GNOME)
@@ -125,6 +125,7 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 %setup -q
 
 %build
+autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target} \
 	--prefix=/usr \
@@ -153,7 +154,7 @@ install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
 mv $RPM_BUILD_ROOT/usr/bin/mcserv $RPM_BUILD_ROOT/usr/sbin 
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[18]/* \
+gzip -9fn $RPM_BUILD_ROOT/usr/share/man/man[18]/* \
 	FAQ NEWS README
 
 %clean
@@ -207,7 +208,7 @@ fi
 /usr/lib/mc/extfs/extfs.ini
 /usr/lib/mc/extfs/sfs.ini
 
-/usr/man/man1/*
+/usr/share/man/man1/*
 %attr(755,root,root) %config /etc/profile.d/*
 
 %dir /usr/lib/mc
@@ -230,7 +231,7 @@ fi
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
 
 %attr(754,root,root) %config /etc/rc.d/init.d/mcserv
-/usr/man/man8/mcserv.8*
+/usr/share/man/man8/mcserv.8*
 %attr(755,root,root) /usr/sbin/mcserv
 
 %files -n gmc
@@ -250,6 +251,10 @@ fi
 /usr/share/mc
 
 %changelog
+* Fri May 14 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [4.5.31-1]
+- now package is FHS 2.0 compliat.
+
 * Sat Apr 24 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.30-2]
 - recompiles on new rpm.
