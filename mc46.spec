@@ -4,7 +4,7 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.45
+Version:	4.5.48
 Release:	1
 License:	GPL
 Group:		Shells
@@ -32,39 +32,39 @@ Obsoletes:	tkmc
 %define		_sysconfdir	/etc/X11/GNOME
 
 %description
-Midnight Commander is a visual shell much like a file manager, only with
-way more features. It is text mode, but also includes mouse support if you
-are running GPM. Its coolest feature is the ability to ftp, view tar, zip
-files, and poke into RPMs for specific files. :-)
+Midnight Commander is a visual shell much like a file manager, only
+with way more features. It is text mode, but also includes mouse
+support if you are running GPM. Its coolest feature is the ability to
+ftp, view tar, zip files, and poke into RPMs for specific files. :-)
 
 %description -l de
-Midnight Commander ist ein Visual-Shell, ähnlich einem Dateimanager, aber
-mit zusätzlichen Funktionen. Es läuft im Textmodus, kann jedoch eine Maus
-unterstützen, wenn GPM betrieben wird. Seine coolsten Fähigkeiten sind die
-ftp-Option, das Einsehen von tar- und zip-Dateien und das Herausfischen von
-spezifischen Dateien aus RPMs.
+Midnight Commander ist ein Visual-Shell, ähnlich einem Dateimanager,
+aber mit zusätzlichen Funktionen. Es läuft im Textmodus, kann jedoch
+eine Maus unterstützen, wenn GPM betrieben wird. Seine coolsten
+Fähigkeiten sind die ftp-Option, das Einsehen von tar- und zip-Dateien
+und das Herausfischen von spezifischen Dateien aus RPMs.
 
 %description -l fr
-Midnight Commander est une interface pour la ligne de commande qui tient
-beaucoup du gestionnaire de fichiers, mais est bien plus puissant. Il
-fonctionne en mode console (texte), mais peut être contrôlé à la souris si
-GPM est présent. Ses caractéristiques les plus remarquables sont la
-possibilité de se connecter à un serveur FTP, de visualiser des archives
-tar, de compresser des fichiers avec zip, de récupérer des fichiers dans
-les packages RPM, et tout ceci simplement.
+Midnight Commander est une interface pour la ligne de commande qui
+tient beaucoup du gestionnaire de fichiers, mais est bien plus
+puissant. Il fonctionne en mode console (texte), mais peut être
+contrôlé à la souris si GPM est présent. Ses caractéristiques les plus
+remarquables sont la possibilité de se connecter à un serveur FTP, de
+visualiser des archives tar, de compresser des fichiers avec zip, de
+récupérer des fichiers dans les packages RPM, et tout ceci simplement.
 
 %description -l pl
-Midnight Commander jest wizualnym shellem podobnym do Norton Commandera.
-Pracuje w trybie tekstowym, ale ma tak¿e wspomaganie dla myszki. Jest super
-;) MC ma wbudowanego klienta ftp, mo¿e zagl±daæ do skompresowanego archiwum
-tarowego, do *.zip oraz *.rpm. Teraz równie¿ ma wspomaganie dla urz±dzeñ
-/dev/pts/{0-2048} - standard Unix98.
+Midnight Commander jest wizualnym shellem podobnym do Norton
+Commandera. Pracuje w trybie tekstowym, ale ma tak¿e wspomaganie dla
+myszki. Jest super ;) MC ma wbudowanego klienta ftp, mo¿e zagl±daæ do
+skompresowanego archiwum tarowego, do *.zip oraz *.rpm. Teraz równie¿
+ma wspomaganie dla urz±dzeñ /dev/pts/{0-2048} - standard Unix98.
 
 %description -l tr
-Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha yetenekli
-bir görsel kabuktur. Metin ekranda çalýþýr ve GPM çalýþýyorsa fare desteði
-vardýr. En hoþ özellikleri ftp yapabilmesi, tar, zip ve RPM dosyalarýnýn
-içeriklerini gösterebilmesidir.
+Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha
+yetenekli bir görsel kabuktur. Metin ekranda çalýþýr ve GPM
+çalýþýyorsa fare desteði vardýr. En hoþ özellikleri ftp yapabilmesi,
+tar, zip ve RPM dosyalarýnýn içeriklerini gösterebilmesidir.
 
 %package -n mcserv
 Summary:	Server for the Midnight Commander network file management system
@@ -80,34 +80,35 @@ Requires:	rc-scripts
 Requires:	pam >= 0.66
 
 %description -n mcserv
-The Midnight Commander file management system will allow you to manipulate
-the files on a remote machine as if they were local. This is only possible
-if the remote machine is running the mcserv server program. Mcserv provides
-clients running Midnight Commander with access to the host's file systems.
+The Midnight Commander file management system will allow you to
+manipulate the files on a remote machine as if they were local. This
+is only possible if the remote machine is running the mcserv server
+program. Mcserv provides clients running Midnight Commander with
+access to the host's file systems.
 
 %description -l de -n mcserv
 mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight
-Commander. Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients,
-die das Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file
-manager).
+Commander. Es ermöglicht den Zugriff auf das Host-Dateisystem für
+Clients, die das Midnight-Dateisystem ausführen (z.Zt. nur Midnight
+Commander file manager).
 
 %description -l fr -n mcserv
 Le système de gestion de fichier Midnight Commander vous permet de
-manipuler des fichiers sur une machine distante comme si ils étaient sur
-votre propre machine. Ceci est possible seulement si la machine distante
-possède le programme mcserv et que celui-ci est activé. Mcserv apporte aux
-machines clientes qui font tourner Midnight Commander un accès aux fichiers
-situés sur l'hôte.
+manipuler des fichiers sur une machine distante comme si ils étaient
+sur votre propre machine. Ceci est possible seulement si la machine
+distante possède le programme mcserv et que celui-ci est activé.
+Mcserv apporte aux machines clientes qui font tourner Midnight
+Commander un accès aux fichiers situés sur l'hôte.
 
 %description -l pl -n mcserv
-Mcserv jest aplikacj± dla sieciowego systemy plików Midnight Commandera.
-Pozwala na dostêp do systemu plików dla klienta pracuj±cego pod MC i
-u¿ywaj±cego jego systemu plików.
+Mcserv jest aplikacj± dla sieciowego systemy plików Midnight
+Commandera. Pozwala na dostêp do systemu plików dla klienta
+pracuj±cego pod MC i u¿ywaj±cego jego systemu plików.
 
 %description -l tr -n mcserv
-mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr. Midnight
-dosya sistemini çalýþtýran istemcilerin sunucu dosya sistemine eriþimini
-saðlar.
+mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr.
+Midnight dosya sistemini çalýþtýran istemcilerin sunucu dosya
+sistemine eriþimini saðlar.
 
 %package -n gmc
 Summary:	Midnight Commander visual shell (GNOME version)
@@ -120,19 +121,20 @@ Group(pl):	X11/GNOME
 Requires:	%{name}	= %{version}
 
 %description -n gmc
-Midnight Commander is a visual shell much like a file manager, only with
-way more features. This is the GNOME version. It's coolest feature is the
-ability to ftp, view tar, zip files and poke into RPMs for specific files.
-The GNOME version of Midnight Commander is not yet finished though. :-(
+Midnight Commander is a visual shell much like a file manager, only
+with way more features. This is the GNOME version. It's coolest
+feature is the ability to ftp, view tar, zip files and poke into RPMs
+for specific files. The GNOME version of Midnight Commander is not yet
+finished though. :-(
 
 %description -l fr -n gmc
-Midnight Commander est une interface pour la ligne de commande qui tient
-beaucoup du gestionnaire de fichiers, mais est bien plus puissant. Ceci est
-la version pour GNOME. Ses caractéristiques les plus remarquables sont la
-possibilité de se connecter à un serveur FTP, de visualiser des archives
-tar, de compresser des fichiers avec zip, et de récupérer des fichiers dans
-les packages RPM. La version GNOME de Midnight Commander n'est pas encore
-terminée cependant. :-(
+Midnight Commander est une interface pour la ligne de commande qui
+tient beaucoup du gestionnaire de fichiers, mais est bien plus
+puissant. Ceci est la version pour GNOME. Ses caractéristiques les
+plus remarquables sont la possibilité de se connecter à un serveur
+FTP, de visualiser des archives tar, de compresser des fichiers avec
+zip, et de récupérer des fichiers dans les packages RPM. La version
+GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 
 %prep
 %setup -q
