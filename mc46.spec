@@ -3,6 +3,7 @@
 # bcond_off_gnome	- without GNOME support
 # bcond_on_ext2undel	- with ext2 undelete fs
 # bcond_on_samba	- with SAMBA vfs support
+# bcond_on_x		- with text edit in X support
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander 
@@ -54,6 +55,7 @@ BuildRequires:	pam-devel
 BuildRequires:	indent
 BuildRequires:	automake
 BuildRequires:	autoconf
+%{?bcond_on_x:BuildRequires:	XFree86-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm < 4.0
 Obsoletes:	tkmc
@@ -200,7 +202,7 @@ autoconf
 	--with-vfs \
 	--with-netrc \
 	--with-x \
-	--with-tm-x-support \
+	%{?bcond_on_x:--with-tm-x-support} \
 	--without-debug \
 	--with-included-slang \
 	%{!?bcond_off_gnome:--with-gnome}%{?bcond_off_gnome:--without-gnome} \
