@@ -71,15 +71,3 @@ diff -Nur mc-4.5.52.orig/macros/gnorba.m4 mc-4.5.52/macros/gnorba.m4
 +AC_DEFUN([GNOME_ORBIT_CHECK], [
 +	GNOME_ORBIT_HOOK([],failure)
 +])
---- mc-4.5.55/macros/gnome.m4.orig	Thu Jun 21 17:37:23 2001
-+++ mc-4.5.55/macros/gnome.m4	Sat Mar 30 11:39:07 2002
-@@ -93,6 +93,9 @@
-  	        fi
- 	      fi
-             fi
-+	else
-+	  AM_CONDITIONAL(HAVE_ORBIT, false)
-+	  AM_CONDITIONAL(HAVE_GNORBA, false)
- 	fi
- 
- 	if test -n "$3"; then

@@ -1,59 +1,71 @@
---- mc-4.5.55/src/Makefile.in.orig	Tue Jul 31 17:24:15 2001
-+++ mc-4.5.55/src/Makefile.in	Sun Sep 16 04:14:56 2001
-@@ -8,12 +8,12 @@
- @MCF@
- 
- CFLAGS   = $(XCFLAGS)
--CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@
-+CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@ -I/usr/include/popt
- LDFLAGS  = $(XLDFLAGS)
- DEFS     = $(XDEFS) -DREGEX_MALLOC -DLIBDIR=\""$(mclibdir)/"\" \
- 	-DCONFDIR=\""$(confdir)/"\" -DLOCALEDIR=\""$(localedir)/"\"
- LIBS     = @LSLANG@ @LEDIT@ @LVFS@ @LINTL@ @LGPM@ \
--	$(XLIBS) $(XLIB) @TERMNET@ @MCLIBS@ @LIBICONV@
-+	$(XLIBS) $(XLIB) @TERMNET@ @MCLIBS@ @LIBICONV@ -lpopt
- DEPLIBS  = $(top_builddir)/vfs/@LIBVFS@ $(top_builddir)/slang/@LIBSLANG@ \
- 	$(top_builddir)/edit/@LIBEDIT_A@ @INTLDEPS@
- INSTALL  = @INSTALL@
-@@ -32,7 +32,7 @@
- 	hotlist.c achown.c layout.c fsusage.c mountlist.c regex.c	\
- 	complete.c slint.c command.c cmd.c panelize.c learn.c		\
- 	listmode.c utilunix.c background.c rxvt.c			\
--	text.c popt.c findme.c poptparse.c poptconfig.c popthelp.c	\
-+	text.c \
- 	filegui.c filenot.c fileopctx.c treestore.c textconf.c		\
- 	charsets.c selcodepage.c
- 
-@@ -44,8 +44,8 @@
- 	hotlist.h layout.h fsusage.h mountlist.h eregex.h complete.h	\
- 	myslang.h command.h cmd.h tty.h fs.h panelize.h achown.h	\
- 	learn.h listmode.h background.h					\
--	x.h textconf.h i18n.h findme.h popt.h filegui.h keys.h		\
--	poptint.h poptalloca.h fileopctx.h treestore.h			\
-+	x.h textconf.h i18n.h findme.h filegui.h keys.h		\
-+	fileopctx.h treestore.h			\
- 	charsets.h selcodepage.h
- 
- OBJS =	dir.o util.o screen.o dialog.o key.o keyxdef.o menu.o		\
-@@ -55,8 +55,8 @@
- 	terms.o boxes.o hotlist.o achown.o layout.o fsusage.o		\
- 	mountlist.o @XCURSES@ regex.o complete.o slint.o command.o	\
- 	cmd.o main.o panelize.o learn.o listmode.o utilunix.o		\
--	background.o rxvt.o text.o popt.o findme.o poptparse.o		\
--	poptconfig.o popthelp.o filegui.o filenot.o fileopctx.o		\
-+	background.o rxvt.o text.o findme.o \
-+	filegui.o filenot.o fileopctx.o		\
- 	treestore.o textconf.o $(CHARSET_OBJS)
- 
- #
-diff -urN mc-4.5.52.org/src/findme.c mc-4.5.52/src/findme.c
---- mc-4.5.52.org/src/findme.c	Mon Mar 19 20:44:47 2001
-+++ mc-4.5.52/src/findme.c	Mon Mar 19 20:46:49 2001
-@@ -6,7 +6,6 @@
- #include "config.h"
- #endif
- 
--#include "poptalloca.h"
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
+diff -Nur mc-4.6.0.orig/src/Makefile.in mc-4.6.0.chng/src/Makefile.in
+--- mc-4.6.0.orig/src/Makefile.in	Wed Feb  5 19:09:09 2003
++++ mc-4.6.0.chng/src/Makefile.in	Thu Feb  6 19:06:52 2003
+@@ -56,7 +56,7 @@
+ CONS_SAVER_FALSE = @CONS_SAVER_FALSE@
+ CONS_SAVER_TRUE = @CONS_SAVER_TRUE@
+ CPP = @CPP@
+-CPPFLAGS = @CPPFLAGS@
++CPPFLAGS = @CPPFLAGS@ -I/usr/include/popt
+ CYGPATH_W = @CYGPATH_W@
+ DATADIRNAME = @DATADIRNAME@
+ DEFS = @DEFS@
+@@ -91,7 +91,7 @@
+ LIBICONV = @LIBICONV@
+ LIBINTL = @LIBINTL@
+ LIBOBJS = @LIBOBJS@
+-LIBS = @LIBS@
++LIBS = @LIBS@ -lpopt
+ LN_S = @LN_S@
+ LTLIBICONV = @LTLIBICONV@
+ LTLIBINTL = @LTLIBINTL@
+@@ -228,8 +228,7 @@
+ 	keyxdef.c layout.c layout.h learn.c learn.h listmode.c		\
+ 	listmode.h main.c main.h menu.c menu.h				\
+ 	mountlist.c mountlist.h mouse.c mouse.h myslang.h option.c	\
+-	option.h panel.h panelize.c panelize.h poptalloca.h popt.c	\
+-	poptconfig.c popt.h popthelp.c poptint.h poptparse.c profile.c	\
++	option.h panel.h panelize.c panelize.h profile.c		\
+ 	profile.h regex.c rxvt.c screen.c setup.c setup.h slint.c	\
+ 	subshell.c subshell.h terms.c text.c textconf.c textconf.h	\
+ 	tree.c tree.h treestore.c treestore.h tty.h user.c user.h	\
+@@ -271,8 +270,7 @@
+ 	layout.c layout.h learn.c learn.h listmode.c listmode.h main.c \
+ 	main.h menu.c menu.h mountlist.c mountlist.h mouse.c mouse.h \
+ 	myslang.h option.c option.h panel.h panelize.c panelize.h \
+-	poptalloca.h popt.c poptconfig.c popt.h popthelp.c poptint.h \
+-	poptparse.c profile.c profile.h regex.c rxvt.c screen.c setup.c \
++	profile.c profile.h regex.c rxvt.c screen.c setup.c \
+ 	setup.h slint.c subshell.c subshell.h terms.c text.c textconf.c \
+ 	textconf.h tree.c tree.h treestore.c treestore.h tty.h user.c \
+ 	user.h util.c util.h utilunix.c view.c view.h widget.c widget.h \
+@@ -288,8 +286,7 @@
+ 	info.$(OBJEXT) key.$(OBJEXT) keyxdef.$(OBJEXT) layout.$(OBJEXT) \
+ 	learn.$(OBJEXT) listmode.$(OBJEXT) main.$(OBJEXT) \
+ 	menu.$(OBJEXT) mountlist.$(OBJEXT) mouse.$(OBJEXT) \
+-	option.$(OBJEXT) panelize.$(OBJEXT) popt.$(OBJEXT) \
+-	poptconfig.$(OBJEXT) popthelp.$(OBJEXT) poptparse.$(OBJEXT) \
++	option.$(OBJEXT) panelize.$(OBJEXT) \
+ 	profile.$(OBJEXT) regex.$(OBJEXT) rxvt.$(OBJEXT) \
+ 	screen.$(OBJEXT) setup.$(OBJEXT) slint.$(OBJEXT) \
+ 	subshell.$(OBJEXT) terms.$(OBJEXT) text.$(OBJEXT) \
+@@ -374,8 +371,6 @@
+ @AMDEP_TRUE@	./$(DEPDIR)/menu.Po ./$(DEPDIR)/mfmt.Po \
+ @AMDEP_TRUE@	./$(DEPDIR)/mountlist.Po ./$(DEPDIR)/mouse.Po \
+ @AMDEP_TRUE@	./$(DEPDIR)/option.Po ./$(DEPDIR)/panelize.Po \
+-@AMDEP_TRUE@	./$(DEPDIR)/popt.Po ./$(DEPDIR)/poptconfig.Po \
+-@AMDEP_TRUE@	./$(DEPDIR)/popthelp.Po ./$(DEPDIR)/poptparse.Po \
+ @AMDEP_TRUE@	./$(DEPDIR)/profile.Po ./$(DEPDIR)/regex.Po \
+ @AMDEP_TRUE@	./$(DEPDIR)/rxvt.Po ./$(DEPDIR)/screen.Po \
+ @AMDEP_TRUE@	./$(DEPDIR)/selcodepage.Po ./$(DEPDIR)/setup.Po \
+@@ -513,10 +508,6 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mouse.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/option.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/panelize.Po@am__quote@
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/popt.Po@am__quote@
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poptconfig.Po@am__quote@
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/popthelp.Po@am__quote@
+-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poptparse.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/profile.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/regex.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rxvt.Po@am__quote@

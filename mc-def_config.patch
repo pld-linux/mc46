@@ -1,24 +1,12 @@
-diff -urN mc-4.5.52.org/src/dir.c mc-4.5.52/src/dir.c
---- mc-4.5.52.org/src/dir.c	Mon Mar 19 20:44:47 2001
-+++ mc-4.5.52/src/dir.c	Mon Mar 19 20:55:42 2001
-@@ -44,7 +44,7 @@
- #endif
+diff -Nur mc-4.6.0.orig/src/panel.h mc-4.6.0.chng/src/panel.h
+--- mc-4.6.0.orig/src/panel.h	Thu Nov 14 08:25:19 2002
++++ mc-4.6.0.chng/src/panel.h	Thu Feb  6 20:31:24 2003
+@@ -6,7 +6,7 @@
  
- /* If true show files ending in ~ */
--int show_backups = 0;
-+int show_backups = 1;
- 
- /* If false then directories are shown separately from files */
- int mix_all_files = 0;
-diff -urN mc-4.5.52.org/src/panel.h mc-4.5.52/src/panel.h
---- mc-4.5.52.org/src/panel.h	Mon Mar 19 20:44:47 2001
-+++ mc-4.5.52/src/panel.h	Mon Mar 19 20:55:46 2001
-@@ -292,7 +292,7 @@
- 
- void try_to_select (WPanel *panel, char *name);
- 
--#define DEFAULT_USER_FORMAT "half type,name,|,size,|,perm"
+ #define selection(p) (&(p->dir.list[p->selected]))
+ #define other_panel get_other_panel()
+-#define DEFAULT_USER_FORMAT "half type name | size | perm"
 +#define DEFAULT_USER_FORMAT "half type,name,|,mtime,|,perm"
  
- /* This were in main: */
- void unmark_files (WPanel *panel);
+ #define LIST_TYPES	4
+ 
