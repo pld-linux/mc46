@@ -46,7 +46,6 @@ URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	glib-devel
 BuildRequires:	glib2-devel
 BuildRequires:	indent
 BuildRequires:	ncurses-devel >= 5.0
