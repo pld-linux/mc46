@@ -7,15 +7,16 @@ Name:		mc
 Version:	4.5.51
 Release:	1
 License:	GPL
-Group:		Shells
-Group(pl):	Pow³oki
+Group:		Applications/Shells
+Group(de):	Applikationen/Shells
+Group(pl):	Aplikacje/Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
-Source1:	mcserv.pamd
-Source2:	mcserv.init
-Patch0:		mc-mimekeys.patch
-Patch1:		mc-rpmfs.patch
-Patch2:		mc-system_popt.patch
-Patch3:		mc-spec-syntax.patch
+Source1:	%{name}serv.pamd
+Source2:	%{name}serv.init
+Patch0:		%{name}-mimekeys.patch
+Patch1:		%{name}-rpmfs.patch
+Patch2:		%{name}-system_popt.patch
+Patch3:		%{name}-spec-syntax.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
@@ -75,6 +76,7 @@ Summary(fr):	Serveur réseau pour le gestionnaire de fichiers Midnight Commander
 Summary(pl):	Serwer plików Midnight Commandera
 Summary(tr):	Midnight Commander dosya sunucusu
 Group:		Daemons
+Group(de):	Server
 Group(pl):	Serwery
 Prereq:		/sbin/chkconfig
 Requires:	portmap
@@ -119,6 +121,7 @@ Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
 Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/GNOME
+Group(de):	X11/GNOME
 Group(pl):	X11/GNOME
 Requires:	%{name}	= %{version}
 
@@ -147,7 +150,6 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 
 %build
 gettextize --copy --force
-LDFLAGS="-s"; export LDFLAGS
 %configure \
 	--without-ext2undel \
 	--with-netrc \
@@ -171,10 +173,9 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
-mv $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir} 
+mv -f $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir} 
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
-	FAQ NEWS README
+gzip -9nf FAQ NEWS README
 
 %find_lang %{name}
 
