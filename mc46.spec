@@ -16,9 +16,10 @@ Summary(pt_BR):	Interpretador de comandos visual Midnight Commander
 Summary(ru):	Диспетчер файлов Midnight Commander
 Summary(tr):	Midnight Commander gЖrsel kabuПu
 Summary(uk):	Диспетчер файл╕в Midnight Commander
+Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell.
 Name:		mc
 Version:	4.5.55
-Release:	8
+Release:	9
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
@@ -138,6 +139,7 @@ Summary(pt_BR):	Servidor de arquivos do Midnight Commander
 Summary(ru):	Midnight Commander файл-сервер
 Summary(tr):	Midnight Commander dosya sunucusu
 Summary(uk):	Midnight Commander файл-сервер
+Summary(zh_CN):	mc мЬбГнд╪Ч╧эюМо╣мЁ╣д╥ЧнЯфВ║ё
 Group:		Daemons
 PreReq:		/sbin/chkconfig
 PreReq:		rc-scripts
@@ -216,6 +218,7 @@ Summary(pt_BR):	Shell visual Midnight Commander (VersЦo GNOME)
 Summary(ru):	GNOME версия файлового менеджера Midnight Commander
 Summary(tr):	Midnight Commander gЖrsel kabuПu (GNOME sЭrЭmЭ)
 Summary(uk):	GNOME верс╕я файлового менеджера Midnight Commander
+Summary(zh_CN):	GNOME об╣д MC ╟Ф╠╬
 Group:		X11/Applications
 Requires:	%{name}	= %{version}
 
@@ -292,7 +295,7 @@ GMC (GNU Midnight Commander) - це файловий менеджер, що базу╓ться на
 %patch15 -p1
 %{?_with_mo:%patch16 -p1}
 %patch17 -p1
-%patch18 -p1
+#%patch18 -p1
 
 %build
 %{__gettextize}
