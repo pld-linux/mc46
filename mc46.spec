@@ -242,10 +242,3 @@ fi
 %{_datadir}/idl
 %{_datadir}/pixmaps
 %{_datadir}/mc
-
-%changelog
-* Fri May 21 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.5.31-1]
-- spec written by me,
-- pl translation by Wojtek ¦lusarczyk <wojtek@shadow.eu.org>.
-- package is FHS 2.0 compliant.
