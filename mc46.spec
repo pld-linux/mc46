@@ -153,13 +153,13 @@ LDFLAGS="-s"; export LDFLAGS
 	--with-included-slang \
 	--with-gnome
 
-make confdir=%{_sysconfdir}/
+%{__make} confdir=%{_sysconfdir}/
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 
-make install \
+%{__make} install \
 	confdir=%{_sysconfdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
