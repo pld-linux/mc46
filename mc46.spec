@@ -152,7 +152,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
-mv $RPM_BUILD_ROOT/usr/bin/mcserv $RPM_BUILD_ROOT/usr/sbin 
+mv $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT/usr/sbin 
 
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/* \
 	FAQ NEWS README
@@ -179,9 +179,9 @@ fi
 %defattr(644,root,root,755)
 %doc *.gz
 
-%attr(755,root,root) /usr/bin/mc
-%attr(755,root,root) /usr/bin/mcedit
-%attr(755,root,root) /usr/bin/mcmfmt
+%attr(755,root,root) %{_bindir}/mc
+%attr(755,root,root) %{_bindir}/mcedit
+%attr(755,root,root) %{_bindir}/mcmfmt
 
 %{_libdir}/mc/mc.ext
 %{_libdir}/mc/mc.hint
@@ -237,8 +237,8 @@ fi
 %files -n gmc
 %defattr(644,root,root,755)
 
-%attr(755,root,root) /usr/bin/gmc
-%attr(755,root,root) /usr/bin/plain-gmc
+%attr(755,root,root) %{_bindir}/gmc
+%attr(755,root,root) %{_bindir}/plain-gmc
 
 /etc/X11/GNOME/mc.global
 /etc/CORBA/servers/gmc.gnorba
