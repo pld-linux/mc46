@@ -22,7 +22,7 @@ Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}.1.pl
 Source4:	%{name}edit.1.pl
-Source5:	%{name}serv.1.pl
+Source5:	%{name}serv.8.pl
 Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
@@ -241,9 +241,9 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
-install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mc.1
-install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mcedit.1
-install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mcserv.8
+install -D %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mc.1
+install -D %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mcedit.1
+install -D %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mcserv.8
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
