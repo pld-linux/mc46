@@ -21,6 +21,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	ORBit-devel
 BuildRequires:	gnome-libs-devel
+BuildRequires:	imlib-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
