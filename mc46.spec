@@ -4,16 +4,17 @@ Summary(fr): Le shell Midnight Commander
 Summary(pl): Midnight Commander wizualny shell
 Summary(tr): Midnight Commander görsel kabuðu
 Name:        mc
-Version:     4.5.0
+Version:     4.5.1
 Release:     1
 Copyright:   GPL
 Group:       Shells
 Source0:     ftp://peyote-asesino.nuclecu.unam.mx/linux/local/devel/%{name}-%{version}.tar.gz
 Patch0:      mc.patch
-Patch1:      mc-hotlist.patch
+Patch1:      mc-POTFILES.patch
 URL:         http://mc.blackdown.org/mc/
 Obsoletes:   tkmc
 BuildRoot:   /tmp/%{name}-%{version}-root
+Conflicts:   rpm <= 2.5.3
 
 %description
 Midnight Commander is a visual shell much like a file manager, only with way
@@ -178,6 +179,10 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/icons/mc
 
 %changelog
+* Sun Nov  1 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+- addded "Conflicts: rpm <= 2.5.3" because "rpm -qplv" query output was
+  changed.
+
 * Wed Aug 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.1.35-3]
 - %%{version} macro instead %%{PACKAGE_VERSION},
