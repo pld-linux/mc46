@@ -1,0 +1,80 @@
+--- mc-4.6.0/vfs/extfs/srpm.orig	Sun Feb 16 11:57:00 2003
++++ mc-4.6.0/vfs/extfs/srpm	Sun Feb 16 12:13:45 2003
+@@ -16,8 +16,14 @@
+ LC_TIME=C
+ export LC_TIME
+ 
++if rpmbuild --version >/dev/null 2>&1; then
++  RPMBUILD="rpmbuild"
++else
++  RPMBUILD="rpm"
++fi
+ if rpm --nosignature --version >/dev/null 2>&1; then
+   RPM="rpm --nosignature"
++  RPMBUILD="$RPMBUILD --nosignature"
+ else
+   RPM="rpm"
+ fi
+@@ -40,7 +46,7 @@
+     HEADERSIZE=`echo "$DESC" | wc -c`
+     echo "-r--r--r--   1 root     root  $HEADERSIZE $DATE HEADER"
+     echo "-r-xr-xr-x   1 root     root    39 $DATE INSTALL"
+-    echo "-r-xr-xr-x   1 root     root    39 $DATE UPGRADE"
++    echo "-r-xr-xr-x   1 root     root    39 $DATE REBUILD"
+     echo "dr-xr-xr-x   3 root     root	   0 $DATE INFO"
+     if [ "`$RPM -qp --qf \"%{SERIAL}\" \"$1\"`" = "(none)" ]; then
+ 	echo "$FILEPREF 0 $DATE INFO/NAME-VERSION-RELEASE"
+@@ -157,7 +163,7 @@
+     case "$2" in
+ 	HEADER) $RPM -qip "$1" > "$3"; exit 0;;
+ 	INSTALL) echo "# Run this to install this RPM package" > "$3"; exit 0;;
+-	UPGRADE) echo "# Run this to upgrade this RPM package" > "$3"; exit 0;;
++	REBUILD) echo "# Run this to rebuild this RPM package" > "$3"; exit 0;;
+ 	ERROR) $RPM -qip "$1" > /dev/null 2> "$3"; exit 0;;
+ 	INFO/NAME-VERSION-RELEASE)	$RPM -qp --qf "%{NAME}-%{VERSION}-%{RELEASE}\n" "$1" > "$3"; exit 0;;
+ 	INFO/NAME-SERIAL:VERSION-RELEASE) $RPM -qp --qf "%{NAME}-%{SERIAL}:%{VERSION}-%{RELEASE}\n" "$1" > "$3"; exit 0;;
+@@ -212,7 +218,7 @@
+ {
+     case "$2" in
+ 	INSTALL) echo "Installing \"$1\""; $RPM -ivh "$1"; exit 0;;
+-	UPGRADE) echo "Upgrading \"$1\""; $RPM -iUvh "$1"; exit 0;;
++	REBUILD) echo "Rebuilding \"$1\""; $RPMBUILD --rebuild "$1"; exit 0;;
+     esac
+ }
+ 
+--- mc-4.6.0/lib/mc.ext.in.orig	Thu Jan 30 16:48:33 2003
++++ mc-4.6.0/lib/mc.ext.in	Sun Feb 16 12:12:10 2003
+@@ -485,7 +485,11 @@
+ 	View=%view{ascii} rpm -qivl --scripts `basename %p .trpm`
+ 
+ # RPM packages (SuSE uses *.spm for source packages)
+-regex/\.(rpm|spm)$
++regex/\.(src\.rpm|spm)$
++	Open=%cd %p#srpm
++	View=%view{ascii} if rpm --nosignature --version >/dev/null 2>&1; then RPM="rpm --nosignature" ; else RPM="rpm" ; fi ; $RPM -qivlp --scripts %f
++
++regex/\.rpm$
+ 	Open=%cd %p#rpm
+ 	View=%view{ascii} if rpm --nosignature --version >/dev/null 2>&1; then RPM="rpm --nosignature" ; else RPM="rpm" ; fi ; $RPM -qivlp --scripts %f
+ 
+--- mc-4.6.0/vfs/extfs/extfs.ini.orig	Mon Dec  9 15:16:33 2002
++++ mc-4.6.0/vfs/extfs/extfs.ini	Sun Feb 16 12:12:28 2003
+@@ -15,6 +15,7 @@
+ 
+ # Packages from popular Linux distributions
+ rpm
++srpm
+ deb
+ 
+ # a: - mtools filesystem
+--- mc-4.6.0/vfs/extfs/Makefile.am.orig	Sat Dec 14 03:46:05 2002
++++ mc-4.6.0/vfs/extfs/Makefile.am	Sun Feb 16 12:15:22 2003
+@@ -4,7 +4,7 @@
+ EXTFS_MISC  = README extfs.ini sfs.ini
+ 
+ # Scripts hat don't need adaptation to the local system
+-EXTFS_CONST = bpp rpm trpm
++EXTFS_CONST = bpp rpm trpm srpm
+ 
+ # Scripts that need adaptation to the local system - source files
+ EXTFS_IN    = 			\

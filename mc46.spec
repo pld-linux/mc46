@@ -24,24 +24,21 @@ Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{versi
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
-Source4:	%{name}-srpm
 # Changelogs for Advanced Midnight Commander patches
-Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
-Source6:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
-Patch1:		%{name}-rpmfs.patch
-Patch2:		%{name}-system_popt.patch
-Patch3:		%{name}-spec-syntax.patch
-Patch7:		%{name}-def_config.patch
-Patch9:		%{name}-proxy.patch
-Patch11:	%{name}-urar.patch
-Patch15:	%{name}-vfs.patch
-Patch17:	%{name}-%{name}.ext-ear_war.patch
-Patch18:	%{name}-home_etc.patch
-Patch21:	%{name}-pl.patch
+Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
+Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
+Patch0:		%{name}-rpmfs.patch
+Patch1:		%{name}-system_popt.patch
+Patch2:		%{name}-spec-syntax.patch
+Patch3:		%{name}-def_config.patch
+Patch4:		%{name}-urar.patch
+Patch5:		%{name}-srpm.patch
+Patch6:		%{name}-home_etc.patch
+Patch7:		%{name}-pl.patch
 # Advanced Midnight Commander patches
-Patch22:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
-#Patch23:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff - changed
-Patch23:	amc-2.diff
+Patch8:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
+#changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
+Patch9:		amc-2.diff
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -202,18 +199,17 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 
 %prep
 %setup -q -a3
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+cp -f vfs/extfs/{rpm,srpm}
+%patch5 -p1
+#%patch6 -p1 
 %patch7 -p1
-#%patch9 -p1
-%patch11 -p1
-#%patch15 -p1
-#%patch17 -p1
-#%patch18 -p1 
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
 %{__gettextize}
@@ -267,8 +263,6 @@ for a in es pl ; do
 		done
 	done
 done
-
-install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/mc/extfs/srpm
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
@@ -362,7 +356,6 @@ fi
 %lang(hu) %{_mandir}/hu/man1/*
 %lang(it) %{_mandir}/it/man1/*
 %lang(ru) %{_mandir}/ru/man1/*
-
 
 %files -n mcserv
 %defattr(644,root,root,755)

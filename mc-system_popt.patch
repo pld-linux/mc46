@@ -1,71 +1,34 @@
-diff -Nur mc-4.6.0.orig/src/Makefile.in mc-4.6.0.chng/src/Makefile.in
---- mc-4.6.0.orig/src/Makefile.in	Wed Feb  5 19:09:09 2003
-+++ mc-4.6.0.chng/src/Makefile.in	Thu Feb  6 19:06:52 2003
-@@ -56,7 +56,7 @@
- CONS_SAVER_FALSE = @CONS_SAVER_FALSE@
- CONS_SAVER_TRUE = @CONS_SAVER_TRUE@
- CPP = @CPP@
--CPPFLAGS = @CPPFLAGS@
-+CPPFLAGS = @CPPFLAGS@ -I/usr/include/popt
- CYGPATH_W = @CYGPATH_W@
- DATADIRNAME = @DATADIRNAME@
- DEFS = @DEFS@
-@@ -91,7 +91,7 @@
- LIBICONV = @LIBICONV@
- LIBINTL = @LIBINTL@
- LIBOBJS = @LIBOBJS@
--LIBS = @LIBS@
-+LIBS = @LIBS@ -lpopt
- LN_S = @LN_S@
- LTLIBICONV = @LTLIBICONV@
- LTLIBINTL = @LTLIBINTL@
-@@ -228,8 +228,7 @@
+--- mc-4.6.0/src/Makefile.am.orig	Tue Oct 15 17:33:04 2002
++++ mc-4.6.0/src/Makefile.am	Sun Feb 16 12:51:16 2003
+@@ -7,9 +7,9 @@
+ if CONS_SAVER
+ pkglib_PROGRAMS = cons.saver
+ AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" \
+-	-DLIBDIR=\""$(pkglibdir)"\"
++	-DLIBDIR=\""$(pkglibdir)"\" -I/usr/include/popt
+ else
+-AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\"
++AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" -I/usr/include/popt
+ endif
+ 
+ noinst_PROGRAMS = man2hlp
+@@ -38,7 +38,7 @@
+ endif
+ 
+ mc_LDADD = $(EDITLIB) $(SLANGLIB) $(VFSLIB) \
+-	$(INTLLIBS) $(GLIB_LIBS) $(MCLIBS) $(LIBICONV)
++	$(INTLLIBS) $(GLIB_LIBS) $(MCLIBS) $(LIBICONV) -lpopt
+ 
+ CHARSET_SRC = charsets.c charsets.h selcodepage.c selcodepage.h
+ 
+@@ -53,8 +53,8 @@
  	keyxdef.c layout.c layout.h learn.c learn.h listmode.c		\
  	listmode.h main.c main.h menu.c menu.h				\
  	mountlist.c mountlist.h mouse.c mouse.h myslang.h option.c	\
 -	option.h panel.h panelize.c panelize.h poptalloca.h popt.c	\
 -	poptconfig.c popt.h popthelp.c poptint.h poptparse.c profile.c	\
-+	option.h panel.h panelize.c panelize.h profile.c		\
++	option.h panel.h panelize.c panelize.h \
++	profile.c	\
  	profile.h regex.c rxvt.c screen.c setup.c setup.h slint.c	\
  	subshell.c subshell.h terms.c text.c textconf.c textconf.h	\
  	tree.c tree.h treestore.c treestore.h tty.h user.c user.h	\
-@@ -271,8 +270,7 @@
- 	layout.c layout.h learn.c learn.h listmode.c listmode.h main.c \
- 	main.h menu.c menu.h mountlist.c mountlist.h mouse.c mouse.h \
- 	myslang.h option.c option.h panel.h panelize.c panelize.h \
--	poptalloca.h popt.c poptconfig.c popt.h popthelp.c poptint.h \
--	poptparse.c profile.c profile.h regex.c rxvt.c screen.c setup.c \
-+	profile.c profile.h regex.c rxvt.c screen.c setup.c \
- 	setup.h slint.c subshell.c subshell.h terms.c text.c textconf.c \
- 	textconf.h tree.c tree.h treestore.c treestore.h tty.h user.c \
- 	user.h util.c util.h utilunix.c view.c view.h widget.c widget.h \
-@@ -288,8 +286,7 @@
- 	info.$(OBJEXT) key.$(OBJEXT) keyxdef.$(OBJEXT) layout.$(OBJEXT) \
- 	learn.$(OBJEXT) listmode.$(OBJEXT) main.$(OBJEXT) \
- 	menu.$(OBJEXT) mountlist.$(OBJEXT) mouse.$(OBJEXT) \
--	option.$(OBJEXT) panelize.$(OBJEXT) popt.$(OBJEXT) \
--	poptconfig.$(OBJEXT) popthelp.$(OBJEXT) poptparse.$(OBJEXT) \
-+	option.$(OBJEXT) panelize.$(OBJEXT) \
- 	profile.$(OBJEXT) regex.$(OBJEXT) rxvt.$(OBJEXT) \
- 	screen.$(OBJEXT) setup.$(OBJEXT) slint.$(OBJEXT) \
- 	subshell.$(OBJEXT) terms.$(OBJEXT) text.$(OBJEXT) \
-@@ -374,8 +371,6 @@
- @AMDEP_TRUE@	./$(DEPDIR)/menu.Po ./$(DEPDIR)/mfmt.Po \
- @AMDEP_TRUE@	./$(DEPDIR)/mountlist.Po ./$(DEPDIR)/mouse.Po \
- @AMDEP_TRUE@	./$(DEPDIR)/option.Po ./$(DEPDIR)/panelize.Po \
--@AMDEP_TRUE@	./$(DEPDIR)/popt.Po ./$(DEPDIR)/poptconfig.Po \
--@AMDEP_TRUE@	./$(DEPDIR)/popthelp.Po ./$(DEPDIR)/poptparse.Po \
- @AMDEP_TRUE@	./$(DEPDIR)/profile.Po ./$(DEPDIR)/regex.Po \
- @AMDEP_TRUE@	./$(DEPDIR)/rxvt.Po ./$(DEPDIR)/screen.Po \
- @AMDEP_TRUE@	./$(DEPDIR)/selcodepage.Po ./$(DEPDIR)/setup.Po \
-@@ -513,10 +508,6 @@
- @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mouse.Po@am__quote@
- @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/option.Po@am__quote@
- @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/panelize.Po@am__quote@
--@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/popt.Po@am__quote@
--@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poptconfig.Po@am__quote@
--@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/popthelp.Po@am__quote@
--@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poptparse.Po@am__quote@
- @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/profile.Po@am__quote@
- @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/regex.Po@am__quote@
- @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rxvt.Po@am__quote@
