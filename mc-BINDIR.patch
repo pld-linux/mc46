@@ -1,0 +1,10 @@
+--- mc-4.5.54/Make.common.in~.~	Mon Oct  9 01:58:39 2000
++++ mc-4.5.54/Make.common.in	Fri Jul 13 08:59:12 2001
+@@ -58,7 +58,6 @@
+ # something to these, so that's why there is a leading _
+ XCFLAGS = @CFLAGS@
+ XCPPFLAGS = @CPPFLAGS@ @MCCPPFLAGS@ -I.. \
+-	-DBINDIR=\""$(bindir)/"\" \
+ 	-DLIBDIR=\""$(mclibdir)/"\" \
+ 	-DICONDIR=\""$(icondir)/"\" \
+ 	-DLOCALEDIR=\""$(localedir)/"\" \
