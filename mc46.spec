@@ -15,11 +15,13 @@ Source2:	mcserv.init
 Patch0:		mc-mimekeys.patch
 Patch1:		mc-rpmfs.patch
 Patch2:		mc-system_popt.patch
+Patch3:		mc-spec-syntax.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	popt-devel
 BuildRequires:	gettext-devel
+BuildRequires:	indent
 %{!?no_gnome:BuildRequires:	ORBit-devel}
 %{!?no_gnome:BuildRequires:	gnome-libs-devel}
 %{!?no_gnome:BuildRequires:	imlib-devel}
@@ -141,6 +143,7 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 gettextize --copy --force
