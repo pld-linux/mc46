@@ -71,6 +71,7 @@ Group:		Daemons
 Group(pl):	Serwery
 Prereq:		/sbin/chkconfig
 Requires:	portmap
+Requires:	rc-scripts
 Requires:	pam >= 0.66
 
 %description -n mcserv
