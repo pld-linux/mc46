@@ -67,6 +67,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
+BuildRequires:	rpmbuild(macros) >= 1.176
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
@@ -316,7 +317,9 @@ rm -rf $RPM_BUILD_ROOT
 if [ -f /var/lock/subsys/mcserv ]; then
 	/etc/rc.d/init.d/mcserv restart >&2
 else
-	echo "Run \"/etc/rc.d/init.d/mcserv start\" to start mcserv daemon."
+	%banner mcserv -e << EOF
+Run "/etc/rc.d/init.d/mcserv start" to start mcserv daemon.
+EOF
 fi
 
 %preun -n mcserv
