@@ -4,7 +4,7 @@ Summary(fr):	Le shell Midnight Commander
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.33
+Version:	4.5.37
 Release:	1
 Copyright:	GPL
 Group:		Shells
@@ -12,6 +12,7 @@ Group(pl):	Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
+Patch:		mc-DESTDIR.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	glib-devel
 BuildRequires:	gpm-devel
@@ -22,6 +23,8 @@ BuildRequires:	gnome-libs-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
+
+%define		sysconfdir	/etc
 
 %description
 Midnight Commander is a visual shell much like a file manager, only with way
@@ -79,26 +82,16 @@ mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight Commander.
 Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients, die das
 Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file manager).
 
-%description -l pl -n mcserv
-Mcserv jest aplikacj± dla sieciowego systemy plików Midnight Commandera.
-Pozwala na dostêp do systemu plików dla klienta pracuj±cego pod MC i 
-u¿ywaj±cego jego systemu plików.
-
-%description -l de -n mcserv
-mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight Commander.
-Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients, die das
-Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file manager).
-
-%description -l de -n mcserv
-mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight Commander.
-Es ermöglicht den Zugriff auf das Host-Dateisystem für Clients, die das
-Midnight-Dateisystem ausführen (z.Zt. nur Midnight Commander file manager).
-
 %description -l fr -n mcserv
 mcserv est un programme pour les système de fichiers réseau de
 Midnight Commander. Il fournit un accès au systéme de fichiers de l'hôte
 aux clients sur lesquelles tourne le systéme de fichiers Midnight
 (actuellement, Midnight Commander est le seul).
+
+%description -l pl -n mcserv
+Mcserv jest aplikacj± dla sieciowego systemy plików Midnight Commandera.
+Pozwala na dostêp do systemu plików dla klienta pracuj±cego pod MC i 
+u¿ywaj±cego jego systemu plików.
 
 %description -l tr -n mcserv
 mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr. Midnight
@@ -123,13 +116,12 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 
 %prep
 %setup -q
+%patch -p1
 
 %build
-autoconf
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure %{_target_platform} \
-	--prefix=%{_prefix} \
-	--sysconfdir=/etc \
+gettextize --copy --force
+LDFLAGS="-s"; export LDFLAGS
+%configure \
 	--without-ext2undel \
 	--with-netrc \
 	--with-x \
@@ -165,8 +157,7 @@ rm -rf $RPM_BUILD_ROOT
 %post -n mcserv
 /sbin/chkconfig --add mcserv
 if test -r /var/run/mcserv.pid; then
-	/etc/rc.d/init.d/mcserv stop >&2
-	/etc/rc.d/init.d/mcserv start >&2
+	/etc/rc.d/init.d/mcserv restart >&2
 else
 	echo "Run \"/etc/rc.d/init.d/mcserv start\" to start mcserv daemon."
 fi
@@ -239,6 +230,5 @@ fi
 %{_libdir}/mc/mc-gnome.ext
 %{_libdir}/mc/term
 %{_datadir}/mime-info
-%{_datadir}/idl
 %{_datadir}/pixmaps
 %{_datadir}/mc
