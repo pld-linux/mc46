@@ -183,37 +183,37 @@ fi
 %attr(755,root,root) /usr/bin/mcedit
 %attr(755,root,root) /usr/bin/mcmfmt
 
-/usr/lib/mc/mc.ext
-/usr/lib/mc/mc.hint
-/usr/lib/mc/mc.hlp
-/usr/lib/mc/mc.lib
-/usr/lib/mc/mc.menu
+%{_libdir}/mc/mc.ext
+%{_libdir}/mc/mc.hint
+%{_libdir}/mc/mc.hlp
+%{_libdir}/mc/mc.lib
+%{_libdir}/mc/mc.menu
 
-%attr(755,root,root) /usr/lib/mc/bin/cons.saver
+%attr(755,root,root) %{_libdir}/mc/bin/cons.saver
 
-%attr(755,root,root) /usr/lib/mc/extfs/a
-%attr(755,root,root) /usr/lib/mc/extfs/deb
-%attr(755,root,root) /usr/lib/mc/extfs/ftplist
-%attr(755,root,root) /usr/lib/mc/extfs/hp48
-%attr(755,root,root) /usr/lib/mc/extfs/lslR
-%attr(755,root,root) /usr/lib/mc/extfs/mailfs
-%attr(755,root,root) /usr/lib/mc/extfs/patchfs
-%attr(755,root,root) /usr/lib/mc/extfs/rpm
-%attr(755,root,root) /usr/lib/mc/extfs/uar
-%attr(755,root,root) /usr/lib/mc/extfs/ucpio
-%attr(755,root,root) /usr/lib/mc/extfs/ulha
-%attr(755,root,root) /usr/lib/mc/extfs/urar
-%attr(755,root,root) /usr/lib/mc/extfs/uzip
-%attr(755,root,root) /usr/lib/mc/extfs/uzoo
-/usr/lib/mc/extfs/extfs.ini
-/usr/lib/mc/extfs/sfs.ini
+%attr(755,root,root) %{_libdir}/mc/extfs/a
+%attr(755,root,root) %{_libdir}/mc/extfs/deb
+%attr(755,root,root) %{_libdir}/mc/extfs/ftplist
+%attr(755,root,root) %{_libdir}/mc/extfs/hp48
+%attr(755,root,root) %{_libdir}/mc/extfs/lslR
+%attr(755,root,root) %{_libdir}/mc/extfs/mailfs
+%attr(755,root,root) %{_libdir}/mc/extfs/patchfs
+%attr(755,root,root) %{_libdir}/mc/extfs/rpm
+%attr(755,root,root) %{_libdir}/mc/extfs/uar
+%attr(755,root,root) %{_libdir}/mc/extfs/ucpio
+%attr(755,root,root) %{_libdir}/mc/extfs/ulha
+%attr(755,root,root) %{_libdir}/mc/extfs/urar
+%attr(755,root,root) %{_libdir}/mc/extfs/uzip
+%attr(755,root,root) %{_libdir}/mc/extfs/uzoo
+%{_libdir}/mc/extfs/extfs.ini
+%{_libdir}/mc/extfs/sfs.ini
 
 %{_mandir}/man1/*
 %attr(755,root,root) %config /etc/profile.d/*
 
-%dir /usr/lib/mc
-%dir /usr/lib/mc/bin
-%dir /usr/lib/mc/extfs
+%dir %{_libdir}/mc
+%dir %{_libdir}/mc/bin
+%dir %{_libdir}/mc/extfs
 
 %lang(cs) /usr/share/locale/cs/LC_MESSAGES/mc.mo
 %lang(da) /usr/share/locale/da/LC_MESSAGES/mc.mo
@@ -242,9 +242,9 @@ fi
 
 /etc/X11/GNOME/mc.global
 /etc/CORBA/servers/gmc.gnorba
-/usr/lib/mc/layout
-/usr/lib/mc/mc-gnome.ext
-/usr/lib/mc/term
+%{_libdir}/mc/layout
+%{_libdir}/mc/mc-gnome.ext
+%{_libdir}/mc/term
 /usr/share/mime-info
 /usr/share/idl
 /usr/share/pixmaps
