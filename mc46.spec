@@ -264,7 +264,7 @@ fi"
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconfig}} \
-	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Utilities}
+	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -272,7 +272,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d,sysconf
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/sysconfig/mcserv
-install %{SOURCE7} $RPM_BUILD_ROOT%{_applnkdir}/Utilities
+install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}/Utilities
 install %{SOURCE8} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 for a in es pl ; do
@@ -368,8 +368,8 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/uzip
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
-%{_applnkdir}/Utilities/*
-%{_pixmapsdir}/*
+%{_desktopdir}/mc.desktop
+%{_pixmapsdir}/mc.png
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
