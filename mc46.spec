@@ -1,3 +1,8 @@
+#
+# Conditional build:
+# bcond_off_gnome	- without GNOME support
+# bcond_on_ext2undel	- with ext2 undelete fs
+#
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander 
 Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
@@ -134,7 +139,7 @@ sistemine eriþimini saðlar.
 Summary:	Midnight Commander visual shell (GNOME version)
 Summary(de):	Midnight Commander Visual-Shell (GNOME Version) 
 Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
-Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
+Summary(pl):	Midnight Commander - wizualny shell (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/Applications
 Group(de):	X11/Applikationen
@@ -183,7 +188,7 @@ GNOME de Midnight Commander n'est pas encore terminée cependant. :-(
 %build
 gettextize --copy --force
 %configure \
-	--without-ext2undel \
+	%{?bcond_on_ext2undel:--with-ext2-undel}%{!?bcond_on_ext2undel:--without-ext2undel} \
 	--with-netrc \
 	--with-x \
 	--without-debug \
