@@ -3,7 +3,8 @@
 %bcond_with	ext2undel	# with ext2 undelete fs
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
-%bcond_with	x		# with text edit in X support
+%bcond_without	x		# without text edit in X support
+%bcond_with	utf8		# for now it's bcond (broken), in future include by DEFAULT (after updating patches)
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -17,12 +18,13 @@ Summary(tr):	Midnight Commander gЖrsel kabuПu
 Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
-Version:	4.6.0
-Release:	20
+%define	pre	pre1
+Version:	4.6.1
+Release:	0.1
 License:	GPL
 Group:		Applications/Shells
-Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
-# Source0-md5:	70804dc9e2049e24f294ff7090a82a12
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}-%{pre}.tar.gz
+# Source0-md5:	8c66f5eeb623b20791b3a13bbe6f8c1b
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -45,18 +47,19 @@ Patch5:		%{name}-pl.patch
 Patch6:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
 Patch7:		amc-2.diff
-Patch8:		%{name}-no_ti_DATA.patch
 Patch9:		%{name}-mc.ext.patch
-Patch10:	%{name}-posix_sh.patch
-Patch11:	%{name}-sequences.patch
 Patch12:	%{name}-mo.patch
 Patch13:	%{name}-posix.patch
-Patch14:	%{name}-CAN-2003-1023.patch
 Patch15:	%{name}-tempfile.patch
 Patch16:	%{name}-localenames.patch
 Patch17:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch18:	%{name}-pld-developerfriendly.patch
+# http://www.suse.de/~nadvornik/mc.html
+Patch19:	%{name}-4.6.0-utf8.patch
+Patch20:	%{name}-4.6.0-utf8-input.patch
+Patch21:	%{name}-4.6.0-utf8-fix.patch
+Patch22:	%{name}-4.6.0-utf8-hints.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -67,6 +70,9 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
+%if %{with utf8}
+BuildRequires:	slang-devel >= 1:1.4.9-6
+%endif
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
@@ -220,7 +226,7 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 т╕льки власне Midnight Commander).
 
 %prep
-%setup -q -a3
+%setup -q -n %{name}-%{version}-%{pre} -a3
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -228,19 +234,23 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+# FIXME
+#%patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+# FIXME
+#%patch12 -p1
 %patch13 -p1
-%patch14 -p1
 %patch15 -p0
 %patch16 -p1
 %{!?with_perl_vfs:%patch17 -p1}
 %patch18 -p1
+%if %{with utf8}
+%patch19 -p1
+%patch20 -p0
+%patch21 -p1
+%patch22 -p1
+%endif
 
 mv -f po/{no,nb}.po
 
@@ -273,7 +283,7 @@ fi"
 	--with-configdir=/etc/samba \
 	--with-codepagedir=/etc/samba/codepages \
 	--with-gpm-mouse \
-	--with-screen=mcslang \
+	--with-screen=%{?!with_utf8:mc}slang \
 	--with-edit
 
 %{__make}
@@ -349,8 +359,10 @@ fi
 %lang(it) %{_datadir}/mc/mc.hlp.it
 %lang(pl) %{_datadir}/mc/mc.hlp.pl
 %lang(ru) %{_datadir}/mc/mc.hlp.ru
+%lang(sr) %{_datadir}/mc/mc.hlp.sr
 %{_datadir}/mc/mc.lib
 %{_datadir}/mc/mc.menu
+%lang(sr) %{_datadir}/mc/mc.menu.sr
 %{_datadir}/mc/mc.hint
 %lang(cs) %{_datadir}/mc/mc.hint.cs
 %lang(es) %{_datadir}/mc/mc.hint.es
@@ -359,6 +371,7 @@ fi
 %lang(nl) %{_datadir}/mc/mc.hint.nl
 %lang(pl) %{_datadir}/mc/mc.hint.pl
 %lang(ru) %{_datadir}/mc/mc.hint.ru
+%lang(sr) %{_datadir}/mc/mc.hint.sr
 %lang(uk) %{_datadir}/mc/mc.hint.uk
 %lang(zh) %{_datadir}/mc/mc.hint.zh
 
@@ -381,6 +394,7 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/audio
 %attr(755,root,root) %{_datadir}/mc/extfs/bpp
 %attr(755,root,root) %{_datadir}/mc/extfs/hp48
+%attr(755,root,root) %{_datadir}/mc/extfs/iso9660
 %attr(755,root,root) %{_datadir}/mc/extfs/lslR
 %attr(755,root,root) %{_datadir}/mc/extfs/rpm
 %attr(755,root,root) %{_datadir}/mc/extfs/trpm
@@ -400,6 +414,7 @@ fi
 %lang(it) %{_mandir}/it/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 %lang(ru) %{_mandir}/ru/man1/*
+%lang(sr) %{_mandir}/sr/man1/*
 
 %files -n mcserv
 %defattr(644,root,root,755)
@@ -410,4 +425,5 @@ fi
 %{_mandir}/man8/mcserv.8*
 %lang(es) %{_mandir}/es/man8/mcserv.8*
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
+%lang(sr) %{_mandir}/sr/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
