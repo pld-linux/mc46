@@ -1,0 +1,70 @@
+--- mc-4.5.42/po/POTFILES.in	Tue Dec  7 02:50:14 1999
++++ mc-4.5.42/po/POTFILES.in	Mon Dec 13 12:15:42 1999
+@@ -53,8 +53,6 @@
+ src/menu.c
+ src/option.c
+ src/panelize.c
+-src/popthelp.c
+-src/poptint.h
+ src/screen.c
+ src/subshell.c
+ src/tree.c
+--- mc-4.5.42/src/Makefile.in	Tue Dec  7 02:50:02 1999
++++ mc-4.5.42/src/Makefile.in	Mon Dec 13 12:04:47 1999
+@@ -5,11 +5,11 @@
+ rootdir = $(srcdir)/..
+ @MCFG@@MCF@
+ 
+-CFLAGS   = $(XCFLAGS) @MCCFLAGS@
++CFLAGS   = $(XCFLAGS) @MCCFLAGS@ -I/usr/include/popt
+ CPPFLAGS = $(XCPPFLAGS) -DREGEX_MALLOC
+ LDFLAGS  = $(XLDFLAGS)
+ DEFS     = $(XDEFS)
+-LIBS     = $(XLIBS) @TERMNET@ $(XLIB) @TERMNET@ @MCLIBS@
++LIBS     = $(XLIBS) @TERMNET@ $(XLIB) @TERMNET@ @MCLIBS@ -lpopt
+ OURLIBS  = @LVFS@ @LSLANG@ @LEDIT@ @LGPM@ @LINTL@
+ INSTALL  = @INSTALL@
+ 
+@@ -24,8 +24,7 @@
+ 	hotlist.c achown.c layout.c fsusage.c mountlist.c regex.c	\
+ 	complete.c slint.c command.c cmd.c panelize.c learn.c		\
+ 	listmode.c utilunix.c background.c rxvt.c			\
+-	text.c popt.c findme.c poptparse.c poptconfig.c popthelp.c	\
+-	filegui.c filenot.c fileopctx.c treestore.c
++	text.c findme.c filegui.c filenot.c fileopctx.c treestore.c
+ 
+ HDRS =	color.h file.h mouse.h user.h dialog.h find.h main.h		\
+ 	util.h dir.h global.h menu.h panel.h win.h mem.h		\
+@@ -35,8 +34,8 @@
+ 	hotlist.h layout.h fsusage.h mountlist.h eregex.h complete.h	\
+ 	myslang.h command.h cmd.h tty.h fs.h panelize.h achown.h	\
+ 	learn.h listmode.h features.inc background.h			\
+-	x.h textconf.h i18n.h findme.h popt.h filegui.h keys.h xtty.h	\
+-	poptint.h poptalloca.h fileopctx.h treestore.h
++	x.h textconf.h i18n.h findme.h filegui.h keys.h xtty.h	\
++	fileopctx.h treestore.h
+ 
+ OBJS =	dir.o util.o screen.o dialog.o key.o keyxdef.o menu.o		\
+ 	file.o win.o color.o help.o find.o profile.o user.o view.o	\
+@@ -45,9 +44,8 @@
+ 	terms.o boxes.o hotlist.o achown.o layout.o fsusage.o		\
+ 	mountlist.o @XCURSES@ @REGEX_O@ complete.o slint.o command.o	\
+ 	cmd.o main.o panelize.o learn.o listmode.o utilunix.o		\
+-	background.o rxvt.o text.o popt.o findme.o poptparse.o		\
+-	poptconfig.o popthelp.o filegui.o filenot.o fileopctx.o		\
+-	treestore.o
++	background.o rxvt.o text.o findme.o filegui.o filenot.o 	\
++	fileopctx.o treestore.o
+ 
+ #
+ # Distribution variables
+--- mc-4.5.42/src/findme.c	Mon Dec 13 12:37:54 1999
++++ mc-4.5.42/src/findme.c	Mon Dec 13 12:37:47 1999
+@@ -6,7 +6,6 @@
+ #include "config.h"
+ #endif
+ 
+-#include "poptalloca.h"
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
