@@ -13,7 +13,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.55
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.gz
@@ -38,6 +38,7 @@ Patch13:	%{name}-nobashism.patch
 Patch14:	%{name}-tinfo.patch
 Patch15:	%{name}-vfs.patch
 Patch16:	%{name}-mo.patch
+Patch17:	%{name}-mc.ext-jar_war.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -191,6 +192,7 @@ nie jest ona jeszcze skoñczona.
 %patch14 -p1
 %patch15 -p1
 %{?_with_mo:%patch16 -p1}
+%patch17 -p1
 
 
 %build
