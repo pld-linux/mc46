@@ -113,7 +113,7 @@ Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/GNOME
 Group(pl):	X11/GNOME
-Requires:	%{name}	   = %{version}
+Requires:	%{name}	= %{version}
 
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
@@ -128,7 +128,7 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target} \
-	--prefix=/usr \
+	--prefix=%{_prefix} \
 	--sysconfdir=/etc \
 	--without-ext2undel \
 	--with-netrc \
@@ -200,6 +200,7 @@ fi
 %attr(755,root,root) %{_libdir}/mc/extfs/patchfs
 %attr(755,root,root) %{_libdir}/mc/extfs/rpm
 %attr(755,root,root) %{_libdir}/mc/extfs/uar
+%attr(755,root,root) %{_libdir}/mc/extfs/uarj
 %attr(755,root,root) %{_libdir}/mc/extfs/ucpio
 %attr(755,root,root) %{_libdir}/mc/extfs/ulha
 %attr(755,root,root) %{_libdir}/mc/extfs/urar
@@ -207,6 +208,7 @@ fi
 %attr(755,root,root) %{_libdir}/mc/extfs/uzoo
 %{_libdir}/mc/extfs/extfs.ini
 %{_libdir}/mc/extfs/sfs.ini
+%{_libdir}/mc/syntax
 
 %{_mandir}/man1/*
 %attr(755,root,root) %config /etc/profile.d/*
