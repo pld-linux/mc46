@@ -4,12 +4,12 @@ Summary(fr): Le shell Midnight Commander
 Summary(pl): Midnight Commander wizualny shell
 Summary(tr): Midnight Commander görsel kabuðu
 Name:        mc
-Version:     4.1.35
-Release:     3
+Version:     4.5.0
+Release:     1
 Copyright:   GPL
 Group:       Shells
 Source0:     ftp://peyote-asesino.nuclecu.unam.mx/linux/local/devel/%{name}-%{version}.tar.gz
-Patch0:      mc-4.1.35.patch
+Patch0:      mc.patch
 URL:         http://mc.blackdown.org/mc/
 Obsoletes:   tkmc
 BuildRoot:   /tmp/%{name}-%{version}-root
@@ -106,6 +106,7 @@ saðlar.
 %patch0 -p1
 
 %build
+autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" ./configure \
 	--prefix=/usr \
 	--with-gnome \
