@@ -18,13 +18,13 @@ Patch2:		mc-system_popt.patch
 URL:		http://mc.blackdown.org/mc/
 BuildRequires:	gpm-devel
 BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	ORBit-devel
-BuildRequires:	gnome-libs-devel
-BuildRequires:	imlib-devel
 BuildRequires:	popt-devel
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+-devel
-BuildRequires:	esound-devel
+%{!?nognome:BuildRequires:	ORBit-devel}
+%{!?nognome:BuildRequires:	gnome-libs-devel}
+%{!?nognome:BuildRequires:	imlib-devel}
+%{!?nognome:BuildRequires:	gtk+-devel}
+%{!?nognome:BuildRequires:	esound-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -151,7 +151,7 @@ LDFLAGS="-s"; export LDFLAGS
 	--with-x \
 	--without-debug \
 	--with-included-slang \
-	--with-gnome
+	%{!?nognome:--with-gnome}
 
 %{__make} confdir=%{_sysconfdir}/
 
@@ -246,16 +246,16 @@ fi
 %{_mandir}/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
 
-%files -n gmc
-%defattr(644,root,root,755)
+%{!?nognome:%files -n gmc}
+%{!?nognome:%defattr(644,root,root,755)}
 
-%attr(755,root,root) %{_bindir}/gmc
-%attr(755,root,root) %{_bindir}/plain-gmc
+%{!?nognome:%attr(755,root,root) %{_bindir}/gmc}
+%{!?nognome:%attr(755,root,root) %{_bindir}/plain-gmc}
 
-%{_sysconfdir}/mc.global
-%{_sysconfdir}/CORBA/servers/gmc.gnorba
-%{_libdir}/mc/layout
-%{_libdir}/mc/mc-gnome.ext
-%{_datadir}/mime-info
-%{_datadir}/pixmaps
-%{_datadir}/mc
+%{!?nognome:%{_sysconfdir}/mc.global}
+%{!?nognome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
+%{!?nognome:%{_libdir}/mc/layout}
+%{!?nognome:%{_libdir}/mc/mc-gnome.ext}
+%{!?nognome:%{_datadir}/mime-info}
+%{!?nognome:%{_datadir}/pixmaps}
+%{!?nognome:%{_datadir}/mc}
