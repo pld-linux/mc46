@@ -1,48 +1,49 @@
-diff -urN mc-4.5.52.org/src/Makefile.in mc-4.5.52/src/Makefile.in
---- mc-4.5.52.org/src/Makefile.in	Mon Mar 19 20:44:47 2001
-+++ mc-4.5.52/src/Makefile.in	Mon Mar 19 20:46:22 2001
-@@ -8,10 +8,10 @@
+--- mc-4.5.55/src/Makefile.in.orig	Tue Jul 31 17:24:15 2001
++++ mc-4.5.55/src/Makefile.in	Sun Sep 16 04:14:56 2001
+@@ -8,12 +8,12 @@
  @MCF@
  
  CFLAGS   = $(XCFLAGS)
--CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@ -DREGEX_MALLOC
-+CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@ -DREGEX_MALLOC -I/usr/include/popt
+-CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@
++CPPFLAGS = $(XCPPFLAGS) @MCCFLAGS@ -I/usr/include/popt
  LDFLAGS  = $(XLDFLAGS)
- DEFS     = $(XDEFS)
--LIBS     = $(XLIBS) @TERMNET@ $(XLIB) @TERMNET@ @MCLIBS@
-+LIBS     = $(XLIBS) @TERMNET@ $(XLIB) @TERMNET@ @MCLIBS@ -lpopt
- OURLIBS  = @LVFS@ @LSLANG@ @LEDIT@ @LGPM@ @LINTL@
+ DEFS     = $(XDEFS) -DREGEX_MALLOC -DLIBDIR=\""$(mclibdir)/"\" \
+ 	-DCONFDIR=\""$(confdir)/"\" -DLOCALEDIR=\""$(localedir)/"\"
+ LIBS     = @LSLANG@ @LEDIT@ @LVFS@ @LINTL@ @LGPM@ \
+-	$(XLIBS) $(XLIB) @TERMNET@ @MCLIBS@ @LIBICONV@
++	$(XLIBS) $(XLIB) @TERMNET@ @MCLIBS@ @LIBICONV@ -lpopt
+ DEPLIBS  = $(top_builddir)/vfs/@LIBVFS@ $(top_builddir)/slang/@LIBSLANG@ \
+ 	$(top_builddir)/edit/@LIBEDIT_A@ @INTLDEPS@
  INSTALL  = @INSTALL@
- 
-@@ -26,7 +26,7 @@
+@@ -32,7 +32,7 @@
  	hotlist.c achown.c layout.c fsusage.c mountlist.c regex.c	\
  	complete.c slint.c command.c cmd.c panelize.c learn.c		\
  	listmode.c utilunix.c background.c rxvt.c			\
 -	text.c popt.c findme.c poptparse.c poptconfig.c popthelp.c	\
 +	text.c \
- 	filegui.c filenot.c fileopctx.c treestore.c textconf.c
+ 	filegui.c filenot.c fileopctx.c treestore.c textconf.c		\
+ 	charsets.c selcodepage.c
  
- HDRS =	color.h file.h mouse.h user.h dialog.h find.h main.h		\
-@@ -37,8 +37,8 @@
+@@ -44,8 +44,8 @@
  	hotlist.h layout.h fsusage.h mountlist.h eregex.h complete.h	\
  	myslang.h command.h cmd.h tty.h fs.h panelize.h achown.h	\
  	learn.h listmode.h background.h					\
--	x.h textconf.h i18n.h findme.h popt.h filegui.h keys.h xtty.h	\
--	poptint.h poptalloca.h fileopctx.h treestore.h
-+	x.h textconf.h i18n.h findme.h filegui.h keys.h xtty.h	\
-+	fileopctx.h treestore.h
+-	x.h textconf.h i18n.h findme.h popt.h filegui.h keys.h		\
+-	poptint.h poptalloca.h fileopctx.h treestore.h			\
++	x.h textconf.h i18n.h findme.h filegui.h keys.h		\
++	fileopctx.h treestore.h			\
+ 	charsets.h selcodepage.h
  
  OBJS =	dir.o util.o screen.o dialog.o key.o keyxdef.o menu.o		\
- 	file.o win.o color.o help.o find.o profile.o user.o view.o	\
-@@ -47,8 +47,8 @@
+@@ -55,8 +55,8 @@
  	terms.o boxes.o hotlist.o achown.o layout.o fsusage.o		\
  	mountlist.o @XCURSES@ regex.o complete.o slint.o command.o	\
  	cmd.o main.o panelize.o learn.o listmode.o utilunix.o		\
 -	background.o rxvt.o text.o popt.o findme.o poptparse.o		\
 -	poptconfig.o popthelp.o filegui.o filenot.o fileopctx.o		\
-+	background.o rxvt.o text.o findme.o 		\
++	background.o rxvt.o text.o findme.o \
 +	filegui.o filenot.o fileopctx.o		\
- 	treestore.o textconf.o
+ 	treestore.o textconf.o $(CHARSET_OBJS)
  
  #
 diff -urN mc-4.5.52.org/src/findme.c mc-4.5.52/src/findme.c

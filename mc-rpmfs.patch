@@ -1,6 +1,5 @@
-diff -uNr mc-4.5.54.orig/vfs/extfs/rpm mc-4.5.54/vfs/extfs/rpm
---- mc-4.5.54.orig/vfs/extfs/rpm	Mon May 14 10:56:08 2001
-+++ mc-4.5.54/vfs/extfs/rpm	Mon May 14 10:38:34 2001
+--- mc-4.5.55/vfs/extfs/rpm.orig	Thu Apr 19 22:51:41 2001
++++ mc-4.5.55/vfs/extfs/rpm	Sun Sep 16 04:10:20 2001
 @@ -35,7 +35,11 @@
      echo "-r-xr-xr-x   1 root     root    39 $DATE INSTALL"
      echo "-r-xr-xr-x   1 root     root    39 $DATE UPGRADE"
@@ -41,7 +40,7 @@ diff -uNr mc-4.5.54.orig/vfs/extfs/rpm mc-4.5.54/vfs/extfs/rpm
  	INFO/RELEASE)		rpm -qp --qf "%{RELEASE}\n" "$1" > "$3"; exit 0;;
  	INFO/GROUP)		rpm -qp --qf "%{GROUP}\n" "$1" > "$3"; exit 0;;
  	INFO/DISTRIBUTION) 	rpm -qp --qf "%{DISTRIBUTION}\n" "$1" > "$3"; exit 0;;
-@@ -139,27 +149,32 @@
+@@ -139,25 +149,31 @@
  	INFO/COPYRIGHT)		rpm -qp --qf "%{COPYRIGHT}\n" "$1" >"$3"; exit 0;;
  	INFO/RPMVERSION)	rpm -qp --qf "%{RPMVERSION}\n" "$1" >"$3"; exit 0;;
  	INFO/REQUIRENAME)	rpm -qp --qf "[%{REQUIRENAME} %{REQUIREFLAGS:depflags} %{REQUIREVERSION}\n]" "$1" >"$3"; exit 0;;
@@ -52,30 +51,27 @@ diff -uNr mc-4.5.54.orig/vfs/extfs/rpm mc-4.5.54/vfs/extfs/rpm
  	INFO/SCRIPTS/POSTIN)	rpm -qp --qf "%{RPMTAG_POSTIN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/PREUN)	rpm -qp --qf "%{RPMTAG_PREUN}\n" "$1" >"$3"; exit 0;;
  	INFO/SCRIPTS/POSTUN)	rpm -qp --qf "%{RPMTAG_POSTUN}\n" "$1" >"$3"; exit 0;;
--	INFO/SCRIPTS/VERIFYSCRIPT)	rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
+ 	INFO/SCRIPTS/VERIFYSCRIPT)	rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
+-	INFO/SCRIPTS/ALL)		rpm -qp --scripts "$1" > "$3"; exit 0;;
 +	INFO/SCRIPTS/VERIFYSCRIPT)
-+		rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
++				rpm -qp --qf "%{VERIFYSCRIPT}\n" "$1" >"$3"; exit 0;;
 +	INFO/SCRIPTS/TRIGGERSCRIPTS)
-+		rpm -qp --triggers "$1" > "$3"; exit 0;;
- 	INFO/SCRIPTS/ALL)		rpm -qp --scripts "$1" > "$3"; exit 0;;
++				rpm -qp --triggers "$1" > "$3"; exit 0;;
++	INFO/SCRIPTS/ALL)	rpm -qp --scripts "$1" > "$3"; exit 0;;
  	INFO/SUMMARY)		rpm -qp --qf "%{SUMMARY}\n" "$1" > "$3"; exit 0;;
  	INFO/OS)		rpm -qp --qf "%{OS}\n" "$1" > "$3"; exit 0;;
  	INFO/CHANGELOG)		rpm -qp --qf "[* %{CHANGELOGTIME:date} %{CHANGELOGNAME}\n%{CHANGELOGTEXT}\n\n]\n" "$1" > "$3"; exit 0;;
  	INFO/SIZE)		rpm -qp --qf "%{SIZE} bytes\n" "$1" > "$3"; exit 0;;
-+	CONTENTS.cpio)		rpm2cpio "$1" > "$3"; exit 0;;
+ 	CONTENTS.cpio)		rpm2cpio "$1" > "$3"; exit 0;;
  	*)
 -	    TMPDIR=/tmp/mctmpdir.$$
-+	    TMPDIR=${TMPDIR:-/tmp}/mctmpdir.$$
++ 	    TMPDIR=${TMPDIR:-/tmp}/mctmpdir.$$
  	    mkdir $TMPDIR || exit 1
  	    cd $TMPDIR
--	    rpm2cpio "$1" | cpio -iumd --quiet "$2" >/dev/null
--	    mv "$2" "$3"
-+	    rpm2cpio "$1" | cpio -iumd --quiet "$2" "./$2" >/dev/null
+ 	    # Files in RPM version 4 and above start with "./" - try both
+ 	    rpm2cpio "$1" | cpio -iumd --quiet "$2" "./$2" >/dev/null
+-	    mv "$2" "$3" 2>/dev/null
 +	    mv -f "$2" "$3"
  	    cd /
  	    rm -rf $TMPDIR;;
- 
--	CONTENTS.cpio)		rpm2cpio "$1" > "$3"; exit 0;;
      esac
- }
- 

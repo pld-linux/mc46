@@ -1,10 +1,9 @@
-diff -ruN mc-4.5.51.orig/src/main.c mc-4.5.51/src/main.c
---- mc-4.5.51.orig/src/main.c	Mon Jul  3 16:32:07 2000
-+++ mc-4.5.51/src/main.c	Wed Oct 18 21:58:17 2000
-@@ -2394,7 +2394,7 @@
- 	termvalue = "";
+--- mc-4.5.55/src/main.c~	Sun Sep 16 15:29:00 2001
++++ mc-4.5.55/src/main.c	Sun Sep 16 15:30:19 2001
+@@ -2373,7 +2373,7 @@
+ 	fprintf (stderr, _("The TERM environment variable is unset!\n"));
+ 	exit (1);
      }
- #ifndef HAVE_X
 -    if (force_xterm || (strncmp (termvalue, "xterm", 5) == 0 || strcmp (termvalue, "dtterm") == 0)){
 +    if (force_xterm || (strncmp (termvalue, "xterm", 5) == 0 || strcmp (termvalue, "dtterm") == 0 || strncmp (termvalue, "rxvt", 4) == 0)){
  	use_mouse_p = XTERM_MOUSE;

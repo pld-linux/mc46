@@ -1,7 +1,6 @@
-diff -urN mc-4.5.52.org/gnome/Makefile.in mc-4.5.52/gnome/Makefile.in
---- mc-4.5.52.org/gnome/Makefile.in	Mon Mar 19 20:44:46 2001
-+++ mc-4.5.52/gnome/Makefile.in	Mon Mar 19 20:51:25 2001
-@@ -20,6 +20,9 @@
+--- mc-4.5.55/gnome/Makefile.in.orig	Tue Aug 21 06:59:38 2001
++++ mc-4.5.55/gnome/Makefile.in	Sun Sep 16 04:19:35 2001
+@@ -32,6 +32,9 @@
  INSTALL_PROGRAM = @INSTALL_PROGRAM@
  INSTALL_DATA = @INSTALL_DATA@
  
@@ -11,17 +10,17 @@ diff -urN mc-4.5.52.org/gnome/Makefile.in mc-4.5.52/gnome/Makefile.in
  PIXMAPS =			\
  	dev.xpm			\
  	link.xpm		\
-@@ -248,6 +251,7 @@
+@@ -236,6 +239,7 @@
  	$(MAKE) plain-gmc
  	$(MAKE) corba-gmc
  	$(MAKE) gmc-client
 +	$(MAKE) gdesktoplnk
- 	@echo ----------------------------------------------------------
- 	@echo -
- 	@echo - GMC no longer exists here.  Use plain-gmc or corba-gmc
-@@ -265,6 +269,9 @@
+ 	@touch mx
+ 
+ plain-gmc: $(OBJS) $(NORMALOBJS) $(DEPLIBS)
+@@ -247,6 +251,9 @@
  gmc-client: $(CLIENTOBJS)
- 	$(CC) -o gmc-client $(CLIENTOBJS) $(CORBA_LDFLAGS) $(LIBS)
+ 	$(CC) -o gmc-client $(CLIENTOBJS) $(INTLLIBS) $(CORBA_LDFLAGS) $(LIBS)
  
 +gdesktoplnk: $(GDESKTOPLNKOBJS)
 +	$(CC) -o gdesktoplnk $(GDESKTOPLNKOBJS) $(LDFLAGS) $(LIBS)
@@ -29,14 +28,14 @@ diff -urN mc-4.5.52.org/gnome/Makefile.in mc-4.5.52/gnome/Makefile.in
  mc.keys: mc.keys.in Makefile
  	sed -e 's^\@icondir\@^$(icondir)^g' \
  	    -e 's^\@gnomeicondir\@^$(gnomeicondir)^g' \
-@@ -330,6 +337,7 @@
+@@ -311,6 +318,7 @@
  	$(INSTALL_PROGRAM) plain-gmc $(DESTDIR)$(bindir)/$(binprefix)plain-gmc
  	$(INSTALL_PROGRAM) corba-gmc $(DESTDIR)$(bindir)/$(binprefix)gmc
  	$(INSTALL_PROGRAM) gmc-client $(DESTDIR)$(bindir)/$(binprefix)gmc-client
 +	$(INSTALL_PROGRAM) gdesktoplnk $(DESTDIR)$(bindir)/$(binprefix)gdesktoplnk
  	for I in $(ICONS); \
  	do $(INSTALL_DATA) $(srcdir)/$$I $(DESTDIR)$(icondir)/$$I; done
- 	$(INSTALL_DATA) $(srcdir)/layout $(DESTDIR)$(mclibdir)/layout
+ 	$(INSTALL_DATA) mc.keys $(DESTDIR)$(datadir)/mime-info
 diff -urN mc-4.5.52.org/gnome/gdesktoplnk.c mc-4.5.52/gnome/gdesktoplnk.c
 --- mc-4.5.52.org/gnome/gdesktoplnk.c	Thu Jan  1 01:00:00 1970
 +++ mc-4.5.52/gnome/gdesktoplnk.c	Mon Mar 19 20:50:49 2001

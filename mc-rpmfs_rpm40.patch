@@ -1,10 +1,10 @@
---- mc-4.5.51/vfs/extfs/rpm.org	Thu Nov 23 05:12:18 2000
-+++ mc-4.5.51/vfs/extfs/rpm	Thu Nov 23 05:13:01 2000
-@@ -113,7 +113,7 @@
+--- mc-4.5.55/vfs/extfs/rpm.orig	Sun Sep 16 04:25:30 2001
++++ mc-4.5.55/vfs/extfs/rpm	Sun Sep 16 04:26:56 2001
+@@ -120,7 +120,7 @@
          echo "$FILEPREF 0 $DATE INFO/CHANGELOG"
      fi
  
--    rpm -qlvp "$1" | sed -e 's/^\(..........\)[-t]* /\1 1 /'
+-    rpm2cpio "$1" | cpio -tv --quiet
 +    rpm -qlvp "$1" | sed -e 's/^\(..........\)[-t]* /\1 /'
      echo "$FILEPREF 0 $DATE CONTENTS.cpio"
  }
