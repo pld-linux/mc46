@@ -4,18 +4,16 @@ Summary(fr):	Le shell Midnight Commander
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.12
-Release:	3d
+Version:	4.5.24
+Release:	1
 Copyright:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
-#######		ftp://peyote-asesino.nuclecu.unam.mx/linux/local/devel
-Source0:	%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
-Patch0:		mc-profile.patch
 URL:		http://mc.blackdown.org/mc/
-Requires:	glib = 1.1.15
+Requires:	glib = 1.2.0
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -108,9 +106,13 @@ Summary(de):	Midnight Commander Visual-Shell (GNOME Version)
 Summary(fr):	shell visuel Midnight Commander (version GNOME)
 Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
 Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
-Group:		X11/Shells
-Group(pl):	X11/Pow³oki
-Requires:	%{name} = %{version}
+Group:		X11/GNOME
+Group(pl):	X11/GNOME
+Requires:	%{name}	   = %{version}
+Requires:	gtk+       = 1.2.0
+Requires:	esound     = 0.2.8
+Requires:	ORBit      = 0.4.0
+Requires:	gnome-libs = 01.0.2
 
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
@@ -120,30 +122,28 @@ The GNOME version of Midnight Commander is not yet finished though. :-(
 
 %prep
 %setup -q
-%patch -p1
 
 %build
-autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure \
 	--prefix=/usr \
+	--sysconfdir=/etc \
 	--with-slang \
-	--with-included-slang \
 	--without-ext2undel \
 	--with-netrc \
 	--with-x \
-	--without-debug
-#	--without-gnome \
-#	--without-gnome-libs \
-#	--without-gnome-includes \
+	--without-debug \
+	--with-gnome
 
-make  		    
+make confdir=/etc/X11/GNOME/
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{usr/sbin,etc/{rc.d/init.d,pam.d,profile.d}}
 
-make prefix=$RPM_BUILD_ROOT/usr install
+make install \
+	confdir=/etc/X11/GNOME/ \
+	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
@@ -191,28 +191,30 @@ fi
 
 %attr(755,root,root) /usr/lib/mc/extfs/a
 %attr(755,root,root) /usr/lib/mc/extfs/deb
-%attr(644,root,root) /usr/lib/mc/extfs/extfs.ini
 %attr(755,root,root) /usr/lib/mc/extfs/ftplist
 %attr(755,root,root) /usr/lib/mc/extfs/hp48
 %attr(755,root,root) /usr/lib/mc/extfs/lslR
 %attr(755,root,root) /usr/lib/mc/extfs/mailfs
 %attr(755,root,root) /usr/lib/mc/extfs/patchfs
 %attr(755,root,root) /usr/lib/mc/extfs/rpm
-%attr(644,root,root) /usr/lib/mc/extfs/sfs.ini
 %attr(755,root,root) /usr/lib/mc/extfs/uar
 %attr(755,root,root) /usr/lib/mc/extfs/ucpio
 %attr(755,root,root) /usr/lib/mc/extfs/ulha
 %attr(755,root,root) /usr/lib/mc/extfs/urar
 %attr(755,root,root) /usr/lib/mc/extfs/uzip
 %attr(755,root,root) /usr/lib/mc/extfs/uzoo
+/usr/lib/mc/extfs/extfs.ini
+/usr/lib/mc/extfs/sfs.ini
 
-%attr(644,root, man) /usr/man/man1/*
+/usr/man/man1/*
 %attr(755,root,root) %config /etc/profile.d/*
 
 %dir /usr/lib/mc
 %dir /usr/lib/mc/bin
 %dir /usr/lib/mc/extfs
 
+%lang(cs) /usr/share/locale/cs/LC_MESSAGES/mc.mo
+%lang(da) /usr/share/locale/da/LC_MESSAGES/mc.mo
 %lang(de) /usr/share/locale/de/LC_MESSAGES/mc.mo
 %lang(es) /usr/share/locale/es/LC_MESSAGES/mc.mo
 %lang(fr) /usr/share/locale/fr/LC_MESSAGES/mc.mo
@@ -226,17 +228,18 @@ fi
 %defattr(644,root,root,755)
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
 
-%attr(750,root,root) %config /etc/rc.d/init.d/mcserv
-%attr(644,root, man) /usr/man/man8/mcserv.8.gz
+%attr(754,root,root) %config /etc/rc.d/init.d/mcserv
+/usr/man/man8/mcserv.8*
 %attr(755,root,root) /usr/sbin/mcserv
 
 %files -n gmc
 %defattr(644,root,root,755)
 
 %attr(755,root,root) /usr/bin/gmc
-%attr(755,root,root) /usr/bin/plain-*
+%attr(755,root,root) /usr/bin/plain-gmc
 
-/usr/etc
+/etc/X11/GNOME/mc.global
+/etc/CORBA/servers/gmc.gnorba
 /usr/lib/mc/layout
 /usr/lib/mc/mc-gnome.ext
 /usr/lib/mc/term
@@ -246,12 +249,18 @@ fi
 /usr/share/mc
 
 %changelog
+* Sat Feb 27 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [4.5.22-1]
+- more locales (cs, da),
+- added more Requires for gmc (gtk+ = 1.2.0, esound = 0.2.8,
+  ORBit = 0.4.0, gnome-libs = 1.0.2)
+- removed man group from man pages.
+
 * Thu Feb 11 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [4.5.12-2d]
 - build with gmc subpackage,
 - compressed forgoten man pages && documentation,
-- fixed init script in mcserv,
-- updated to 4.5.12.
+- fixed init script in mcserv.
 
 * Thu Jan 21 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.9-2d]
