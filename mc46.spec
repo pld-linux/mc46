@@ -1,6 +1,5 @@
 #
 # Conditional build:
-# _without_gnome	- without GNOME support
 # _with_ext2undel	- with ext2 undelete fs
 # _with_samba		- with SAMBA vfs support
 # _with_x		- with text edit in X support
@@ -18,11 +17,11 @@ Summary(tr):	Midnight Commander gˆrsel kabuu
 Summary(uk):	‰…”–≈‘ﬁ≈“ ∆¡ Ã¶◊ Midnight Commander
 Summary(zh_CN):	“ª∏ˆ∑Ω±„ µ”√µƒŒƒº˛π‹¿Ì∆˜∫Õ–Èƒ‚Shell
 Name:		mc
-Version:	4.5.55
-Release:	12
+Version:	4.6.0
+Release:	0.1
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	%{name}-non-english-man-pages.tar.bz2
@@ -30,14 +29,9 @@ Source4:	%{name}-srpm
 Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
-Patch3:		%{name}-spec-syntax.patch
-Patch4:		%{name}-gdeskpopt.patch
-Patch5:		%{name}-prototype.patch
-Patch6:		%{name}-gnome-editor.patch
 Patch7:		%{name}-def_config.patch
 Patch8:		%{name}-mouse_in_rxvt.patch
 Patch9:		%{name}-proxy.patch
-Patch10:	%{name}-nognome-amfix.patch
 Patch11:	%{name}-urar.patch
 Patch12:	%{name}-samba.patch
 Patch13:	%{name}-nobashism.patch
@@ -50,7 +44,7 @@ Patch19:	%{name}-tmout.patch
 Patch20:	%{name}-new_icons_am.patch
 Patch21:	%{name}-pl.patch
 Patch22:	%{name}-zh.patch
-URL:		http://www.gnome.org/mc/
+URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -62,9 +56,6 @@ BuildRequires:	popt-devel
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
-%{!?_without_gnome:BuildRequires:	ORBit-devel}
-%{!?_without_gnome:BuildRequires:	gnome-libs-devel >= 1.2.13}
-%{!?_without_gnome:BuildRequires:	imlib-devel}
 %{?_with_ext2undel:BuildRequires:	e2fsprogs-devel}
 %{?_with_x:BuildRequires:	XFree86-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -211,117 +202,39 @@ Commander. ˜œŒ¡ ⁄¡¬≈⁄–≈ﬁ’§ ƒœ”‘’– ƒœ ◊¶ƒƒ¡Ã≈Œœß ∆¡ Ãœ◊œß ”…”‘≈Õ…
 ÀÃ¶§Œ‘¡Õ, ›œ –¶ƒ‘“…Õ’¿‘ÿ ∆¡ Ãœ◊’ ”…”‘≈Õ’ Midnight Commander (Œ¡“¡⁄¶
 ‘¶ÃÿÀ… ◊Ã¡”Œ≈ Midnight Commander).
 
-%package -n gmc
-Summary:	Midnight Commander visual shell (GNOME version)
-Summary(de):	Midnight Commander Visual-Shell (GNOME Version)
-Summary(es):	Shell visual Midnight Commander (VersiÛn GNOME)
-Summary(fr):	Version GNOME du gestionnaire de fichiers Midnight Commander
-Summary(ja):	GNOME Õ— Midnight Commander •’•°•§•Î•ﬁ•Õ°º•∏•„
-Summary(pl):	Midnight Commander - wizualna pow≥oka (wersja GNOME)
-Summary(pt_BR):	Shell visual Midnight Commander (Vers„o GNOME)
-Summary(ru):	GNOME ◊≈“”…— ∆¡ Ãœ◊œ«œ Õ≈Œ≈ƒ÷≈“¡ Midnight Commander
-Summary(tr):	Midnight Commander gˆrsel kabuu (GNOME s¸r¸m¸)
-Summary(uk):	GNOME ◊≈“”¶— ∆¡ Ãœ◊œ«œ Õ≈Œ≈ƒ÷≈“¡ Midnight Commander
-Summary(zh_CN):	GNOME œ¬µƒ MC ∞Ê±æ
-Group:		X11/Applications
-Requires:	%{name}	= %{version}
-
-%description -n gmc
-Midnight Commander is a visual shell much like a file manager, only
-with way more features. This is the GNOME version. It's coolest
-feature is the ability to ftp, view tar, zip files and poke into RPMs
-for specific files. The GNOME version of Midnight Commander is not yet
-finished though. :-(
-
-%description -n gmc -l es
-Midnight Commander es un interpretador de comandos visual, muy
-parecido con un administrador de archivos, solamente que con _muchas_
-otras capacidades. Una de sus caracterÌsticas m·s interesantes es su
-habilidad para conectarse a servidores ftp, visualizar archivos tar,
-zip y rpms.
-
-%description -n gmc -l fr
-Midnight Commander est une interface pour la ligne de commande qui
-tient beaucoup du gestionnaire de fichiers, mais est bien plus
-puissant. Ceci est la version pour GNOME. Ses caractÈristiques les
-plus remarquables sont la possibilitÈ de se connecter ‡ un serveur
-FTP, de visualiser des archives tar, de compresser des fichiers avec
-zip, et de rÈcupÈrer des fichiers dans les packages RPM. La version
-GNOME de Midnight Commander n'est pas encore terminÈe cependant. :-(
-
-%description -l ja
-GMC (GNU Midnight Commander) §œ°¢•ø°º•ﬂ• •Î»«§Œ Midnight Commander§Ú
-∏µ§À§∑§ø GNOME GUI •«•π•Ø•»•√•◊§Úº¬∏Ω§π§Î•’•°•§•Î•ﬁ•Õ°º•∏•„§«§π°£ GMC
-§œ FTP §À¿‹¬≥§«§≠§ø§Í°¢ tar §‰ zip §‰ RPM §Œ√Ê§Ú∏´§ø§Í§π§Î§≥§»§¨
-§«§≠§ﬁ§π°£
-
-%description -n gmc -l pl
-Midnight Commander jest wizualn± pow≥ok±, posiadaj±c± znacznie wiÍcej
-funkcji niø samo zarz±dzanie plikami. Ma wbudowanego klienta ftp,
-potrafi przegl±daÊ pliki tar, zip oraz siÍgaÊ do konkretnych plikÛw
-pakietÛw rpm. To jest wersja pracuj±ca pod GNOME. Niestety nie jest
-ona jeszcze skoÒczona.
-
-%description -n gmc -l pt_BR
-Midnight Commander È um interpretador de comandos visual, muito
-parecido com um gerenciador de arquivos, somente com _muitas_ outras
-capacidades. Uma de suas caracterÌsticas mais interessantes È sua
-habilidade de conectar-se a servidores ftp, visualizar arquivos tar,
-zip e rpms.
-
-%description -n gmc -l ru
-GMC (GNU Midnight Commander) - ‹‘œ ∆¡ Ãœ◊Ÿ  Õ≈Œ≈ƒ÷≈“, œ”Œœ◊¡ŒŒŸ  Œ¡
-‘≈“Õ…Œ¡ÃÿŒœ  ◊≈“”…… Midnight Commander … ƒœ¬¡◊Ã—¿›…  À Œ≈Õ’
-«“¡∆…ﬁ≈”À…  …Œ‘≈“∆≈ ” ƒ≈”À‘œ–¡ GNOME.
-
-%description -n gmc -l uk
-GMC (GNU Midnight Commander) - √≈ ∆¡ Ãœ◊…  Õ≈Œ≈ƒ÷≈“, ›œ ¬¡⁄’§‘ÿ”— Œ¡
-‘≈“Õ¶Œ¡ÃÿŒ¶  ◊≈“”¶ß Midnight Commander ‘¡ ƒœƒ¡§ ƒœ Œÿœ«œ «“¡∆¶ﬁŒ… 
-¶Œ‘≈“∆≈ ” ƒ≈”À‘œ–’ GNOME.
-
 %prep
 %setup -q -a3
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch7 -p1 - prawdopodobnie merged
+#%patch8 -p1
+#%patch9 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%{?_with_mo:%patch16 -p1}
-%patch17 -p1
-#%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-
-mv -f po/zh_CN{.GB2312,}.po
-mv -f po/zh_TW{.Big5,}.po
+#%patch12 -p1
+#%patch13 -p1
+#%patch14 -p1
+#%patch15 -p1
+#%{?_with_mo:%patch16 -p1}
+#%patch17 -p1
+#%patch19 -p1 merged?
+#%patch20 -p1
+#%patch21 -p1
+#%patch22 -p1
 
 %build
 %{__gettextize}
-%{__aclocal} -I \
-	%{!?_without_gnome:%{_aclocaldir}/gnome}%{?_without_gnome:macros}
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 X11_WWW="
-if [ -f /usr/X11R6/bin/netscape ]; then
+if [ -f /usr/bin/netscape ]; then
 	netscape;
 else
-	if [ -f /usr/X11R6/bin/galeon ]; then
+	if [ -f /usr/bin/galeon ]; then
 		galeon
 	else
-		if [ -f /usr/X11R6/bin/mozilla ]; then
+		if [ -f /usr/bin/mozilla ]; then
 			mozilla
 		else
 			xterm -c lynx
@@ -329,26 +242,25 @@ else
 	fi;
 fi"
 %configure \
-	%{?_with_ext2undel:--with-ext2-undel}%{!?_with_ext2undel:--without-ext2undel} \
+	--with%{!?debug:out}-debug \
+	--with%{!?_with_ext2undel:out}-ext2undel \
+	%{?_with_x:--with-x} \
 	--with-vfs \
-	--with-netrc \
-	--with-x \
-	%{?_with_x:--with-tm-x-support} \
-	--without-debug \
-	--with-included-slang \
-	--enable-largefile \
-	--enable-mcserv-install \
-	%{!?_without_gnome:--with-gnome}%{?_without_gnome:--without-gnome} \
-	%{?_with_samba:--with-samba}
+	--with-mcfs \
+	%{?_with_samba:--with-samba} \
+	--with-configdir=/etc/samba \
+	--with-codepagedir=/etc/samba/codepages \
+	--with-gpm-mouse \
+	--with-screen=mcslang \
+	--with-edit
 
-%{__make} confdir=%{_sysconfdir}/
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 
 %{__make} install \
-	confdir=%{_sysconfdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
@@ -363,11 +275,9 @@ for a in es pl ; do
 	done
 done
 
-install %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/mc/extfs/srpm
+install %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/mc/extfs/srpm
 
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
-
-mv -f $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir}
 
 %find_lang %{name}
 
@@ -396,60 +306,71 @@ fi
 
 %attr(755,root,root) %{_bindir}/mc*
 
-%{_libdir}/mc/mc.ext
+%{_datadir}/mc/mc.ext
 
-%{_libdir}/mc/mc.hlp
-%lang(hu) %{_libdir}/mc/mc.hlp.hu
-%{_libdir}/mc/mc.lib
-%{_libdir}/mc/mc.menu
-%{_libdir}/mc/mc.hint
-%lang(cs) %{_libdir}/mc/mc.hint.cs
-%lang(es) %{_libdir}/mc/mc.hint.es
-%lang(hu) %{_libdir}/mc/mc.hint.hu
-%lang(it) %{_libdir}/mc/mc.hint.it
-%lang(nl) %{_libdir}/mc/mc.hint.nl
-%lang(pl) %{_libdir}/mc/mc.hint.pl
-%lang(ru) %{_libdir}/mc/mc.hint.ru
-%lang(uk) %{_libdir}/mc/mc.hint.uk
-%lang(zh) %{_libdir}/mc/mc.hint.zh
+%{_datadir}/mc/cedit*
+%{_datadir}/mc/edit.*
 
-%attr(755,root,root) %{_libdir}/mc/bin/cons.saver
+%{_datadir}/mc/mc.hlp
+%lang(hu) %{_datadir}/mc/mc.hlp.hu
+%lang(es) %{_datadir}/mc/mc.hlp.es
+%lang(it) %{_datadir}/mc/mc.hlp.it
+%lang(pl) %{_datadir}/mc/mc.hlp.pl
+%lang(ru) %{_datadir}/mc/mc.hlp.ru
+%{_datadir}/mc/mc.lib
+%{_datadir}/mc/mc.menu
+%{_datadir}/mc/mc.hint
+%lang(cs) %{_datadir}/mc/mc.hint.cs
+%lang(es) %{_datadir}/mc/mc.hint.es
+%lang(hu) %{_datadir}/mc/mc.hint.hu
+%lang(it) %{_datadir}/mc/mc.hint.it
+%lang(nl) %{_datadir}/mc/mc.hint.nl
+%lang(pl) %{_datadir}/mc/mc.hint.pl
+%lang(ru) %{_datadir}/mc/mc.hint.ru
+%lang(uk) %{_datadir}/mc/mc.hint.uk
+%lang(zh) %{_datadir}/mc/mc.hint.zh
 
-%{_libdir}/mc/extfs/README
-%attr(755,root,root) %{_libdir}/mc/extfs/a
-%attr(755,root,root) %{_libdir}/mc/extfs/apt
-%attr(755,root,root) %{_libdir}/mc/extfs/audio
-%attr(755,root,root) %{_libdir}/mc/extfs/bpp
-%attr(755,root,root) %{_libdir}/mc/extfs/deb*
-%attr(755,root,root) %{_libdir}/mc/extfs/dpkg
-%attr(755,root,root) %{_libdir}/mc/extfs/ftplist
-%attr(755,root,root) %{_libdir}/mc/extfs/hp48
-%attr(755,root,root) %{_libdir}/mc/extfs/lslR
-%attr(755,root,root) %{_libdir}/mc/extfs/mailfs
-%attr(755,root,root) %{_libdir}/mc/extfs/patchfs
-%attr(755,root,root) %{_libdir}/mc/extfs/rpm*
-%attr(755,root,root) %{_libdir}/mc/extfs/trpm
-%attr(755,root,root) %{_libdir}/mc/extfs/uar*
-%attr(755,root,root) %{_libdir}/mc/extfs/ucpio
-%attr(755,root,root) %{_libdir}/mc/extfs/uha
-%attr(755,root,root) %{_libdir}/mc/extfs/ulha
-%attr(755,root,root) %{_libdir}/mc/extfs/urar
-%attr(755,root,root) %{_libdir}/mc/extfs/uzip
-%attr(755,root,root) %{_libdir}/mc/extfs/uzoo
-%attr(755,root,root) %{_libdir}/mc/extfs/srpm
-%{_libdir}/mc/extfs/extfs.ini
-%{_libdir}/mc/extfs/sfs.ini
-%{_libdir}/mc/syntax
+%attr(755,root,root) %{_libdir}/mc/cons.saver
+
+%{_datadir}/mc/extfs/README
+%attr(755,root,root) %{_datadir}/mc/extfs/a
+%attr(755,root,root) %{_datadir}/mc/extfs/apt
+%attr(755,root,root) %{_datadir}/mc/extfs/audio
+%attr(755,root,root) %{_datadir}/mc/extfs/bpp
+%attr(755,root,root) %{_datadir}/mc/extfs/deb*
+%attr(755,root,root) %{_datadir}/mc/extfs/dpkg
+#%attr(755,root,root) %{_datadir}/mc/extfs/ftplist
+%attr(755,root,root) %{_datadir}/mc/extfs/hp48
+%attr(755,root,root) %{_datadir}/mc/extfs/lslR
+%attr(755,root,root) %{_datadir}/mc/extfs/mailfs
+%attr(755,root,root) %{_datadir}/mc/extfs/patchfs
+%attr(755,root,root) %{_datadir}/mc/extfs/rpm*
+%attr(755,root,root) %{_datadir}/mc/extfs/trpm
+%attr(755,root,root) %{_datadir}/mc/extfs/uar*
+#%attr(755,root,root) %{_datadir}/mc/extfs/ucpio
+%attr(755,root,root) %{_datadir}/mc/extfs/uha
+%attr(755,root,root) %{_datadir}/mc/extfs/ulha
+%attr(755,root,root) %{_datadir}/mc/extfs/urar
+%attr(755,root,root) %{_datadir}/mc/extfs/uzip
+%attr(755,root,root) %{_datadir}/mc/extfs/uzoo
+%attr(755,root,root) %{_datadir}/mc/extfs/srpm
+%{_datadir}/mc/extfs/extfs.ini
+%{_datadir}/mc/extfs/sfs.ini
+%{_datadir}/mc/syntax
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
+%lang(hu) %{_mandir}/hu/man1/*
+%lang(it) %{_mandir}/it/man1/*
+%lang(ru) %{_mandir}/ru/man1/*
 
 %attr(755,root,root) %config /etc/profile.d/*
 
+%dir %{_datadir}/mc
+%dir %{_datadir}/mc/bin
+%dir %{_datadir}/mc/extfs
 %dir %{_libdir}/mc
-%dir %{_libdir}/mc/bin
-%dir %{_libdir}/mc/extfs
 
 %files -n mcserv
 %defattr(644,root,root,755)
@@ -460,16 +381,3 @@ fi
 %lang(es) %{_mandir}/es/man8/mcserv.8*
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
-
-%{!?_without_gnome:%files -n gmc}
-%{!?_without_gnome:%defattr(644,root,root,755)}
-
-%{!?_without_gnome:%attr(755,root,root) %{_bindir}/gdesktoplnk}
-%{!?_without_gnome:%attr(755,root,root) %{_bindir}/gmc*}
-%{!?_without_gnome:%attr(755,root,root) %{_bindir}/plain-gmc}
-
-%{!?_without_gnome:%{_sysconfdir}/mc.global}
-%{!?_without_gnome:%{_sysconfdir}/CORBA/servers/gmc.gnorba}
-%{!?_without_gnome:%{_datadir}/mime-info}
-%{!?_without_gnome:%{_datadir}/pixmaps}
-%{!?_without_gnome:%{_datadir}/mc}
