@@ -20,6 +20,9 @@ Group(pl):	Aplikacje/Pow³oki
 Source0:	ftp://ftp.gnome.org/pub/GNOME/stable/sources/mc/%{name}-%{version}.tar.bz2
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
+Source3:	%{name}.1.pl
+Source4:	%{name}edit.1.pl
+Source5:	%{name}serv.1.pl
 Patch0:		%{name}-mimekeys.patch
 Patch1:		%{name}-rpmfs.patch
 Patch2:		%{name}-system_popt.patch
@@ -238,6 +241,10 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/{rc.d/init.d,pam.d,profile.d}}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
 
+install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mc.1
+install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mcedit.1
+install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mcserv.8
+
 install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/mcserv $RPM_BUILD_ROOT%{_sbindir}
@@ -311,6 +318,8 @@ fi
 %{_libdir}/mc/syntax
 
 %{_mandir}/man1/*
+%lang(pl) %{_mandir}/pl/man1/*
+
 %attr(755,root,root) %config /etc/profile.d/*
 
 %dir %{_libdir}/mc
@@ -323,6 +332,7 @@ fi
 
 %attr(754,root,root) %config /etc/rc.d/init.d/mcserv
 %{_mandir}/man8/mcserv.8*
+%lang(pl) %{_mandir}/pl/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
 
 %{!?_without_gnome:%files -n gmc}
