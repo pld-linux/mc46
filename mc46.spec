@@ -10,6 +10,7 @@ Copyright:   GPL
 Group:       Shells
 Source0:     ftp://peyote-asesino.nuclecu.unam.mx/linux/local/devel/%{name}-%{version}.tar.gz
 Patch0:      mc.patch
+Patch1:      mc-hotlist.patch
 URL:         http://mc.blackdown.org/mc/
 Obsoletes:   tkmc
 BuildRoot:   /tmp/%{name}-%{version}-root
@@ -104,6 +105,7 @@ saðlar.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 autoconf
