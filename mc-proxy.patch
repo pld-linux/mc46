@@ -1,0 +1,29 @@
+--- mc-4.5.51/vfs/ftpfs.c.orig	Mon Jul  3 16:31:59 2000
++++ mc-4.5.51/vfs/ftpfs.c	Fri Sep 29 14:22:43 2000
+@@ -390,7 +390,7 @@
+     }
+     
+     /* Proxy server accepts: username@host-we-want-to-connect*/
+-    if (SUP.proxy){
++    if (SUP.use_proxy){
+ #if defined(HSC_PROXY)
+ 	char *p;
+ 	int port;
+@@ -424,7 +424,7 @@
+ 	    fflush (logfile);
+ 	}
+ #if defined(HSC_PROXY)
+-	if (SUP.proxy){
++	if (SUP.use_proxy){
+ 	    print_vfs_message (_("ftpfs: sending proxy login name"));
+ 	    if (command (me, super, 1, "USER %s", proxyname) != CONTINUE)
+ 		goto proxyfail;
+@@ -643,7 +643,7 @@
+     }
+ 
+     /* Hosts to connect to that start with a ! should use proxy */
+-    if (SUP.proxy){
++    if (SUP.use_proxy){
+ 	ftpfs_get_proxy_host_and_port (ftpfs_proxy_host, &host, &port);
+ 	free_host = 1;
+     }

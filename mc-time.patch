@@ -1,0 +1,88 @@
+--- mc-4.5.51/vfs/vfs.h.jj	Mon Jul  3 10:31:59 2000
++++ mc-4.5.51/vfs/vfs.h	Wed Feb 14 06:09:11 2001
+@@ -6,12 +6,14 @@
+ #include <sys/stat.h>
+ #include <dirent.h>
+ 
+-#if !defined(SCO_FLAVOR) || !defined(_SYS_SELECT_H) || defined(IS_AIX)
++#ifdef TIME_WITH_SYS_TIME
++#    include <sys/time.h>
++#    include <time.h>
++#else
++#  if !defined(SCO_FLAVOR) || !defined(_SYS_SELECT_H)
+ #	include <sys/time.h>	/* alex: this redefines struct timeval */
+-#  ifdef IS_AIX
+-#       include <time.h>
+-#  endif
+-#endif /* SCO_FLAVOR */
++#  endif /* SCO_FLAVOR */
++#endif /* TIME_WITH_SYS_TIME */
+ 
+ #ifdef HAVE_UTIME_H
+ #    include <utime.h>
+--- mc-4.5.51/configure.in.jj	Mon Jul  3 10:31:57 2000
++++ mc-4.5.51/configure.in	Wed Feb 14 06:03:33 2001
+@@ -153,6 +153,7 @@ AC_HEADER_SYS_WAIT
+ AC_HEADER_DIRENT
+ AC_SHORT_D_NAME_LEN
+ AC_HEADER_STDC
++AC_HEADER_TIME
+ 
+ 
+ #Let me check for an incompatible regcomp in HP-UX before making this
+--- mc-4.5.51/configure.jj	Mon Jul  3 10:31:57 2000
++++ mc-4.5.51/configure	Wed Feb 14 06:06:28 2001
+@@ -4348,6 +4348,41 @@ EOF
+ 
+ fi
+ 
++echo $ac_n "checking whether time.h and sys/time.h may both be included""... $ac_c" 1>&6
++echo "configure:4353: checking whether time.h and sys/time.h may both be included" >&5
++if eval "test \"`echo '$''{'ac_cv_header_time'+set}'`\" = set"; then
++  echo $ac_n "(cached) $ac_c" 1>&6
++else
++  cat > conftest.$ac_ext <<EOF
++#line 4358 "configure"
++#include "confdefs.h"
++#include <sys/types.h>
++#include <sys/time.h>
++#include <time.h>
++int main() {
++struct tm *tp;
++; return 0; }
++EOF
++if { (eval echo configure:4367: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
++  rm -rf conftest*
++  ac_cv_header_time=yes
++else
++  echo "configure: failed program was:" >&5
++  cat conftest.$ac_ext >&5
++  rm -rf conftest*
++  ac_cv_header_time=no
++fi
++rm -f conftest*
++fi
++
++echo "$ac_t""$ac_cv_header_time" 1>&6
++if test $ac_cv_header_time = yes; then
++  cat >> confdefs.h <<\EOF
++#define TIME_WITH_SYS_TIME 1
++EOF
++
++fi
++
+ 
+ 
+ #Let me check for an incompatible regcomp in HP-UX before making this
+--- mc-4.5.51/config.h.in.jj	Mon Jul  3 10:31:58 2000
++++ mc-4.5.51/config.h.in	Wed Feb 14 06:04:46 2001
+@@ -110,6 +110,9 @@
+ /* Define if you have the ANSI C header files.  */
+ #undef STDC_HEADERS
+ 
++/* Define if you can safely include both <sys/time.h> and <time.h>.  */
++#undef TIME_WITH_SYS_TIME
++
+ /* Define to `int' if <sys/types.h> doesn't define.  */
+ #undef uid_t
+ 
