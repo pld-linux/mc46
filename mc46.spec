@@ -300,14 +300,20 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc FAQ NEWS README
-
 %attr(755,root,root) %{_bindir}/mc*
+%attr(755,root,root) %config /etc/profile.d/*
+%attr(755,root,root) %{_libdir}/mc/cons.saver
+%dir %{_libdir}/mc
+
+%dir %{_datadir}/mc
+
+%{_datadir}/mc/bin
+%{_datadir}/mc/syntax
+%{_datadir}/mc/term
 
 %{_datadir}/mc/mc.ext
-
 %{_datadir}/mc/cedit*
 %{_datadir}/mc/edit.*
-
 %{_datadir}/mc/mc.hlp
 %lang(hu) %{_datadir}/mc/mc.hlp.hu
 %lang(es) %{_datadir}/mc/mc.hlp.es
@@ -327,9 +333,10 @@ fi
 %lang(uk) %{_datadir}/mc/mc.hint.uk
 %lang(zh) %{_datadir}/mc/mc.hint.zh
 
-%attr(755,root,root) %{_libdir}/mc/cons.saver
-
+%dir %{_datadir}/mc/extfs
 %{_datadir}/mc/extfs/README
+%{_datadir}/mc/extfs/extfs.ini
+%{_datadir}/mc/extfs/sfs.ini
 %attr(755,root,root) %{_datadir}/mc/extfs/a
 %attr(755,root,root) %{_datadir}/mc/extfs/apt
 %attr(755,root,root) %{_datadir}/mc/extfs/audio
@@ -351,9 +358,6 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/uzip
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
-%{_datadir}/mc/extfs/extfs.ini
-%{_datadir}/mc/extfs/sfs.ini
-%{_datadir}/mc/syntax
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
@@ -362,12 +366,6 @@ fi
 %lang(it) %{_mandir}/it/man1/*
 %lang(ru) %{_mandir}/ru/man1/*
 
-%attr(755,root,root) %config /etc/profile.d/*
-
-%dir %{_datadir}/mc
-%dir %{_datadir}/mc/bin
-%dir %{_datadir}/mc/extfs
-%dir %{_libdir}/mc
 
 %files -n mcserv
 %defattr(644,root,root,755)
