@@ -12,7 +12,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.55
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -32,15 +32,14 @@ Patch4:		%{name}-gdeskpopt.patch
 Patch5:		%{name}-prototype.patch
 Patch6:		%{name}-gnome-editor.patch
 Patch7:		%{name}-def_config.patch
-Patch8:		%{name}-rpmfs_rpm40.patch
-Patch9:		%{name}-mouse_in_rxvt.patch
-Patch10:	%{name}-proxy.patch
-Patch11:	%{name}-nognome-amfix.patch
-Patch12:	%{name}-urar.patch
-Patch13:	%{name}-samba.patch
-Patch14:	%{name}-nobashism.patch
-Patch15:	%{name}-tinfo.patch
-Patch16:	%{name}-vfs.patch
+Patch8:		%{name}-mouse_in_rxvt.patch
+Patch9:		%{name}-proxy.patch
+Patch10:	%{name}-nognome-amfix.patch
+Patch11:	%{name}-urar.patch
+Patch12:	%{name}-samba.patch
+Patch13:	%{name}-nobashism.patch
+Patch14:	%{name}-tinfo.patch
+Patch15:	%{name}-vfs.patch
 URL:		http://www.gnome.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -197,7 +196,6 @@ nie jest ona jeszcze skoñczona.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 gettextize --copy --force
@@ -224,6 +222,7 @@ fi"
 	%{?_with_x:--with-tm-x-support} \
 	--without-debug \
 	--with-included-slang \
+	--enable-largefile \
 	--enable-mcserv-install \
 	%{!?_without_gnome:--with-gnome}%{?_without_gnome:--without-gnome} \
 	%{?_with_samba:--with-samba}
