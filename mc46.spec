@@ -5,7 +5,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.50
-Release:	1
+Release:	2
 License:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
