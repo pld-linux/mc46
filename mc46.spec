@@ -4,7 +4,7 @@ Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.49
+Version:	4.5.50
 Release:	1
 License:	GPL
 Group:		Shells
@@ -188,7 +188,7 @@ fi
 
 %preun -n mcserv
 if [ "$1" = "0" ]; then
-	if [-f /var/lock/subsys/mcserv ]; then
+	if [ -f /var/lock/subsys/mcserv ]; then
 		/etc/rc.d/init.d/mcserv stop >&2
 	fi
 	/sbin/chkconfig --del mcserv
