@@ -270,8 +270,7 @@ fi
 - fixed mcserv.pamd (now as separate Surce1),
 - added Group(pl),
 - removed %ifos Linux %attr(4711,root,root) /usr/lib/mc/bin/cons.saver
-  (PLD Linux dont't like Solaris ;),
-- fixed $TEMPDIR in mc.sh (by Micha³ Zalewski <lcamtuf@dione.ids.pl>)
+  fixed $TEMPDIR in mc.sh (by Micha³ Zalewski <lcamtuf@dione.ids.pl>)
 
 * Mon Nov 2 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [4.5.1-2d]
@@ -336,63 +335,12 @@ fi
 - removed linking mcserv with not neccesary libs (XLib and term),
 - removed COPING from %doc (copyright statment is in Copyright field).
 
-* Thu May 07 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Thu May 07 1998 Cristian Gafton <gafton@redhat.com>
-- upgraded to 4.1.33 to fix extfs problems
-
-* Mon May 04 1998 Michael K. Johnson <johnsonm@redhat.com>
-- upgraded to 4.1.32
-- enhanced init script
-
-* Mon Apr 20 1998 Erik Troan <ewt@redhat.com>
-- built against newer ncurses
-
-* Thu Oct 30 1997 Michael K. Johnson <johnsonm@redhat.com>
-- Added dependency on portmap
-
-* Wed Oct 29 1997 Michael K. Johnson <johnsonm@redhat.com>
-- fixed spec file.
-- Updated to 4.1.8
-
 * Sun Oct 26 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-
 - updated to 4.1.6
 - added %attr macros in %files,
 - a few simplification in %install,
 - removed glibc patch,
 - fixed installing /etc/X11/wmconfig/tkmc.
-
-* Thu Oct 23 1997 Michael K. Johnson <johnsonm@redhat.com>
-- updated to 4.1.5
-- added wmconfig
-
-* Wed Oct 15 1997 Erik Troan <ewt@redhat.com>
-- chkconfig is for mcserv package, not mc one
-
-* Tue Oct 14 1997 Erik Troan <ewt@redhat.com>
-- patched init script for chkconfig
-- don't turn on the service by default
-
-* Fri Oct 10 1997 Michael K. Johnson <johnsonm@redhat.com>
-- Converted to new PAM conventions.
-- Updated to 4.1.3
-- No longer needs glibc patch.
-
-* Thu May 22 1997 Michele Marziani <marziani@fe.infn.it>
-- added support for mc alias in /etc/profile.d/mc.csh (for csh and tcsh)
-- lowered number of SysV init scripts in /etc/rc.d/rc[0,1,6].d
-  (mcserv needs to be killed before inet)
-- removed all references to $RPM_SOURCE_DIR
-- restored $RPM_OPT_FLAGS when compiling
-- minor cleanup of spec file: redundant directives and comments removed
-
-* Sun May 18 1997 Michele Marziani <marziani@fe.infn.it>
-- removed all references to non-existent mc.rpmfs
-- added mcedit.1 to the %files section
-- reverted to un-gzipped man pages (RedHat style)
-- removed double install line for mcserv.pamd
 
 * Tue May 13 1997 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
 - added new rpmfs script,
