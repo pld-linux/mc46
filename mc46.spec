@@ -13,7 +13,7 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/mc/%{name}-%{version}.tar.gz
 Source1:	mcserv.pamd
 Source2:	mcserv.init
 URL:		http://mc.blackdown.org/mc/
-Requires:	glib = 1.2.1
+%requires_pkg	glib
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -109,10 +109,10 @@ Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
 Group:		X11/GNOME
 Group(pl):	X11/GNOME
 Requires:	%{name}	   = %{version}
-Requires:	gtk+       = 1.2.1
-Requires:	esound     = 0.2.8
-Requires:	ORBit      = 0.4.2
-Requires:	gnome-libs = 1.0.5
+%requires_pkg	gtk+
+%requires_pkg	esound
+%requires_pkg	ORBit
+%requires_pkg	gnome-libs
 
 %description -n gmc
 Midnight Commander is a visual shell much like a file manager, only with
