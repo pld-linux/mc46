@@ -4,8 +4,8 @@ Summary(fr):	Le shell Midnight Commander
 Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
-Version:	4.5.9
-Release:	2d
+Version:	4.5.12
+Release:	3d
 Copyright:	GPL
 Group:		Shells
 Group(pl):	Pow³oki
@@ -15,7 +15,7 @@ Source1:	mcserv.pamd
 Source2:	mcserv.init
 Patch0:		mc-profile.patch
 URL:		http://mc.blackdown.org/mc/
-Requires:	glib = 1.1.7
+Requires:	glib = 1.1.15
 BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:	rpm =< 2.5.3
 Obsoletes:	tkmc
@@ -54,14 +54,14 @@ bir görsel kabuktur. Metin ekranda çalýþýr ve GPM çalýþýyorsa fare desteði
 vardýr. En hoþ özellikleri ftp yapabilmesi, tar, zip ve RPM dosyalarýnýn
 içeriklerini gösterebilmesidir.
  
-%package -n mcserv
+%package	-n mcserv
 Summary:	Midnight Commander file server
 Summary(de):	Midnight Commander File-Server 
 Summary(fr):	Serveur de fichier de Midnight Commander
 Summary(pl):	Serwer plików Midnight Commandera
 Summary(tr):	Midnight Commander dosya sunucusu
-Group:		Networking/Daemons
-Group(pl):	Sieciowe/Serwery
+Group:		Daemons
+Group(pl):	Serwery
 Prereq:		/sbin/chkconfig
 Requires:	portmap
 Requires:	pam >= 0.66
@@ -102,21 +102,21 @@ mcserv, Midnight Commander að dosya sisteminin sunucu programýdýr. Midnight
 dosya sistemini çalýþtýran istemcilerin sunucu dosya sistemine eriþimini
 saðlar.
 
-#%package -n gmc
-#Summary:	Midnight Commander visual shell (GNOME version)
-#Summary(de):	Midnight Commander Visual-Shell (GNOME Version) 
-#Summary(fr):	shell visuel Midnight Commander (version GNOME)
-#Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
-#Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
-#Group:		X11/Shells
-#Group(pl):	X11/Pow³oki
-#Requires:	%{name} = %{version}
+%package	-n gmc
+Summary:	Midnight Commander visual shell (GNOME version)
+Summary(de):	Midnight Commander Visual-Shell (GNOME Version) 
+Summary(fr):	shell visuel Midnight Commander (version GNOME)
+Summary(pl):	Midnight Commander wizualny shell (wersja GNOME)
+Summary(tr):	Midnight Commander görsel kabuðu (GNOME sürümü)
+Group:		X11/Shells
+Group(pl):	X11/Pow³oki
+Requires:	%{name} = %{version}
 
-#%description -n gmc
-#Midnight Commander is a visual shell much like a file manager, only with
-#way more features.  This is the GNOME version. It's coolest feature is the
-#ability to ftp, view tar, zip files and poke into RPMs for specific files.
-#The GNOME version of Midnight Commander is not yet finished though. :-(
+%description -n gmc
+Midnight Commander is a visual shell much like a file manager, only with
+way more features.  This is the GNOME version. It's coolest feature is the
+ability to ftp, view tar, zip files and poke into RPMs for specific files.
+The GNOME version of Midnight Commander is not yet finished though. :-(
 
 %prep
 %setup -q
@@ -127,15 +127,16 @@ autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure \
 	--prefix=/usr \
-	--without-gnome \
-	--without-gnome-libs \
-	--without-gnome-includes \
 	--with-slang \
 	--with-included-slang \
 	--without-ext2undel \
 	--with-netrc \
 	--with-x \
 	--without-debug
+#	--without-gnome \
+#	--without-gnome-libs \
+#	--without-gnome-includes \
+
 make  		    
 
 %install
@@ -151,7 +152,8 @@ install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/profile.d
 
 mv $RPM_BUILD_ROOT/usr/bin/mcserv $RPM_BUILD_ROOT/usr/sbin 
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/{man1/*,man8/*} FAQ NEWS README
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man[18]/* 
+bzip2 -9 FAQ NEWS README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -224,17 +226,33 @@ fi
 %defattr(644,root,root,755)
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
 
-%attr(700,root,root) %config /etc/rc.d/init.d/mcserv
+%attr(750,root,root) %config /etc/rc.d/init.d/mcserv
 %attr(644,root, man) /usr/man/man8/mcserv.8.gz
 %attr(755,root,root) /usr/sbin/mcserv
 
-#%files -n gmc
-#%defattr(644, root, root, 755)
-#%attr(755, root, root) /usr/bin/gmc
-#/usr/lib/mc/layout
-#/usr/share/icons/mc
+%files -n gmc
+%defattr(644,root,root,755)
+
+%attr(755,root,root) /usr/bin/gmc
+%attr(755,root,root) /usr/bin/plain-*
+
+/usr/etc
+/usr/lib/mc/layout
+/usr/lib/mc/mc-gnome.ext
+/usr/lib/mc/term
+/usr/share/mime-info
+/usr/share/idl
+/usr/share/pixmaps
+/usr/share/mc
 
 %changelog
+* Thu Feb 11 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [4.5.12-2d]
+- build with gmc subpackage,
+- compressed forgoten man pages && documentation,
+- fixed init script in mcserv,
+- updated to 4.5.12.
+
 * Thu Jan 21 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.9-2d]
 - fixed Requires (glib = 1.1.7).
@@ -297,7 +315,7 @@ fi
 - build against glibc-2.1,
 - removed gnome version of mc.
 
-* Wed Aug 26 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+* Wed Jul 12 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.1.35-3]
 - %%{version} macro instead %%{PACKAGE_VERSION},
 - added -q %setup parameter,
