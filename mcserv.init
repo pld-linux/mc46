@@ -6,9 +6,9 @@
 #
 # description:	The Midnight Commander server allows users on remote machines \
 #		to use the Midnight Commander file manager to manipulate their \
-#		files on the machine running the server. The server  \
-#       	authenticates the user through PAM, which by default requires \
-#       	a username/password combination before allowing access.
+#		files on the machine running the server. The server \
+#		authenticates the user through PAM, which by default requires \
+#		a username/password combination before allowing access.
 #
 # processname:	mcserv
 
@@ -20,12 +20,16 @@
 . /etc/sysconfig/network
 
 # Get service config
-[ -f /etc/sysconfig/mscerv ] && . /etc/sysconfig/mscerv
+[ -f /etc/sysconfig/mcserv ] && . /etc/sysconfig/mcserv
 
 # Check that networking is up.
-if [ "${NETWORKING}" = "no" ]; then
-	echo "WARNING: Networking is down. Mcserv service can't be runed."
-	exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
+		msg_network_down mcserv
+		exit 1
+	fi
+else
+	exit 0
 fi
 
 
@@ -34,29 +38,37 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/mcserv ]; then
-		show Starting mcserv
-		daemon mcserv $OPTIONS
+		msg_starting mcserv
+		is_yes $VERBOSE && OPTS="$OPTS -v"
+		is_yes $QUIET && OPTS="$OPTS -v"
+		[ "$PORT" != "" ] && OPTS="$POPTS -p $PORT"
+		daemon mcserv -d $OPTS
+		touch /var/lock/subsys/mcserv
 	else
-		echo "mcserv already is running"
+		msg_already_running mcserv
 	fi
-	touch /var/lock/subsys/mcserv
 	;;
   status)
-        status mcserv
+	status mcserv
+	exit $?
 	;;
-  restart|reload)
-        $0 stop
+  restart|force-reload)
+	$0 stop
 	$0 start
-        ;;
+	exit $?
+	;;
   stop)
-        show Shutting down mcserv
-	killproc mcserv
-	rm -f /var/lock/subsys/mcserv
+	if [ -f /var/lock/subsys/mcserv ]; then
+		msg_stopping mcserv
+		killproc mcserv
+		rm -f /var/lock/subsys/mcserv >/dev/null 2>&1
+	else
+		msg_not_running mcserv
+	fi
 	;;
   *)
-	echo "Usage: $0 {start|stop|status|restart|reload}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit 0
-
