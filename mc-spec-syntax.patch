@@ -1,7 +1,7 @@
-diff -Nur mc-4.5.51.orig/gtkedit/syntax.c mc-4.5.51/gtkedit/syntax.c
---- mc-4.5.51.orig/gtkedit/syntax.c	Wed Sep 27 21:51:02 2000
-+++ mc-4.5.51/gtkedit/syntax.c	Wed Sep 27 21:49:34 2000
-@@ -1202,6 +1202,9 @@
+diff -urN mc-4.5.52.org/gtkedit/syntax.c mc-4.5.52/gtkedit/syntax.c
+--- mc-4.5.52.org/gtkedit/syntax.c	Mon Mar 19 20:44:45 2001
++++ mc-4.5.52/gtkedit/syntax.c	Mon Mar 19 20:48:50 2001
+@@ -1201,6 +1201,9 @@
  "file ..\\*\\\\.(diff|rej|patch)$ Diff\\sOutput ^diff",
  "include diff.syntax",
  "",
@@ -11,10 +11,10 @@ diff -Nur mc-4.5.51.orig/gtkedit/syntax.c mc-4.5.51/gtkedit/syntax.c
  "file ..\\*\\\\.lsm$ LSM\\sFile",
  "include lsm.syntax",
  "",
-diff -Nur mc-4.5.51.orig/syntax/Makefile.in mc-4.5.51/syntax/Makefile.in
---- mc-4.5.51.orig/syntax/Makefile.in	Mon Jul  3 16:32:17 2000
-+++ mc-4.5.51/syntax/Makefile.in	Wed Sep 27 21:52:45 2000
-@@ -34,7 +34,8 @@
+diff -urN mc-4.5.52.org/syntax/Makefile.am mc-4.5.52/syntax/Makefile.am
+--- mc-4.5.52.org/syntax/Makefile.am	Mon Mar 19 20:44:46 2001
++++ mc-4.5.52/syntax/Makefile.am	Mon Mar 19 20:49:18 2001
+@@ -22,6 +22,7 @@
  	smalltalk.syntax	\
  	swig.syntax		\
  	texinfo.syntax		\
@@ -22,11 +22,10 @@ diff -Nur mc-4.5.51.orig/syntax/Makefile.in mc-4.5.51/syntax/Makefile.in
 +	unknown.syntax		\
 +	spec.syntax
  
- all:
- 
-diff -Nur mc-4.5.51.orig/syntax/spec.syntax mc-4.5.51/syntax/spec.syntax
---- mc-4.5.51.orig/syntax/spec.syntax	Thu Jan  1 01:00:00 1970
-+++ mc-4.5.51/syntax/spec.syntax	Wed Sep 27 21:49:34 2000
+ EXTRA_DIST = $(syntax_DATA)
+diff -urN mc-4.5.52.org/syntax/spec.syntax mc-4.5.52/syntax/spec.syntax
+--- mc-4.5.52.org/syntax/spec.syntax	Thu Jan  1 01:00:00 1970
++++ mc-4.5.52/syntax/spec.syntax	Mon Mar 19 20:48:50 2001
 @@ -0,0 +1,194 @@
 +context default
 +    keyword whole Autoprov: green/6

@@ -1,12 +1,12 @@
-diff -ruN mc-4.5.51.orig/src/dir.c mc-4.5.51/src/dir.c
---- mc-4.5.51.orig/src/dir.c	Mon Jul  3 16:32:07 2000
-+++ mc-4.5.51/src/dir.c	Mon Aug 14 22:12:54 2000
-@@ -76,7 +76,7 @@
-     { N_("&Group"),       sort_group }
- };
- 
--#define string_sortcomp(a,b) (case_sensitive ? strcoll (a,b) : g_strcasecmp (a,b))
-+#define string_sortcomp(a,b) (case_sensitive ? strcmp (a,b) : g_strcasecmp (a,b))
- 
- int
- unsorted (const file_entry *a, const file_entry *b)
+diff -urN mc-4.5.52.org/src/dir.c mc-4.5.52/src/dir.c
+--- mc-4.5.52.org/src/dir.c	Mon Mar 19 20:44:47 2001
++++ mc-4.5.52/src/dir.c	Mon Mar 19 21:04:25 2001
+@@ -82,7 +82,7 @@
+  * Ideally, the user should be able to select between all three functions -
+  * strcoll() (if available), strcmp() and g_strcasecmp().
+  */
+-#ifdef HAVE_STRCOLL
++#if defined(HAVE_STRCOLL) && 0
+ #define string_sortcomp(a,b) (case_sensitive ? strcoll (a,b) : g_strcasecmp (a,b))
+ #else
+ #define string_sortcomp(a,b) (case_sensitive ? strcmp (a,b) : g_strcasecmp (a,b))

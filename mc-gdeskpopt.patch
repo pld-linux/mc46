@@ -1,18 +1,17 @@
-diff -Nru mc-4.5.51/gnome/Makefile.in mc-4.5.51.new/gnome/Makefile.in
---- mc-4.5.51/gnome/Makefile.in	Mon Jul  3 16:32:11 2000
-+++ mc-4.5.51.new/gnome/Makefile.in	Fri Nov 10 10:28:11 2000
-@@ -208,6 +208,10 @@
- 	FileManager-common.o
- 
+diff -urN mc-4.5.52.org/gnome/Makefile.in mc-4.5.52/gnome/Makefile.in
+--- mc-4.5.52.org/gnome/Makefile.in	Mon Mar 19 20:44:46 2001
++++ mc-4.5.52/gnome/Makefile.in	Mon Mar 19 20:51:25 2001
+@@ -20,6 +20,9 @@
+ INSTALL_PROGRAM = @INSTALL_PROGRAM@
+ INSTALL_DATA = @INSTALL_DATA@
  
 +GDESKTOPLNKSRCS = gdesktoplnk.c
-+
 +GDESKTOPLNKOBJS = gdesktoplnk.o
 +
- $(CORBA_GENERATED): $(rootdir)/idl/FileManager.idl
- 	orbit-idl `gnome-config --cflags idl` $(rootdir)/idl/FileManager.idl
- 
-@@ -253,6 +257,7 @@
+ PIXMAPS =			\
+ 	dev.xpm			\
+ 	link.xpm		\
+@@ -248,6 +251,7 @@
  	$(MAKE) plain-gmc
  	$(MAKE) corba-gmc
  	$(MAKE) gmc-client
@@ -20,7 +19,7 @@ diff -Nru mc-4.5.51/gnome/Makefile.in mc-4.5.51.new/gnome/Makefile.in
  	@echo ----------------------------------------------------------
  	@echo -
  	@echo - GMC no longer exists here.  Use plain-gmc or corba-gmc
-@@ -270,6 +275,9 @@
+@@ -265,6 +269,9 @@
  gmc-client: $(CLIENTOBJS)
  	$(CC) -o gmc-client $(CLIENTOBJS) $(CORBA_LDFLAGS) $(LIBS)
  
@@ -30,7 +29,7 @@ diff -Nru mc-4.5.51/gnome/Makefile.in mc-4.5.51.new/gnome/Makefile.in
  mc.keys: mc.keys.in Makefile
  	sed -e 's^\@icondir\@^$(icondir)^g' \
  	    -e 's^\@gnomeicondir\@^$(gnomeicondir)^g' \
-@@ -342,6 +350,7 @@
+@@ -330,6 +337,7 @@
  	$(INSTALL_PROGRAM) plain-gmc $(DESTDIR)$(bindir)/$(binprefix)plain-gmc
  	$(INSTALL_PROGRAM) corba-gmc $(DESTDIR)$(bindir)/$(binprefix)gmc
  	$(INSTALL_PROGRAM) gmc-client $(DESTDIR)$(bindir)/$(binprefix)gmc-client
@@ -38,9 +37,9 @@ diff -Nru mc-4.5.51/gnome/Makefile.in mc-4.5.51.new/gnome/Makefile.in
  	for I in $(ICONS); \
  	do $(INSTALL_DATA) $(srcdir)/$$I $(DESTDIR)$(icondir)/$$I; done
  	$(INSTALL_DATA) $(srcdir)/layout $(DESTDIR)$(mclibdir)/layout
-diff -Nru mc-4.5.51/gnome/gdesktoplnk.c mc-4.5.51.new/gnome/gdesktoplnk.c
---- mc-4.5.51/gnome/gdesktoplnk.c	Thu Jan  1 01:00:00 1970
-+++ mc-4.5.51.new/gnome/gdesktoplnk.c	Fri Nov 10 10:28:24 2000
+diff -urN mc-4.5.52.org/gnome/gdesktoplnk.c mc-4.5.52/gnome/gdesktoplnk.c
+--- mc-4.5.52.org/gnome/gdesktoplnk.c	Thu Jan  1 01:00:00 1970
++++ mc-4.5.52/gnome/gdesktoplnk.c	Mon Mar 19 20:50:49 2001
 @@ -0,0 +1,103 @@
 +/*
 + * Gnome Desktop linker.

@@ -1,6 +1,6 @@
-diff -Nru mc-4.5.51/src/dir.c mc-4.5.51.new/src/dir.c
---- mc-4.5.51/src/dir.c	Mon Jul  3 16:32:07 2000
-+++ mc-4.5.51.new/src/dir.c	Fri Nov 10 13:19:10 2000
+diff -urN mc-4.5.52.org/src/dir.c mc-4.5.52/src/dir.c
+--- mc-4.5.52.org/src/dir.c	Mon Mar 19 20:44:47 2001
++++ mc-4.5.52/src/dir.c	Mon Mar 19 20:55:42 2001
 @@ -44,7 +44,7 @@
  #endif
  
@@ -10,26 +10,9 @@ diff -Nru mc-4.5.51/src/dir.c mc-4.5.51.new/src/dir.c
  
  /* If false then directories are shown separately from files */
  int mix_all_files = 0;
-diff -Nru mc-4.5.51/src/main.c mc-4.5.51.new/src/main.c
---- mc-4.5.51/src/main.c	Mon Jul  3 16:32:07 2000
-+++ mc-4.5.51.new/src/main.c	Fri Nov 10 13:17:19 2000
-@@ -211,11 +211,11 @@
- int auto_save_setup = 1;
- 
- /* If true, be eight bit clean */
--int eight_bit_clean = 0;
-+int eight_bit_clean = 1;
- 
- /* If true, then display chars 0-255, else iso-8859-1,
-    requires eight_bit_clean */
--int full_eight_bits = 0;
-+int full_eight_bits = 1;
- 
- /* If true use the internal viewer */
- int use_internal_view = 1;
-diff -Nru mc-4.5.51/src/panel.h mc-4.5.51.new/src/panel.h
---- mc-4.5.51/src/panel.h	Mon Jul  3 16:32:05 2000
-+++ mc-4.5.51.new/src/panel.h	Fri Nov 10 13:21:31 2000
+diff -urN mc-4.5.52.org/src/panel.h mc-4.5.52/src/panel.h
+--- mc-4.5.52.org/src/panel.h	Mon Mar 19 20:44:47 2001
++++ mc-4.5.52/src/panel.h	Mon Mar 19 20:55:46 2001
 @@ -292,7 +292,7 @@
  
  void try_to_select (WPanel *panel, char *name);
