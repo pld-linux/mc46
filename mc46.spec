@@ -253,7 +253,7 @@ fi
 %changelog
 * Fri May 14 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.31-1]
-- now package is FHS 2.0 compliat.
+- now package is FHS 2.0 compliant.
 
 * Sat Apr 24 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.5.30-2]
