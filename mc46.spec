@@ -204,12 +204,12 @@ aclocal -I \
 autoconf
 automake -a -c
 X11_WWW="
-if [ -f /usr/X11R6/bin/netscape ]; then  netscape; 
+if [ -f /usr/X11R6/bin/netscape ]; then netscape;
 else
-  if [ -f /usr/X11R6/bin/galeon ]; then galeon; 
+  if [ -f /usr/X11R6/bin/galeon ]; then galeon;
   else
-    if [ -f /usr/X11R6/bin/mozilla ]; then mozilla; 
-    else 
+    if [ -f /usr/X11R6/bin/mozilla ]; then mozilla;
+    else
       xterm -c lynx;
     fi;
   fi;
