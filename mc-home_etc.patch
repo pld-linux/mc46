@@ -298,7 +298,7 @@ diff -Nur mc-4.5.55.orig/lib/mc.sh.in mc-4.5.55.chng/lib/mc.sh.in
 -        mkdir -p $HOME/.mc/tmp 2> /dev/null
 -	chmod 700 $HOME/.mc/tmp
 -	MC=$HOME/.mc/tmp/mc-$$
-+	if [ "$CONFIG_DIR" == "" ]; then
++	if [ "$CONFIG_DIR" = "" ]; then
 +	    HOMEMC="$HOME/.mc"
 +	else
 +	    HOMEMC="$HOME/$CONFIG_DIR/mc"
