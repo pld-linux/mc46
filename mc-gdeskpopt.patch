@@ -1,0 +1,147 @@
+diff -Nru mc-4.5.51/gnome/Makefile.in mc-4.5.51.new/gnome/Makefile.in
+--- mc-4.5.51/gnome/Makefile.in	Mon Jul  3 16:32:11 2000
++++ mc-4.5.51.new/gnome/Makefile.in	Fri Nov 10 10:28:11 2000
+@@ -208,6 +208,10 @@
+ 	FileManager-common.o
+ 
+ 
++GDESKTOPLNKSRCS = gdesktoplnk.c
++
++GDESKTOPLNKOBJS = gdesktoplnk.o
++
+ $(CORBA_GENERATED): $(rootdir)/idl/FileManager.idl
+ 	orbit-idl `gnome-config --cflags idl` $(rootdir)/idl/FileManager.idl
+ 
+@@ -253,6 +257,7 @@
+ 	$(MAKE) plain-gmc
+ 	$(MAKE) corba-gmc
+ 	$(MAKE) gmc-client
++	$(MAKE) gdesktoplnk
+ 	@echo ----------------------------------------------------------
+ 	@echo -
+ 	@echo - GMC no longer exists here.  Use plain-gmc or corba-gmc
+@@ -270,6 +275,9 @@
+ gmc-client: $(CLIENTOBJS)
+ 	$(CC) -o gmc-client $(CLIENTOBJS) $(CORBA_LDFLAGS) $(LIBS)
+ 
++gdesktoplnk: $(GDESKTOPLNKOBJS)
++	$(CC) -o gdesktoplnk $(GDESKTOPLNKOBJS) $(LDFLAGS) $(LIBS)
++
+ mc.keys: mc.keys.in Makefile
+ 	sed -e 's^\@icondir\@^$(icondir)^g' \
+ 	    -e 's^\@gnomeicondir\@^$(gnomeicondir)^g' \
+@@ -342,6 +350,7 @@
+ 	$(INSTALL_PROGRAM) plain-gmc $(DESTDIR)$(bindir)/$(binprefix)plain-gmc
+ 	$(INSTALL_PROGRAM) corba-gmc $(DESTDIR)$(bindir)/$(binprefix)gmc
+ 	$(INSTALL_PROGRAM) gmc-client $(DESTDIR)$(bindir)/$(binprefix)gmc-client
++	$(INSTALL_PROGRAM) gdesktoplnk $(DESTDIR)$(bindir)/$(binprefix)gdesktoplnk
+ 	for I in $(ICONS); \
+ 	do $(INSTALL_DATA) $(srcdir)/$$I $(DESTDIR)$(icondir)/$$I; done
+ 	$(INSTALL_DATA) $(srcdir)/layout $(DESTDIR)$(mclibdir)/layout
+diff -Nru mc-4.5.51/gnome/gdesktoplnk.c mc-4.5.51.new/gnome/gdesktoplnk.c
+--- mc-4.5.51/gnome/gdesktoplnk.c	Thu Jan  1 01:00:00 1970
++++ mc-4.5.51.new/gnome/gdesktoplnk.c	Fri Nov 10 10:28:24 2000
+@@ -0,0 +1,103 @@
++/*
++ * Gnome Desktop linker.
++ * This program creates links for the desktop icons
++ *
++ * Authors:
++ *   Pablo Saratxaga
++ *
++ * Under the GNU General Public License
++ */
++#include <sys/stat.h>
++#include <string.h>
++
++#include <config.h>
++#include <gnome.h>
++
++static char *progname;
++static char *icon_name;
++static char *icon_caption;
++static char *link_name;
++static char *desktop_dir;
++static char *drop_action;
++
++static const struct poptOption options [] = {
++	{ "progname", 0, POPT_ARG_STRING, &progname, 0,
++	  N_("Name of the program to link to") },
++	{ "icon-name", 0, POPT_ARG_STRING, &icon_name, 0,
++	  N_("Name of the icon to use on the desktop") },
++	{ "icon-caption", 0, POPT_ARG_STRING, &icon_caption, 0,
++	  N_("Caption of the icon to be created") },
++	{ "link-name", 0, POPT_ARG_STRING, &link_name, 0,
++	  N_("Name of the symlink to create") },
++	{ "desktop-dir", 0, POPT_ARG_STRING, &desktop_dir, 0, N_("DESKTOP-DIR"),
++	  N_("Creates links to this program in the directory specified") }, 
++	{ "drop-action", 0, POPT_ARG_STRING, &drop_action, 0,
++	  N_("Specifies the action to perform when dropping some object") },
++	{ NULL, 0, 0, NULL, 0 }
++};
++
++
++
++int
++main (int argc, char *argv [])
++{
++	poptContext ctx;
++	char dir [8192];
++	char *str;
++	struct stat buf;
++
++	bindtextdomain(PACKAGE, LOCALEDIR);
++	textdomain(PACKAGE);
++	
++	gnome_init_with_popt_table ("GDesktopLnk", VERSION, argc, argv, options, 0, &ctx);
++
++	if (!progname)
++		return 1;
++
++	if (!desktop_dir)
++		return 2;
++
++	if (chdir (desktop_dir) == -1)
++		return 3;
++
++	getcwd (dir, sizeof (dir));
++
++	if (!link_name) {
++		str=strrchr(progname,'/');
++		if (str)
++			link_name = g_strdup_printf("%s",str+1);
++		else
++			link_name = g_strdup_printf("%s",progname);
++	}
++
++	if (lstat (link_name, &buf) == 0){
++		if (S_ISLNK (buf.st_mode))
++			unlink (link_name);
++	}
++		
++	if (symlink (progname, link_name) == 0){
++
++		str = g_concat_dir_and_file (desktop_dir, link_name);
++
++		if (drop_action)
++			gnome_metadata_set (str, "drop-action",
++					strlen (drop_action)+1, drop_action);
++
++		if (icon_caption)
++			gnome_metadata_set (str, "icon-caption",
++					strlen (icon_caption)+1, icon_caption);
++
++		if (icon_name) {
++			char *icon;
++
++			icon = gnome_unconditional_pixmap_file(icon_name);
++			gnome_metadata_set (str, "icon-filename",
++					strlen (icon)+1, icon);
++			g_free(icon);
++		}
++
++	}
++	g_free (str);
++	return 0;
++}
++

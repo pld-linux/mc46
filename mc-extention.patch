@@ -1,0 +1,11 @@
+--- mc-4.5.51/lib/mc.ext.in.orig	Thu Aug 17 19:43:13 2000
++++ mc-4.5.51/lib/mc.ext.in	Thu Aug 17 19:43:47 2000
+@@ -425,7 +425,7 @@
+ 	Start Emacs on this RMAIL file=emacs %f
+ 	Open=emacs %f
+ 
+-type/mail
++type/Mail
+ 	Open=elm -f %f
+ 	Icon=mail.xpm
+ 	View=%view{ascii} mcmfmt < %f

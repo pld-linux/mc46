@@ -1,0 +1,13 @@
+--- mc-4.5.43/src/subshell.c.blarg	Thu May 11 16:33:30 2000
++++ mc-4.5.43/src/subshell.c	Thu May 11 16:34:57 2000
+@@ -187,6 +187,10 @@
+  *	quit - Can be set to SUBSHELL_EXIT by the SIGCHLD handler
+  */
+ 
++/* blarg */
++extern char *ptsname(int);
++
++
+ #ifdef HAVE_GRANTPT
+ #    define SYNC_PTY_SIDES
+ #else
