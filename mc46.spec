@@ -234,6 +234,7 @@ fi"
 	--with%{!?debug:out}-debug \
 	--with%{!?_with_ext2undel:out}-ext2undel \
 	%{?_with_x:--with-x} \
+	%{!?_with_x:--without-x} \
 	--with-vfs \
 	--with-mcfs \
 	%{?_with_samba:--with-samba} \
