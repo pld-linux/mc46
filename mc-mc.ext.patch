@@ -14,11 +14,11 @@
  # patch
 -regex/\.(diff|patch)(\.(bz2|gz|Z))?$
 -        Open=%cd %p#patchfs
-+regex/\.(diff|patch)(\.bz2)?$
++regex/\.(diff|patch).bz2?$
 +	Open=%cd %p#patchfs
 +	View=%view{ascii} bzip2 -dc %f 2>/dev/null
 +
-+regex/\.(diff|patch)(\.(gz|Z))?$
++regex/\.(diff|patch)\.(gz|Z)?$
 +	Open=%cd %p#patchfs
 +	View=%view{ascii} gzip -dc %f 2>/dev/null
  
