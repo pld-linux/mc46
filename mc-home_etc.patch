@@ -327,7 +327,7 @@ diff -Nur mc-4.5.55.orig/src/cmd.c mc-4.5.55.chng/src/cmd.c
      switch (dir) {
  	case 0:
 -	    buffer = g_strdup (where ? CEDIT_LOCAL_MENU : MC_LOCAL_MENU);
-+	    buffer = g_strconcat (config_dir, (where ? CEDIT_LOCAL_MENU : MC_LOCAL_MENU), NULL);
++	    buffer = g_strconcat (home_dir, config_dir, (where ? CEDIT_LOCAL_MENU : MC_LOCAL_MENU), NULL);
  	    check_for_default (menufile, buffer);
  	    break;
  
