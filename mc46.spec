@@ -12,7 +12,7 @@ Summary(pl):	Midnight Commander - pow³oka wizualna
 Summary(tr):	Midnight Commander görsel kabuðu
 Name:		mc
 Version:	4.5.54
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -41,7 +41,7 @@ Patch17:	%{name}-samba.patch
 Patch18:	%{name}-use_AM_GNU_GETTEXT.patch
 Patch19:	%{name}-sh-quiet.patch
 Patch20:	%{name}-nobashism.patch
-URL:		http://mc.blackdown.org/mc/
+URL:		http://www.gnome.org/mc/
 %{!?_without_gnome:BuildRequires:	ORBit-devel}
 %{!?_without_gnome:BuildRequires:	esound-devel}
 BuildRequires:	gettext-devel
