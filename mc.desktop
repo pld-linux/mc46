@@ -17,6 +17,6 @@ Icon=mc.png
 Terminal=true
 Type=Application
 Encoding=UTF-8
-Categories=Utility;FileManager;
+Categories=ConsoleOnly;Utility;FileManager;
 # vi: encoding=utf-8
 
