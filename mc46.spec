@@ -20,7 +20,7 @@ Summary(zh_CN):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 %define	pre	pre1
 Version:	4.6.1
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}-%{pre}.tar.gz
@@ -235,8 +235,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-# FIXME
-#%patch6 -p1
+%patch6 -p1
 %patch7 -p1
 %patch9 -p1
 # FIXME
