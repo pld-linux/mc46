@@ -18,13 +18,13 @@ Summary(tr):	Midnight Commander görsel kabuğu
 Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
-%define	pre	pre1
+%define	pre	pre4
 Version:	4.6.1
-Release:	0.4
+Release:	0.1
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}-%{pre}.tar.gz
-# Source0-md5:	8c66f5eeb623b20791b3a13bbe6f8c1b
+# Source0-md5:	89904e7cd92134cbf7a6cc03bf4be4a2
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -239,8 +239,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch6 -p1
 %patch7 -p1
 %patch9 -p1
-# FIXME
-#%patch12 -p1
+%patch12 -p1
 %patch13 -p1
 %patch15 -p0
 %patch16 -p1
