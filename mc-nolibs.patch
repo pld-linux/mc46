@@ -1,5 +1,5 @@
---- mc-4.6.1-pre1/configure.in.orig	2004-07-23 17:51:54.373386000 +0000
-+++ mc-4.6.1-pre1/configure.in	2004-07-23 18:42:08.714170339 +0000
+--- mc-4.6.1-pre1/configure.ac.orig	2004-07-23 17:51:54.373386000 +0000
++++ mc-4.6.1-pre1/configure.ac	2004-07-23 18:42:08.714170339 +0000
 @@ -291,9 +291,6 @@
  dnl Network related functions
  dnl
