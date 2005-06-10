@@ -13,29 +13,17 @@ diff -Naur mc-2003-01-24-21.orig/edit/edit.c mc-2003-01-24-21.patched/edit/edit.
      case CK_Find:
  	edit_search_cmd (edit, 0);
  	break;
-diff -Naur mc-2003-01-24-21.orig/edit/editcmddef.h mc-2003-01-24-21.patched/edit/editcmddef.h
---- mc-2003-01-24-21.orig/edit/editcmddef.h	Tue Jan 22 06:07:21 2002
-+++ mc-2003-01-24-21.patched/edit/editcmddef.h	Sat Jan 25 14:32:07 2003
-@@ -104,6 +104,8 @@
- #define CK_Check_Save_And_Quit	457
- #define CK_Maximize		458
- 
-+#define CK_Toggle_Syntax	480
-+
- /* macro */
- #define CK_Begin_Record_Macro	501
- #define CK_End_Record_Macro	502
-diff -Naur mc-2003-01-24-21.orig/edit/editkeys.c mc-2003-01-24-21.patched/edit/editkeys.c
---- mc-2003-01-24-21.orig/edit/editkeys.c	Wed Dec 25 23:53:25 2002
-+++ mc-2003-01-24-21.patched/edit/editkeys.c	Sat Jan 25 14:31:29 2003
-@@ -53,6 +53,7 @@
-     '\t', CK_Tab,
-     XCTRL ('u'), CK_Undo,
-     KEY_IC, CK_Toggle_Insert,
+
+--- ./edit/editkeys.c.amc       2005-06-10 12:20:55.784294320 +0200
++++ ./edit/editkeys.c   2005-06-10 12:21:17.170043192 +0200
+@@ -95,6 +95,7 @@
+
+     XCTRL ('k'), CK_Delete_To_Line_End,
+     XCTRL ('l'), CK_Refresh,
 +    XCTRL ('s'), CK_Toggle_Syntax,
      XCTRL ('o'), CK_Shell,
-     KEY_F (3), CK_Mark,
-     KEY_F (13), CK_Column_Mark,
+     XCTRL ('u'), CK_Undo,
+
 diff -Naur mc-2003-01-24-21.orig/src/cmd.c mc-2003-01-24-21.patched/src/cmd.c
 --- mc-2003-01-24-21.orig/src/cmd.c	Sat Jan 25 13:46:00 2003
 +++ mc-2003-01-24-21.patched/src/cmd.c	Sat Jan 25 14:49:05 2003
@@ -123,14 +111,14 @@ diff -Naur mc-2003-01-24-21.orig/src/command.c mc-2003-01-24-21.patched/src/comm
 +  return 0;
 +}
 +
- /*Tries variable substitution, and if a variable CDPATH
- of the form e.g. CDPATH=".:~:/usr" exists, we try then all the paths which
- are mentioned there. Also, we do not support such extraordinary things as
+ /*
+  * Expand the argument to "cd" and change directory.  First try tilde
+  * expansion, then variable substitution.  If the CDPATH variable is set
 @@ -93,8 +114,37 @@
          }
      }
      *r = 0;
--    
+-
 +
      result = do_cd (q, cd_parse_command);
 +
@@ -189,28 +177,26 @@ diff -Naur mc-2003-01-24-21.orig/src/file.c mc-2003-01-24-21.patched/src/file.c
  #ifdef WITH_BACKGROUND
      /* Let our parent know we are saying bye bye */
      if (we_are_background) {
-diff -Naur mc-2003-01-24-21.orig/src/key.c mc-2003-01-24-21.patched/src/key.c
---- mc-2003-01-24-21.orig/src/key.c	Sat Dec 28 06:11:40 2002
-+++ mc-2003-01-24-21.patched/src/key.c	Sat Jan 25 15:24:09 2003
-@@ -675,6 +675,18 @@
- 	                c = KEY_F (c-'0');
- 		    else if (c == ' ')
- 			c = ESC_CHAR;
-+                    else switch (c){
-+                        case '!': c = KEY_F(11);break;
-+                        case '@': c = KEY_F(12);break;
-+                        case '#': c = KEY_F(13);break;
-+                        case '$': c = KEY_F(14);break;
-+                        case '%': c = KEY_F(15);break;
-+                        case '^': c = KEY_F(16);break;
-+                        case '&': c = KEY_F(17);break;
-+                        case '*': c = KEY_F(18);break;
-+                        case '(': c = KEY_F(19);break;
-+                        case ')': c = KEY_F(20);break;
-+                    }
- 		    pending_keys = seq_append = NULL;
- 		    this = NULL;
- 		    return correct_key_code (c);
+--- ./src/key.c.amc     2005-06-10 12:27:19.650937720 +0200
++++ ./src/key.c 2005-06-10 12:29:57.386958200 +0200
+@@ -819,6 +819,17 @@
+	                c = KEY_F (c - '0');
+		    else if (c == ' ')
+			c = ESC_CHAR;
++                   else switch (c){
++                           case '!': c = KEY_F(11);break;
++                           case '@': c = KEY_F(12);break;
++                           case '#': c = KEY_F(13);break;
++                           case '$': c = KEY_F(14);break;
++                           case '%': c = KEY_F(15);break;
++                           case '^': c = KEY_F(16);break;
++                           case '&': c = KEY_F(17);break;
++                           case '*': c = KEY_F(18);break;
++                           case '(': c = KEY_F(19);break;
++                           case ')': c = KEY_F(20);break;
+	            else
+			c = ALT(c);
+
 diff -Naur mc-2003-01-24-21.orig/src/main.c mc-2003-01-24-21.patched/src/main.c
 --- mc-2003-01-24-21.orig/src/main.c	Sat Jan 25 13:46:00 2003
 +++ mc-2003-01-24-21.patched/src/main.c	Sat Jan 25 15:40:09 2003
@@ -235,14 +221,6 @@ diff -Naur mc-2003-01-24-21.orig/src/main.c mc-2003-01-24-21.patched/src/main.c
      if (!do_cd (new_dir, cd_exact))
  	message (1, _("Warning"),
  		 _(" The Commander can't change to the directory that \n"
-@@ -543,6 +550,7 @@
- 	    fflush (stdout);
- 	    mc_raw_mode ();
- 	    getch ();
-+//            get_key_code(0);
- 	}
- 	if (console_flag) {
- 	    if (output_lines && keybar_visible) {
 @@ -867,8 +875,18 @@
      if (current_dlg == midnight_dlg && command_prompt) {
  	int prompt_len;
