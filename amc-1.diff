@@ -1,3 +1,15 @@
+diff -Naur mc-2003-01-24-21.orig/edit/editcmddef.h mc-2003-01-24-21.patched/edit/editcmddef.h
+--- mc-2003-01-24-21.orig/edit/editcmddef.h    Tue Jan 22 06:07:21 2002
++++ mc-2003-01-24-21.patched/edit/editcmddef.h Sat Jan 25 14:32:07 2003
+@@ -104,6 +104,8 @@
+ #define CK_Check_Save_And_Quit        457
+ #define CK_Maximize           458
+
++#define CK_Toggle_Syntax      480
++
+ /* macro */
+ #define CK_Begin_Record_Macro 501
+ #define CK_End_Record_Macro   502
 diff -Naur mc-2003-01-24-21.orig/edit/edit.c mc-2003-01-24-21.patched/edit/edit.c
 --- mc-2003-01-24-21.orig/edit/edit.c	Mon Dec 23 11:19:07 2002
 +++ mc-2003-01-24-21.patched/edit/edit.c	Sat Jan 25 14:28:53 2003
@@ -83,76 +95,6 @@ diff -Naur mc-2003-01-24-21.orig/src/cmd.c mc-2003-01-24-21.patched/src/cmd.c
                  continue;
          }
  	c = regexp_match (reg_exp_t, cpanel->dir.list [i].fname, match_file);
-diff -Naur mc-2003-01-24-21.orig/src/command.c mc-2003-01-24-21.patched/src/command.c
---- mc-2003-01-24-21.orig/src/command.c	Thu Nov 14 08:27:08 2002
-+++ mc-2003-01-24-21.patched/src/command.c	Sat Jan 25 15:05:02 2003
-@@ -41,6 +41,27 @@
- /* This holds the command line */
- WInput *cmdline;
- 
-+/* Wildcard matching routine by A'rpi/ESP-team */
-+static int wildcard_cmp_names(char *n,char *m){
-+next:
-+  if(m[0]=='*'){
-+    int i;
-+    m++;
-+    if(m[0]==0) return 1;
-+    while(n[0]){
-+      if(wildcard_cmp_names(n,m)) return 1;
-+      n++;
-+    }
-+    return 0;
-+  }
-+  if(n[0]==m[0] || (m[0]=='?' && n[0])){
-+    if(n[0]==0) return 1;
-+    n++;m++;
-+    goto next;
-+  }
-+  return 0;
-+}
-+
- /*
-  * Expand the argument to "cd" and change directory.  First try tilde
-  * expansion, then variable substitution.  If the CDPATH variable is set
-@@ -93,8 +114,37 @@
-         }
-     }
-     *r = 0;
--
-+
-     result = do_cd (q, cd_parse_command);
-+
-+    if(!result && strchr(q,92)){
-+      // quoted dirname
-+      char *q2=g_malloc(strlen(q)+1);
-+      char *s=q;
-+      char *d=q2;
-+      int c;
-+      do{
-+        c=*s++;
-+        if(c==92 || c=='%') c=*s++;
-+        *d++=c;
-+      } while(c);
-+      free(q);
-+      q=q2;
-+      result = do_cd (q, cd_parse_command);
-+    }
-+    
-+    if(!result && (strchr(q,'*')||strchr(q,'?'))){
-+	// wildcarded dirname
-+	int i;
-+        for (i = 0; i < cpanel->count; i++)
-+    	    if(S_ISDIR(cpanel->dir.list [i].buf.st_mode)){
-+		if(wildcard_cmp_names(cpanel->dir.list [i].fname,q)){
-+		    // found it!!!
-+		    result = do_cd (cpanel->dir.list [i].fname, cd_parse_command);
-+		    if(result) break;
-+		}
-+	    }
-+    }
- 
-     /* CDPATH handling */
-     if (*q != PATH_SEP && !result) {
 diff -Naur mc-2003-01-24-21.orig/src/file.c mc-2003-01-24-21.patched/src/file.c
 --- mc-2003-01-24-21.orig/src/file.c	Thu Dec 26 21:10:39 2002
 +++ mc-2003-01-24-21.patched/src/file.c	Sat Jan 25 16:11:43 2003
@@ -171,32 +113,38 @@ diff -Naur mc-2003-01-24-21.orig/src/file.c mc-2003-01-24-21.patched/src/file.c
  	ctx->dest_mask = NULL;
      }
 +
-+    if( (op_beep_when_finished==2) || (!only_one && op_beep_when_finished==1) )
++    if( (op_beep_when_finished==2) || (op_beep_when_finished==1) )
 +        SLtt_beep();
 +
  #ifdef WITH_BACKGROUND
      /* Let our parent know we are saying bye bye */
      if (we_are_background) {
---- ./src/key.c.amc     2005-06-10 12:27:19.650937720 +0200
-+++ ./src/key.c 2005-06-10 12:29:57.386958200 +0200
-@@ -819,6 +819,17 @@
-	                c = KEY_F (c - '0');
+--- ./src/key.c.amc     2005-06-10 14:41:41.746312928 +0200
++++ ./src/key.c 2005-06-10 14:33:45.022785920 +0200
+@@ -819,8 +819,21 @@
+			c = KEY_F (c - '0');
 		    else if (c == ' ')
 			c = ESC_CHAR;
-+                   else switch (c){
-+                           case '!': c = KEY_F(11);break;
-+                           case '@': c = KEY_F(12);break;
-+                           case '#': c = KEY_F(13);break;
-+                           case '$': c = KEY_F(14);break;
-+                           case '%': c = KEY_F(15);break;
-+                           case '^': c = KEY_F(16);break;
-+                           case '&': c = KEY_F(17);break;
-+                           case '*': c = KEY_F(18);break;
-+                           case '(': c = KEY_F(19);break;
-+                           case ')': c = KEY_F(20);break;
-	            else
-			c = ALT(c);
+-	            else
+-			c = ALT(c);
++		    else {
++			switch (c){
++				case '!': c = KEY_F(11);break;
++				case '@': c = KEY_F(12);break;
++				case '#': c = KEY_F(13);break;
++				case '$': c = KEY_F(14);break;
++				case '%': c = KEY_F(15);break;
++				case '^': c = KEY_F(16);break;
++				case '&': c = KEY_F(17);break;
++				case '*': c = KEY_F(18);break;
++				case '(': c = KEY_F(19);break;
++				case ')': c = KEY_F(20);break;
++				default: c = ALT(c);break;
++			}
++		     }
 
+		    pending_keys = seq_append = NULL;
+		    this = NULL;
 diff -Naur mc-2003-01-24-21.orig/src/main.c mc-2003-01-24-21.patched/src/main.c
 --- mc-2003-01-24-21.orig/src/main.c	Sat Jan 25 13:46:00 2003
 +++ mc-2003-01-24-21.patched/src/main.c	Sat Jan 25 15:40:09 2003
@@ -231,7 +179,7 @@ diff -Naur mc-2003-01-24-21.orig/src/main.c mc-2003-01-24-21.patched/src/main.c
 +	    prompt = (geteuid () == 0) ? "# " : "$ ";
 +	} else
 +	if(command_prompt_type==1){
-+	    prompt = cpanel->cwd;
++	    prompt = current_panel->cwd;
 +	} else
 +	if(command_prompt_type==2){
 +	    prompt = strip_ctrl_codes (subshell_prompt);
