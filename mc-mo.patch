@@ -115,7 +115,7 @@ diff -ur mc-4.6.0.orig/src/main.h mc-4.6.0/src/main.h
 -    if (!panel->is_panelized) {
 -	try_to_select (other_panel, selection (panel)->fname);
 +    if ( chdir_other_panel_old ) {
-+           if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
++           if (!S_ISDIR (panel->dir.list [panel->selected].st.st_mode))
 +                   new_dir = concat_dir_and_file (panel->cwd, "..");
 +           else
 +                   new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
