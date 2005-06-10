@@ -20,7 +20,7 @@ Summary(zh_CN):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 %define	pre	pre1
 Version:	4.6.1
-Release:	0.2
+Release:	0.4
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}-%{pre}.tar.gz
@@ -44,7 +44,8 @@ Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 # Advanced Midnight Commander patches
-Patch6:		http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
+#changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
+Patch6:		amc-1.diff
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
 Patch7:		amc-2.diff
 Patch9:		%{name}-mc.ext.patch
