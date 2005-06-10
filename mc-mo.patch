@@ -80,72 +80,61 @@ diff -ur mc-4.6.0.orig/src/main.h mc-4.6.0/src/main.h
  extern int auto_menu;
  extern int pause_after_run;
  extern int auto_save_setup;
-diff -ur mc-4.6.0.orig/src/option.c mc-4.6.0/src/option.c
---- mc-4.6.0.orig/src/option.c	Sun Dec  8 05:16:30 2002
-+++ mc-4.6.0/src/option.c	Fri Nov 21 23:55:51 2003
-@@ -77,12 +77,13 @@
-    {N_("ma&Rk moves down"),   &mark_moves_down,   TOGGLE_VARIABLE,       0, "mark-moves" },
-    {N_("show &Hidden files"), &show_dot_files,    toggle_show_hidden,    0, "show-hidden" },
-    {N_("show &Backup files"), &show_backups,      toggle_show_backup,    0, "show-backup" },
+--- ./src/option.c.amc      2005-06-10 15:44:46.500942768 +0200
++++ ./src/option.c  2005-06-10 15:50:58.240429776 +0200
+@@ -72,12 +72,13 @@
+    {N_("ma&Rk moves down"),   &mark_moves_down,   TOGGLE_VARIABLE,       0 },
+    {N_("show &Hidden files"), &show_dot_files,    toggle_show_hidden,    0 },
+    {N_("show &Backup files"), &show_backups,      toggle_show_backup,    0 },
 +   {N_("chdir &Other panel"), &chdir_other_panel_old,TOGGLE_VARIABLE,    0, "chdir-old" },
     { 0, 0, 0, 0 }
  };
- 
+
  /* Make sure this corresponds to the check_options structure */
  #define OTHER_OPTIONS 12
 -#define PANEL_OPTIONS 6
 +#define PANEL_OPTIONS 7
- 
+
  static WRadio *pause_radio;
- 
-@@ -229,7 +230,7 @@
-     /* Add checkboxes for "panel options" */
-     for (i = 0; i < PANEL_OPTIONS; i++) {
- 	check_options[i + OTHER_OPTIONS].widget =
--	    check_new (PY + (6 - i), PX + 2, XTRACT (i + OTHER_OPTIONS));
-+	    check_new (PY + (PANEL_OPTIONS - i), PX + 2, XTRACT (i + OTHER_OPTIONS));
- 	add_widget (conf_dlg, check_options[i + OTHER_OPTIONS].widget);
-     }
- }
-diff -ur mc-4.6.0.orig/src/screen.c mc-4.6.0/src/screen.c
---- mc-4.6.0.orig/src/screen.c	Fri Nov 21 22:58:37 2003
-+++ mc-4.6.0/src/screen.c	Fri Nov 21 23:55:51 2003
-@@ -1996,15 +1996,32 @@
+
+--- ./src/screen.c.amc      2005-06-10 15:44:53.990804136 +0200
++++ ./src/screen.c  2005-06-10 16:14:09.406940320 +0200
+@@ -1993,15 +1993,32 @@
  static void
  chdir_other_panel (WPanel *panel)
  {
 +    char *new_dir;
 +
      if (get_other_type () != view_listing) {
- 	set_display_type (get_other_index (), view_listing);
+	set_display_type (get_other_index (), view_listing);
      }
- 
-     do_panel_cd (opanel, cpanel->cwd, cd_exact);
- 
+
+     do_panel_cd (other_panel, current_panel->cwd, cd_exact);
+
 -    /* try to select current filename on the other panel */
 -    if (!panel->is_panelized) {
 -	try_to_select (other_panel, selection (panel)->fname);
 +    if ( chdir_other_panel_old ) {
-+	if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
-+	    new_dir = concat_dir_and_file (panel->cwd, "..");
-+	else
-+	    new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
++           if (!S_ISDIR (panel->dir.list [panel->selected].buf.st_mode))
++                   new_dir = concat_dir_and_file (panel->cwd, "..");
++           else
++                   new_dir = concat_dir_and_file (panel->cwd, panel->dir.list [panel->selected].fname);
 +
-+	change_panel ();
-+	do_cd (new_dir, cd_exact);
-+	change_panel ();
++           change_panel ();
++           do_cd (new_dir, cd_exact);
++           change_panel ();
 +
-+	move_down (panel);
++           move_down (panel);
 +
-+	g_free (new_dir);
++           g_free (new_dir);
 +    } else {
-+	/* try to select current filename on the other panel */
-+	if (!panel->is_panelized) {
-+	    try_to_select (other_panel, selection (panel)->fname);
-+	}
++           /* try to select current filename on the other panel */
++           if (!panel->is_panelized) {
++                   try_to_select (other_panel, selection (panel)->fname);
++           }
      }
  }
- 
+
 diff -ur mc-4.6.0.orig/src/setup.c mc-4.6.0/src/setup.c
 --- mc-4.6.0.orig/src/setup.c	Fri Nov 21 22:58:37 2003
 +++ mc-4.6.0/src/setup.c	Sat Nov 22 00:04:46 2003
