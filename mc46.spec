@@ -48,20 +48,19 @@ Patch5:		%{name}-pl.patch
 Patch6:		amc-1.diff
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
 Patch7:		amc-2.diff
-Patch9:		%{name}-mc.ext.patch
-Patch12:	%{name}-mo.patch
-Patch13:	%{name}-posix.patch
-Patch15:	%{name}-tempfile.patch
-Patch16:	%{name}-localenames.patch
-Patch17:	%{name}-noperl-vfs.patch
+Patch8:		%{name}-mc.ext.patch
+Patch9:		%{name}-mo.patch
+Patch10:	%{name}-tempfile.patch
+Patch11:	%{name}-localenames.patch
+Patch12:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
-Patch18:	%{name}-pld-developerfriendly.patch
+Patch13:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
-Patch19:	%{name}-4.6.0-utf8.patch
-Patch20:	%{name}-4.6.0-utf8-input.patch
-Patch21:	%{name}-4.6.0-utf8-fix.patch
-Patch22:	%{name}-4.6.0-utf8-hints.patch
-Patch23:	%{name}-nolibs.patch
+Patch14:	%{name}-4.6.0-utf8.patch
+Patch15:	%{name}-4.6.0-utf8-input.patch
+Patch16:	%{name}-4.6.0-utf8-fix.patch
+Patch17:	%{name}-4.6.0-utf8-hints.patch
+Patch18:	%{name}-nolibs.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -234,24 +233,23 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+#%patch4 -p1	#---fixme
+#%patch5 -p1	#---fixme
+#%patch6 -p1	#---fixme
+#%patch7 -p1	#---fixme
+#%patch8 -p1	#---fixme
 %patch9 -p1
-%patch12 -p1
-%patch13 -p1
+#%patch10 -p0	#---fixme
+%patch11 -p1
+%{!?with_perl_vfs:%patch12 -p1}
+#%patch13 -p1	#---fixme
+%if %{with utf8}
+%patch14 -p1
 %patch15 -p0
 %patch16 -p1
-%{!?with_perl_vfs:%patch17 -p1}
-%patch18 -p1
-%if %{with utf8}
-%patch19 -p1
-%patch20 -p0
-%patch21 -p1
-%patch22 -p1
+%patch17 -p1
 %endif
-%patch23 -p1
+%patch18 -p1
 
 mv -f po/{no,nb}.po
 
