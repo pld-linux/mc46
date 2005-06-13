@@ -575,63 +575,6 @@ diff -Naur mc-2003-01-24-21.patched/syntax/lsm.syntax mc-2003-01-24-21.patch2/sy
  
 +###############################################################################
 \ No newline at end of file
-diff -Naur mc-2003-01-24-21.patched/syntax/makefile.syntax mc-2003-01-24-21.patch2/syntax/makefile.syntax
---- mc-2003-01-24-21.patched/syntax/makefile.syntax	Sun Sep 29 22:32:16 2002
-+++ mc-2003-01-24-21.patch2/syntax/makefile.syntax	Sat Jan 25 20:50:40 2003
-@@ -1,3 +1,4 @@
-+# modified by A'rpi/ESP-team  <arpi@esp-team.scene.hu>
- 
- context default
-     keyword $(*) yellow
-@@ -10,36 +11,36 @@
-     keyword whole linestart ifeq magenta
-     keyword whole linestart ifneq magenta
-     keyword whole linestart else magenta
--    keyword linestart \t lightgray red
-+#    keyword linestart \t lightgray red
-     keyword whole .PHONY white
-     keyword whole .NOEXPORT white
-     keyword = white
-     keyword : yellow
-     keyword \\\n yellow
- # this handles strange cases like @something@@somethingelse@ properly
--    keyword whole @+@ brightmagenta black
--    keyword @+@ brightmagenta black
-+    keyword whole @+@ brightmagenta
-+    keyword @+@ brightmagenta
- 
- context linestart # \n brown
--    spellcheck
--    keyword whole @+@ brightmagenta black
--    keyword @+@ brightmagenta black
-+    keyword whole @+@ brightmagenta
-+    keyword @+@ brightmagenta
- 
- context exclusive = \n brightcyan
-     keyword \\\n yellow
-     keyword $(*) yellow
-     keyword ${*} brightgreen
--    keyword linestart \t lightgray red
--    keyword whole @+@ brightmagenta black
--    keyword @+@ brightmagenta black
-+#    keyword linestart \t lightgray red
-+    keyword whole @+@ brightmagenta
-+    keyword @+@ brightmagenta
- 
- context exclusive linestart \t \n
-     keyword \\\n yellow
-     keyword $(*) yellow
-     keyword ${*} brightgreen
--    keyword linestart \t lightgray red
--    keyword whole @+@ brightmagenta black
--    keyword @+@ brightmagenta black
-+#    keyword linestart \t lightgray red
-+    keyword whole @+@ brightmagenta
-+    keyword @+@ brightmagenta
- 
-+###############################################################################
- 
- 
 diff -Naur mc-2003-01-24-21.patched/syntax/mhtml.syntax mc-2003-01-24-21.patch2/syntax/mhtml.syntax
 --- mc-2003-01-24-21.patched/syntax/mhtml.syntax	Thu Jan  1 01:00:00 1970
 +++ mc-2003-01-24-21.patch2/syntax/mhtml.syntax	Fri Aug  6 05:07:50 1999
@@ -730,3 +673,63 @@ diff -Naur mc-2003-01-24-21.patched/vfs/extfs/uesp mc-2003-01-24-21.patch2/vfs/e
 +    exit 0;;
 +esac
 +exit 1
+--- ./syntax/makefile.syntax.amc-2	2005-06-13 15:03:46.007097552 +0200
++++ ./syntax/makefile.syntax	2005-06-13 15:10:51.022485392 +0200
+@@ -1,3 +1,5 @@
++# modified by A'rpi/ESP-team  <arpi@esp-team.scene.hu>
++
+ context default
+     keyword $$ brightcyan
+     keyword $(*) yellow
+@@ -12,21 +14,20 @@
+     keyword whole linestart ifeq magenta
+     keyword whole linestart ifneq magenta
+     keyword whole linestart else magenta
+-    keyword linestart \t lightgray red
++#    keyword linestart \t lightgray red
+     keyword whole .PHONY white
+     keyword whole .NOEXPORT white
+     keyword = white
+     keyword : yellow
+     keyword \\\n yellow
+ # this handles strange cases like @something@@somethingelse@ properly
+-    keyword whole @+@ brightmagenta black
+-    keyword @+@ brightmagenta black
++    keyword whole @+@ brightmagenta
++    keyword @+@ brightmagenta
+ 
+ # comment
+ context linestart # \n brown
+-    spellcheck
+-    keyword whole @+@ brightmagenta black
+-    keyword @+@ brightmagenta black
++    keyword whole @+@ brightmagenta
++    keyword @+@ brightmagenta
+ 
+ # right part of an assignment
+ context exclusive = \n brightcyan
+@@ -34,9 +35,9 @@
+     keyword $$ brightcyan
+     keyword $(*) yellow
+     keyword ${*} brightgreen
+-    keyword linestart \t lightgray red
+-    keyword whole @+@ brightmagenta black
+-    keyword @+@ brightmagenta black
++#    keyword linestart \t lightgray red
++    keyword whole @+@ brightmagenta
++    keyword @+@ brightmagenta
+ 
+ # shell code
+ context exclusive linestart \t \n
+@@ -44,6 +45,8 @@
+     keyword $$ brightcyan
+     keyword $(*) yellow
+     keyword ${*} brightgreen
+-    keyword linestart \t lightgray red
+-    keyword whole @+@ brightmagenta black
+-    keyword @+@ brightmagenta black
++#    keyword linestart \t lightgray red
++    keyword whole @+@ brightmagenta
++    keyword @+@ brightmagenta
++
++###############################################################################

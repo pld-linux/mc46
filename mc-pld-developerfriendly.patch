@@ -34,13 +34,13 @@ diff -urN mc-4.6.0-orig/syntax/Makefile.am mc-4.6.0/syntax/Makefile.am
  	dos.syntax		\
  	fortran.syntax		\
 @@ -24,6 +25,7 @@
+	pascal.syntax		\
  	perl.syntax		\
  	php.syntax		\
- 	po.syntax		\
 +	pld-update-todo.syntax	\
+ 	po.syntax		\
+	povray.syntax		\
  	python.syntax		\
- 	sh.syntax		\
- 	smalltalk.syntax	\
 diff -urN mc-4.6.0-orig/syntax/Makefile.in mc-4.6.0/syntax/Makefile.in
 --- mc-4.6.0-orig/syntax/Makefile.in	2003-02-05 19:09:09.000000000 +0100
 +++ mc-4.6.0/syntax/Makefile.in	2004-02-11 04:18:08.730709808 +0100

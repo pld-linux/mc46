@@ -36,65 +36,6 @@ diff -Naur mc-2003-01-24-21.orig/edit/edit.c mc-2003-01-24-21.patched/edit/edit.
      XCTRL ('o'), CK_Shell,
      XCTRL ('u'), CK_Undo,
 
-diff -Naur mc-2003-01-24-21.orig/src/cmd.c mc-2003-01-24-21.patched/src/cmd.c
---- mc-2003-01-24-21.orig/src/cmd.c	Sat Jan 25 13:46:00 2003
-+++ mc-2003-01-24-21.patched/src/cmd.c	Sat Jan 25 14:49:05 2003
-@@ -515,6 +515,7 @@
-     int i;
-     int c;
-     int dirflag = 0;
-+    int fileflag = 1;
- 
-     reg_exp = input_dialog (_(" Select "), "", easy_patterns ? "*" : ".");
-     if (!reg_exp)
-@@ -527,8 +528,9 @@
-         dirflag = 1;
-         reg_exp_t++;
-     }
--    if (reg_exp_t [strlen(reg_exp_t) - 1] == PATH_SEP){
-+    if ((*reg_exp_t) && reg_exp_t [strlen(reg_exp_t) - 1] == PATH_SEP){
-         dirflag = 1;
-+	fileflag = 0;
-         reg_exp_t [strlen(reg_exp_t) - 1] = 0;
-     }
- 
-@@ -539,7 +541,7 @@
- 	    if (!dirflag)
-                 continue;
-         } else {
--            if (dirflag)
-+            if (!fileflag)
-                 continue;
- 	}
- 	c = regexp_match (reg_exp_t, cpanel->dir.list [i].fname, match_file);
-@@ -562,6 +564,7 @@
-     int i;
-     int c;
-     int dirflag = 0;
-+    int fileflag = 1;
- 
-     reg_exp = input_dialog (_(" Unselect "),"", easy_patterns ? "*" : ".");
-     if (!reg_exp)
-@@ -574,8 +577,9 @@
-         dirflag = 1;
- 	reg_exp_t ++;
-     }
--    if (reg_exp_t [strlen(reg_exp_t) - 1] == PATH_SEP){
-+    if ((*reg_exp_t) && reg_exp_t [strlen(reg_exp_t) - 1] == PATH_SEP){
-         dirflag = 1;
-+	fileflag = 0;
-         reg_exp_t [strlen(reg_exp_t) - 1] = 0;
-     }
-     for (i = 0; i < cpanel->count; i++){
-@@ -585,7 +589,7 @@
- 	    if (!dirflag)
- 	        continue;
-         } else {
--            if (dirflag)
-+            if (!fileflag)
-                 continue;
-         }
- 	c = regexp_match (reg_exp_t, cpanel->dir.list [i].fname, match_file);
 diff -Naur mc-2003-01-24-21.orig/src/file.c mc-2003-01-24-21.patched/src/file.c
 --- mc-2003-01-24-21.orig/src/file.c	Thu Dec 26 21:10:39 2002
 +++ mc-2003-01-24-21.patched/src/file.c	Sat Jan 25 16:11:43 2003
@@ -207,18 +148,6 @@ diff -Naur mc-2003-01-24-21.orig/src/main.c mc-2003-01-24-21.patched/src/main.c
  
      /* Suspend */
      {XCTRL ('z'), suspend_cmd},
-diff -Naur mc-2003-01-24-21.orig/src/screen.c mc-2003-01-24-21.patched/src/screen.c
---- mc-2003-01-24-21.orig/src/screen.c	Tue Jan 21 03:25:51 2003
-+++ mc-2003-01-24-21.patched/src/screen.c	Sat Jan 25 15:45:50 2003
-@@ -2100,7 +2100,7 @@
-     { ALT('u'),   directory_history_next },
-     { ALT('+'),	  select_cmd },
-     { KEY_KP_ADD, select_cmd },
--    { ALT('\\'),  unselect_cmd },
-+//    { ALT('\\'),  unselect_cmd },
-     { ALT('-'),	  unselect_cmd },
-     { KEY_KP_SUBTRACT, unselect_cmd },
-     { ALT('*'),	  reverse_selection_cmd },
 diff -Naur mc-2003-01-24-21.orig/src/setup.c mc-2003-01-24-21.patched/src/setup.c
 --- mc-2003-01-24-21.orig/src/setup.c	Sat Jan 25 13:46:00 2003
 +++ mc-2003-01-24-21.patched/src/setup.c	Sat Jan 25 16:13:25 2003
@@ -259,59 +188,95 @@ diff -Naur mc-2003-01-24-21.orig/src/setup.c mc-2003-01-24-21.patched/src/setup.
      { "panel_scroll_pages", &panel_scroll_pages },
      { "xtree_mode", &xtree_mode },
      { "num_history_items_recorded", &num_history_items_recorded },
-diff -Naur mc-2003-01-24-21.orig/src/subshell.c mc-2003-01-24-21.patched/src/subshell.c
---- mc-2003-01-24-21.orig/src/subshell.c	Sat Jan 25 13:46:00 2003
-+++ mc-2003-01-24-21.patched/src/subshell.c	Sat Jan 25 15:58:50 2003
-@@ -100,6 +100,9 @@
- TRUE;
- #endif
- 
-+/* Don't allow ctrl+o (panels ON) if shell already dunning a command: */
-+int subshell_blocks_ctrlo=1;
-+
- /* File descriptor of the pseudoterminal used by the subshell */
- int subshell_pty = 0;
- 
-@@ -937,7 +940,7 @@
-     fd_set read_set;	/* For `select' */
+--- ./src/subshell.c.org	2005-06-13 14:44:23.300855768 +0200
++++ ./src/subshell.c	2005-06-13 14:59:04.423904704 +0200
+@@ -897,7 +897,7 @@
+     fd_set read_set;		/* For `select' */
      int maxfdp;
-     int bytes;		/* For the return value from `read' */
--    int i;		/* Loop counter */
-+    int i,j;		/* Loop counter */
-     
-     struct timeval wtime; /* Maximum time we wait for the subshell */
-     struct timeval *wptr;
-@@ -1039,7 +1042,19 @@
- 		    exit (1);
- 		}
+     int bytes;			/* For the return value from `read' */
+-    int i;			/* Loop counter */
++    int i,j;			/* Loop counter */
  
--		for (i=0; i<bytes; ++i)
-+		if(subshell_blocks_ctrlo){
-+		    if (pty_buffer[0] == subshell_switch_key &&
-+                	subshell_ready==TRUE){
-+		    	    subshell_state = INACTIVE;
-+		    	    return TRUE;
-+                	}
+     struct timeval wtime;	/* Maximum time we wait for the subshell */
+     struct timeval *wptr;
+@@ -995,23 +995,34 @@
+ 		exit (1);
+ 	    }
+ 
+-	    for (i = 0; i < bytes; ++i)
+-		if (pty_buffer[i] == subshell_switch_key) {
+-		    write (subshell_pty, pty_buffer, i);
+-		    if (subshell_ready)
+-			subshell_state = INACTIVE;
+-		    return TRUE;
+-		}
+-
+-	    write (subshell_pty, pty_buffer, bytes);
+-	    subshell_ready = FALSE;
+-	} else {
+-	    return FALSE;
++	    if(subshell_blocks_ctrlo){
++		    if (pty_buffer[0] == subshell_switch_key && subshell_ready==TRUE){
++			    subshell_state = INACTIVE;
++			    return TRUE;
++		    }
 +		    // remove ctrl+o codes from buffer:
 +		    for (i=0,j=0; i<bytes; ++i)
-+			if (pty_buffer[i] != subshell_switch_key)
-+                    	    pty_buffer[j++]=pty_buffer[i];
++			    if (pty_buffer[i] != subshell_switch_key)
++				    pty_buffer[j++]=pty_buffer[i];
 +		    bytes=j;
-+                } else {
-+		  for (i=0; i<bytes; ++i)
- 		    if (pty_buffer[i] == subshell_switch_key)
- 		    {
- 			write (subshell_pty, pty_buffer, i);
-@@ -1047,9 +1062,10 @@
- 			    subshell_state = INACTIVE;
- 			return TRUE;
- 		    }
++	    } else {
++		    for (i = 0; i < bytes; ++i)
++			    if (pty_buffer[i] == subshell_switch_key) {
++				    write (subshell_pty, pty_buffer, i);
++				    if (subshell_ready)
++					    subshell_state = INACTIVE;
++				    return TRUE;
++			    }
++		    
++		    write (subshell_pty, pty_buffer, bytes);
++		    subshell_ready = FALSE;
++	    } else {
++		    return FALSE;
++	    }
+ 	}
+     }
+ }
+ 
 -
-+                }
- 		write (subshell_pty, pty_buffer, bytes);
--		subshell_ready = FALSE;
-+	        subshell_ready = FALSE;
-+
- 	    } else {
- 		return FALSE;
- 	    }
+ /* Wait until the subshell dies or stops.  If it stops, make it resume.  */
+ /* Possibly modifies the globals `subshell_alive' and `subshell_stopped' */
+ static void synchronize (void)
+--- ./src/cmd.c.org	2005-06-13 14:34:50.986860720 +0200
++++ ./src/cmd.c	2005-06-13 14:48:59.394883096 +0200
+@@ -495,8 +495,9 @@
+ 	dirflag = 1;
+ 	reg_exp_t++;
+     }
+-    if (reg_exp_t[strlen (reg_exp_t) - 1] == PATH_SEP) {
++    if ((*reg_exp_t) && reg_exp_t [strlen(reg_exp_t) - 1] == PATH_SEP){
+ 	dirflag = 1;
++	fileflag = 0;
+ 	reg_exp_t[strlen (reg_exp_t) - 1] = 0;
+     }
+ 
+@@ -507,7 +508,7 @@
+ 	    if (!dirflag)
+ 		continue;
+ 	} else {
+-	    if (dirflag)
++	    if (!fileflag)
+ 		continue;
+ 	}
+ 	c = regexp_match (reg_exp_t, current_panel->dir.list[i].fname,
+--- ./src/screen.c.org	2005-06-13 14:44:15.237081648 +0200
++++ ./src/screen.c	2005-06-13 14:51:01.965249568 +0200
+@@ -2113,7 +2130,7 @@
+     { ALT('u'),   directory_history_next },
+     { ALT('+'),	  cmd_select },
+     { KEY_KP_ADD, cmd_select },
+-    { ALT('\\'),  cmd_unselect },
++//    { ALT('\\'),  cmd_unselect },
+     { ALT('-'),	  cmd_unselect },
+     { KEY_KP_SUBTRACT, cmd_unselect },
+     { ALT('*'),	  cmd_reverse_selection },

@@ -73,175 +73,6 @@ diff -urN mc-4.6.1-pre1.org/doc/mcview.1.in mc-4.6.1-pre1/doc/mcview.1.in
  .I $HOME/.mc/ini
  .IP
  User's own setup.  If this file is present, the setup is loaded from
-diff -urN mc-4.6.1-pre1.org/edit/edit.c mc-4.6.1-pre1/edit/edit.c
---- mc-4.6.1-pre1.org/edit/edit.c	2004-06-06 23:19:35.761460880 +0200
-+++ mc-4.6.1-pre1/edit/edit.c	2004-06-06 23:20:01.398563448 +0200
-@@ -2682,7 +2682,7 @@
-     int nomark;
-     struct stat status;
-     long start_mark, end_mark;
--    char *block_file = catstrs (home_dir, BLOCK_FILE, 0);
-+    char *block_file = catstrs (etc_dir, BLOCK_FILE, 0);
-     int rc = 0;
- 
-     nomark = eval_marks (edit, &start_mark, &end_mark);
-diff -urN mc-4.6.1-pre1.org/edit/editcmd.c mc-4.6.1-pre1/edit/editcmd.c
---- mc-4.6.1-pre1.org/edit/editcmd.c	2004-06-06 23:19:35.730465592 +0200
-+++ mc-4.6.1-pre1/edit/editcmd.c	2004-06-06 23:20:01.417560560 +0200
-@@ -584,7 +584,7 @@
- {
-     char *filename;
-     int file;
--    filename = catstrs (home_dir, MACRO_FILE, 0);
-+    filename = catstrs (etc_dir, MACRO_FILE, 0);
-     if ((file = open (filename, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
- 	return 0;
-     close (file);
-@@ -620,7 +620,7 @@
-     if (saved_macros_loaded)
- 	if ((j = macro_exists (k)) < 0)
- 	    return 0;
--    g = fopen (catstrs (home_dir, TEMP_FILE, 0), "w");
-+    g = fopen (catstrs (etc_dir, TEMP_FILE, 0), "w");
-     if (!g) {
- /* This heads the delete macro error dialog box */
- 	edit_error_dialog (_(" Delete macro "),
-@@ -654,7 +654,7 @@
-     }
-     fclose (f);
-     fclose (g);
--    if (rename (catstrs (home_dir, TEMP_FILE, 0), catstrs (home_dir, MACRO_FILE, 0)) == -1) {
-+    if (rename (catstrs (etc_dir, TEMP_FILE, 0), catstrs (etc_dir, MACRO_FILE, 0)) == -1) {
- /* This heads the delete macro error dialog box */
- 	edit_error_dialog (_(" Delete macro "),
- 	   get_sys_error (_(" Cannot overwrite macro file ")));
-@@ -2185,7 +2185,7 @@
- /* copies a block to clipboard file */
- static int edit_save_block_to_clip_file (WEdit * edit, long start, long finish)
- {
--    return edit_save_block (edit, catstrs (home_dir, CLIP_FILE, 0), start, finish);
-+    return edit_save_block (edit, catstrs (etc_dir, CLIP_FILE, 0), start, finish);
- }
- 
- 
-@@ -2222,7 +2222,7 @@
- 
- void edit_paste_from_X_buf_cmd (WEdit * edit)
- {
--    edit_insert_file (edit, catstrs (home_dir, CLIP_FILE, 0));
-+    edit_insert_file (edit, catstrs (etc_dir, CLIP_FILE, 0));
- }
- 
- 
-@@ -2274,7 +2274,7 @@
-     if (eval_marks (edit, &start_mark, &end_mark))
- 	return 1;
-     exp =
--	edit_get_save_file (catstrs (home_dir, CLIP_FILE, 0),
-+	edit_get_save_file (catstrs (etc_dir, CLIP_FILE, 0),
- 			    _(" Save Block "));
-     edit_push_action (edit, KEY_PRESS + edit->start_display);
-     if (exp) {
-@@ -2303,7 +2303,7 @@
- int
- edit_insert_file_cmd (WEdit *edit)
- {
--    char *exp = edit_get_load_file (catstrs (home_dir, CLIP_FILE, 0),
-+    char *exp = edit_get_load_file (catstrs (etc_dir, CLIP_FILE, 0),
- 				    _(" Insert File "));
-     edit_push_action (edit, KEY_PRESS + edit->start_display);
-     if (exp) {
-@@ -2339,7 +2339,7 @@
- 	edit_error_dialog (_(" Sort block "), _(" You must first highlight a block of text. "));
- 	return 0;
-     }
--    edit_save_block (edit, catstrs (home_dir, BLOCK_FILE, 0), start_mark, end_mark);
-+    edit_save_block (edit, catstrs (etc_dir, BLOCK_FILE, 0), start_mark, end_mark);
- 
-     exp = old ? old : "";
- 
-@@ -2352,7 +2352,7 @@
- 	g_free (old);
-     old = exp;
- 
--    e = system (catstrs (" sort ", exp, " ", home_dir, BLOCK_FILE, " > ", home_dir, TEMP_FILE, 0));
-+    e = system (catstrs (" sort ", exp, " ", etc_dir, BLOCK_FILE, " > ", etc_dir, TEMP_FILE, 0));
-     if (e) {
- 	if (e == -1 || e == 127) {
- 	    edit_error_dialog (_(" Sort "), 
-@@ -2370,7 +2370,7 @@
- 
-     if (edit_block_delete_cmd (edit))
- 	return 1;
--    edit_insert_file (edit, catstrs (home_dir, TEMP_FILE, 0));
-+    edit_insert_file (edit, catstrs (etc_dir, TEMP_FILE, 0));
-     return 0;
- }
- 
-@@ -2423,8 +2423,8 @@
-     char *quoted_name = NULL;
- 
-     o = catstrs (mc_home, shell_cmd, 0);	/* original source script */
--    h = catstrs (home_dir, EDIT_DIR, shell_cmd, 0);	/* home script */
--    b = catstrs (home_dir, BLOCK_FILE, 0);	/* block file */
-+    h = catstrs (etc_dir, EDIT_DIR, shell_cmd, 0);	/* home script */
-+    b = catstrs (etc_dir, BLOCK_FILE, 0);	/* block file */
- 
-     if (!(script_home = fopen (h, "r"))) {
- 	if (!(script_home = fopen (h, "w"))) {
-@@ -2476,8 +2476,8 @@
- 	 *   $3 - file where error messages should be put
- 	 *        (for compatibility with old scripts).
- 	 */
--	system (catstrs (" ", home_dir, EDIT_DIR, shell_cmd, " ", quoted_name,
--			 " ", home_dir, BLOCK_FILE " /dev/null", NULL));
-+	system (catstrs (" ", etc_dir, EDIT_DIR, shell_cmd, " ", quoted_name,
-+			 " ", etc_dir, BLOCK_FILE " /dev/null", NULL));
- 
-     } else {
- 	/*
-@@ -2485,7 +2485,7 @@
- 	 * Arguments:
- 	 *   $1 - name of the edited file.
- 	 */
--	system (catstrs (" ", home_dir, EDIT_DIR, shell_cmd, " ",
-+	system (catstrs (" ", etc_dir, EDIT_DIR, shell_cmd, " ",
- 			 quoted_name, NULL));
-     }
-     g_free (quoted_name);
-diff -urN mc-4.6.1-pre1.org/edit/editwidget.c mc-4.6.1-pre1/edit/editwidget.c
---- mc-4.6.1-pre1.org/edit/editwidget.c	2004-06-06 23:19:35.769459664 +0200
-+++ mc-4.6.1-pre1/edit/editwidget.c	2004-06-06 23:20:01.421559952 +0200
-@@ -176,7 +176,7 @@
- 		sizeof (int));
-     }
-     if (!made_directory) {
--	mkdir (catstrs (home_dir, EDIT_DIR, 0), 0700);
-+	mkdir (catstrs (etc_dir, EDIT_DIR, 0), 0700);
- 	made_directory = 1;
-     }
- 
-diff -urN mc-4.6.1-pre1.org/edit/syntax.c mc-4.6.1-pre1/edit/syntax.c
---- mc-4.6.1-pre1.org/edit/syntax.c	2004-06-06 23:19:35.731465440 +0200
-+++ mc-4.6.1-pre1/edit/syntax.c	2004-06-06 23:20:01.430558584 +0200
-@@ -630,7 +630,7 @@
- 	return fopen (filename, "r");
- 
-     g_free (error_file_name);
--    error_file_name = g_strconcat (home_dir, EDIT_DIR PATH_SEP_STR,
-+    error_file_name = g_strconcat (etc_dir, EDIT_DIR PATH_SEP_STR,
- 				   filename, NULL);
-     f = fopen (error_file_name, "r");
-     if (f)
-@@ -1092,7 +1092,7 @@
- 	if (!*edit->filename && !type)
- 	    return;
-     }
--    f = catstrs (home_dir, SYNTAX_FILE, 0);
-+    f = catstrs (etc_dir, SYNTAX_FILE, 0);
-     r = edit_read_syntax_file (edit, names, f, edit ? edit->filename : 0,
- 			       get_first_editor_line (edit), type);
-     if (r == -1) {
 diff -urN mc-4.6.1-pre1.org/man/pl/man1/mc.1 mc-4.6.1-pre1/man/pl/man1/mc.1
 --- mc-4.6.1-pre1.org/man/pl/man1/mc.1	2004-06-06 23:19:36.088411176 +0200
 +++ mc-4.6.1-pre1/man/pl/man1/mc.1	2004-06-06 23:20:01.437557520 +0200
@@ -391,17 +222,6 @@ diff -urN mc-4.6.1-pre1.org/src/ext.c mc-4.6.1-pre1/src/ext.c
  	if (!exist_file (extension_file)) {
  	    g_free (extension_file);
  	  check_stock_mc_ext:
-diff -urN mc-4.6.1-pre1.org/src/global.h mc-4.6.1-pre1/src/global.h
---- mc-4.6.1-pre1.org/src/global.h	2004-06-06 23:19:35.634480184 +0200
-+++ mc-4.6.1-pre1/src/global.h	2004-06-06 23:20:01.461553872 +0200
-@@ -157,6 +157,7 @@
- #include "vfsdummy.h"
- #endif
- 
-+extern char *etc_dir;
- extern char *home_dir;
- 
- #ifdef min
 diff -urN mc-4.6.1-pre1.org/src/hotlist.c mc-4.6.1-pre1/src/hotlist.c
 --- mc-4.6.1-pre1.org/src/hotlist.c	2004-06-06 23:19:35.661476080 +0200
 +++ mc-4.6.1-pre1/src/hotlist.c	2004-06-06 23:20:01.470552504 +0200
@@ -427,15 +247,6 @@ diff -urN mc-4.6.1-pre1.org/src/main.c mc-4.6.1-pre1/src/main.c
  /* The home directory */
  char *home_dir;
  
-@@ -2090,7 +2093,7 @@
- do_mc_filename_rename (char *mc_dir, char *o_name, char *n_name)
- {
-     char *full_o_name = concat_dir_and_file (home_dir, o_name);
--    char *full_n_name = g_strconcat (home_dir, MC_BASE, n_name, NULL);
-+    char *full_n_name = g_strconcat (etc_dir, MC_BASE, n_name, NULL);
-     int move;
- 
-     move = 0 == rename (full_o_name, full_n_name);
 @@ -2104,7 +2107,7 @@
  {
      struct stat s;
@@ -547,15 +358,6 @@ diff -urN mc-4.6.1-pre1.org/src/treestore.c mc-4.6.1-pre1/src/treestore.c
 diff -urN mc-4.6.1-pre1.org/src/user.c mc-4.6.1-pre1/src/user.c
 --- mc-4.6.1-pre1.org/src/user.c	2004-06-06 23:19:35.688471976 +0200
 +++ mc-4.6.1-pre1/src/user.c	2004-06-06 23:20:01.500547944 +0200
-@@ -218,7 +218,7 @@
-     case 'k':			/* block file name */
-     case 'b':			/* block file name / strip extension */  {
- 	    if (edit_widget) {
--		char *file = g_strconcat (home_dir, BLOCK_FILE, NULL);
-+		char *file = g_strconcat (etc_dir, BLOCK_FILE, NULL);
- 		fname = (*quote_func) (file, 0);
- 		g_free (file);
- 		return fname;
 @@ -699,7 +699,7 @@
      if (!exist_file (menu) || !menu_file_own (menu)){
  	g_free (menu);
@@ -621,3 +423,218 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      netrcp = netrc = load_file (netrcname);
      if (netrc == NULL) {
  	g_free (netrcname);
+--- ./src/main.c.org	2005-06-13 14:15:51.545082200 +0200
++++ ./src/main.c	2005-06-13 14:18:11.569795208 +0200
+@@ -2111,7 +2111,7 @@
+ do_mc_filename_rename (const char *mc_dir, const char *o_name, const char *n_name)
+ {
+     char *full_o_name = concat_dir_and_file (home_dir, o_name);
+-    char *full_n_name = g_strconcat (home_dir, MC_BASE, n_name, (char *) NULL);
++    char *full_n_name = g_strconcat (etc_dir, MC_BASE, n_name, (char *) NULL);
+     int move;
+ 
+     move = 0 == rename (full_o_name, full_n_name);
+--- ./src/global.h.org	2005-06-13 14:14:31.432261200 +0200
++++ ./src/global.h	2005-06-13 14:15:29.690404616 +0200
+@@ -157,6 +157,7 @@
+ #include "vfsdummy.h"
+ #endif
+ 
++extern char *etc_dir;
+ extern const char *home_dir;
+ 
+ #ifdef min
+--- ./src/user.c.org	2005-06-13 14:18:27.989299064 +0200
++++ ./src/user.c	2005-06-13 14:19:10.824787080 +0200
+@@ -216,7 +216,7 @@
+     case 'k':			/* block file name */
+     case 'b':			/* block file name / strip extension */  {
+ 	    if (edit_widget) {
+-		char *file = g_strconcat (home_dir, BLOCK_FILE, (char *) NULL);
++		char *file = g_strconcat (etc_dir, BLOCK_FILE, (char *) NULL);
+ 		fname = (*quote_func) (file, 0);
+ 		g_free (file);
+ 		return fname;
+--- ./edit/editwidget.c.org	2005-06-13 14:12:20.457172440 +0200
++++ ./edit/editwidget.c	2005-06-13 14:12:38.053497392 +0200
+@@ -176,7 +176,7 @@
+ 		sizeof (int));
+     }
+     if (!made_directory) {
+-	mkdir (catstrs (home_dir, EDIT_DIR, (char *) NULL), 0700);
++	mkdir (catstrs (etc_dir, EDIT_DIR, (char *) NULL), 0700);
+ 	made_directory = 1;
+     }
+ 
+--- ./edit/editcmd.c.org	2005-06-13 14:10:53.448399784 +0200
++++ ./edit/editcmd.c	2005-06-13 14:12:04.249636360 +0200
+@@ -585,7 +585,7 @@
+ {
+     char *filename;
+     int file;
+-    filename = catstrs (home_dir, MACRO_FILE, (char *) NULL);
++    filename = catstrs (etc_dir, MACRO_FILE, (char *) NULL);
+     if ((file = open (filename, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
+ 	return 0;
+     close (file);
+@@ -621,7 +621,7 @@
+     if (saved_macros_loaded)
+ 	if ((j = macro_exists (k)) < 0)
+ 	    return 0;
+-    g = fopen (catstrs (home_dir, TEMP_FILE, (char *) NULL), "w");
++    g = fopen (catstrs (etc_dir, TEMP_FILE, (char *) NULL), "w");
+     if (!g) {
+ /* This heads the delete macro error dialog box */
+ 	edit_error_dialog (_(" Delete macro "),
+@@ -655,7 +655,7 @@
+     }
+     fclose (f);
+     fclose (g);
+-    if (rename (catstrs (home_dir, TEMP_FILE, (char *) NULL), catstrs (home_dir, MACRO_FILE, (char *) NULL)) == -1) {
++    if (rename (catstrs (etc_dir, TEMP_FILE, (char *) NULL), catstrs (etc_dir, MACRO_FILE, (char *) NULL)) == -1) {
+ /* This heads the delete macro error dialog box */
+ 	edit_error_dialog (_(" Delete macro "),
+ 	   get_sys_error (_(" Cannot overwrite macro file ")));
+@@ -2208,7 +2208,7 @@
+ /* copies a block to clipboard file */
+ static int edit_save_block_to_clip_file (WEdit * edit, long start, long finish)
+ {
+-    return edit_save_block (edit, catstrs (home_dir, CLIP_FILE, (char *) NULL), start, finish);
++    return edit_save_block (edit, catstrs (etc_dir, CLIP_FILE, (char *) NULL), start, finish);
+ }
+ 
+ 
+@@ -2245,7 +2245,7 @@
+ 
+ void edit_paste_from_X_buf_cmd (WEdit * edit)
+ {
+-    edit_insert_file (edit, catstrs (home_dir, CLIP_FILE, (char *) NULL));
++    edit_insert_file (edit, catstrs (etc_dir, CLIP_FILE, (char *) NULL));
+ }
+ 
+ 
+@@ -2297,7 +2297,7 @@
+     if (eval_marks (edit, &start_mark, &end_mark))
+ 	return 1;
+     exp =
+-	edit_get_save_file (catstrs (home_dir, CLIP_FILE, (char *) NULL),
++	edit_get_save_file (catstrs (etc_dir, CLIP_FILE, (char *) NULL),
+ 			    _(" Save Block "));
+     edit_push_action (edit, KEY_PRESS + edit->start_display);
+     if (exp) {
+@@ -2326,7 +2326,7 @@
+ int
+ edit_insert_file_cmd (WEdit *edit)
+ {
+-    char *exp = edit_get_load_file (catstrs (home_dir, CLIP_FILE, (char *) NULL),
++    char *exp = edit_get_load_file (catstrs (etc_dir, CLIP_FILE, (char *) NULL),
+ 				    _(" Insert File "));
+     edit_push_action (edit, KEY_PRESS + edit->start_display);
+     if (exp) {
+@@ -2362,7 +2362,7 @@
+ 	edit_error_dialog (_(" Sort block "), _(" You must first highlight a block of text. "));
+ 	return 0;
+     }
+-    edit_save_block (edit, catstrs (home_dir, BLOCK_FILE, (char *) NULL), start_mark, end_mark);
++    edit_save_block (edit, catstrs (etc_dir, BLOCK_FILE, (char *) NULL), start_mark, end_mark);
+ 
+     exp = old ? old : "";
+ 
+@@ -2374,7 +2374,7 @@
+     g_free (old);
+     old = exp;
+ 
+-    e = system (catstrs (" sort ", exp, " ", home_dir, BLOCK_FILE, " > ", home_dir, TEMP_FILE, (char *) NULL));
++    e = system (catstrs (" sort ", exp, " ", etc_dir, BLOCK_FILE, " > ", etc_dir, TEMP_FILE, (char *) NULL));
+     if (e) {
+ 	if (e == -1 || e == 127) {
+ 	    edit_error_dialog (_(" Sort "), 
+@@ -2392,7 +2392,7 @@
+ 
+     if (edit_block_delete_cmd (edit))
+ 	return 1;
+-    edit_insert_file (edit, catstrs (home_dir, TEMP_FILE, (char *) NULL));
++    edit_insert_file (edit, catstrs (etc_dir, TEMP_FILE, (char *) NULL));
+     return 0;
+ }
+ 
+@@ -2413,7 +2413,7 @@
+     if (!exp)
+ 	return 1;
+ 
+-    e = system (catstrs (exp, " > ", home_dir, TEMP_FILE, (char *) NULL));
++    e = system (catstrs (exp, " > ", etc_dir, TEMP_FILE, (char *) NULL));
+     g_free (exp);
+ 
+     if (e) {
+@@ -2424,7 +2424,7 @@
+ 
+     edit->force |= REDRAW_COMPLETELY;
+ 
+-    edit_insert_file (edit, catstrs (home_dir, TEMP_FILE, (char *) NULL));
++    edit_insert_file (edit, catstrs (etc_dir, TEMP_FILE, (char *) NULL));
+     return 0;
+ }
+ 
+@@ -2445,8 +2445,8 @@
+     char *quoted_name = NULL;
+ 
+     o = catstrs (mc_home, shell_cmd, (char *) NULL);	/* original source script */
+-    h = catstrs (home_dir, EDIT_DIR, shell_cmd, (char *) NULL);	/* home script */
+-    b = catstrs (home_dir, BLOCK_FILE, (char *) NULL);	/* block file */
++    h = catstrs (etc_dir, EDIT_DIR, shell_cmd, (char *) NULL);	/* home script */
++    b = catstrs (etc_dir, BLOCK_FILE, (char *) NULL);	/* block file */
+ 
+     if (!(script_home = fopen (h, "r"))) {
+ 	if (!(script_home = fopen (h, "w"))) {
+@@ -2498,8 +2498,8 @@
+ 	 *   $3 - file where error messages should be put
+ 	 *        (for compatibility with old scripts).
+ 	 */
+-	system (catstrs (" ", home_dir, EDIT_DIR, shell_cmd, " ", quoted_name,
+-			 " ", home_dir, BLOCK_FILE " /dev/null", (char *) NULL));
++	system (catstrs (" ", etc_dir, EDIT_DIR, shell_cmd, " ", quoted_name,
++			 " ", etc_dir, BLOCK_FILE " /dev/null", (char *) NULL));
+ 
+     } else {
+ 	/*
+@@ -2507,7 +2507,7 @@
+ 	 * Arguments:
+ 	 *   $1 - name of the edited file.
+ 	 */
+-	system (catstrs (" ", home_dir, EDIT_DIR, shell_cmd, " ",
++	system (catstrs (" ", etc_dir, EDIT_DIR, shell_cmd, " ",
+ 			 quoted_name, (char *) NULL));
+     }
+     g_free (quoted_name);
+--- ./edit/syntax.c.org	2005-06-13 14:12:50.360626424 +0200
++++ ./edit/syntax.c	2005-06-13 14:13:22.331766072 +0200
+@@ -624,7 +624,7 @@
+ 	return fopen (filename, "r");
+ 
+     g_free (error_file_name);
+-    error_file_name = g_strconcat (home_dir, EDIT_DIR PATH_SEP_STR,
++    error_file_name = g_strconcat (etc_dir, EDIT_DIR PATH_SEP_STR,
+ 				   filename, (char *) NULL);
+     f = fopen (error_file_name, "r");
+     if (f)
+@@ -1110,7 +1110,7 @@
+ 	if (!*edit->filename && !type)
+ 	    return;
+     }
+-    f = catstrs (home_dir, SYNTAX_FILE, (char *) NULL);
++    f = catstrs (etc_dir, SYNTAX_FILE, (char *) NULL);
+     r = edit_read_syntax_file (edit, names, f, edit ? edit->filename : 0,
+ 			       get_first_editor_line (edit), type);
+     if (r == -1) {
+--- ./edit/edit.c.org	2005-06-13 14:09:12.420758320 +0200
++++ ./edit/edit.c	2005-06-13 14:10:10.282961928 +0200
+@@ -2652,7 +2652,7 @@
+     int nomark;
+     struct stat status;
+     long start_mark, end_mark;
+-    char *block_file = catstrs (home_dir, BLOCK_FILE, (char *) NULL);
++    char *block_file = catstrs (etc_dir, BLOCK_FILE, 0);
+     int rc = 0;
+ 
+     nomark = eval_marks (edit, &start_mark, &end_mark);
