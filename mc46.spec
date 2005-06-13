@@ -20,7 +20,7 @@ Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 %define	pre	pre4
 Version:	4.6.1
-Release:	0.1
+Release:	0.3
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}-%{pre}.tar.gz
@@ -232,15 +232,15 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
-#%patch4 -p1	#---fixme
-#%patch5 -p1	#---fixme
-#%patch6 -p1	#---fixme
-#%patch7 -p1	#---fixme
-#%patch8 -p1	#---fixme
+%patch4 -p1
+#%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+#%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
-#%patch12 -p1	#---fixme
+%patch12 -p1
 %if %{with utf8}
 %patch13 -p1
 %patch14 -p0
