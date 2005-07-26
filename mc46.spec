@@ -18,13 +18,12 @@ Summary(tr):	Midnight Commander gЖrsel kabuПu
 Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
-%define	pre	pre4
 Version:	4.6.1
-Release:	0.3
+Release:	0.4
 License:	GPL
 Group:		Applications/Shells
-Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}-%{pre}.tar.gz
-# Source0-md5:	89904e7cd92134cbf7a6cc03bf4be4a2
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
+# Source0-md5:	18b20db6e40480a53bac2870c56fc3c4
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -226,7 +225,7 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 т╕льки власне Midnight Commander).
 
 %prep
-%setup -q -n %{name}-%{version}-%{pre} -a3
+%setup -q -a3
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
