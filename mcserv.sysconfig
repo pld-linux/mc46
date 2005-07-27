@@ -1,8 +1,0 @@
-# Make mcserv quiet
-QUIET="no"
-
-# Make mcserv verbose
-VERBOSE="no"
-
-# Assign mcserv a port, or leave empty, to let it select port.
-PORT=""
