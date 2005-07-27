@@ -1,16 +1,6 @@
-diff -urN mc-4.6.0.orig/lib/mc.ext.in mc-4.6.0/lib/mc.ext.in
---- mc-4.6.0.orig/lib/mc.ext.in	2004-03-26 10:31:23.330492768 +0100
-+++ mc-4.6.0/lib/mc.ext.in	2004-03-26 10:32:01.078754160 +0100
-@@ -300,7 +300,7 @@
- 
- # html
- regex/\.([Hh]tml?|HTML?)$
--	Open=if test -n "@X11_WWW@" && test -n "$DISPLAY"; then (@X11_WWW@ file://%d/%p &) >/dev/null 2>&1; else links %f 2>/dev/null || lynx -force_html %f; fi
-+	Open=if test -n "gnome-moz-remote" && test -n "$DISPLAY"; then (gnome-moz-remote file://%d/%p &) >/dev/null 2>&1; else elinks %f 2>/dev/null || lynx -force_html %f; fi
- 	View=%view{ascii} lynx -dump -force_html %f
- 
- # StarOffice 5.2
-@@ -442,34 +442,49 @@
+--- ./lib/mc.ext.in.org	2005-07-27 20:52:12.000000000 +0200
++++ ./lib/mc.ext.in	2005-07-27 20:59:04.000000000 +0200
+@@ -164,23 +164,32 @@
  # cpio
  shell/.cpio.Z
  	Open=%cd %p#ucpio
@@ -34,6 +24,7 @@ diff -urN mc-4.6.0.orig/lib/mc.ext.in mc-4.6.0/lib/mc.ext.in
  
  # patch
 -regex/\.(diff|patch)(\.(bz2|gz|Z))?$
+-        Open=%cd %p#patchfs
 +regex/\.(diff|patch)(\.bz2)$
 +	Open=%cd %p#patchfs
 +	View=%view{ascii} bzip2 -dc %f 2>/dev/null
@@ -43,11 +34,20 @@ diff -urN mc-4.6.0.orig/lib/mc.ext.in mc-4.6.0/lib/mc.ext.in
 +	View=%view{ascii} gzip -dc %f 2>/dev/null
 +
 +regex/\.(diff|patch)$
-         Open=%cd %p#patchfs
++	Open=%cd %p#patchfs
 +	View=%view{ascii} /bin/cat %f 2>/dev/null
  
- # gzip
- type/^gzip
+ # ar library
+ regex/\.s?a$
+@@ -432,6 +441,7 @@
+ # html
+ regex/\.([hH][tT][mM][lL]?)$
+ 	Open=(if test -n "@X11_WWW@" && test -n "$DISPLAY"; then (@X11_WWW@ file://%d/%p &) 1>&2; else links %f || lynx -force_html %f || ${PAGER:-more} %f; fi) 2>/dev/null
++	 Open=(if test -n "gnome-moz-remote" && test -n "$DISPLAY"; then (gnome-moz-remote file://%d/%p &) >/dev/null 2>&1; else elinks %f 2>/dev/null || lynx -force_html %f || ${PAGER:-more} %f; fi) 2>/dev/null
+ 	View=%view{ascii} lynx -dump -force_html %f
+ 
+ # StarOffice 5.2
+@@ -526,11 +536,17 @@
  	Open=gzip -dc %f | %var{PAGER:more}
  	View=%view{ascii} gzip -dc %f 2>/dev/null
  
