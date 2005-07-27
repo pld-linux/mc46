@@ -19,7 +19,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	0.4
+Release:	0.9
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -235,7 +235,7 @@ cp -f vfs/extfs/{rpm,srpm}
 #%patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#%patch8 -p1
+%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
