@@ -19,7 +19,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	0.9
+Release:	0.10
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -27,11 +27,11 @@ Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{versi
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
 # Changelogs for Advanced Midnight Commander patches
 Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
 # NoSource4-md5:	bcf001d40a63f15848a3763cf5e29f6d
 Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
+# Source5-md5:	4f69a9856931d562fb5f942a8093e577
 # NoSource5-md5:	4f69a9856931d562fb5f942a8093e577
 Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
@@ -54,10 +54,7 @@ Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
-Patch13:	%{name}-4.6.0-utf8.patch
-Patch14:	%{name}-4.6.0-utf8-input.patch
-Patch15:	%{name}-4.6.0-utf8-fix.patch
-Patch16:	%{name}-4.6.0-utf8-hints.patch
+Patch13:	http://www.ottolander.nl/mc-patches/UTF-8/mc-4.6.1-utf8.patch
 Patch17:	%{name}-nolibs.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
@@ -70,7 +67,8 @@ BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
 %if %{with utf8}
-BuildRequires:	slang-devel >= 1:1.4.9-6
+BuildRequires:	slang-devel(utf8) >= 1:1.4.9-6
+Requires:	slang(utf8) >= 1:1.4.9-6
 %endif
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
@@ -242,13 +240,70 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch12 -p1
 %if %{with utf8}
 %patch13 -p1
-%patch14 -p0
-%patch15 -p1
-%patch16 -p1
 %endif
 %patch17 -p1
 
 mv -f po/{no,nb}.po
+
+%if %{with utf8}
+# convert files in /lib to UTF-8
+cd lib
+for i in mc.hint mc.hint.es mc.hint.it mc.hint.nl; do
+  iconv -f iso-8859-1 -t utf-8 < ${i} > ${i}.tmp
+  mv -f ${i}.tmp ${i}
+done
+
+for i in mc.hint.cs mc.hint.hu mc.hint.pl; do
+  iconv -f iso-8859-2 -t utf-8 < ${i} > ${i}.tmp
+  mv -f ${i}.tmp ${i}
+done
+
+for i in mc.hint.sr mc.menu.sr; do
+  iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
+  mv -f ${i}.tmp ${i}
+done
+
+iconv -f koi8-r -t utf8 < mc.hint.ru > mc.hint.ru.tmp
+mv -f mc.hint.ru.tmp mc.hint.ru
+iconv -f koi8-u -t utf8 < mc.hint.uk > mc.hint.uk.tmp
+mv -f mc.hint.uk.tmp mc.hint.uk
+iconv -f big5 -t utf8 < mc.hint.zh > mc.hint.zh.tmp
+mv -f mc.hint.zh.tmp mc.hint.zh
+cd ..
+
+
+# convert man pages in /doc to UTF-8
+cd doc
+
+cd ru
+for i in mc.1.in xnc.hlp; do
+  iconv -f koi8-r -t utf-8 < ${i} > ${i}.tmp
+  mv -f ${i}.tmp ${i}
+done
+cd ..
+
+cd sr
+for i in mc.1.in mcserv.8.in xnc.hlp; do
+  iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
+  mv -f ${i}.tmp ${i}
+done
+cd ..
+
+for d in es it; do
+  for i in mc.1.in xnc.hlp; do
+    iconv -f iso-8859-3 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
+    mv -f ${d}/${i}.tmp ${d}/${i}
+  done
+done
+
+for d in hu pl; do
+  for i in mc.1.in xnc.hlp; do
+    iconv -f iso-8859-2 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
+    mv -f ${d}/${i}.tmp ${d}/${i}
+  done
+done
+cd ..
+%endif
 
 %build
 %{__gettextize}
@@ -269,6 +324,11 @@ else
 		fi;
 	fi;
 fi"
+
+%if %{with utf8}
+CFLAGS="-DUTF8"
+export CFLAGS
+%endif
 %configure \
 	--enable-charset \
 	--with%{!?debug:out}-debug \
