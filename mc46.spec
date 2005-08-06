@@ -27,11 +27,11 @@ Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{versi
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+# Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
 # Changelogs for Advanced Midnight Commander patches
 Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
 # NoSource4-md5:	bcf001d40a63f15848a3763cf5e29f6d
 Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
-# Source5-md5:	4f69a9856931d562fb5f942a8093e577
 # NoSource5-md5:	4f69a9856931d562fb5f942a8093e577
 Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
