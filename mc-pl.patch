@@ -113,12 +113,12 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  msgid " Which menu file do you want to edit? "
 @@ -1313,11 +1313,11 @@
  
- #: src/cmd.c:627
+ #: src/cmd.c:597
  msgid "&Local"
 -msgstr "Lokalne"
 +msgstr "&Lokalne"
  
- #: src/cmd.c:627
+ #: src/cmd.c:597
  msgid "&Home"
 -msgstr "Prywatne"
 +msgstr "&W³asne"
@@ -135,36 +135,36 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  #: src/cmd.c:940
  msgid " Link "
 @@ -1386,31 +1386,31 @@
- #: src/cmd.c:978
+ #: src/cmd.c:938
  #, c-format
  msgid " symlink: %s "
 -msgstr " dowi±zanie symboliczne: %s "
 +msgstr " skrót: %s "
  
- #: src/cmd.c:1012
+ #: src/cmd.c:974
  #, c-format
  msgid " Symlink `%s' points to: "
 -msgstr " Dowi±zanie symboliczne '%s' wskazuje na: "
 +msgstr " Skrót '%s' wskazuje na: "
  
- #: src/cmd.c:1017
+ #: src/cmd.c:979
  msgid " Edit symlink "
 -msgstr " Zmodyfikuj dowi±zanie symboliczne "
 +msgstr " Zmodyfikuj skrót "
  
- #: src/cmd.c:1022
+ #: src/cmd.c:984
  #, c-format
  msgid " edit symlink, unable to remove %s: %s "
 -msgstr " modyfikacja dowi±zania symbolicznego, nie mo¿na usun±æ %s: %s "
 +msgstr " modyfikacja skrótu, nie mo¿na usun±æ %s: %s "
  
- #: src/cmd.c:1026
+ #: src/cmd.c:988
  #, c-format
  msgid " edit symlink: %s "
 -msgstr " modyfikacja dowi±zania symbolicznego: %s"
 +msgstr " modyfikacja skrótu: %s"
  
- #: src/cmd.c:1037
+ #: src/cmd.c:999
  #, c-format
  msgid "`%s' is not a symbolic link"
 -msgstr "\"%s\" nie jest dowi±zaniem symbolicznym"
@@ -231,12 +231,12 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  msgid "&Dive into subdir if exists"
 @@ -2168,11 +2168,11 @@
  
- #: src/find.c:105
+ #: src/find.c:117
  msgid "&View - F3"
 -msgstr "Podgl±d - F3"
 +msgstr "Poka¿ - F3"
  
- #: src/find.c:106
+ #: src/find.c:118
  msgid "&Edit - F4"
 -msgstr "Edycja - F4"
 +msgstr "Edytuj - F4"
@@ -245,36 +245,36 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  msgid "Start at:"
 @@ -2683,15 +2683,15 @@
  
- #: src/main.c:844
+ #: src/main.c:849
  msgid "&Edit               F4"
 -msgstr "Edycja              F4"
 +msgstr "Edytuj              F4"
  
- #: src/main.c:845
+ #: src/main.c:850
  msgid "&Copy               F5"
 -msgstr "Skopiuj             F5"
 +msgstr "Kopiuj              F5"
  
- #: src/main.c:846
+ #: src/main.c:851
  msgid "c&Hmod           C-x c"
 -msgstr "Chmod            C-x c"
 +msgstr "Uprawnienia      C-x c"
  
- #: src/main.c:847
+ #: src/main.c:852
  msgid "&Link            C-x l"
 @@ -2707,15 +2707,15 @@
  
- #: src/main.c:850
+ #: src/main.c:855
  msgid "ch&Own           C-x o"
 -msgstr "Chown            C-x o"
 +msgstr "W³asno¶æ         C-x o"
  
- #: src/main.c:851
+ #: src/main.c:856
  msgid "&Advanced chown       "
 -msgstr "Zaawansowane chown    "
 +msgstr "Uprawnienia i w³asno¶æ"
  
- #: src/main.c:852
+ #: src/main.c:857
  msgid "&Rename/Move        F6"
 -msgstr "Nazwa/Przenie¶      F6"
 +msgstr "Nazwa/Przesuñ       F6"
@@ -342,17 +342,17 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  msgid "Group"
 @@ -3315,11 +3315,11 @@
  
- #: src/screen.c:2187 src/view.c:2231
+ #: src/screen.c:2208 src/view.c:2280
  msgid "Edit"
 -msgstr "Edycja"
 +msgstr "Edytuj"
  
- #: src/screen.c:2189 src/tree.c:977
+ #: src/screen.c:2210 src/tree.c:980
  msgid "RenMov"
 -msgstr "Przen."
 +msgstr "Przesuñ"
  
- #: src/screen.c:2190 src/tree.c:981
+ #: src/screen.c:2211 src/tree.c:984
  msgid "Mkdir"
 @@ -3445,7 +3445,7 @@
  #: src/tree.c:591
