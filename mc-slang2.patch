@@ -15,7 +15,6 @@ diff -urbB mc-4.6.1.org/src/global.h mc-4.6.1/src/global.h
  #include "fs.h"
  #include "util.h"
  
-Tylko w mc-4.6.1/src: global.h~
 diff -urbB mc-4.6.1.org/src/help.c mc-4.6.1/src/help.c
 --- mc-4.6.1.org/src/help.c	2005-09-19 22:32:27.941026000 +0200
 +++ mc-4.6.1/src/help.c	2005-09-19 22:36:33.341719440 +0200
@@ -28,7 +27,6 @@ diff -urbB mc-4.6.1.org/src/help.c mc-4.6.1/src/help.c
  			SLsmg_draw_object (h->y + line + 2, h->x + col + 2, acs_map [c]);
  #else
  			SLsmg_draw_object (h->y + line + 2, h->x + col + 2, c);
-Tylko w mc-4.6.1/src: help.c~
 diff -urbB mc-4.6.1.org/src/slint.c mc-4.6.1/src/slint.c
 --- mc-4.6.1.org/src/slint.c	2005-05-27 16:19:18.000000000 +0200
 +++ mc-4.6.1/src/slint.c	2005-09-19 22:34:33.333963392 +0200
