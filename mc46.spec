@@ -4,7 +4,7 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_with	utf8		# for now it's bcond (broken), in future include by DEFAULT (after updating patches)
+%bcond_without	utf8		# utf8
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -19,7 +19,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -56,6 +56,7 @@ Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
 Patch13:	http://www.ottolander.nl/mc-patches/UTF-8/mc-4.6.1-utf8.patch
 Patch17:	%{name}-nolibs.patch
+Patch18:	%{name}-slang2.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -67,8 +68,7 @@ BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
 %if %{with utf8}
-BuildRequires:	slang-devel(utf8) >= 1:1.4.9-6
-Requires:	slang(utf8) >= 1:1.4.9-6
+BuildRequires:	slang-devel >= 2.0.0
 %endif
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
@@ -240,6 +240,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch12 -p1
 %if %{with utf8}
 %patch13 -p1
+%patch18 -p1
 %endif
 %patch17 -p1
 
