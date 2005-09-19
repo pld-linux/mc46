@@ -19,7 +19,7 @@ Summary(uk):	‰…”–≈‘ﬁ≈“ ∆¡ Ã¶◊ Midnight Commander
 Summary(zh_CN):	“ª∏ˆ∑Ω±„ µ”√µƒŒƒº˛π‹¿Ì∆˜∫Õ–Èƒ‚Shell
 Name:		mc
 Version:	4.6.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -54,9 +54,15 @@ Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
-Patch13:	http://www.ottolander.nl/mc-patches/UTF-8/mc-4.6.1-utf8.patch
+Patch13:	%{name}-utf8.patch
+Patch14:	%{name}-slang2.patch
+Patch15:	%{name}-64bit.patch
+Patch16:	%{name}-fish-upload.patch
 Patch17:	%{name}-nolibs.patch
-Patch18:	%{name}-slang2.patch
+Patch18:	%{name}-ftpcrash.patch
+Patch19:	%{name}-symcrash.patch
+Patch20:	%{name}-uglydir.patch
+Patch21:	%{name}-userhost.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -240,9 +246,15 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch12 -p1
 %if %{with utf8}
 %patch13 -p1
-%patch18 -p1
+%patch14 -p1
 %endif
+%patch15 -p1
+%patch16 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
 
 mv -f po/{no,nb}.po
 
