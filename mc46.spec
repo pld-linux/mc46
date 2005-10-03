@@ -74,7 +74,7 @@ BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
 %if %{with utf8}
-BuildRequires:	slang-devel >= 2.0.0
+BuildRequires:	slang-devel >= 1:2.0.0
 %endif
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
