@@ -1,0 +1,29 @@
+diff -urbB mc-4.6.1.org/src/view.c mc-4.6.1/src/view.c
+--- mc-4.6.1.org/src/view.c	2005-10-18 08:33:40.629598000 +0200
++++ mc-4.6.1/src/view.c	2005-10-18 08:35:28.833149112 +0200
+@@ -1166,12 +1166,15 @@
+ 		&& col < width - view->start_col) {
+ 		view_gotoyx (view, row, col + view->start_col);
+ 
+-#ifndef UTF8
++#ifdef UTF8
++		if (!SLsmg_Is_Unicode) {
++#endif
+ 		c = convert_to_display_c (c);
+ 		if (!is_printable (c))
+ 		    c = '.';
+ 		view_add_character (view, c);
+-#else /* UTF8 */
++#ifdef UTF8
++		} else {
+ 		if (!iswprint (wc))
+ 		    wc = '.';
+ 		view_add_character (view, wc);
+@@ -1181,6 +1184,7 @@
+ 		    if (cw > 1)
+ 			col+= cw - 1;
+ 		}
++		}
+ #endif /* UTF8 */
+ 
+ 	    }
