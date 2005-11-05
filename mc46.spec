@@ -4,7 +4,7 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_without	utf8		# utf8
+%bcond_with	utf8		# utf8
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -19,7 +19,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	3.2
+Release:	4
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -90,7 +90,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
 
-%define		specflags_ia32	 -fomit-frame-pointer 
+%define		specflags_ia32	 -fomit-frame-pointer
 
 %description
 Midnight Commander is a visual shell much like a file manager, only
