@@ -29,9 +29,9 @@ Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
 # Changelogs for Advanced Midnight Commander patches
-Source4:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.txt
+Source4:	http://www1.mplayerhq.hu/~arpi/amc/a%{name}-1.txt
 # NoSource4-md5:	bcf001d40a63f15848a3763cf5e29f6d
-Source5:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.txt
+Source5:	http://www1.mplayerhq.hu/~arpi/amc/a%{name}-2.txt
 # NoSource5-md5:	4f69a9856931d562fb5f942a8093e577
 Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
@@ -44,9 +44,9 @@ Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 # Advanced Midnight Commander patches
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
-Patch6:		amc-1.diff
+Patch6:		a%{name}-1.diff
 #changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
-Patch7:		amc-2.diff
+Patch7:		a%{name}-2.diff
 Patch8:		%{name}-mc.ext.patch
 Patch9:		%{name}-mo.patch
 Patch10:	%{name}-localenames.patch
@@ -80,12 +80,12 @@ BuildRequires:	slang-devel >= 1:2.0.0
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
-%{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
+# Needed? %%{?with_perl_vfs:Requires:	perl-base}
 %{?with_x:BuildRequires:	XFree86-devel}
+%{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
 Requires:	file
 Requires:	pam >= 0.77.3
 Requires:	setup >= 2.4.6-2
-# Needed? %%{?with_perl_vfs:Requires:	perl-base}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
@@ -163,10 +163,10 @@ Summary(tr):	Midnight Commander dosya sunucusu
 Summary(uk):	Midnight Commander 屏侍-优易乓
 Summary(zh_CN):	mc 网络文件管理系统的服务器。
 Group:		Daemons
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	pam >= 0.66
 Requires:	portmap
+Requires:	rc-scripts
 
 %description -n mcserv
 The Midnight Commander file management system will allow you to
@@ -492,10 +492,10 @@ fi
 
 %files -n mcserv
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
 
 %attr(754,root,root) /etc/rc.d/init.d/mcserv
-%attr(644,root,root) %config /etc/sysconfig/mcserv
+%attr(644,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mcserv
 %{_mandir}/man8/mcserv.8*
 %lang(es) %{_mandir}/es/man8/mcserv.8*
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
