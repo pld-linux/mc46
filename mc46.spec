@@ -74,6 +74,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
+BuildRequires:	sed >= 4.0
 %if %{with utf8}
 BuildRequires:	slang-devel >= 1:2.0.0
 %endif
@@ -319,6 +320,8 @@ for d in hu pl; do
 done
 cd ..
 %endif
+
+sed -i 's:|hxx|:|hh|hpp|hxx|:' syntax/Syntax
 
 %build
 %{__gettextize}
