@@ -498,7 +498,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
 
 %attr(754,root,root) /etc/rc.d/init.d/mcserv
-%attr(644,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mcserv
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mcserv
 %{_mandir}/man8/mcserv.8*
 %lang(es) %{_mandir}/es/man8/mcserv.8*
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
