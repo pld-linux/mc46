@@ -63,7 +63,7 @@ Patch18:	%{name}-ftpcrash.patch
 Patch19:	%{name}-symcrash.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
-Patch22:	%{name}-utf8-view.patch
+Patch22:	%{name}-utf8-look-and-feel.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
