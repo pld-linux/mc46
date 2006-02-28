@@ -4,7 +4,7 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_with	utf8		# utf8
+%bcond_without	utf8		# utf8
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -19,11 +19,13 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.6.1
-Release:	5
+%define	snap	2006-02-24-22
+%define ssnap	%(echo %{snap} | tr - .)
+Release:	0.%{ssnap}.1
 License:	GPL
 Group:		Applications/Shells
-Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
-# Source0-md5:	18b20db6e40480a53bac2870c56fc3c4
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/mc-2006-02-24-22.tar.gz
+# Source0-md5:	408b835829f8e4c7279f0c8944355334
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -55,12 +57,8 @@ Patch11:	%{name}-noperl-vfs.patch
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
 Patch13:	%{name}-utf8.patch
-Patch14:	%{name}-slang2.patch
-Patch15:	%{name}-64bit.patch
 Patch16:	%{name}-fish-upload.patch
 Patch17:	%{name}-nolibs.patch
-Patch18:	%{name}-ftpcrash.patch
-Patch19:	%{name}-symcrash.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-look-and-feel.patch
@@ -231,30 +229,30 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 т╕льки власне Midnight Commander).
 
 %prep
-%setup -q -a3
+%setup -q -a3 -n %{name}-%{snap}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+# UPDATE ME (home-etc)
+#%patch4 -p1
+# UPDATE ME (translation)
+# %patch5 -p1
+# UPDATED AMC PATCHES available on mc list
+#%patch6 -p1
+#%patch7 -p1
 %patch8 -p1
-%patch9 -p1
+# M-o patch
+#%patch9 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
 %patch12 -p1
 %if %{with utf8}
 %patch13 -p1
-%patch14 -p1
 %endif
-%patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p1
-%patch19 -p1
 %patch20 -p1
 %patch21 -p1
 %{?with_utf8:%patch22 -p1}
@@ -473,11 +471,12 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/lslR
 %attr(755,root,root) %{_datadir}/mc/extfs/rpm
 %attr(755,root,root) %{_datadir}/mc/extfs/trpm
+%attr(755,root,root) %{_datadir}/mc/extfs/u7z
+%attr(755,root,root) %{_datadir}/mc/extfs/ualz
 %attr(755,root,root) %{_datadir}/mc/extfs/uar*
 %attr(755,root,root) %{_datadir}/mc/extfs/uha
 %attr(755,root,root) %{_datadir}/mc/extfs/ulha
 %attr(755,root,root) %{_datadir}/mc/extfs/urar
-%attr(755,root,root) %{_datadir}/mc/extfs/uesp
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
 %{_desktopdir}/mc.desktop
