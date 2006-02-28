@@ -1,6 +1,6 @@
-diff -urN mc-4.6.0-orig/syntax/cvs-userlist.syntax mc-4.6.0/syntax/cvs-userlist.syntax
---- mc-4.6.0-orig/syntax/cvs-userlist.syntax	1970-01-01 01:00:00.000000000 +0100
-+++ mc-4.6.0/syntax/cvs-userlist.syntax	2004-02-11 04:16:02.995824416 +0100
+diff -urN mc-2006-02-24-22.org/syntax/cvs-userlist.syntax mc-2006-02-24-22/syntax/cvs-userlist.syntax
+--- mc-2006-02-24-22.org/syntax/cvs-userlist.syntax	1970-01-01 01:00:00.000000000 +0100
++++ mc-2006-02-24-22/syntax/cvs-userlist.syntax	2006-02-28 17:37:11.801898000 +0100
 @@ -0,0 +1,20 @@
 +wholechars abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-
 +
@@ -22,57 +22,57 @@ diff -urN mc-4.6.0-orig/syntax/cvs-userlist.syntax mc-4.6.0/syntax/cvs-userlist.
 +	keyword , yellow black
 +	
 +
-diff -urN mc-4.6.0-orig/syntax/Makefile.am mc-4.6.0/syntax/Makefile.am
---- mc-4.6.0-orig/syntax/Makefile.am	2004-02-11 03:21:32.000000000 +0100
-+++ mc-4.6.0/syntax/Makefile.am	2004-02-11 04:17:12.818209800 +0100
-@@ -5,6 +5,7 @@
- 	ada95.syntax		\
- 	c.syntax		\
+diff -urN mc-2006-02-24-22.org/syntax/Makefile.am mc-2006-02-24-22/syntax/Makefile.am
+--- mc-2006-02-24-22.org/syntax/Makefile.am	2006-01-30 18:01:58.000000000 +0100
++++ mc-2006-02-24-22/syntax/Makefile.am	2006-02-28 17:38:02.617073750 +0100
+@@ -7,6 +7,7 @@
  	changelog.syntax	\
+ 	cs.syntax		\
+ 	css.syntax		\
 +	cvs-userlist.syntax	\
  	diff.syntax		\
  	dos.syntax		\
- 	fortran.syntax		\
-@@ -24,6 +25,7 @@
-	pascal.syntax		\
- 	perl.syntax		\
- 	php.syntax		\
-+	pld-update-todo.syntax	\
- 	po.syntax		\
-	povray.syntax		\
- 	python.syntax		\
-diff -urN mc-4.6.0-orig/syntax/Makefile.in mc-4.6.0/syntax/Makefile.in
---- mc-4.6.0-orig/syntax/Makefile.in	2003-02-05 19:09:09.000000000 +0100
-+++ mc-4.6.0/syntax/Makefile.in	2004-02-11 04:18:08.730709808 +0100
-@@ -190,6 +190,7 @@
- 	ada95.syntax		\
- 	c.syntax		\
- 	changelog.syntax	\
-+	cvs-userlist.syntax	\
- 	diff.syntax		\
- 	dos.syntax		\
- 	fortran.syntax		\
-@@ -208,6 +209,7 @@
+ 	eiffel.syntax		\
+@@ -28,6 +29,7 @@
  	pascal.syntax		\
  	perl.syntax		\
  	php.syntax		\
 +	pld-update-todo.syntax	\
  	po.syntax		\
+ 	povray.syntax		\
  	python.syntax		\
- 	sh.syntax		\
-diff -urN mc-4.6.0-orig/syntax/pld-update-todo.syntax mc-4.6.0/syntax/pld-update-todo.syntax
---- mc-4.6.0-orig/syntax/pld-update-todo.syntax	1970-01-01 01:00:00.000000000 +0100
-+++ mc-4.6.0/syntax/pld-update-todo.syntax	2004-02-11 04:16:02.996824264 +0100
+diff -urN mc-2006-02-24-22.org/syntax/Makefile.in mc-2006-02-24-22/syntax/Makefile.in
+--- mc-2006-02-24-22.org/syntax/Makefile.in	2006-02-24 23:36:58.000000000 +0100
++++ mc-2006-02-24-22/syntax/Makefile.in	2006-02-28 17:38:24.266426750 +0100
+@@ -241,6 +241,7 @@
+ 	changelog.syntax	\
+ 	cs.syntax		\
+ 	css.syntax		\
++	cvs-userlist.syntax	\
+ 	diff.syntax		\
+ 	dos.syntax		\
+ 	eiffel.syntax		\
+@@ -262,6 +263,7 @@
+ 	pascal.syntax		\
+ 	perl.syntax		\
+ 	php.syntax		\
++	pld-update-todo.syntax	\
+ 	po.syntax		\
+ 	povray.syntax		\
+ 	python.syntax		\
+diff -urN mc-2006-02-24-22.org/syntax/pld-update-todo.syntax mc-2006-02-24-22/syntax/pld-update-todo.syntax
+--- mc-2006-02-24-22.org/syntax/pld-update-todo.syntax	1970-01-01 01:00:00.000000000 +0100
++++ mc-2006-02-24-22/syntax/pld-update-todo.syntax	2006-02-28 17:37:11.805898250 +0100
 @@ -0,0 +1,5 @@
 +context default
 +	keyword wholeleft	[OLD]\s*\s	brightred
 +	keyword wholeleft	[NEW]\s*\n	green
 +	keyword wholeright	(*)	white black
 +
-diff -urN mc-4.6.0-orig/syntax/Syntax mc-4.6.0/syntax/Syntax
---- mc-4.6.0-orig/syntax/Syntax	2004-02-11 03:21:32.000000000 +0100
-+++ mc-4.6.0/syntax/Syntax	2004-02-11 04:16:02.997824112 +0100
-@@ -125,6 +125,12 @@
+diff -urN mc-2006-02-24-22.org/syntax/Syntax mc-2006-02-24-22/syntax/Syntax
+--- mc-2006-02-24-22.org/syntax/Syntax	2005-10-31 22:15:34.000000000 +0100
++++ mc-2006-02-24-22/syntax/Syntax	2006-02-28 17:37:11.805898250 +0100
+@@ -145,5 +145,11 @@
  file Don_t_match_me Mail\sfolder ^From\s
  include mail.syntax
  
@@ -84,4 +84,156 @@ diff -urN mc-4.6.0-orig/syntax/Syntax mc-4.6.0/syntax/Syntax
 +
  file .\* unknown
  include unknown.syntax
- 
+diff -urN mc-2006-02-24-22.org/syntax/Syntax.orig mc-2006-02-24-22/syntax/Syntax.orig
+--- mc-2006-02-24-22.org/syntax/Syntax.orig	1970-01-01 01:00:00.000000000 +0100
++++ mc-2006-02-24-22/syntax/Syntax.orig	2005-10-31 22:15:34.000000000 +0100
+@@ -0,0 +1,149 @@
++# This file describes which highlighting scheme is applied to a particular
++# file in mcedit.
++#
++# Each entry consists of two lines: a "file" specification and the
++# corresponding highlighting definition ("include"). A file specification
++# can have two or three fields, each separated by white-space characters.
++#
++# The first field is a regular expression that is matched against the file
++# name. The second field is a description of the file type and is
++# currently unused. The third (optional) field is a regular expression
++# that is matched against the first line of the file. The first entry
++# that matches wins, that is, all the entries below are ignored.
++#
++# Certain characters must be quoted in these fields. These are space (\s),
++# tabs (\t), backslashes(\\), plus (\+) and asterisk (\*). Braces {} and
++# brackets [] must not be quoted in this file. However, they have a special
++# meaning when used in the actual syntax definitions.
++#
++# You can use the following colors in the syntax highlighting files:
++# black, blue, brightblue, brightcyan, brightgreen, brightmagenta,
++# brightred, brown, cyan, gray, green, lightgray, magenta, red, white,
++# yellow
++#
++
++file [Ss]yntax$ Syntax\sHighlighting\sdefinitions ^#\ssyntax\srules\sversion\s
++include syntax.syntax
++
++file ..\*\\.(e)$ Eiffel\sSource\sFile
++include eiffel.syntax
++
++file ..\*\\.(diff|rej|patch)$ Diff\sOutput ^(diff|Index:)\s
++include diff.syntax
++
++file ..\*\\.lsm$ LSM\sFile
++include lsm.syntax
++
++file ..\*\\.sh$ Shell\sScript ^#!.\*([\s/]([abd-z]?|ba|pdk)sh|@SH@)
++include sh.syntax
++
++file ..\*\\.(pl|PL|pm|PM)$ Perl\sProgram ^#!.\*([\s/]perl|@PERL@)
++include perl.syntax
++
++file ..\*\\.(py|PY)$ Python\sProgram ^#!.\*([\s/]python|@PYTHON@)
++include python.syntax
++
++file ..\*\\.(rb|RB)$ Ruby\sProgram ^#!.\*([\s/]ruby|@RUBY@)
++include ruby.syntax
++
++file ..\*\\.(man|[0-9n]|[0-9]x)$ NROFF\sSource
++include nroff.syntax
++
++file ..\*\\.(htm|html|HTM|HTML)$ HTML\sFile
++include html.syntax
++
++file ..\*\\.(xml|XML|xsd|XSD|xslt?|XSLT?|dtd|DTD|qpg|qpg.in)$ XML\sdocument (\\?xml\sversion|!DOCTYPE\s)
++include xml.syntax
++
++file (.\*[Mm]akefile[\\\.A-Za-z0-9]\*|..\*\\.mk|Kbuild)$ Makefile
++include makefile.syntax
++
++file ..\*\\.(pp|PP|pas|PAS|dpr|DPR|inc|INC)$ Pascal\sProgram
++include pascal.syntax
++
++file ..\*\\.(ada|adb|ads|ADA|ADB|ADS)$ Ada\sProgram
++include ada95.syntax
++
++file ..\*\\.(tcl|itcl|TCL|ITCL)$ Tcl\sProgram
++include tcl.syntax
++
++file ..\*\\.(sl|SL)$ S-Lang\sProgram
++include slang.syntax
++
++file ..\*\\.tex$ LaTeX\s2.09\sDocument
++include latex.syntax
++
++file ..\*\.(texi|texinfo|TEXI|TEXINFO)$ Texinfo\sDocument
++include texinfo.syntax
++
++file ..\*\\.([chC]|CC|cxx|cc|cpp|CPP|CXX|hxx|h\.in)$ C/C\+\+\sProgram
++include c.syntax
++
++file ..\*\\.[fF]$ Fortran\sProgram
++include fortran.syntax
++
++file ..\*\\.i$ SWIG\sSource
++include swig.syntax
++
++file ..\*\\.(php|PHP)[0-9]?$ PHP\sProgram
++include php.syntax
++
++file ..\*\\.(java|JAVA|Java|jav)$ Java\sProgram
++include java.syntax
++
++file ..\*\\.(cs|CS)$ C\#\sProgram
++include cs.syntax
++
++file ..\*\\.(js|JS)$ JavaScript\sProgram
++include js.syntax
++
++file ..\*\\.(asax|aspx|ascx|asmx|ashx)$ ASPX\sFile
++include aspx.syntax
++
++file ..\*\\.st$ SmallTalk\sProgram
++include smalltalk.syntax
++
++file ..\*\\.(lisp|lsp|el)$ Lisp\sProgram
++include lisp.syntax
++
++file ..\*\\.(ml|mli|mly|mll|mlp)$ ML\sProgram
++include ml.syntax
++
++file ..\*\\.m$ Matlab\sor\sOctave\sFile
++include octave.syntax
++
++file ..\*\\.(sql|SQL)$ SQL\sProgram
++include sql.syntax
++
++file ..\*\\.(spec|spec\.in)$ RPM\sSpecfile
++include spec.syntax
++
++file .\*ChangeLog[\\\.A-Za-z0-9_]\*$ GNU\sChangeLog\sFile
++include changelog.syntax
++
++file (..\*\\.m4$|configure\\.in|configure\\.ac) M4\sMacroprocessor\sSource
++include m4.syntax
++
++file ..\*\\.(bat|cmd)$ DOS\sBatch
++include dos.syntax
++
++file ..\*\\.(po|pot|pox)$ PO\sFile
++include po.syntax
++
++file ..\*\\.([Aa][Ss][Mm]|s|S)$ ASM\sProgram
++include assembler.syntax
++ 
++file ..\*\\.([Pp][Oo][Vv])$ POV\sScript
++include povray.syntax
++
++file ..\*\\.([lL][uU][aA])$ LUA\sProgram
++include lua.syntax
++
++file ..\*\\.([iI][dD][lL])$ CORBA\sIDL
++include idl.syntax
++
++file Don_t_match_me Mail\sfolder ^From\s
++include mail.syntax
++
++file .\* unknown
++include unknown.syntax

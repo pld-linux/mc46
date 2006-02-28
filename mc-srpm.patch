@@ -1,6 +1,7 @@
---- ./lib/mc.ext.in.org	2005-06-10 17:04:56.341735824 +0200
-+++ ./lib/mc.ext.in	2005-06-10 17:06:41.384766856 +0200
-@@ -217,7 +217,11 @@
+diff -urN mc-2006-02-24-22.org/lib/mc.ext.in mc-2006-02-24-22/lib/mc.ext.in
+--- mc-2006-02-24-22.org/lib/mc.ext.in	2006-02-20 16:12:48.000000000 +0100
++++ mc-2006-02-24-22/lib/mc.ext.in	2006-02-28 16:55:32.869724500 +0100
+@@ -192,7 +192,11 @@
  	View=%view{ascii} rpm -qivl --scripts `basename %p .trpm`
  
  # RPM packages (SuSE uses *.spm for source packages)
@@ -13,20 +14,10 @@
  	Open=%cd %p#rpm
  	View=%view{ascii} if rpm --nosignature --version >/dev/null 2>&1; then RPM="rpm --nosignature" ; else RPM="rpm" ; fi ; $RPM -qivlp --scripts %f
  
---- ./vfs/extfs/Makefile.am.org	2005-06-10 17:08:02.014509272 +0200
-+++ ./vfs/extfs/Makefile.am	2005-06-10 17:08:23.234283376 +0200
-@@ -4,7 +4,7 @@
- EXTFS_MISC  = README extfs.ini sfs.ini
- 
- # Scripts hat don't need adaptation to the local system
--EXTFS_CONST = bpp rpm trpm
-+EXTFS_CONST = bpp rpm trpm srpm
- 
- # Scripts that need adaptation to the local system - source files
- EXTFS_IN    = 			\
---- ./vfs/extfs/extfs.ini.org	2005-06-10 17:07:21.512666488 +0200
-+++ ./vfs/extfs/extfs.ini	2005-06-10 17:07:48.611546832 +0200
-@@ -15,6 +15,7 @@
+diff -urN mc-2006-02-24-22.org/vfs/extfs/extfs.ini mc-2006-02-24-22/vfs/extfs/extfs.ini
+--- mc-2006-02-24-22.org/vfs/extfs/extfs.ini	2005-07-20 21:03:54.000000000 +0200
++++ mc-2006-02-24-22/vfs/extfs/extfs.ini	2006-02-28 16:55:32.869724500 +0100
+@@ -17,6 +17,7 @@
  
  # Packages from popular Linux distributions
  rpm
@@ -34,8 +25,21 @@
  deb
  
  # a: - mtools filesystem
---- ./vfs/extfs/srpm.org	2005-06-10 17:01:18.087915448 +0200
-+++ ./vfs/extfs/srpm	2005-06-10 17:04:37.956530800 +0200
+diff -urN mc-2006-02-24-22.org/vfs/extfs/Makefile.am mc-2006-02-24-22/vfs/extfs/Makefile.am
+--- mc-2006-02-24-22.org/vfs/extfs/Makefile.am	2005-07-20 21:03:54.000000000 +0200
++++ mc-2006-02-24-22/vfs/extfs/Makefile.am	2006-02-28 16:55:57.719277500 +0100
+@@ -4,7 +4,7 @@
+ EXTFS_MISC  = README extfs.ini sfs.ini
+ 
+ # Scripts hat don't need adaptation to the local system
+-EXTFS_CONST = bpp rpm trpm u7z
++EXTFS_CONST = bpp rpm trpm srpm u7z
+ 
+ # Scripts that need adaptation to the local system - source files
+ EXTFS_IN    = 			\
+diff -urN mc-2006-02-24-22.org/vfs/extfs/srpm mc-2006-02-24-22/vfs/extfs/srpm
+--- mc-2006-02-24-22.org/vfs/extfs/srpm	2006-02-28 16:53:07.272625000 +0100
++++ mc-2006-02-24-22/vfs/extfs/srpm	2006-02-28 16:55:32.869724500 +0100
 @@ -19,8 +19,15 @@
  LC_TIME=C
  export LC_TIME
