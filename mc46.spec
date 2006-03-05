@@ -6,6 +6,8 @@
 %bcond_without	x		# without text edit in X support
 %bcond_without	utf8		# utf8
 #
+%define	snap	2006-02-24-22
+%define ssnap	%(echo %{snap} | tr - .)
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
 Summary(es):	Interpretador de comandos visual Midnight Commander
@@ -19,12 +21,10 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.1
-%define	snap	2006-02-24-22
-%define ssnap	%(echo %{snap} | tr - .)
 Release:	0.%{ssnap}.1
 License:	GPL
 Group:		Applications/Shells
-Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/mc-2006-02-24-22.tar.gz
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-2006-02-24-22.tar.gz
 # Source0-md5:	408b835829f8e4c7279f0c8944355334
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
@@ -72,6 +72,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 %if %{with utf8}
 BuildRequires:	slang-devel >= 1:2.0.0
@@ -85,9 +86,9 @@ BuildRequires:	gpm-devel
 Requires:	file
 Requires:	pam >= 0.77.3
 Requires:	setup >= 2.4.6-2
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags_ia32	 -fomit-frame-pointer
 
@@ -263,18 +264,18 @@ mv -f po/{no,nb}.po
 # convert files in /lib to UTF-8
 cd lib
 for i in mc.hint mc.hint.es mc.hint.it mc.hint.nl; do
-  iconv -f iso-8859-1 -t utf-8 < ${i} > ${i}.tmp
-  mv -f ${i}.tmp ${i}
+	iconv -f iso-8859-1 -t utf-8 < ${i} > ${i}.tmp
+	mv -f ${i}.tmp ${i}
 done
 
 for i in mc.hint.cs mc.hint.hu mc.hint.pl; do
-  iconv -f iso-8859-2 -t utf-8 < ${i} > ${i}.tmp
-  mv -f ${i}.tmp ${i}
+	iconv -f iso-8859-2 -t utf-8 < ${i} > ${i}.tmp
+	mv -f ${i}.tmp ${i}
 done
 
 for i in mc.hint.sr mc.menu.sr; do
-  iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
-  mv -f ${i}.tmp ${i}
+	iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
+	mv -f ${i}.tmp ${i}
 done
 
 iconv -f koi8-r -t utf8 < mc.hint.ru > mc.hint.ru.tmp
@@ -291,30 +292,30 @@ cd doc
 
 cd ru
 for i in mc.1.in xnc.hlp; do
-  iconv -f koi8-r -t utf-8 < ${i} > ${i}.tmp
-  mv -f ${i}.tmp ${i}
+	iconv -f koi8-r -t utf-8 < ${i} > ${i}.tmp
+	mv -f ${i}.tmp ${i}
 done
 cd ..
 
 cd sr
 for i in mc.1.in mcserv.8.in xnc.hlp; do
-  iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
-  mv -f ${i}.tmp ${i}
+	iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
+	mv -f ${i}.tmp ${i}
 done
 cd ..
 
 for d in es it; do
-  for i in mc.1.in xnc.hlp; do
-    iconv -f iso-8859-3 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
-    mv -f ${d}/${i}.tmp ${d}/${i}
-  done
+	for i in mc.1.in xnc.hlp; do
+		iconv -f iso-8859-3 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
+		mv -f ${d}/${i}.tmp ${d}/${i}
+	done
 done
 
 for d in hu pl; do
-  for i in mc.1.in xnc.hlp; do
-    iconv -f iso-8859-2 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
-    mv -f ${d}/${i}.tmp ${d}/${i}
-  done
+	for i in mc.1.in xnc.hlp; do
+		iconv -f iso-8859-2 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
+		mv -f ${d}/${i}.tmp ${d}/${i}
+	done
 done
 cd ..
 %endif
@@ -396,17 +397,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post -n mcserv
 /sbin/chkconfig --add mcserv
-if [ -f /var/lock/subsys/mcserv ]; then
-	/etc/rc.d/init.d/mcserv restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/mcserv start\" to start mcserv daemon."
-fi
+%service mcserv restart "mcserv daemon"
 
 %preun -n mcserv
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mcserv ]; then
-		/etc/rc.d/init.d/mcserv stop >&2
-	fi
+	%service mcserv stop
 	/sbin/chkconfig --del mcserv
 fi
 
