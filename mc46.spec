@@ -6,7 +6,7 @@
 %bcond_without	x		# without text edit in X support
 %bcond_without	utf8		# utf8
 #
-%define	snap	2006-02-24-22
+%define	snap	2006-03-01-04
 %define ssnap	%(echo %{snap} | tr - .)
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -20,12 +20,12 @@ Summary(tr):	Midnight Commander görsel kabuğu
 Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
-Version:	4.6.1
+Version:	4.6.2
 Release:	0.%{ssnap}.1
 License:	GPL
 Group:		Applications/Shells
-Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-2006-02-24-22.tar.gz
-# Source0-md5:	408b835829f8e4c7279f0c8944355334
+Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
+# Source0-md5:	dc96921adf2dd1f38dd48928a6dda59d
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
