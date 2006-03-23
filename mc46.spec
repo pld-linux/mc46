@@ -81,7 +81,7 @@ BuildRequires:	slang-devel >= 1:2.0.0
 BuildRequires:	gpm-devel
 %endif
 # Needed? %%{?with_perl_vfs:Requires:	perl-base}
-%{?with_x:BuildRequires:	XFree86-devel}
+%{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
 Requires:	file
 Requires:	pam >= 0.77.3
