@@ -343,7 +343,7 @@ else
 fi"
 
 %if %{with utf8}
-CFLAGS="-DUTF8"
+CFLAGS="-DUTF8 %{rpmcflags}"
 export CFLAGS
 %endif
 %configure \
