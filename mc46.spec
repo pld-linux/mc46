@@ -6,7 +6,7 @@
 %bcond_without	x		# without text edit in X support
 %bcond_without	utf8		# utf8
 #
-%define	snap	2006-03-01-04
+%define	snap	2006-05-10-21
 %define ssnap	%(echo %{snap} | tr - .)
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -25,7 +25,7 @@ Release:	0.%{ssnap}.1
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
-# Source0-md5:	dc96921adf2dd1f38dd48928a6dda59d
+# Source0-md5:	b480bbd7cea8ee04bb789e8fabf54923
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -57,7 +57,6 @@ Patch11:	%{name}-noperl-vfs.patch
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
 Patch13:	%{name}-utf8.patch
-Patch16:	%{name}-fish-upload.patch
 Patch17:	%{name}-nolibs.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
@@ -252,7 +251,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %if %{with utf8}
 %patch13 -p1
 %endif
-%patch16 -p1
 %patch17 -p1
 %patch20 -p1
 %patch21 -p1
