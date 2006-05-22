@@ -19,7 +19,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -74,6 +74,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 %if %{with utf8}
 BuildRequires:	slang-devel >= 1:2.0.0
@@ -81,15 +82,15 @@ BuildRequires:	slang-devel >= 1:2.0.0
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
-# Needed? %%{?with_perl_vfs:Requires:	perl-base}
 %{?with_x:BuildRequires:	XFree86-devel}
 %{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
+# Needed? %%{?with_perl_vfs:Requires:	perl-base}
 Requires:	file
 Requires:	pam >= 0.77.3
 Requires:	setup >= 2.4.6-2
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags_ia32	 -fomit-frame-pointer
 
@@ -398,17 +399,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post -n mcserv
 /sbin/chkconfig --add mcserv
-if [ -f /var/lock/subsys/mcserv ]; then
-	/etc/rc.d/init.d/mcserv restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/mcserv start\" to start mcserv daemon."
-fi
+%service mcserv restart "mcserv daemon"
 
 %preun -n mcserv
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mcserv ]; then
-		/etc/rc.d/init.d/mcserv stop >&2
-	fi
+	%service mcserv stop
 	/sbin/chkconfig --del mcserv
 fi
 
