@@ -4,7 +4,7 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_without	utf8		# utf8
+%bcond_with	utf8		# utf8
 #
 %define	snap	2006-05-10-21
 %define ssnap	%(echo %{snap} | tr - .)
