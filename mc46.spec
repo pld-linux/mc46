@@ -21,7 +21,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{ssnap}.1
+Release:	0.%{ssnap}.2
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
@@ -57,6 +57,8 @@ Patch11:	%{name}-noperl-vfs.patch
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
 Patch13:	%{name}-utf8.patch
+Patch14:	%{name}-vhdl-syntax.patch
+
 Patch17:	%{name}-nolibs.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
@@ -251,6 +253,8 @@ cp -f vfs/extfs/{rpm,srpm}
 %if %{with utf8}
 %patch13 -p1
 %endif
+%patch14 -p1
+
 %patch17 -p1
 %patch20 -p1
 %patch21 -p1
@@ -318,6 +322,7 @@ done
 cd ..
 %endif
 
+rm -f syntax/Syntax.orig
 sed -i 's:|hxx|:|hh|hpp|hxx|:' syntax/Syntax
 
 %build
