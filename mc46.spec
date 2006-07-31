@@ -86,6 +86,7 @@ BuildRequires:	gpm-devel
 %{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
 Requires:	file
 Requires:	pam >= 0.77.3
+Requires:	sed
 Requires:	setup >= 2.4.6-2
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
