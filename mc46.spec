@@ -19,7 +19,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -87,6 +87,7 @@ BuildRequires:	gpm-devel
 # Needed? %%{?with_perl_vfs:Requires:	perl-base}
 Requires:	file
 Requires:	pam >= 0.77.3
+Requires:	sed
 Requires:	setup >= 2.4.6-2
 Obsoletes:	tkmc
 Conflicts:	rpm < 4.0
