@@ -1,6 +1,6 @@
---- mc-4.6.1a/acinclude.m4.utf8	2005-11-16 00:27:27.000000000 +0100
-+++ mc-4.6.1a/acinclude.m4	2006-02-01 14:25:01.000000000 +0100
-@@ -768,14 +768,14 @@ AC_DEFUN([MC_WITH_SLANG], [
+--- mc-2006-06-30-18/acinclude.m4.utf8	2006-06-30 20:32:27.000000000 +0200
++++ mc-2006-06-30-18/acinclude.m4	2006-07-11 10:39:54.000000000 +0200
+@@ -443,14 +443,14 @@
      fi
  
      dnl Unless external S-Lang was requested, reject S-Lang with UTF-8 hacks
@@ -23,9 +23,9 @@
  
      if test x$with_screen = xslang; then
  	AC_DEFINE(HAVE_SYSTEM_SLANG, 1,
---- mc-4.6.1a/src/layout.c.utf8	2005-09-05 03:40:45.000000000 +0200
-+++ mc-4.6.1a/src/layout.c	2006-02-01 14:25:01.000000000 +0100
-@@ -369,36 +369,36 @@ init_layout (void)
+--- mc-2006-06-30-18/src/layout.c.utf8	2006-02-28 18:44:28.000000000 +0100
++++ mc-2006-06-30-18/src/layout.c	2006-07-11 10:39:54.000000000 +0200
+@@ -369,36 +369,36 @@
  
  	while (i--) {
  	    s_split_direction[i] = _(s_split_direction[i]);
@@ -69,7 +69,7 @@
  	    if (l1 > second_width)
  		second_width = l1;
  	}
-@@ -412,14 +412,14 @@ init_layout (void)
+@@ -412,14 +412,14 @@
  	 *
  	 * Now the last thing to do - properly space buttons...
  	 */
@@ -89,7 +89,7 @@
  
  	i18n_layt_flag = 1;
      }
-@@ -687,7 +687,7 @@ setup_panels (void)
+@@ -687,7 +687,7 @@
      panel_do_cols (0);
      panel_do_cols (1);
  
@@ -98,9 +98,9 @@
  
      widget_set_size (&the_menubar->widget, 0, 0, 1, COLS);
  
---- mc-4.6.1a/src/tty.c.utf8	2006-01-07 13:17:07.000000000 +0100
-+++ mc-4.6.1a/src/tty.c	2006-02-01 14:25:01.000000000 +0100
-@@ -123,10 +123,12 @@ tty_print_char(int c)
+--- mc-2006-06-30-18/src/tty.c.utf8	2006-05-23 16:20:39.000000000 +0200
++++ mc-2006-06-30-18/src/tty.c	2006-07-11 10:39:54.000000000 +0200
+@@ -134,10 +134,12 @@
       * defined or not. Congratulations! At least, they left the API call
       * for SLsmg_write_nchars as it has always been.
       */
@@ -117,9 +117,9 @@
  #else
      addch(c);
  #endif
---- mc-4.6.1a/src/option.c.utf8	2005-05-27 05:35:15.000000000 +0200
-+++ mc-4.6.1a/src/option.c	2006-02-01 14:25:01.000000000 +0100
-@@ -123,12 +123,12 @@ init_configure (void)
+--- mc-2006-06-30-18/src/option.c.utf8	2006-02-28 18:44:28.000000000 +0100
++++ mc-2006-06-30-18/src/option.c	2006-07-11 10:39:54.000000000 +0200
+@@ -123,12 +123,12 @@
  	title2 = _(" Pause after run... ");
  	title3 = _(" Other options ");
  
@@ -135,7 +135,7 @@
  	    if (i >= OTHER_OPTIONS) {
  		if (l1 > first_width)
  		    first_width = l1;
-@@ -141,23 +141,23 @@ init_configure (void)
+@@ -141,23 +141,23 @@
  	i = PAUSE_OPTIONS;
  	while (i--) {
  	    pause_options[i] = _(pause_options[i]);
@@ -166,9 +166,9 @@
  
  	i18n_config_flag = 1;
      }
---- mc-4.6.1a/src/menu.h.utf8	2004-12-03 20:17:47.000000000 +0100
-+++ mc-4.6.1a/src/menu.h	2006-02-01 14:25:01.000000000 +0100
-@@ -21,6 +21,8 @@ typedef struct Menu {
+--- mc-2006-06-30-18/src/menu.h.utf8	2004-12-03 20:17:47.000000000 +0100
++++ mc-2006-06-30-18/src/menu.h	2006-07-11 10:39:54.000000000 +0200
+@@ -21,6 +21,8 @@
      menu_entry *entries;
      int    start_x;		/* position relative to menubar start */
      char   *help_node;
@@ -177,8 +177,8 @@
  } Menu;
  
  extern int menubar_visible;
---- mc-4.6.1a/src/menu.c.utf8	2005-09-05 04:12:09.000000000 +0200
-+++ mc-4.6.1a/src/menu.c	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/src/menu.c.utf8	2005-09-06 22:36:23.000000000 +0200
++++ mc-2006-06-30-18/src/menu.c	2006-07-11 10:39:54.000000000 +0200
 @@ -22,6 +22,7 @@
  #include <string.h>
  
@@ -187,7 +187,7 @@
  
  #include "global.h"
  #include "tty.h"
-@@ -53,35 +54,95 @@ create_menu (const char *name, menu_entr
+@@ -53,35 +54,95 @@
  {
      Menu *menu;
      const char *cp;
@@ -289,7 +289,7 @@
      menu->start_x = 0;
      menu->help_node = g_strdup (help_node);
      return menu;
-@@ -112,8 +173,26 @@ static void menubar_paint_idx (WMenu *me
+@@ -112,8 +173,26 @@
  	const char *text;
  
  	addch((unsigned char)menu->entries [idx].first_letter);
@@ -318,7 +318,7 @@
  		if (*text != '&')
  		    addch(*text);
  		else {
-@@ -122,7 +201,7 @@ static void menubar_paint_idx (WMenu *me
+@@ -122,7 +201,7 @@
  		    addch(*(++text));
  		    attrset(color);
  		}
@@ -327,7 +327,7 @@
      }
      widget_move (&menubar->widget, y, x + 1);
  }
-@@ -168,6 +247,12 @@ static void menubar_draw (WMenu *menubar
+@@ -168,6 +247,12 @@
  	if (menubar->active)
  	    attrset(i == menubar->selected?MENU_SELECTED_COLOR:SELECTED_COLOR);
  	widget_move (&menubar->widget, 0, menubar->menu [i]->start_x);
@@ -340,7 +340,7 @@
  	tty_printf ("%s", menubar->menu [i]->name);
      }
  
-@@ -493,7 +578,13 @@ menubar_arrange(WMenu* menubar)
+@@ -493,7 +578,13 @@
  
  	for (i = 0; i < items; i++)
  	{
@@ -355,7 +355,7 @@
  		menubar->menu[i]->start_x = start_x;
  		start_x += len + gap;
  	}
-@@ -506,7 +597,13 @@ menubar_arrange(WMenu* menubar)
+@@ -506,7 +597,13 @@
  	for (i = 0; i < items; i++)
  	{
  		/* preserve length here, to be used below */
@@ -370,7 +370,7 @@
  	}
  
  	gap /= (items - 1);
-@@ -530,6 +627,9 @@ menubar_arrange(WMenu* menubar)
+@@ -530,6 +627,9 @@
  void
  destroy_menu (Menu *menu)
  {
@@ -380,8 +380,8 @@
      g_free (menu->name);
      g_free (menu->help_node);
      g_free (menu);
---- mc-4.6.1a/src/filegui.c.utf8	2006-01-30 10:22:33.000000000 +0100
-+++ mc-4.6.1a/src/filegui.c	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/src/filegui.c.utf8	2006-01-30 18:01:58.000000000 +0100
++++ mc-2006-06-30-18/src/filegui.c	2006-07-11 10:39:54.000000000 +0200
 @@ -65,6 +65,7 @@
  #include "filegui.h"
  #include "key.h"		/* get_event */
@@ -390,7 +390,7 @@
  
  /* }}} */
  
-@@ -563,8 +564,8 @@ init_replace (FileOpContext *ctx, enum O
+@@ -563,8 +564,8 @@
  	 * longest of "Overwrite..." labels 
  	 * (assume "Target date..." are short enough)
  	 */
@@ -401,7 +401,7 @@
  
  	/* longest of button rows */
  	i = sizeof (rd_widgets) / sizeof (rd_widgets[0]);
-@@ -575,7 +576,7 @@ init_replace (FileOpContext *ctx, enum O
+@@ -575,7 +576,7 @@
  		    l2 = max (l2, l);
  		    l = 0;
  		}
@@ -410,7 +410,7 @@
  	    }
  	}
  	l2 = max (l2, l);	/* last row */
-@@ -593,12 +594,12 @@ init_replace (FileOpContext *ctx, enum O
+@@ -593,12 +594,12 @@
  		    l = l1;
  		}
  		rd_widgets[i].xpos = l;
@@ -425,7 +425,7 @@
      }
  #endif				/* ENABLE_NLS */
  
-@@ -617,7 +618,7 @@ init_replace (FileOpContext *ctx, enum O
+@@ -617,7 +618,7 @@
  
      ADD_RD_LABEL (ui, 0,
  		  name_trunc (ui->replace_filename,
@@ -434,7 +434,7 @@
      ADD_RD_BUTTON (1);
  
      ADD_RD_BUTTON (2);
-@@ -804,36 +805,36 @@ fmd_init_i18n (int force)
+@@ -804,36 +805,36 @@
  	if (fmd_widgets[i].text[0] != '\0')
  	    fmd_widgets[i].text = _(fmd_widgets[i].text);
  
@@ -481,7 +481,7 @@
  
      chkbox_xpos (FMCB0);
      chkbox_xpos (FMCB21);
-@@ -855,7 +856,7 @@ fmd_init_i18n (int force)
+@@ -855,7 +856,7 @@
  
  char *
  file_mask_dialog (FileOpContext *ctx, FileOperation operation, const char *text,
@@ -490,7 +490,7 @@
  {
      int source_easy_patterns = easy_patterns;
      char *source_mask, *orig_mask, *dest_dir, *tmpdest;
-@@ -864,12 +865,20 @@ file_mask_dialog (FileOpContext *ctx, Fi
+@@ -864,12 +865,20 @@
      struct stat buf;
      int val;
      QuickDialog Quick_input;
@@ -512,7 +512,7 @@
      fmd_init_i18n (FALSE);
  
      /* Set up the result pointers */
-@@ -928,6 +937,7 @@ file_mask_dialog (FileOpContext *ctx, Fi
+@@ -928,6 +937,7 @@
      orig_mask = source_mask;
      if (!dest_dir || !*dest_dir) {
  	g_free (source_mask);
@@ -520,16 +520,16 @@
  	return dest_dir;
      }
      if (source_easy_patterns) {
-@@ -981,5 +991,6 @@ file_mask_dialog (FileOpContext *ctx, Fi
+@@ -981,5 +991,6 @@
      }
      if (val == B_USER)
  	*do_background = 1;
 +    g_free(def_text);
      return dest_dir;
  }
---- mc-4.6.1a/src/panelize.c.utf8	2005-05-27 05:35:15.000000000 +0200
-+++ mc-4.6.1a/src/panelize.c	2006-02-01 14:25:01.000000000 +0100
-@@ -127,7 +127,7 @@ init_panelize (void)
+--- mc-2006-06-30-18/src/panelize.c.utf8	2005-05-27 05:35:15.000000000 +0200
++++ mc-2006-06-30-18/src/panelize.c	2006-07-11 10:39:54.000000000 +0200
+@@ -127,7 +127,7 @@
  	i = sizeof (panelize_but) / sizeof (panelize_but[0]);
  	while (i--) {
  	    panelize_but[i].text = _(panelize_but[i].text);
@@ -538,7 +538,7 @@
  	}
  	maxlen += 10;
  
-@@ -136,11 +136,11 @@ init_panelize (void)
+@@ -136,11 +136,11 @@
      panelize_cols = max (panelize_cols, maxlen);
  
      panelize_but[2].x =
@@ -553,9 +553,9 @@
  
  #endif				/* ENABLE_NLS */
  
---- mc-4.6.1a/src/slint.c.utf8	2005-09-05 04:14:29.000000000 +0200
-+++ mc-4.6.1a/src/slint.c	2006-02-01 14:25:01.000000000 +0100
-@@ -141,7 +141,9 @@ void
+--- mc-2006-06-30-18/src/slint.c.utf8	2005-09-06 22:36:23.000000000 +0200
++++ mc-2006-06-30-18/src/slint.c	2006-07-11 10:39:54.000000000 +0200
+@@ -141,7 +141,9 @@
  slang_init (void)
  {
      SLtt_get_terminfo ();
@@ -566,9 +566,9 @@
     /*
      * If the terminal in not in terminfo but begins with a well-known
      * string such as "linux" or "xterm" S-Lang will go on, but the
---- mc-4.6.1a/src/main.c.utf8	2006-01-29 21:26:05.000000000 +0100
-+++ mc-4.6.1a/src/main.c	2006-02-01 14:25:01.000000000 +0100
-@@ -704,7 +704,7 @@ load_prompt (int fd, void *unused)
+--- mc-2006-06-30-18/src/main.c.utf8	2006-05-15 17:46:14.000000000 +0200
++++ mc-2006-06-30-18/src/main.c	2006-07-11 10:39:54.000000000 +0200
+@@ -704,7 +704,7 @@
  	int prompt_len;
  
  	tmp_prompt = strip_ctrl_codes (subshell_prompt);
@@ -577,7 +577,7 @@
  
  	/* Check for prompts too big */
  	if (COLS > 8 && prompt_len > COLS - 8) {
-@@ -1617,7 +1617,11 @@ update_xterm_title_path (void)
+@@ -1612,7 +1612,11 @@
      if (xterm_flag && xterm_title) {
  	p = s = g_strdup (strip_home_and_password (current_panel->cwd));
  	do {
@@ -589,8 +589,8 @@
  		*s = '?';
  	} while (*++s);
  	fprintf (stdout, "\33]0;mc - %s\7", p);
---- mc-4.6.1a/src/view.c.utf8	2006-01-31 15:39:30.000000000 +0100
-+++ mc-4.6.1a/src/view.c	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/src/view.c.utf8	2006-02-06 17:55:43.000000000 +0100
++++ mc-2006-06-30-18/src/view.c	2006-07-11 10:39:54.000000000 +0200
 @@ -43,6 +43,10 @@
  #include <sys/stat.h>
  #include <unistd.h>
@@ -602,7 +602,7 @@
  #include "global.h"
  #include "tty.h"
  #include "cmd.h"		/* For view_other_cmd */
-@@ -1627,7 +1631,7 @@ view_display_status (WView *view)
+@@ -1627,7 +1631,7 @@
      hline (' ', width);
  
      file_label = _("File: %s");
@@ -611,7 +611,7 @@
      file_name = view->filename ? view->filename
  	: view->command ? view->command
  	: "";
-@@ -1895,6 +1899,12 @@ view_display_text (WView * view)
+@@ -1895,6 +1899,12 @@
      offset_type from;
      int c;
      struct hexedit_change_node *curr = view->change_list;
@@ -624,9 +624,9 @@
  
      view_display_clean (view);
      view_display_ruler (view);
-@@ -1907,8 +1917,37 @@ view_display_text (WView * view)
+@@ -1907,8 +1917,37 @@
  
-     attrset (NORMAL_COLOR);
+     tty_setcolor (NORMAL_COLOR);
      for (row = 0, col = 0; row < height && (c = get_byte (view, from)) != -1; from++) {
 -
 +#ifndef UTF8
@@ -663,7 +663,7 @@
  	    int c_prev;
  	    int c_next;
  
-@@ -1967,10 +2006,17 @@ view_display_text (WView * view)
+@@ -1967,10 +2006,17 @@
  	if (col >= view->dpy_text_column
  	    && col - view->dpy_text_column < width) {
  	    widget_move (view, top + row, left + (col - view->dpy_text_column));
@@ -680,10 +680,10 @@
 +#endif
  	}
  	col++;
- 	attrset (NORMAL_COLOR);
---- mc-4.6.1a/src/screen.c.utf8	2005-11-11 04:32:40.000000000 +0100
-+++ mc-4.6.1a/src/screen.c	2006-02-01 14:25:01.000000000 +0100
-@@ -171,21 +171,56 @@ add_permission_string (char *dest, int w
+ 	tty_setcolor (NORMAL_COLOR);
+--- mc-2006-06-30-18/src/screen.c.utf8	2006-02-09 02:59:16.000000000 +0100
++++ mc-2006-06-30-18/src/screen.c	2006-07-11 10:39:54.000000000 +0200
+@@ -171,21 +171,56 @@
  static const char *
  string_file_name (file_entry *fe, int len)
  {
@@ -711,7 +711,9 @@
 +	for (i = 0; i < sizeof (buffer) - 1; i++) {
 +	    wchar_t wc;
 +	    int len;
-+
+ 
+-	if (!is_printable(c))
+-	    c = '?';
 +	    len = mbrtowc (&wc, str, mbmax, &s);
 +	    if (!len)
 +		break;
@@ -738,18 +740,16 @@
 +
 +	    c = fe->fname[i];
  
--	if (!is_printable(c))
--	    c = '?';
-+	    if (!c) break;
- 
 -	buffer[i] = c;
++	    if (!c) break;
++
 +	    if (!is_printable(c)) c = '?';
 +
 +	    buffer[i] = c;
      }
  
      buffer[i] = 0;
-@@ -450,42 +485,6 @@ static struct {
+@@ -450,42 +485,6 @@
  { "dot",   1,  0, J_RIGHT,	" ",		0, string_dot,		   NULL },
  };
  
@@ -792,7 +792,7 @@
  static int
  file_compute_color (int attr, file_entry *fe)
  {
-@@ -539,14 +538,18 @@ file_compute_color (int attr, file_entry
+@@ -539,14 +538,18 @@
  
  /* Formats the file number file_index of panel in the buffer dest */
  static void
@@ -810,11 +810,11 @@
 +#else
 +    char     buffer[BUF_MEDIUM];
 +#endif
-+    int txtwidth;
++    int txtwidth = 0;
  
      length     = 0;
      empty_line = (file_index >= panel->count);
-@@ -564,34 +567,137 @@ format_file (char *dest, int limit, WPan
+@@ -564,34 +567,137 @@
  	    break;
  
  	if (format->string_fn){
@@ -892,7 +892,7 @@
 +	    default:
 +		break;
 +	    }
- 
++
 +	    attrset (color);
 +
 +	    if (wide) {
@@ -954,7 +954,7 @@
 +			    len - txtlen - still);
 +		}
 +		buffer[len] = '\0';
-+
+ 
 +		if (perm)
 +		    add_permission_string (buffer, format->field_len, fe,
 +					   attr, color, perm - 1);
@@ -966,7 +966,7 @@
  	} else {
              if (attr == SELECTED || attr == MARKED_SELECTED)
                  attrset (SELECTED_COLOR);
-@@ -614,7 +720,6 @@ repaint_file (WPanel *panel, int file_in
+@@ -614,7 +720,6 @@
  {
      int    second_column = 0;
      int	   width, offset;
@@ -974,7 +974,7 @@
  
      offset = 0;
      if (!isstatus && panel->split){
-@@ -643,7 +748,7 @@ repaint_file (WPanel *panel, int file_in
+@@ -643,7 +748,7 @@
  	    widget_move (&panel->widget, file_index - panel->top_file + 2, 1);
      }
  
@@ -983,7 +983,7 @@
  
      if (!isstatus && panel->split){
  	if (second_column)
-@@ -692,7 +797,7 @@ display_mini_info (WPanel *panel)
+@@ -692,7 +797,7 @@
  		   ngettext("%s in %d file", "%s in %d files", panel->marked),
  		   b_bytes, panel->marked);
  
@@ -992,7 +992,7 @@
  	    buffer [cols] = 0;
  	    p += 2;
  	} else
-@@ -1101,6 +1206,12 @@ paint_frame (WPanel *panel)
+@@ -1101,6 +1206,12 @@
      int  side, width;
  
      const char *txt;
@@ -1005,7 +1005,7 @@
      if (!panel->split)
  	adjust_top_file (panel);
  
-@@ -1125,16 +1236,38 @@ paint_frame (WPanel *panel)
+@@ -1125,16 +1236,38 @@
              if (format->string_fn){
                  txt = format->title;
  
@@ -1047,9 +1047,72 @@
  	    } else {
  		attrset (NORMAL_COLOR);
  		one_vline ();
---- mc-4.6.1a/src/widget.h.utf8	2005-06-14 15:02:31.000000000 +0200
-+++ mc-4.6.1a/src/widget.h	2006-02-01 14:25:01.000000000 +0100
-@@ -22,6 +22,7 @@ typedef struct WButton {
+@@ -1891,11 +2024,24 @@
+     int i;
+     int wrapped = 0;
+     int found;
++    int prevpos, pos;
++    int j;
++    mbstate_t mbs;
+ 
+     l = strlen (panel->search_buffer);
+     if (c_code == KEY_BACKSPACE) {
+-	if (l)
+-	    panel->search_buffer[--l] = '\0';
++	if (l) {
++	    prevpos = pos = 0;
++	    memset (&mbs, 0, sizeof (mbs));
++	    while (pos < l) {
++		prevpos = pos;
++		j = mbrlen (panel->search_buffer + pos, l - pos, &mbs);
++		if (j <= 0) break;
++		pos += j;
++	    }
++	    --l;
++	    panel->search_buffer[prevpos] = 0;
++	}
+     } else {
+ 	if (c_code && l < sizeof (panel->search_buffer)) {
+ 	    panel->search_buffer[l] = c_code;
+@@ -1904,6 +2050,14 @@
+ 	}
+     }
+ 
++    prevpos = pos = 0;
++    memset (&mbs, 0, sizeof (mbs));
++    while (pos < l) {
++	prevpos = pos;
++	j = mbrlen (panel->search_buffer + pos, l - pos, &mbs);
++	if (j <= 0) break;
++	pos += j;
++    }
+     found = 0;
+     for (i = panel->selected; !wrapped || i != panel->selected; i++) {
+ 	if (i >= panel->count) {
+@@ -1914,9 +2068,9 @@
+ 	}
+ 	if (panel->
+ 	    case_sensitive
+-	    ? (strncmp (panel->dir.list[i].fname, panel->search_buffer, l)
++	    ? (strncmp (panel->dir.list[i].fname, panel->search_buffer, pos)
+ 	       == 0) : (g_strncasecmp (panel->dir.list[i].fname,
+-				       panel->search_buffer, l) == 0)) {
++				       panel->search_buffer, pos) == 0)) {
+ 	    unselect_item (panel);
+ 	    panel->selected = i;
+ 	    select_item (panel);
+@@ -1925,7 +2079,7 @@
+ 	}
+     }
+     if (!found)
+-	panel->search_buffer[--l] = 0;
++	panel->search_buffer[prevpos] = 0;
+ 
+     paint_panel (panel);
+ }
+--- mc-2006-06-30-18/src/widget.h.utf8	2006-02-28 18:44:28.000000000 +0100
++++ mc-2006-06-30-18/src/widget.h	2006-07-11 10:39:54.000000000 +0200
+@@ -22,6 +22,7 @@
      char *text;			/* text of button */
      int hotkey;			/* hot KEY */
      int hotpos;			/* offset hot KEY char in text */
@@ -1057,7 +1120,7 @@
      bcback callback;		/* Callback function */
  } WButton;
  
-@@ -43,6 +44,7 @@ typedef struct WCheck {
+@@ -42,6 +43,7 @@
      char *text;			/* text of check button */
      int hotkey;                 /* hot KEY */
      int hotpos;			/* offset hot KEY char in text */
@@ -1065,7 +1128,7 @@
  } WCheck;
  
  typedef struct WGauge {
-@@ -58,16 +60,20 @@ char *show_hist (GList *history, int wid
+@@ -57,16 +59,20 @@
  
  typedef struct {
      Widget widget;
@@ -1091,8 +1154,8 @@
      GList *history;		/* The history */
      int  need_push;		/* need to push the current Input on hist? */
      char **completions;		/* Possible completions array */
---- mc-4.6.1a/src/tty.h.utf8	2005-09-05 04:14:29.000000000 +0200
-+++ mc-4.6.1a/src/tty.h	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/src/tty.h.utf8	2006-05-15 17:46:20.000000000 +0200
++++ mc-2006-06-30-18/src/tty.h	2006-07-11 10:39:54.000000000 +0200
 @@ -8,6 +8,8 @@
      of ifdefs in the other files small.
   */
@@ -1102,9 +1165,9 @@
  #ifdef HAVE_SLANG
  #   include "myslang.h"
  #endif
---- mc-4.6.1a/src/hotlist.c.utf8	2006-01-30 10:22:33.000000000 +0100
-+++ mc-4.6.1a/src/hotlist.c	2006-02-01 14:25:01.000000000 +0100
-@@ -555,7 +555,7 @@ init_i18n_stuff(int list_type, int cols)
+--- mc-2006-06-30-18/src/hotlist.c.utf8	2006-02-15 17:19:26.000000000 +0100
++++ mc-2006-06-30-18/src/hotlist.c	2006-07-11 10:39:54.000000000 +0200
+@@ -565,7 +565,7 @@
  
  			row = hotlist_but [i].y;
  			++count [row];
@@ -1113,7 +1176,7 @@
  			if (hotlist_but [i].flags == DEFPUSH_BUTTON)
  				len [row] += 2;
  		}
-@@ -580,12 +580,12 @@ init_i18n_stuff(int list_type, int cols)
+@@ -590,12 +590,12 @@
  				/* not first int the row */
  				if (!strcmp (hotlist_but [i].text, cancel_but))
  					hotlist_but [i].x = 
@@ -1128,7 +1191,7 @@
  				+ (hotlist_but [i].flags == DEFPUSH_BUTTON ? 5 : 3);
  		}
  	}
-@@ -814,7 +814,7 @@ static void add_widgets_i18n(QuickWidget
+@@ -836,7 +836,7 @@
  	for (i = 0; i < 3; i++)
  	{
  		qw [i].text = _(qw [i].text);
@@ -1137,7 +1200,7 @@
  	}
  	space = (len - 4 - l[0] - l[1] - l[2]) / 4;
  
-@@ -863,7 +863,7 @@ add_new_entry_input (const char *header,
+@@ -885,7 +885,7 @@
  
      msglen(text1, &lines1, &cols1);
      msglen(text2, &lines2, &cols2);
@@ -1146,7 +1209,7 @@
      len = max (len, cols2) + 4;
      len = max (len, 64);
  
-@@ -959,7 +959,7 @@ add_new_group_input (const char *header,
+@@ -981,7 +981,7 @@
  #endif /* ENABLE_NLS */
  
      msglen (label, &lines, &cols);
@@ -1155,7 +1218,7 @@
      len = max (len, 64);
  
  #ifdef ENABLE_NLS
-@@ -1015,7 +1015,7 @@ void add2hotlist_cmd (void)
+@@ -1037,7 +1037,7 @@
  {
      char *prompt, *label;
      const char *cp = _("Label for \"%s\":");
@@ -1164,9 +1227,9 @@
      char *label_string = g_strdup (current_panel->cwd);
  
      strip_password (label_string, 1);
---- mc-4.6.1a/src/help.c.utf8	2005-07-22 11:29:50.000000000 +0200
-+++ mc-4.6.1a/src/help.c	2006-02-01 14:25:01.000000000 +0100
-@@ -449,10 +449,28 @@ static void help_show (Dlg_head *h, cons
+--- mc-2006-06-30-18/src/help.c.utf8	2005-07-22 11:29:50.000000000 +0200
++++ mc-2006-06-30-18/src/help.c	2006-07-11 10:39:54.000000000 +0200
+@@ -449,10 +449,28 @@
  #ifndef HAVE_SLANG
  			addch (acs_map [c]);
  #else
@@ -1186,7 +1249,7 @@
 +		    len = mbrtowc(&wc, p, MB_CUR_MAX, &mbs);
 +		    if (len <= 0) len = 1; /* skip broken multibyte chars */
 +
-+            	    SLsmg_write_char(wc);
++            	    SLsmg_write_nwchars(&wc, 1);
 +		    p += len - 1;
  		} else
 +#endif
@@ -1195,7 +1258,7 @@
  		col++;
  		break;
  	    }
-@@ -805,6 +823,12 @@ interactive_display (const char *filenam
+@@ -805,6 +823,12 @@
  	message (1, MSG_ERROR, _(" Cannot open file %s \n %s "), filename ? filename : hlpfile,
  		 unix_error_string (errno));
      }
@@ -1208,9 +1271,9 @@
  
      if (!filename)
  	g_free (hlpfile);
---- mc-4.6.1a/src/wtools.c.utf8	2005-09-05 05:21:32.000000000 +0200
-+++ mc-4.6.1a/src/wtools.c	2006-02-01 14:25:01.000000000 +0100
-@@ -49,11 +49,11 @@ create_listbox_window (int cols, int lin
+--- mc-2006-06-30-18/src/wtools.c.utf8	2006-02-28 18:44:28.000000000 +0100
++++ mc-2006-06-30-18/src/wtools.c	2006-07-11 10:39:54.000000000 +0200
+@@ -49,11 +49,11 @@
      /* Adjust sizes */
      lines = (lines > LINES - 6) ? LINES - 6 : lines;
  
@@ -1224,7 +1287,7 @@
  	cols = len;
  
      cols = cols > COLS - 6 ? COLS - 6 : cols;
-@@ -124,7 +124,7 @@ query_dialog (const char *header, const 
+@@ -124,7 +124,7 @@
  	va_start (ap, count);
  	for (i = 0; i < count; i++) {
  	    char *cp = va_arg (ap, char *);
@@ -1233,7 +1296,7 @@
  	    if (strchr (cp, '&') != NULL)
  		win_len--;
  	}
-@@ -133,7 +133,7 @@ query_dialog (const char *header, const 
+@@ -133,7 +133,7 @@
  
      /* count coordinates */
      msglen (text, &lines, &cols);
@@ -1242,7 +1305,7 @@
      lines += 4 + (count > 0 ? 2 : 0);
      xpos = COLS / 2 - cols / 2;
      ypos = LINES / 3 - (lines - 3) / 2;
-@@ -148,7 +148,7 @@ query_dialog (const char *header, const 
+@@ -148,7 +148,7 @@
  	va_start (ap, count);
  	for (i = 0; i < count; i++) {
  	    cur_name = va_arg (ap, char *);
@@ -1251,7 +1314,7 @@
  	    if (strchr (cur_name, '&') != NULL)
  		xpos--;
  
-@@ -461,7 +461,7 @@ fg_input_dialog_help (const char *header
+@@ -457,7 +457,7 @@
      quick_widgets[2].histname = histname;
  
      msglen (text, &lines, &cols);
@@ -1260,18 +1323,18 @@
      len = max (len, 64);
  
      /* The special value of def_text is used to identify password boxes
-@@ -481,7 +481,7 @@ fg_input_dialog_help (const char *header
-      */
+@@ -477,7 +477,7 @@
+     quick_widgets[1].text = _(quick_widgets[1].text);
      quick_widgets[0].relative_x = len / 2 + 4;
      quick_widgets[1].relative_x =
--	len / 2 - (strlen (_(quick_widgets[1].text)) + 9);
-+	len / 2 - (mbstrlen (_(quick_widgets[1].text)) + 9);
+-	len / 2 - (strlen (quick_widgets[1].text) + 9);
++	len / 2 - (mbstrlen (quick_widgets[1].text) + 9);
      quick_widgets[0].x_divisions = quick_widgets[1].x_divisions = len;
  #endif				/* ENABLE_NLS */
  
---- mc-4.6.1a/src/util.h.utf8	2005-11-03 03:18:38.000000000 +0100
-+++ mc-4.6.1a/src/util.h	2006-02-01 14:25:01.000000000 +0100
-@@ -111,6 +111,13 @@ void init_uid_gid_cache (void);
+--- mc-2006-06-30-18/src/util.h.utf8	2006-02-06 17:55:43.000000000 +0100
++++ mc-2006-06-30-18/src/util.h	2006-07-11 10:39:54.000000000 +0200
+@@ -103,6 +103,13 @@
  char *get_group (int);
  char *get_owner (int);
  
@@ -1285,9 +1348,9 @@
  #define MAX_I18NTIMELENGTH 14
  #define MIN_I18NTIMELENGTH 10
  #define STD_I18NTIMELENGTH 12
---- mc-4.6.1a/src/widget.c.utf8	2005-10-08 06:52:42.000000000 +0200
-+++ mc-4.6.1a/src/widget.c	2006-02-01 14:25:01.000000000 +0100
-@@ -35,6 +35,9 @@
+--- mc-2006-06-30-18/src/widget.c.utf8	2006-05-30 15:46:15.000000000 +0200
++++ mc-2006-06-30-18/src/widget.c	2006-07-11 10:39:54.000000000 +0200
+@@ -36,6 +36,9 @@
  
  #include "global.h"
  #include "tty.h"
@@ -1297,7 +1360,7 @@
  #include "color.h"
  #include "mouse.h"
  #include "dialog.h"
-@@ -181,6 +184,11 @@ button_callback (Widget *w, widget_msg_t
+@@ -182,6 +185,11 @@
  	if (b->hotpos >= 0) {
  	    widget_selectcolor (w, b->selected, TRUE);
  	    widget_move (w, 0, b->hotpos + off);
@@ -1309,7 +1372,7 @@
  	    addch ((unsigned char) b->text[b->hotpos]);
  	}
  	return MSG_HANDLED;
-@@ -214,7 +222,7 @@ button_event (Gpm_Event *event, void *da
+@@ -215,7 +223,7 @@
  static int
  button_len (const char *text, unsigned int flags)
  {
@@ -1318,7 +1381,7 @@
      switch (flags){
  	case DEFPUSH_BUTTON:
  	    ret += 6;
-@@ -237,14 +245,36 @@ button_len (const char *text, unsigned i
+@@ -238,14 +246,36 @@
   * the button text is g_malloc()ed, we can safely change and shorten it.
   */
  static void
@@ -1360,7 +1423,7 @@
      }
  }
  
-@@ -265,8 +295,9 @@ button_new (int y, int x, int action, in
+@@ -266,8 +296,9 @@
      widget_want_hotkey (b->widget, 1);
      b->hotkey = 0;
      b->hotpos = -1;
@@ -1371,7 +1434,7 @@
      return b;
  }
  
-@@ -279,14 +310,13 @@ button_get_text (WButton *b)
+@@ -280,14 +311,13 @@
  void
  button_set_text (WButton *b, const char *text)
  {
@@ -1388,7 +1451,7 @@
  /* Radio button widget */
  static int radio_event (Gpm_Event *event, void *);
  
-@@ -361,14 +391,35 @@ radio_callback (Widget *w, widget_msg_t 
+@@ -362,14 +392,35 @@
  	    widget_move (&r->widget, i, 0);
  
  	    tty_printf ("(%c) ", (r->sel == i) ? '*' : ' ');
@@ -1431,7 +1494,7 @@
  	}
  	return MSG_HANDLED;
  
-@@ -407,7 +458,7 @@ radio_new (int y, int x, int count, cons
+@@ -408,7 +459,7 @@
      /* Compute the longest string */
      max = 0;
      for (i = 0; i < count; i++){
@@ -1440,7 +1503,7 @@
  	if (m > max)
  	    max = m;
      }
-@@ -468,6 +519,11 @@ check_callback (Widget *w, widget_msg_t 
+@@ -468,6 +519,11 @@
  	if (c->hotpos >= 0) {
  	    widget_selectcolor (w, msg == WIDGET_FOCUS, TRUE);
  	    widget_move (&c->widget, 0, +c->hotpos + 4);
@@ -1452,7 +1515,7 @@
  	    addch ((unsigned char) c->text[c->hotpos]);
  	}
  	return MSG_HANDLED;
-@@ -505,35 +561,20 @@ WCheck *
+@@ -505,35 +561,20 @@
  check_new (int y, int x, int state, const char *text)
  {
      WCheck *c =  g_new (WCheck, 1);
@@ -1492,7 +1555,7 @@
  /* Label widget */
  
  static cb_ret_t
-@@ -572,7 +613,7 @@ label_callback (Widget *w, widget_msg_t 
+@@ -572,7 +613,7 @@
  		}
  		widget_move (&l->widget, y, 0);
  		tty_printf ("%s", p);
@@ -1501,7 +1564,7 @@
  		if (xlen > 0)
  		    tty_printf ("%*s", xlen, " ");
  		if (!q)
-@@ -606,7 +647,7 @@ label_set_text (WLabel *label, const cha
+@@ -606,7 +647,7 @@
      if (text){
  	label->text = g_strdup (text);
  	if (label->auto_adjust_cols) {
@@ -1510,7 +1573,7 @@
  	    if (newcols > label->widget.cols)
  	    label->widget.cols = newcols;
  	}
-@@ -630,7 +671,7 @@ label_new (int y, int x, const char *tex
+@@ -630,7 +671,7 @@
      if (!text || strchr(text, '\n'))
  	width = 1;
      else
@@ -1519,7 +1582,7 @@
  
      l = g_new (WLabel, 1);
      init_widget (&l->widget, y, x, 1, width, label_callback, NULL);
-@@ -778,13 +819,69 @@ static void draw_history_button (WInput 
+@@ -778,13 +819,69 @@
  /* Pointer to killed data */
  static char *kill_buffer = 0;
  
@@ -1591,7 +1654,7 @@
  
      if (should_show_history_button (in))
  	has_history = HISTORY_BUTTON_WIDTH;
-@@ -794,7 +891,7 @@ update_input (WInput *in, int clear_firs
+@@ -794,7 +891,7 @@
  
      /* Make the point visible */
      if ((in->point < in->first_shown) ||
@@ -1600,7 +1663,7 @@
  	in->first_shown = in->point - (in->field_len / 3);
  	if (in->first_shown < 0)
  	    in->first_shown = 0;
-@@ -814,14 +911,29 @@ update_input (WInput *in, int clear_firs
+@@ -814,14 +911,29 @@
  	addch (' ');
      widget_move (&in->widget, 0, 0);
      
@@ -1632,7 +1695,7 @@
  
      if (clear_first)
  	    in->first = 0;
-@@ -974,7 +1086,7 @@ char *
+@@ -974,7 +1086,7 @@
  show_hist (GList *history, int widget_x, int widget_y)
  {
      GList *hi, *z;
@@ -1641,7 +1704,7 @@
      int x, y, w, h;
      char *q, *r = 0;
      Dlg_head *query_dlg;
-@@ -987,7 +1099,7 @@ show_hist (GList *history, int widget_x,
+@@ -987,7 +1099,7 @@
      z = g_list_first (history);
      hi = z;
      while (hi) {
@@ -1650,7 +1713,7 @@
  	    maxlen = i;
  	count++;
  	hi = g_list_next (hi);
-@@ -1159,35 +1271,83 @@ new_input (WInput *in)
+@@ -1157,35 +1269,83 @@
      in->need_push = 1;
      in->buffer [0] = 0;
      in->point = 0;
@@ -1737,7 +1800,7 @@
      return MSG_HANDLED;
  }
  
-@@ -1195,12 +1355,14 @@ static void
+@@ -1193,12 +1353,14 @@
  beginning_of_line (WInput *in)
  {
      in->point = 0;
@@ -1753,7 +1816,7 @@
  }
  
  static void
-@@ -1208,18 +1370,21 @@ backward_char (WInput *in)
+@@ -1206,18 +1368,21 @@
  {
      if (in->point)
  	in->point--;
@@ -1776,7 +1839,7 @@
      char *p = in->buffer + in->point;
  
      while (*p
-@@ -1229,11 +1394,39 @@ forward_word (WInput * in)
+@@ -1227,11 +1392,39 @@
      while (*p && isalnum ((unsigned char) *p))
  	p++;
      in->point = p - in->buffer;
@@ -1816,7 +1879,7 @@
      char *p = in->buffer + in->point;
  
      while (p - 1 > in->buffer - 1 && (isspace ((unsigned char) *(p - 1))
-@@ -1243,6 +1436,32 @@ backward_word (WInput *in)
+@@ -1241,6 +1434,32 @@
      while (p - 1 > in->buffer - 1 && isalnum ((unsigned char) *(p - 1)))
  	p--;
      in->point = p - in->buffer;
@@ -1849,7 +1912,7 @@
  }
  
  static void
-@@ -1275,8 +1494,9 @@ backward_delete (WInput *in)
+@@ -1273,8 +1492,9 @@
      
      if (!in->point)
  	return;
@@ -1861,7 +1924,7 @@
      in->need_push = 1;
      in->point--;
  }
-@@ -1284,10 +1504,8 @@ backward_delete (WInput *in)
+@@ -1282,10 +1502,8 @@
  static void
  delete_char (WInput *in)
  {
@@ -1874,7 +1937,7 @@
      in->need_push = 1;
  }
  
-@@ -1302,6 +1520,9 @@ copy_region (WInput *in, int x_first, in
+@@ -1300,6 +1518,9 @@
      
      g_free (kill_buffer);
  
@@ -1884,7 +1947,7 @@
      kill_buffer = g_strndup(in->buffer+first,last-first);
  }
  
-@@ -1310,11 +1531,13 @@ delete_region (WInput *in, int x_first, 
+@@ -1308,11 +1529,13 @@
  {
     int first = min (x_first, x_last);
     int last  = max (x_first, x_last);
@@ -1900,7 +1963,7 @@
     in->need_push = 1;
  }
  
-@@ -1331,6 +1554,8 @@ kill_word (WInput *in)
+@@ -1329,6 +1552,8 @@
      copy_region (in, old_point, new_point);
      delete_region (in, old_point, new_point);
      in->need_push = 1;
@@ -1909,7 +1972,7 @@
  }
  
  static void
-@@ -1374,16 +1599,20 @@ yank (WInput *in)
+@@ -1372,16 +1597,20 @@
      
      if (!kill_buffer)
          return;
@@ -1932,7 +1995,7 @@
  }
  
  void
-@@ -1393,9 +1622,10 @@ assign_text (WInput *in, const char *tex
+@@ -1391,9 +1620,10 @@
      g_free (in->buffer);
      in->buffer = g_strdup (text);	/* was in->buffer->text */
      in->current_max_len = strlen (in->buffer) + 1;
@@ -1944,7 +2007,7 @@
  }
  
  static void
-@@ -1522,6 +1752,7 @@ port_region_marked_for_delete (WInput *i
+@@ -1520,6 +1750,7 @@
      *in->buffer = 0;
      in->point = 0;
      in->first = 0;
@@ -1952,7 +2015,7 @@
  }
  
  cb_ret_t
-@@ -1550,7 +1781,11 @@ handle_char (WInput *in, int c_code)
+@@ -1548,7 +1779,11 @@
  	}
      }
      if (!input_map [i].fn){
@@ -1964,7 +2027,7 @@
  	    return MSG_NOT_HANDLED;
  	if (in->first){
  	    port_region_marked_for_delete (in);
-@@ -1584,6 +1819,9 @@ input_set_point (WInput *in, int pos)
+@@ -1581,6 +1816,9 @@
      if (pos != in->point)
      	free_completions (in);
      in->point = pos;
@@ -1974,7 +2037,7 @@
      update_input (in, 1);
  }
  
-@@ -1624,7 +1862,7 @@ input_callback (Widget *w, widget_msg_t 
+@@ -1621,7 +1859,7 @@
  	return MSG_HANDLED;
  
      case WIDGET_CURSOR:
@@ -1983,7 +2046,7 @@
  	return MSG_HANDLED;
  
      case WIDGET_DESTROY:
-@@ -1648,7 +1886,7 @@ input_event (Gpm_Event * event, void *da
+@@ -1645,7 +1883,7 @@
  	    && should_show_history_button (in)) {
  	    do_show_hist (in);
  	} else {
@@ -1992,7 +2055,7 @@
  	    if (event->x - in->first_shown - 1 < in->point)
  		in->point = event->x - in->first_shown - 1;
  	    if (in->point < 0)
-@@ -1705,7 +1943,8 @@ input_new (int y, int x, int color, int 
+@@ -1702,7 +1940,8 @@
      in->is_password = 0;
  
      strcpy (in->buffer, def_text);
@@ -2002,8 +2065,8 @@
      return in;
  }
  
---- mc-4.6.1a/src/util.c.utf8	2005-11-03 03:18:38.000000000 +0100
-+++ mc-4.6.1a/src/util.c	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/src/util.c.utf8	2005-11-03 03:01:12.000000000 +0100
++++ mc-2006-06-30-18/src/util.c	2006-07-11 10:39:54.000000000 +0200
 @@ -33,7 +33,11 @@
  #include <sys/types.h>
  #include <sys/stat.h>
@@ -2016,7 +2079,7 @@
  #include "global.h"
  #include "profile.h"
  #include "main.h"		/* mc_home */
-@@ -45,9 +49,21 @@
+@@ -45,9 +49,39 @@
  #include "charsets.h"
  #endif
  
@@ -2030,15 +2093,33 @@
 +#if SLANG_VERSION >= 20000
 +void SLsmg_write_nwchars(wchar_t *s, size_t n)
 +{
-+    while(n--)
-+	SLsmg_write_char(*s++);
++    if (SLsmg_is_utf8_mode()) { /* slang can handle it directly */
++	while(n-- && *s)
++	    SLsmg_write_char(*s++);
++    }
++    else { /* convert wchars back to 8bit encoding */
++       mbstate_t mbs;
++	memset (&mbs, 0, sizeof (mbs));
++	while (n-- && *s) {
++	    char buf[MB_LEN_MAX + 1]; /* should use 1 char, but to be sure */
++	    if (*s < 0x80) {
++		SLsmg_write_char(*s++); /* ASCII */
++	    }
++	    else {
++		if (wcrtomb(buf, *s++, &mbs) == 1)
++		    SLsmg_write_char((wchar_t)(buf[0]));
++		else
++		    SLsmg_write_char('?'); /* should not happen */
++	    }
++	} 
++    }
 +}
 +#endif
 +
  extern void str_replace(char *s, char from, char to)
  {
      for (; *s != '\0'; s++) {
-@@ -78,9 +94,106 @@ is_8bit_printable (unsigned char c)
+@@ -78,9 +112,106 @@
      return (c > 31 && c != 127 && c != 155);
  }
  
@@ -2145,7 +2226,7 @@
      c &= 0xff;
  
  #ifdef HAVE_CHARSET
-@@ -98,7 +211,7 @@ is_printable (int c)
+@@ -98,7 +229,7 @@
  #endif				/* !HAVE_CHARSET */
  }
  
@@ -2154,7 +2235,7 @@
  void
  msglen (const char *text, int *lines, int *columns)
  {
-@@ -111,8 +224,21 @@ msglen (const char *text, int *lines, in
+@@ -111,8 +242,21 @@
  	    nlines++;
  	    colindex = 0;
  	} else {
@@ -2176,7 +2257,7 @@
  		ncolumns = colindex;
  	}
      }
-@@ -206,7 +332,24 @@ name_quote (const char *s, int quote_per
+@@ -206,7 +350,24 @@
  		*d++ = '\\';
  	    break;
  	}
@@ -2201,7 +2282,7 @@
      }
      *d = '\0';
      return ret;
-@@ -228,25 +371,90 @@ const char *
+@@ -228,25 +389,90 @@
  name_trunc (const char *txt, int trunc_len)
  {
      static char x[MC_MAXPATHLEN + MC_MAXPATHLEN];
@@ -2306,7 +2387,7 @@
      return x;
  }
  
-@@ -678,11 +886,61 @@ load_file (const char *filename)
+@@ -678,11 +904,61 @@
  }
  
  char *
@@ -2368,7 +2449,7 @@
  
      hintfile_base = concat_dir_and_file (mc_home, filename);
      lang = guess_message_value ();
-@@ -715,7 +973,10 @@ load_mc_home_file (const char *filename,
+@@ -715,7 +991,10 @@
      else
  	g_free (hintfile);
  
@@ -2380,7 +2461,7 @@
  }
  
  /* Check strftime() results. Some systems (i.e. Solaris) have different
-@@ -724,12 +985,14 @@ size_t
+@@ -724,12 +1003,14 @@
  i18n_checktimelength (void)
  {
      size_t length, a, b;
@@ -2399,7 +2480,7 @@
      length = max (a, b);
      
      /* Don't handle big differences. Use standard value (email bug, please) */
-@@ -742,15 +1005,12 @@ i18n_checktimelength (void)
+@@ -742,15 +1023,12 @@
  const char *
  file_date (time_t when)
  {
@@ -2417,7 +2498,7 @@
  	/* strftime() format string for old dates */
  	fmtyear = _("%b %e  %Y");
  	/* strftime() format string for recent dates */
-@@ -770,7 +1030,7 @@ file_date (time_t when)
+@@ -770,7 +1048,7 @@
      else
  	fmt = fmttime;
      
@@ -2426,7 +2507,7 @@
      return timebuf;
  }
  
-@@ -900,10 +1160,27 @@ strip_ctrl_codes (char *s)
+@@ -900,10 +1178,27 @@
  		r++;
  	    continue;
  	}
@@ -2455,14 +2536,14 @@
      }
      *w = 0;
      return s;
---- mc-4.6.1a/src/file.c.utf8	2006-01-29 21:26:05.000000000 +0100
-+++ mc-4.6.1a/src/file.c	2006-02-01 14:25:01.000000000 +0100
-@@ -161,15 +161,20 @@ static const char *
+--- mc-2006-06-30-18/src/file.c.utf8	2006-05-23 16:20:39.000000000 +0200
++++ mc-2006-06-30-18/src/file.c	2006-07-11 10:39:54.000000000 +0200
+@@ -161,15 +161,20 @@
  do_transform_source (FileOpContext *ctx, const char *source)
  {
      size_t j, k, l, len;
 -    const char *fnsource = x_basename (source);
-+    const char *fnsource = g_strdup (x_basename (source));
++    char *fnsource = g_strdup (x_basename (source));
      int next_reg;
      enum CaseConvs case_conv = NO_CONV;
      static char fntarget[MC_MAXPATHLEN];
@@ -2479,7 +2560,7 @@
  	return NULL;
      }
      for (next_reg = 1, j = 0, k = 0; j < strlen (ctx->dest_mask); j++) {
-@@ -213,6 +218,7 @@ do_transform_source (FileOpContext *ctx,
+@@ -213,6 +218,7 @@
  		|| ctx->regs.start[next_reg] < 0) {
  		message (1, MSG_ERROR, _(" Invalid target mask "));
  		transform_error = FILE_ABORT;
@@ -2487,7 +2568,7 @@
  		return NULL;
  	    }
  	    for (l = (size_t) ctx->regs.start[next_reg];
-@@ -227,6 +233,7 @@ do_transform_source (FileOpContext *ctx,
+@@ -227,6 +233,7 @@
  	}
      }
      fntarget[k] = 0;
@@ -2495,9 +2576,25 @@
      return fntarget;
  }
  
---- mc-4.6.1a/src/find.c.utf8	2005-07-07 21:34:56.000000000 +0200
-+++ mc-4.6.1a/src/find.c	2006-02-01 14:25:01.000000000 +0100
-@@ -217,7 +217,7 @@ find_parameters (char **start_dir, char 
+@@ -1688,13 +1695,13 @@
+     *dp = '\0';
+ 
+     if (single_source) {
+-	i = fmd_xlen - strlen (format_string) - 4;
++	i = fmd_xlen - mbstrlen (format_string) - 4;
+ 	g_snprintf (cmd_buf, sizeof (cmd_buf), format_string,
+ 		    name_trunc (single_source, i));
+     } else {
+ 	g_snprintf (cmd_buf, sizeof (cmd_buf), format_string,
+ 		    panel->marked);
+-	i = strlen (cmd_buf) + 6 - fmd_xlen;
++	i = mbstrlen (cmd_buf) + 6 - fmd_xlen;
+ 	if (i > 0) {
+ 	    fmd_xlen += i;
+ 	    fmd_init_i18n (TRUE);	/* to recalculate positions of child widgets */
+--- mc-2006-06-30-18/src/find.c.utf8	2006-02-06 17:55:43.000000000 +0100
++++ mc-2006-06-30-18/src/find.c	2006-07-11 10:39:54.000000000 +0200
+@@ -217,7 +217,7 @@
  	int l1, maxlen = 0;
  
  	while (i--) {
@@ -2506,7 +2603,7 @@
  	    if (l1 > maxlen)
  		maxlen = l1;
  	}
-@@ -226,7 +226,7 @@ find_parameters (char **start_dir, char 
+@@ -226,7 +226,7 @@
  	    FIND_X = i;
  
  	for (i = sizeof (buts) / sizeof (buts[0]), l1 = 0; i--;) {
@@ -2515,7 +2612,7 @@
  	}
  	l1 += 21;
  	if (l1 > FIND_X)
-@@ -235,8 +235,8 @@ find_parameters (char **start_dir, char 
+@@ -235,8 +235,8 @@
  	ilen = FIND_X - 7 - maxlen;	/* for the case of very long buttons :) */
  	istart = FIND_X - 3 - ilen;
  
@@ -2526,7 +2623,7 @@
  
  	i18n_flag = 1;
  	case_label = _(case_label);
-@@ -857,7 +857,7 @@ setup_gui (void)
+@@ -863,7 +863,7 @@
      if (!i18n_flag) {
  	register int i = sizeof (fbuts) / sizeof (fbuts[0]);
  	while (i--)
@@ -2535,7 +2632,7 @@
  	fbuts[2].len += 2;	/* DEFPUSH_BUTTON */
  	i18n_flag = 1;
      }
-@@ -1028,7 +1028,7 @@ find_file (char *start_dir, char *patter
+@@ -1028,7 +1028,7 @@
  
  	    if (!next_free)	/* first turn i.e clean old list */
  		panel_clean_dir (current_panel);
@@ -2544,8 +2641,8 @@
  	    list->list[next_free].fname = name;
  	    list->list[next_free].f.marked = 0;
  	    list->list[next_free].f.link_to_dir = link_to_dir;
---- mc-4.6.1a/src/myslang.h.utf8	2005-09-05 05:22:04.000000000 +0200
-+++ mc-4.6.1a/src/myslang.h	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/src/myslang.h.utf8	2005-09-06 22:36:23.000000000 +0200
++++ mc-2006-06-30-18/src/myslang.h	2006-07-11 10:39:54.000000000 +0200
 @@ -11,6 +11,16 @@
  #endif	/* HAVE_SLANG_SLANG_H */
  #endif
@@ -2563,9 +2660,9 @@
  enum {
      KEY_BACKSPACE = 400,
      KEY_END, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT,
---- mc-4.6.1a/src/achown.c.utf8	2005-09-05 03:36:58.000000000 +0200
-+++ mc-4.6.1a/src/achown.c	2006-02-01 14:25:01.000000000 +0100
-@@ -584,6 +584,12 @@ init_chown_advanced (void)
+--- mc-2006-06-30-18/src/achown.c.utf8	2005-09-06 22:36:23.000000000 +0200
++++ mc-2006-06-30-18/src/achown.c	2006-07-11 10:39:54.000000000 +0200
+@@ -584,6 +584,12 @@
      b_att[2] = button_new (XTRACT (6));
      b_user = button_new (XTRACT (5));
      b_group = button_new (XTRACT (4));
@@ -2578,9 +2675,9 @@
  
      add_widget (ch_dlg, b_group);
      add_widget (ch_dlg, b_user);
---- mc-4.6.1a/src/dialog.c.utf8	2005-09-05 05:20:27.000000000 +0200
-+++ mc-4.6.1a/src/dialog.c	2006-02-01 14:25:01.000000000 +0100
-@@ -166,7 +166,7 @@ common_dialog_repaint (struct Dlg_head *
+--- mc-2006-06-30-18/src/dialog.c.utf8	2005-09-06 22:36:23.000000000 +0200
++++ mc-2006-06-30-18/src/dialog.c	2006-07-11 10:39:54.000000000 +0200
+@@ -166,7 +166,7 @@
  
      if (h->title) {
  	attrset (DLG_HOT_NORMALC (h));
@@ -2589,9 +2686,9 @@
  	addstr (h->title);
      }
  }
---- mc-4.6.1a/src/boxes.c.utf8	2006-01-30 10:22:33.000000000 +0100
-+++ mc-4.6.1a/src/boxes.c	2006-02-01 14:25:01.000000000 +0100
-@@ -153,23 +153,23 @@ display_init (int radio_sel, char *init_
+--- mc-2006-06-30-18/src/boxes.c.utf8	2006-02-28 18:44:28.000000000 +0100
++++ mc-2006-06-30-18/src/boxes.c	2006-07-11 10:39:54.000000000 +0200
+@@ -153,23 +153,23 @@
  	display_title = _(display_title);
  	for (i = 0; i < LIST_TYPES; i++) {
  	    displays[i] = _(displays[i]);
@@ -2620,7 +2717,7 @@
  	if (i > DISPLAY_X)
  	    DISPLAY_X = i;
  
-@@ -288,20 +288,20 @@ sort_box (sortfn *sort_fn, int *reverse,
+@@ -288,20 +288,20 @@
  	int maxlen = 0;
  	for (i = SORT_TYPES - 1; i >= 0; i--) {
  	    sort_orders_names[i] = _(sort_orders[i].sort_name);
@@ -2646,7 +2743,7 @@
  	if (i > l)
  	    l = i;
  
-@@ -310,7 +310,7 @@ sort_box (sortfn *sort_fn, int *reverse,
+@@ -310,7 +310,7 @@
  	if (i > SORT_X)
  	    SORT_X = i;
  
@@ -2655,7 +2752,7 @@
  	if (i > SORT_X)
  	    SORT_X = i;
  
-@@ -408,7 +408,7 @@ confirm_box (void)
+@@ -408,7 +408,7 @@
  		while (i--)
  		{
  			conf_widgets [i].text = _(conf_widgets [i].text);
@@ -2664,7 +2761,7 @@
  			if (l1 > maxlen)
  				maxlen = l1;
  		}
-@@ -423,8 +423,8 @@ confirm_box (void)
+@@ -423,8 +423,8 @@
  		 * And this for the case when buttons with some space to the right
  		 * do not fit within 2/6
  		 */
@@ -2675,7 +2772,7 @@
  		if (i > l1)
  			l1 = i;
  
-@@ -497,11 +497,11 @@ display_bits_box (void)
+@@ -497,11 +497,11 @@
  		{
  			display_widgets [i].text = _(display_widgets[i].text);
  			display_bits_str [i] = _(display_bits_str [i]);
@@ -2689,7 +2786,7 @@
  		if (l1 > maxlen)
  			maxlen = l1;
  		
-@@ -509,8 +509,8 @@ display_bits_box (void)
+@@ -509,8 +509,8 @@
  		display_bits.xlen = (maxlen + 5) * 6 / 4;
  
  		/* See above confirm_box */
@@ -2700,7 +2797,7 @@
  		if (i > l1)
  			l1 = i;
  
-@@ -605,7 +605,7 @@ init_disp_bits_box (void)
+@@ -605,7 +605,7 @@
  
      cpname = _("&Select");
      add_widget (dbits_dlg,
@@ -2709,7 +2806,7 @@
  			    NORMAL_BUTTON, cpname, sel_charset_button));
  
      return dbits_dlg;
-@@ -816,7 +816,7 @@ cd_dialog (void)
+@@ -816,7 +816,7 @@
      quick_widgets [1].y_divisions =
  	quick_widgets [0].y_divisions = Quick_input.ylen = 5;
  
@@ -2718,7 +2815,7 @@
  
      quick_widgets [0].relative_x =
  	quick_widgets [1].relative_x + len + 1;
-@@ -975,7 +975,7 @@ jobs_cmd (void)
+@@ -975,7 +975,7 @@
  		{
  			job_buttons [i].name = _(job_buttons [i].name);
  
@@ -2727,7 +2824,7 @@
  			JOBS_X = max (JOBS_X, startx + len + 3);
  
  			job_buttons [i].xpos = startx;
-@@ -984,7 +984,7 @@ jobs_cmd (void)
+@@ -984,7 +984,7 @@
  
  		/* Last button - Ok a.k.a. Cancel :) */
  		job_buttons [n_buttons - 1].xpos =
@@ -2736,7 +2833,7 @@
  
  		i18n_flag = 1;
  	}
-@@ -1042,7 +1042,7 @@ vfs_smb_get_authinfo (const char *host, 
+@@ -1042,7 +1042,7 @@
          
          while (i--)
          {
@@ -2745,7 +2842,7 @@
              if (l1 > maxlen)
                  maxlen = l1;
          }
-@@ -1052,7 +1052,7 @@ vfs_smb_get_authinfo (const char *host, 
+@@ -1052,7 +1052,7 @@
          
          for (i = sizeof(buts)/sizeof(buts[0]), l1 = 0; i--; )
          {
@@ -2754,7 +2851,7 @@
          }
          l1 += 15;
          if (l1 > dialog_x)
-@@ -1061,7 +1061,7 @@ vfs_smb_get_authinfo (const char *host, 
+@@ -1061,7 +1061,7 @@
          ilen = dialog_x - 7 - maxlen; /* for the case of very long buttons :) */
          istart = dialog_x - 3 - ilen;
          
@@ -2763,9 +2860,9 @@
          
          i18n_flag = 1;
      }
---- mc-4.6.1a/src/learn.c.utf8	2005-05-27 05:35:15.000000000 +0200
-+++ mc-4.6.1a/src/learn.c	2006-02-01 14:25:01.000000000 +0100
-@@ -237,7 +237,7 @@ init_learn (void)
+--- mc-2006-06-30-18/src/learn.c.utf8	2005-05-27 05:35:15.000000000 +0200
++++ mc-2006-06-30-18/src/learn.c	2006-07-11 10:39:54.000000000 +0200
+@@ -237,7 +237,7 @@
  	learn_but[0].x = 78 / 2 + 4;
  
  	learn_but[1].text = _(learn_but[1].text);
@@ -2774,9 +2871,9 @@
  
  	learn_title = _(learn_title);
  	i18n_flag = 1;
---- mc-4.6.1a/edit/edit-widget.h.utf8	2005-08-15 22:34:26.000000000 +0200
-+++ mc-4.6.1a/edit/edit-widget.h	2006-02-01 14:25:01.000000000 +0100
-@@ -30,6 +30,11 @@ typedef struct edit_key_map_type {
+--- mc-2006-06-30-18/edit/edit-widget.h.utf8	2006-03-20 17:44:32.000000000 +0100
++++ mc-2006-06-30-18/edit/edit-widget.h	2006-07-11 10:39:54.000000000 +0200
+@@ -30,6 +30,11 @@
      long command;
  } edit_key_map_type;
  
@@ -2788,7 +2885,7 @@
  struct WEdit {
      Widget widget;
  
-@@ -42,8 +47,17 @@ struct WEdit {
+@@ -42,8 +47,17 @@
      /* dynamic buffers and cursor position for editor: */
      long curs1;			/* position of the cursor from the beginning of the file. */
      long curs2;			/* position from the end of the file */
@@ -2806,7 +2903,7 @@
  
      /* search variables */
      long search_start;		/* First character to start searching from */
-@@ -87,7 +101,7 @@ struct WEdit {
+@@ -87,7 +101,7 @@
  
      /* undo stack and pointers */
      unsigned long stack_pointer;
@@ -2815,9 +2912,9 @@
      unsigned long stack_size;
      unsigned long stack_size_mask;
      unsigned long stack_bottom;
---- mc-4.6.1a/edit/editkeys.c.utf8	2005-08-10 18:47:44.000000000 +0200
-+++ mc-4.6.1a/edit/editkeys.c	2006-02-01 14:25:01.000000000 +0100
-@@ -181,10 +181,10 @@ static const edit_key_map_type common_ke
+--- mc-2006-06-30-18/edit/editkeys.c.utf8	2006-02-02 00:05:15.000000000 +0100
++++ mc-2006-06-30-18/edit/editkeys.c	2006-07-11 10:39:54.000000000 +0200
+@@ -182,10 +182,10 @@
   * 'command' is one of the editor commands from editcmddef.h.
   */
  int
@@ -2830,7 +2927,7 @@
      int i = 0;
      int extmod = 0;
      const edit_key_map_type *key_map = NULL;
-@@ -241,9 +241,30 @@ edit_translate_key (WEdit *edit, long x_
+@@ -242,9 +242,30 @@
      /* an ordinary insertable character */
      if (x_key < 256 && !extmod) {
  	int c = convert_from_input_c (x_key);
@@ -2862,7 +2959,7 @@
  	    goto fin;
  	}
      }
-@@ -282,7 +303,7 @@ edit_translate_key (WEdit *edit, long x_
+@@ -283,7 +304,7 @@
      *cmd = command;
      *ch = char_for_insertion;
  
@@ -2871,9 +2968,9 @@
  	/* unchanged, key has no function here */
  	return 0;
      }
---- mc-4.6.1a/edit/editwidget.c.utf8	2005-09-07 10:54:12.000000000 +0200
-+++ mc-4.6.1a/edit/editwidget.c	2006-02-01 14:25:01.000000000 +0100
-@@ -344,7 +344,8 @@ edit_callback (Widget *w, widget_msg_t m
+--- mc-2006-06-30-18/edit/editwidget.c.utf8	2005-09-07 17:53:03.000000000 +0200
++++ mc-2006-06-30-18/edit/editwidget.c	2006-07-11 10:39:54.000000000 +0200
+@@ -344,7 +344,8 @@
  
      case WIDGET_KEY:
  	{
@@ -2883,8 +2980,8 @@
  
  	    /* The user may override the access-keys for the menu bar. */
  	    if (edit_translate_key (e, parm, &cmd, &ch)) {
---- mc-4.6.1a/edit/editcmd.c.utf8	2006-01-30 10:22:33.000000000 +0100
-+++ mc-4.6.1a/edit/editcmd.c	2006-02-01 14:29:55.000000000 +0100
+--- mc-2006-06-30-18/edit/editcmd.c.utf8	2006-03-20 17:44:32.000000000 +0100
++++ mc-2006-06-30-18/edit/editcmd.c	2006-07-11 10:39:54.000000000 +0200
 @@ -61,7 +61,7 @@
  #define edit_get_save_file(f,h) input_expand_dialog (h, _(" Enter file name: "), f)
  
@@ -2894,7 +2991,7 @@
     int len;
  };
  
-@@ -84,12 +84,16 @@ int edit_confirm_save = 1;
+@@ -84,12 +84,16 @@
  #define MAX_REPL_LEN 1024
  
  static int edit_save_cmd (WEdit *edit);
@@ -2913,7 +3010,7 @@
  }
  
  static const char *
-@@ -124,11 +128,11 @@ static void *memmove (void *dest, const 
+@@ -124,11 +128,11 @@
  #endif /* !HAVE_MEMMOVE */
  
  /* #define itoa MY_itoa  <---- this line is now in edit.h */
@@ -2928,7 +3025,7 @@
      int j = i;
      *s-- = 0;
      do {
-@@ -213,6 +217,48 @@ void edit_refresh_cmd (WEdit * edit)
+@@ -213,6 +217,48 @@
      doupdate();
  }
  
@@ -2977,7 +3074,7 @@
  /*  If 0 (quick save) then  a) create/truncate <filename> file,
  			    b) save to <filename>;
      if 1 (safe save) then   a) save to <tempnam>,
-@@ -320,32 +366,48 @@ edit_save_file (WEdit *edit, const char 
+@@ -345,32 +391,48 @@
  	buf = 0;
  	filelen = edit->last_byte;
  	while (buf <= (edit->curs1 >> S_EDIT_BUF_SIZE) - 1) {
@@ -3029,7 +3126,7 @@
  			 EDIT_BUF_SIZE) != EDIT_BUF_SIZE) {
  			filelen = -1;
  			break;
-@@ -658,13 +720,21 @@ edit_delete_macro (WEdit * edit, int k)
+@@ -686,13 +748,21 @@
  	if (!n || n == EOF)
  	    break;
  	n = 0;
@@ -3051,7 +3148,7 @@
  	    fprintf (g, ";\n");
  	}
      }
-@@ -697,7 +767,11 @@ int edit_save_macro_cmd (WEdit * edit, s
+@@ -725,7 +795,11 @@
  	if (f) {
  	    fprintf (f, ("key '%d 0': "), s);
  	    for (i = 0; i < n; i++)
@@ -3063,7 +3160,7 @@
  	    fprintf (f, ";\n");
  	    fclose (f);
  	    if (saved_macros_loaded) {
-@@ -747,10 +821,18 @@ int edit_load_macro_cmd (WEdit * edit, s
+@@ -775,10 +849,18 @@
  		saved_macro[i++] = s;
  	    if (!found) {
  		*n = 0;
@@ -3082,7 +3179,7 @@
  	    }
  	    fscanf (f, ";\n");
  	    if (s == k)
-@@ -897,7 +979,7 @@ int eval_marks (WEdit * edit, long *star
+@@ -925,7 +1007,7 @@
  #define space_width 1
  
  static void
@@ -3091,7 +3188,7 @@
  {
      long cursor;
      int i, col;
-@@ -945,7 +1027,7 @@ edit_block_copy_cmd (WEdit *edit)
+@@ -973,7 +1055,7 @@
  {
      long start_mark, end_mark, current = edit->curs1;
      int size;
@@ -3100,7 +3197,7 @@
  
      edit_update_curs_col (edit);
      if (eval_marks (edit, &start_mark, &end_mark))
-@@ -985,7 +1067,7 @@ edit_block_move_cmd (WEdit *edit)
+@@ -1013,7 +1095,7 @@
  {
      long count;
      long current;
@@ -3109,7 +3206,7 @@
      long start_mark, end_mark;
      int deleted = 0;
      int x = 0;
-@@ -1046,7 +1128,7 @@ edit_block_move_cmd (WEdit *edit)
+@@ -1074,7 +1156,7 @@
  	edit_push_action (edit, COLUMN_ON);
  	column_highlighting = 0;
      } else {
@@ -3118,7 +3215,7 @@
  	edit_cursor_move (edit, start_mark - edit->curs1);
  	edit_scroll_screen_over_cursor (edit);
  	count = start_mark;
-@@ -1385,7 +1467,11 @@ static long sargs[NUM_REPL_ARGS][256 / s
+@@ -1413,7 +1495,11 @@
  /* This function is a modification of mc-3.2.10/src/view.c:regexp_view_search() */
  /* returns -3 on error in pattern, -1 on not found, found_len = 0 if either */
  static int
@@ -3130,7 +3227,7 @@
  		      int match_bol, int icase, int *found_len, void *d)
  {
      static regex_t r;
-@@ -1394,6 +1480,11 @@ string_regexp_search (char *pattern, cha
+@@ -1422,6 +1508,11 @@
      regmatch_t *pmatch;
      static regmatch_t s[1];
  
@@ -3142,7 +3239,7 @@
      pmatch = (regmatch_t *) d;
      if (!pmatch)
  	pmatch = s;
-@@ -1413,13 +1504,51 @@ string_regexp_search (char *pattern, cha
+@@ -1441,13 +1532,51 @@
  	old_type = match_type;
  	old_icase = icase;
      }
@@ -3194,7 +3291,7 @@
      *found_len = pmatch[0].rm_eo - pmatch[0].rm_so;
      return (pmatch[0].rm_so);
  }
-@@ -1427,13 +1556,29 @@ string_regexp_search (char *pattern, cha
+@@ -1455,13 +1584,29 @@
  /* thanks to  Liviu Daia <daia@stoilow.imar.ro>  for getting this
     (and the above) routines to work properly - paul */
  
@@ -3225,7 +3322,7 @@
      int n = 0;
  
      for (p = 0; p < l; p++)	/* count conversions... */
-@@ -1442,19 +1587,22 @@ edit_find_string (long start, unsigned c
+@@ -1470,19 +1615,22 @@
  		n++;
  
      if (replace_scanf || replace_regexp) {
@@ -3255,7 +3352,7 @@
  	    if (replace_case) {
  		for (p = start; p < last_byte && p < start + MAX_REPL_LEN; p++)
  		    buf[p - start] = (*get_byte) (data, p);
-@@ -1468,20 +1616,36 @@ edit_find_string (long start, unsigned c
+@@ -1496,20 +1644,36 @@
  	    }
  
  	    buf[(q = p - start)] = 0;
@@ -3293,7 +3390,7 @@
  		if (q + start < last_byte) {
  		    if (replace_case) {
  			buf[q] = (*get_byte) (data, q + start);
-@@ -1495,7 +1659,11 @@ edit_find_string (long start, unsigned c
+@@ -1523,7 +1687,11 @@
  		start++;
  		buf++;		/* move the window along */
  		if (buf == mbuf + MAX_REPL_LEN) {	/* the window is about to go past the end of array, so... */
@@ -3305,7 +3402,7 @@
  		    buf = mbuf;
  		}
  		q--;
-@@ -1521,10 +1689,16 @@ edit_find_string (long start, unsigned c
+@@ -1549,10 +1717,16 @@
  
  		buf = mbuf;
  		while (q) {
@@ -3323,7 +3420,7 @@
  			return -3;
  		    }
  		    else if (found_start == -1)	/* not found: try next line */
-@@ -1535,15 +1709,27 @@ edit_find_string (long start, unsigned c
+@@ -1563,15 +1737,27 @@
  			match_bol = 0;
  			continue;
  		    }
@@ -3353,7 +3450,7 @@
  		    memmove (mbuf, buf, q);
  		    p = start + q;
  		    move_win = 1;
-@@ -1553,36 +1739,59 @@ edit_find_string (long start, unsigned c
+@@ -1581,36 +1767,59 @@
  	    }
  	}
      } else {
@@ -3421,7 +3518,7 @@
      return -2;
  }
  
-@@ -1596,9 +1805,14 @@ edit_find_forwards (long search_start, u
+@@ -1624,9 +1833,14 @@
  
      while ((p = edit_find_string (p, exp, len, last_byte, get_byte, data, once_only, d)) >= 0) {
  	if (replace_whole) {
@@ -3436,7 +3533,7 @@
  		return p;
  	    if (once_only)
  		return -2;
-@@ -1630,6 +1844,7 @@ edit_find (long search_start, unsigned c
+@@ -1658,6 +1872,7 @@
  
  #define is_digit(x) ((x) >= '0' && (x) <= '9')
  
@@ -3444,7 +3541,7 @@
  #define snprint(v) { \
  		*p1++ = *p++; \
  		*p1 = '\0'; \
-@@ -1637,33 +1852,48 @@ edit_find (long search_start, unsigned c
+@@ -1665,33 +1880,48 @@
  		if (n >= (size_t) (e - s)) goto nospc; \
  		s += n; \
  	    }
@@ -3501,7 +3598,7 @@
  	s += n;
  	q = p;
  	p1 = q1;
-@@ -1691,45 +1921,78 @@ static int snprintf_p (char *str, size_t
+@@ -1719,45 +1949,78 @@
  	    *p1++ = *p++;
  	if (*p == '*') {
  	    p++;
@@ -3590,7 +3687,7 @@
  	    snprint (*va_arg (ap, long *));
  	} else if (*p == 'p') {
  	    snprint (*va_arg (ap, void **));
-@@ -1738,10 +2001,17 @@ static int snprintf_p (char *str, size_t
+@@ -1766,10 +2029,17 @@
  	q = p;
      }
      va_end (ap);
@@ -3608,7 +3705,7 @@
      return s + n - str;
  nospc:
      va_end (ap);
-@@ -1920,8 +2190,11 @@ edit_replace_cmd (WEdit *edit, int again
+@@ -1948,8 +2218,11 @@
  		}
  	    }
  	    if (replace_yes) {	/* delete then insert new */
@@ -3621,7 +3718,7 @@
  		    int ret = 0;
  
  		    /* we need to fill in sargs just like with scanf */
-@@ -1930,17 +2203,25 @@ edit_replace_cmd (WEdit *edit, int again
+@@ -1958,17 +2231,25 @@
  			for (k = 1;
  			     k < NUM_REPL_ARGS && pmatch[k].rm_eo >= 0;
  			     k++) {
@@ -3648,7 +3745,7 @@
  								    edit->
  								    search_start
  								    -
-@@ -1958,14 +2239,23 @@ edit_replace_cmd (WEdit *edit, int again
+@@ -1986,14 +2267,23 @@
  		    }
  		    if (!ret)
  			ret =
@@ -3672,7 +3769,7 @@
  		    } else {
  			edit_error_dialog (_(" Replace "),
  					   ret ==
-@@ -1979,10 +2269,18 @@ edit_replace_cmd (WEdit *edit, int again
+@@ -2007,10 +2297,18 @@
  		    times_replaced++;
  		    while (i--)
  			edit_delete (edit);
@@ -3691,7 +3788,7 @@
  	    }
  	    /* so that we don't find the same string again */
  	    if (replace_backwards) {
-@@ -2157,16 +2455,17 @@ edit_ok_to_exit (WEdit *edit)
+@@ -2183,16 +2481,17 @@
  #define TEMP_BUF_LEN 1024
  
  /* Return a null terminated length of text. Result must be g_free'd */
@@ -3713,7 +3810,7 @@
  	    x = edit_move_forward3 (edit, edit_bol (edit, start), 0,
  				    start);
  	    c = edit_get_byte (edit, start);
-@@ -2199,11 +2498,15 @@ edit_save_block (WEdit * edit, const cha
+@@ -2225,11 +2524,15 @@
  	return 0;
  
      if (column_highlighting) {
@@ -3730,7 +3827,7 @@
  	    if (r < 0)
  		break;
  	    p += r;
-@@ -2211,15 +2514,19 @@ edit_save_block (WEdit * edit, const cha
+@@ -2237,15 +2540,19 @@
  	}
  	g_free (block);
      } else {
@@ -3752,7 +3849,7 @@
  	    start = end;
  	}
  	g_free (buf);
-@@ -2557,17 +2864,20 @@ edit_block_process_cmd (WEdit *edit, con
+@@ -2583,17 +2890,20 @@
  
  /* prints at the cursor */
  /* returns the number of chars printed */
@@ -3775,7 +3872,7 @@
  static void pipe_mail (WEdit *edit, char *to, char *subject, char *cc)
  {
      FILE *p = 0;
-@@ -2661,15 +2971,20 @@ void edit_mail_dialog (WEdit * edit)
+@@ -2687,15 +2997,20 @@
  /* find first character of current word */
  static int edit_find_word_start (WEdit *edit, long *word_start, int *word_len)
  {
@@ -3798,7 +3895,7 @@
  	return 0;
  
  /* search start of word to be completed */
-@@ -2679,11 +2994,19 @@ static int edit_find_word_start (WEdit *
+@@ -2705,11 +3020,19 @@
  	    return 0;
  
  	last = c;
@@ -3819,7 +3916,7 @@
  		return 0;
  
  	    *word_start = edit->curs1 - (i - 1); /* start found */
-@@ -2716,7 +3039,7 @@ edit_collect_completions (WEdit *edit, l
+@@ -2742,7 +3065,7 @@
  			  int *num)
  {
      int len, max_len = 0, i, skip;
@@ -3828,7 +3925,7 @@
  
      /* collect max MAX_WORD_COMPLETIONS completions */
      while (*num < MAX_WORD_COMPLETIONS) {
-@@ -2735,11 +3058,16 @@ edit_collect_completions (WEdit *edit, l
+@@ -2761,11 +3084,16 @@
  	    buffers1[start >> S_EDIT_BUF_SIZE][start & M_EDIT_BUF_SIZE];
  	skip = 0;
  	for (i = 0; i < *num; i++) {
@@ -3848,7 +3945,7 @@
  		skip = 1;
  		break;		/* skip it, already added */
  	    }
-@@ -2747,7 +3075,7 @@ edit_collect_completions (WEdit *edit, l
+@@ -2773,7 +3101,7 @@
  	if (skip)
  	    continue;
  
@@ -3857,7 +3954,7 @@
  	compl[*num].len = len;
  	for (i = 0; i < len; i++)
  	    compl[*num].text[i] = *(bufpos + i);
-@@ -2761,6 +3089,18 @@ edit_collect_completions (WEdit *edit, l
+@@ -2787,6 +3115,18 @@
      return max_len;
  }
  
@@ -3876,7 +3973,7 @@
  
  /* let the user select its preferred completion */
  static void
-@@ -2773,6 +3113,9 @@ edit_completion_dialog (WEdit * edit, in
+@@ -2799,6 +3139,9 @@
      WListbox *compl_list;
      int compl_dlg_h;		/* completion dialog height */
      int compl_dlg_w;		/* completion dialog width */
@@ -3886,7 +3983,7 @@
  
      /* calculate the dialog metrics */
      compl_dlg_h = num_compl + 2;
-@@ -2808,9 +3151,18 @@ edit_completion_dialog (WEdit * edit, in
+@@ -2834,9 +3177,18 @@
      add_widget (compl_dlg, compl_list);
  
      /* fill the listbox with the completions */
@@ -3905,7 +4002,7 @@
  
      /* pop up the dialog */
      run_dlg (compl_dlg);
-@@ -2818,9 +3170,17 @@ edit_completion_dialog (WEdit * edit, in
+@@ -2844,9 +3196,17 @@
      /* apply the choosen completion */
      if (compl_dlg->ret_value == B_ENTER) {
  	listbox_get_current (compl_list, &curr, NULL);
@@ -3924,7 +4021,7 @@
      }
  
      /* destroy dialog before return */
-@@ -2837,8 +3197,9 @@ edit_complete_word_cmd (WEdit *edit)
+@@ -2863,8 +3223,9 @@
  {
      int word_len = 0, i, num_compl = 0, max_len;
      long word_start = 0;
@@ -3936,7 +4033,7 @@
      struct selection compl[MAX_WORD_COMPLETIONS];	/* completions */
  
      /* don't want to disturb another search */
-@@ -2855,16 +3216,32 @@ edit_complete_word_cmd (WEdit *edit)
+@@ -2881,16 +3242,32 @@
      /* prepare match expression */
      bufpos = &edit->buffers1[word_start >> S_EDIT_BUF_SIZE]
  	[word_start & M_EDIT_BUF_SIZE];
@@ -3969,8 +4066,8 @@
  
      if (num_compl > 0) {
  	/* insert completed word if there is only one match */
---- mc-4.6.1a/edit/wordproc.c.utf8	2005-05-27 05:35:12.000000000 +0200
-+++ mc-4.6.1a/edit/wordproc.c	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/edit/wordproc.c.utf8	2006-06-17 04:55:41.000000000 +0200
++++ mc-2006-06-30-18/edit/wordproc.c	2006-07-11 10:42:46.000000000 +0200
 @@ -40,7 +40,12 @@
  
  #define tab_width option_tab_spacing
@@ -3984,7 +4081,7 @@
  #define FONT_MEAN_WIDTH 1
  
  static long
-@@ -57,14 +62,21 @@ line_start (WEdit *edit, long line)
+@@ -57,14 +62,21 @@
  	p = edit_move_forward (edit, p, line - l, 0);
  
      p = edit_bol (edit, p);
@@ -4007,7 +4104,7 @@
      c = edit_get_byte (edit, p);
      if (c == '.') {		/* `...' is acceptable */
  	if (edit_get_byte (edit, p + 1) == '.')
-@@ -78,7 +90,13 @@ static int bad_line_start (WEdit * edit,
+@@ -78,7 +90,13 @@
  		return 0;	/* `---' is acceptable */
  	return 1;
      }
@@ -4021,7 +4118,7 @@
  	return 1;
      return 0;
  }
-@@ -131,33 +149,37 @@ end_paragraph (WEdit *edit, int force)
+@@ -131,33 +149,37 @@
  					i - edit->curs_line, 0));
  }
  
@@ -4067,7 +4164,7 @@
      while (size--) {
  	*p = *p == '\n' ? ' ' : *p;
  	p++;
-@@ -174,7 +196,7 @@ static inline int next_tab_pos (int x)
+@@ -174,7 +196,7 @@
  {
      return x += tab_width - x % tab_width;
  }
@@ -4076,25 +4173,25 @@
  {
      int x = 0, c, xn = 0;
      for (;;) {
-@@ -198,7 +220,7 @@ static int line_pixel_length (unsigned c
+@@ -198,7 +220,7 @@
  }
  
  static int
--next_word_start (unsigned char *t, int q)
-+next_word_start (mc_wchar_t *t, int q)
+-next_word_start (unsigned char *t, int q, int size)
++next_word_start (mc_wchar_t *t, int q, int size)
  {
      int i;
-     for (i = q;; i++) {
-@@ -220,7 +242,7 @@ next_word_start (unsigned char *t, int q
+     int saw_ws = 0;
+@@ -222,7 +244,7 @@
  
  /* find the start of a word */
  static int
--word_start (unsigned char *t, int q)
-+word_start (mc_wchar_t *t, int q)
+-word_start (unsigned char *t, int q, int size)
++word_start (mc_wchar_t *t, int q, int size)
  {
      int i = q;
      if (t[q] == ' ' || t[q] == '\t')
-@@ -239,7 +261,7 @@ word_start (unsigned char *t, int q)
+@@ -241,7 +263,7 @@
  }
  
  /* replaces ' ' with '\n' to properly format a paragraph */
@@ -4103,7 +4200,7 @@
  {
      int q = 0, ww;
      strip_newlines (t, size);
-@@ -267,7 +289,7 @@ static void format_this (unsigned char *
+@@ -269,7 +291,7 @@
      }
  }
  
@@ -4112,7 +4209,7 @@
  {
      edit_cursor_move (edit, q - edit->curs1);
      edit_delete (edit);
-@@ -276,18 +298,27 @@ static void replace_at (WEdit * edit, lo
+@@ -278,18 +300,27 @@
  
  /* replaces a block of text */
  static void
@@ -4142,7 +4239,7 @@
  		    p++;
  	    } else if (t[i - 1] == '\n') {
  		long curs;
-@@ -299,7 +330,11 @@ put_paragraph (WEdit * edit, unsigned ch
+@@ -301,7 +332,11 @@
  		p = edit->curs1;
  	    } else if (c == '\n') {
  		edit_cursor_move (edit, p - edit->curs1);
@@ -4154,7 +4251,7 @@
  		    edit_delete (edit);
  		    if (cursor > edit->curs1)
  			cursor--;
-@@ -332,7 +367,7 @@ format_paragraph (WEdit *edit, int force
+@@ -334,7 +369,7 @@
  {
      long p, q;
      int size;
@@ -4163,7 +4260,7 @@
      int indent = 0;
      if (option_word_wrap_line_length < 2)
  	return;
-@@ -342,17 +377,25 @@ format_paragraph (WEdit *edit, int force
+@@ -344,17 +379,25 @@
      q = end_paragraph (edit, force);
      indent = test_indent (edit, p, q);
      t = get_paragraph (edit, p, q, indent, &size);
@@ -4190,8 +4287,8 @@
  		    g_free (t);
  		    return;
  		}
---- mc-4.6.1a/edit/edit.h.utf8	2005-09-07 10:54:12.000000000 +0200
-+++ mc-4.6.1a/edit/edit.h	2006-02-01 14:25:01.000000000 +0100
+--- mc-2006-06-30-18/edit/edit.h.utf8	2006-02-06 17:55:42.000000000 +0100
++++ mc-2006-06-30-18/edit/edit.h	2006-07-11 10:39:54.000000000 +0200
 @@ -25,6 +25,27 @@
  
  #include <stdio.h>
@@ -4238,7 +4335,7 @@
  };
  
  struct WEdit;
-@@ -120,8 +143,12 @@ void edit_reload_menu (void);
+@@ -120,8 +143,12 @@
  void menu_save_mode_cmd (void);
  int edit_raw_key_query (const char *heading, const char *query, int cancel);
  int edit_file (const char *_file, int line);
@@ -4252,7 +4349,7 @@
  int edit_count_lines (WEdit * edit, long current, int upto);
  long edit_move_forward (WEdit * edit, long current, int lines, long upto);
  long edit_move_forward3 (WEdit * edit, long current, int cols, long upto);
-@@ -146,11 +173,11 @@ int edit_block_delete_cmd (WEdit * edit)
+@@ -146,11 +173,11 @@
  void edit_delete_line (WEdit * edit);
  
  int edit_delete (WEdit * edit);
@@ -4266,7 +4363,7 @@
  long edit_write_stream (WEdit * edit, FILE * f);
  char *edit_get_write_filter (const char *writename, const char *filename);
  int edit_save_confirm_cmd (WEdit * edit);
-@@ -181,7 +208,7 @@ void edit_goto_cmd (WEdit * edit);
+@@ -181,7 +208,7 @@
  int eval_marks (WEdit * edit, long *start_mark, long *end_mark);
  void edit_status (WEdit * edit);
  void edit_execute_key_command (WEdit *edit, int command,
@@ -4275,7 +4372,7 @@
  void edit_update_screen (WEdit * edit);
  int edit_print_string (WEdit * e, const char *s);
  void edit_move_to_line (WEdit * e, long line);
-@@ -231,7 +258,7 @@ void edit_mail_dialog (WEdit *edit);
+@@ -231,7 +258,7 @@
  void format_paragraph (WEdit *edit, int force);
  
  /* either command or char_for_insertion must be passed as -1 */
@@ -4284,9 +4381,9 @@
  
  #define get_sys_error(s) (s)
  
---- mc-4.6.1a/edit/editdraw.c.utf8	2005-09-05 04:14:29.000000000 +0200
-+++ mc-4.6.1a/edit/editdraw.c	2006-02-01 14:25:01.000000000 +0100
-@@ -69,11 +69,16 @@ static void status_string (WEdit * edit,
+--- mc-2006-06-30-18/edit/editdraw.c.utf8	2005-09-06 22:36:20.000000000 +0200
++++ mc-2006-06-30-18/edit/editdraw.c	2006-07-11 10:39:54.000000000 +0200
+@@ -69,11 +69,16 @@
       * as decimal and as hex.
       */
      if (edit->curs1 < edit->last_byte) {
@@ -4306,7 +4403,7 @@
      } else {
  	strcpy (byte_str, "<EOF>");
      }
-@@ -205,11 +210,16 @@ void edit_scroll_screen_over_cursor (WEd
+@@ -205,11 +210,16 @@
  #define lowlevel_set_color(x) attrset(MY_COLOR_PAIR(color))
  #endif
  
@@ -4325,7 +4422,7 @@
  
      int x = start_col_real + EDIT_TEXT_HORIZONTAL_OFFSET;
      int x1 = start_col + EDIT_TEXT_HORIZONTAL_OFFSET;
-@@ -223,9 +233,9 @@ print_to_widget (WEdit *edit, long row, 
+@@ -223,9 +233,9 @@
      edit_move (x1 + FONT_OFFSET_X, y + FONT_OFFSET_Y);
      p = line;
  
@@ -4337,7 +4434,7 @@
  	int color;
  
  	if (cols_to_skip) {
-@@ -234,9 +244,9 @@ print_to_widget (WEdit *edit, long row, 
+@@ -234,9 +244,9 @@
  	    continue;
  	}
  
@@ -4350,20 +4447,20 @@
  
  	if (style & MOD_ABNORMAL) {
  	    /* Non-printable - use black background */
-@@ -250,8 +260,11 @@ print_to_widget (WEdit *edit, long row, 
+@@ -250,8 +260,11 @@
  	} else {
  	    lowlevel_set_color (color);
  	}
 -
 +#ifdef UTF8
-+	SLsmg_write_char(textchar);
++	SLsmg_write_nwchars(&textchar, 1);
 +#else
  	addch (textchar);
 +#endif
  	p++;
      }
  }
-@@ -261,11 +274,11 @@ static void
+@@ -261,11 +274,11 @@
  edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
  		     long end_col)
  {
@@ -4378,7 +4475,7 @@
      int color;
      int i, book_mark = -1;
  
-@@ -287,66 +300,96 @@ edit_draw_this_line (WEdit *edit, long b
+@@ -287,66 +300,96 @@
  
  	if (row <= edit->total_lines - edit->start_line) {
  	    while (col <= end_col - edit->start_col) {
@@ -4495,7 +4592,7 @@
  		    }
  		    col++;
  		    break;
-@@ -356,7 +399,7 @@ edit_draw_this_line (WEdit *edit, long b
+@@ -356,7 +399,7 @@
      } else {
  	start_col_real = start_col = 0;
      }
@@ -4504,9 +4601,9 @@
  
      print_to_widget (edit, row, start_col, start_col_real, end_col, line);
  }
---- mc-4.6.1a/edit/edit.c.utf8	2006-01-26 16:42:56.000000000 +0100
-+++ mc-4.6.1a/edit/edit.c	2006-02-01 14:25:01.000000000 +0100
-@@ -103,7 +103,11 @@ char *option_backup_ext = NULL;
+--- mc-2006-06-30-18/edit/edit.c.utf8	2006-02-13 22:35:05.000000000 +0100
++++ mc-2006-06-30-18/edit/edit.c	2006-07-11 10:39:54.000000000 +0200
+@@ -103,7 +103,11 @@
  static void edit_move_to_prev_col (WEdit *edit, long p);
  static void user_menu (WEdit *edit);
  
@@ -4518,7 +4615,7 @@
  {
      unsigned long p;
      if (byte_index >= (edit->curs1 + edit->curs2) || byte_index < 0)
-@@ -132,7 +136,7 @@ edit_init_buffers (WEdit *edit)
+@@ -132,7 +136,7 @@
  
      edit->curs1 = 0;
      edit->curs2 = 0;
@@ -4527,7 +4624,7 @@
  }
  
  /*
-@@ -157,7 +161,7 @@ edit_load_file_fast (WEdit *edit, const 
+@@ -157,7 +161,7 @@
      }
  
      if (!edit->buffers2[buf2])
@@ -4536,7 +4633,7 @@
  
      mc_read (file,
  	     (char *) edit->buffers2[buf2] + EDIT_BUF_SIZE -
-@@ -167,7 +171,7 @@ edit_load_file_fast (WEdit *edit, const 
+@@ -167,7 +171,7 @@
      for (buf = buf2 - 1; buf >= 0; buf--) {
  	/* edit->buffers2[0] is already allocated */
  	if (!edit->buffers2[buf])
@@ -4545,7 +4642,7 @@
  	mc_read (file, (char *) edit->buffers2[buf], EDIT_BUF_SIZE);
      }
  
-@@ -240,9 +244,44 @@ edit_insert_stream (WEdit * edit, FILE *
+@@ -240,9 +244,44 @@
  {
      int c;
      long i = 0;
@@ -4591,7 +4688,7 @@
      }
      return i;
  }
-@@ -250,9 +289,32 @@ edit_insert_stream (WEdit * edit, FILE *
+@@ -250,9 +289,32 @@
  long edit_write_stream (WEdit * edit, FILE * f)
  {
      long i;
@@ -4624,7 +4721,7 @@
      return i;
  }
  
-@@ -291,12 +353,46 @@ edit_insert_file (WEdit *edit, const cha
+@@ -291,12 +353,46 @@
  	int i, file, blocklen;
  	long current = edit->curs1;
  	unsigned char *buf;
@@ -4671,7 +4768,7 @@
  	}
  	edit_cursor_move (edit, current - edit->curs1);
  	g_free (buf);
-@@ -386,7 +482,11 @@ cleanup:
+@@ -386,7 +482,11 @@
  static int
  edit_load_file (WEdit *edit)
  {
@@ -4683,7 +4780,7 @@
  
      /* Cannot do fast load if a filter is used */
      if (edit_find_filter (edit->filename) >= 0)
-@@ -452,6 +552,7 @@ edit_load_position (WEdit *edit)
+@@ -452,6 +552,7 @@
      edit->prev_col = column;
      edit_move_to_prev_col (edit, edit_bol (edit, edit->curs1));
      edit_move_display (edit, line - (edit->num_widget_lines / 2));
@@ -4691,7 +4788,7 @@
  }
  
  /* Save cursor position in the file */
-@@ -534,7 +635,7 @@ edit_init (WEdit *edit, int lines, int c
+@@ -534,7 +635,7 @@
      edit_set_filename (edit, filename);
      edit->stack_size = START_STACK_SIZE;
      edit->stack_size_mask = START_STACK_SIZE - 1;
@@ -4700,7 +4797,7 @@
      if (edit_load_file (edit)) {
  	/* edit_load_file already gives an error message */
  	if (to_free)
-@@ -689,13 +790,23 @@ void edit_push_action (WEdit * edit, lon
+@@ -689,13 +790,23 @@
  {
      unsigned long sp = edit->stack_pointer;
      unsigned long spm1;
@@ -4726,7 +4823,7 @@
  	    if (t) {
  		edit->undo_stack = t;
  		edit->stack_size <<= 1;
-@@ -710,7 +821,7 @@ void edit_push_action (WEdit * edit, lon
+@@ -710,7 +821,7 @@
  #ifdef FAST_MOVE_CURSOR
      if (c == CURS_LEFT_LOTS || c == CURS_RIGHT_LOTS) {
  	va_list ap;
@@ -4735,7 +4832,7 @@
  	edit->stack_pointer = (edit->stack_pointer + 1) & edit->stack_size_mask;
  	va_start (ap, c);
  	c = -(va_arg (ap, int));
-@@ -721,12 +832,14 @@ void edit_push_action (WEdit * edit, lon
+@@ -721,12 +832,14 @@
  	&& spm1 != edit->stack_bottom
  	&& ((sp - 2) & edit->stack_size_mask) != edit->stack_bottom) {
  	int d;
@@ -4755,7 +4852,7 @@
  		    return;
  		}
  	    }
-@@ -734,19 +847,20 @@ void edit_push_action (WEdit * edit, lon
+@@ -734,19 +847,20 @@
  #ifndef NO_STACK_CURSMOVE_ANIHILATION
  	    else if ((c == CURS_LEFT && d == CURS_RIGHT)
  		     || (c == CURS_RIGHT && d == CURS_LEFT)) {	/* a left then a right anihilate each other */
@@ -4781,7 +4878,7 @@
  		goto check_bottom;
  	    }
  #ifndef NO_STACK_CURSMOVE_ANIHILATION
-@@ -758,7 +872,9 @@ void edit_push_action (WEdit * edit, lon
+@@ -758,7 +872,9 @@
  #endif
  	}
      }
@@ -4792,7 +4889,7 @@
    check_bottom:
  
      edit->stack_pointer = (edit->stack_pointer + 1) & edit->stack_size_mask;
-@@ -771,10 +887,10 @@ void edit_push_action (WEdit * edit, lon
+@@ -771,10 +887,10 @@
         (((unsigned long) c + 1) & edit->stack_size_mask) == edit->stack_bottom)
  	do {
  	    edit->stack_bottom = (edit->stack_bottom + 1) & edit->stack_size_mask;
@@ -4805,7 +4902,7 @@
  	edit->stack_bottom = edit->stack_pointer = 0;
  }
  
-@@ -783,30 +899,30 @@ void edit_push_action (WEdit * edit, lon
+@@ -783,30 +899,30 @@
     then the file should be as it was when he loaded up. Then set edit->modified to 0.
   */
  static long
@@ -4847,7 +4944,7 @@
  }
  
  /* is called whenever a modification is made by one of the four routines below */
-@@ -827,7 +943,7 @@ static inline void edit_modification (WE
+@@ -827,7 +943,7 @@
   */
  
  void
@@ -4856,7 +4953,7 @@
  {
      /* check if file has grown to large */
      if (edit->last_byte >= SIZE_LIMIT)
-@@ -865,12 +981,11 @@ edit_insert (WEdit *edit, int c)
+@@ -865,12 +981,11 @@
      /* add a new buffer if we've reached the end of the last one */
      if (!(edit->curs1 & M_EDIT_BUF_SIZE))
  	edit->buffers1[edit->curs1 >> S_EDIT_BUF_SIZE] =
@@ -4872,7 +4969,7 @@
  
      /* update file length */
      edit->last_byte++;
-@@ -881,7 +996,7 @@ edit_insert (WEdit *edit, int c)
+@@ -881,7 +996,7 @@
  
  
  /* same as edit_insert and move left */
@@ -4881,7 +4978,7 @@
  {
      if (edit->last_byte >= SIZE_LIMIT)
  	return;
-@@ -904,7 +1019,7 @@ void edit_insert_ahead (WEdit * edit, in
+@@ -904,7 +1019,7 @@
      edit->last_get_rule += (edit->last_get_rule >= edit->curs1);
  
      if (!((edit->curs2 + 1) & M_EDIT_BUF_SIZE))
@@ -4890,7 +4987,7 @@
      edit->buffers2[edit->curs2 >> S_EDIT_BUF_SIZE][EDIT_BUF_SIZE - (edit->curs2 & M_EDIT_BUF_SIZE) - 1] = c;
  
      edit->last_byte++;
-@@ -914,7 +1029,7 @@ void edit_insert_ahead (WEdit * edit, in
+@@ -914,7 +1029,7 @@
  
  int edit_delete (WEdit * edit)
  {
@@ -4899,7 +4996,7 @@
      if (!edit->curs2)
  	return 0;
  
-@@ -938,7 +1053,7 @@ int edit_delete (WEdit * edit)
+@@ -938,7 +1053,7 @@
  	edit->total_lines--;
  	edit->force |= REDRAW_AFTER_CURSOR;
      }
@@ -4908,7 +5005,7 @@
      if (edit->curs1 < edit->start_display) {
  	edit->start_display--;
  	if (p == '\n')
-@@ -952,7 +1067,7 @@ int edit_delete (WEdit * edit)
+@@ -952,7 +1067,7 @@
  static int
  edit_backspace (WEdit * edit)
  {
@@ -4917,7 +5014,7 @@
      if (!edit->curs1)
  	return 0;
  
-@@ -976,7 +1091,7 @@ edit_backspace (WEdit * edit)
+@@ -976,7 +1091,7 @@
  	edit->total_lines--;
  	edit->force |= REDRAW_AFTER_CURSOR;
      }
@@ -4926,7 +5023,7 @@
  
      if (edit->curs1 < edit->start_display) {
  	edit->start_display--;
-@@ -989,10 +1104,18 @@ edit_backspace (WEdit * edit)
+@@ -989,10 +1104,18 @@
  
  #ifdef FAST_MOVE_CURSOR
  
@@ -4946,7 +5043,7 @@
  	edit->curs_line--;
  	next -= (unsigned long) dest;
  	n -= next;
-@@ -1005,7 +1128,7 @@ int
+@@ -1005,7 +1128,7 @@
  edit_move_backward_lots (WEdit *edit, long increment)
  {
      int r, s, t;
@@ -4955,7 +5052,7 @@
  
      if (increment > edit->curs1)
  	increment = edit->curs1;
-@@ -1045,7 +1168,7 @@ edit_move_backward_lots (WEdit *edit, lo
+@@ -1045,7 +1168,7 @@
  	    edit->buffers2[edit->curs2 >> S_EDIT_BUF_SIZE] = p;
  	else
  	    edit->buffers2[edit->curs2 >> S_EDIT_BUF_SIZE] =
@@ -4964,7 +5061,7 @@
      } else {
  	g_free (p);
      }
-@@ -1083,7 +1206,7 @@ edit_move_backward_lots (WEdit *edit, lo
+@@ -1083,7 +1206,7 @@
  		edit->buffers2[edit->curs2 >> S_EDIT_BUF_SIZE] = p;
  	    else
  		edit->buffers2[edit->curs2 >> S_EDIT_BUF_SIZE] =
@@ -4973,7 +5070,7 @@
  	} else {
  	    g_free (p);
  	}
-@@ -1115,7 +1238,7 @@ int edit_cursor_move (WEdit * edit, long
+@@ -1115,7 +1238,7 @@
  
  	    c = edit_get_byte (edit, edit->curs1 - 1);
  	    if (!((edit->curs2 + 1) & M_EDIT_BUF_SIZE))
@@ -4982,7 +5079,7 @@
  	    edit->buffers2[edit->curs2 >> S_EDIT_BUF_SIZE][EDIT_BUF_SIZE - (edit->curs2 & M_EDIT_BUF_SIZE) - 1] = c;
  	    edit->curs2++;
  	    c = edit->buffers1[(edit->curs1 - 1) >> S_EDIT_BUF_SIZE][(edit->curs1 - 1) & M_EDIT_BUF_SIZE];
-@@ -1140,7 +1263,7 @@ int edit_cursor_move (WEdit * edit, long
+@@ -1140,7 +1263,7 @@
  
  	    c = edit_get_byte (edit, edit->curs1);
  	    if (!(edit->curs1 & M_EDIT_BUF_SIZE))
@@ -4991,7 +5088,7 @@
  	    edit->buffers1[edit->curs1 >> S_EDIT_BUF_SIZE][edit->curs1 & M_EDIT_BUF_SIZE] = c;
  	    edit->curs1++;
  	    c = edit->buffers2[(edit->curs2 - 1) >> S_EDIT_BUF_SIZE][EDIT_BUF_SIZE - ((edit->curs2 - 1) & M_EDIT_BUF_SIZE) - 1];
-@@ -1247,7 +1370,7 @@ long edit_move_forward3 (WEdit * edit, l
+@@ -1247,7 +1370,7 @@
  	q = edit->last_byte + 2;
  
      for (col = 0, p = current; p < q; p++) {
@@ -5000,7 +5097,7 @@
  	if (cols != -10) {
  	    if (col == cols)
  		return p;
-@@ -1265,7 +1388,7 @@ long edit_move_forward3 (WEdit * edit, l
+@@ -1265,7 +1388,7 @@
  	} else if (c < 32 || c == 127)
  	    col += 2; /* Caret notation for control characters */
  	else
@@ -5009,7 +5106,7 @@
      }
      return col;
  }
-@@ -1398,7 +1521,7 @@ static int
+@@ -1398,7 +1521,7 @@
  is_blank (WEdit *edit, long offset)
  {
      long s, f;
@@ -5018,7 +5115,7 @@
      s = edit_bol (edit, offset);
      f = edit_eol (edit, offset) - 1;
      while (s <= f) {
-@@ -1770,13 +1893,13 @@ static void edit_left_delete_word (WEdit
+@@ -1770,13 +1893,13 @@
  static void
  edit_do_undo (WEdit * edit)
  {
@@ -5035,7 +5132,7 @@
  	case STACK_BOTTOM:
  	    goto done_undo;
  	case CURS_RIGHT:
-@@ -1797,31 +1920,33 @@ edit_do_undo (WEdit * edit)
+@@ -1797,31 +1920,33 @@
  	case COLUMN_OFF:
  	    column_highlighting = 0;
  	    break;
@@ -5082,7 +5179,7 @@
      edit_update_curs_row (edit);
  
    done_undo:;
-@@ -2101,7 +2226,7 @@ static void edit_goto_matching_bracket (
+@@ -2101,7 +2226,7 @@
   * passed as -1.  Commands are executed, and char_for_insertion is
   * inserted at the cursor.
   */
@@ -5091,7 +5188,7 @@
  {
      if (command == CK_Begin_Record_Macro) {
  	edit->macro_i = 0;
-@@ -2136,7 +2261,7 @@ static const char * const shell_cmd[] = 
+@@ -2136,7 +2261,7 @@
     all of them. It also does not check for the Undo command.
   */
  void
@@ -5100,7 +5197,7 @@
  {
      edit->force |= REDRAW_LINE;
  
-@@ -2169,7 +2294,7 @@ edit_execute_cmd (WEdit *edit, int comma
+@@ -2169,7 +2294,7 @@
      }
  
      /* An ordinary key press */
