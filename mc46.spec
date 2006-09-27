@@ -4,9 +4,9 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_with	utf8		# utf8
+%bcond_without	utf8		# utf8
 #
-%define	snap	2006-05-10-21
+%define	snap	2006-09-25-14
 %define ssnap	%(echo %{snap} | tr - .)
 Summary:	A user-friendly file manager and visual shell
 Summary(de):	Visuelle Shell Midnight Commander
@@ -21,20 +21,15 @@ Summary(uk):	Диспетчер файл╕в Midnight Commander
 Summary(zh_CN):	р╩╦Ж╥╫╠Цй╣сц╣днд╪Ч╧эюМфВ╨мпИдБShell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{ssnap}.3
+Release:	0.%{ssnap}.1
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
-# Source0-md5:	b480bbd7cea8ee04bb789e8fabf54923
+# Source0-md5:	166770dd758526b2a013a6978a8bb54a
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source3-md5:	17d7b574e1b85ad6f8ddceda9e841f19
-# Changelogs for Advanced Midnight Commander patches
-Source4:	http://www1.mplayerhq.hu/~arpi/amc/a%{name}-1.txt
-# NoSource4-md5:	bcf001d40a63f15848a3763cf5e29f6d
-Source5:	http://www1.mplayerhq.hu/~arpi/amc/a%{name}-2.txt
-# NoSource5-md5:	4f69a9856931d562fb5f942a8093e577
 Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
 Source8:	%{name}.png
@@ -44,11 +39,6 @@ Patch2:		%{name}-urar.patch
 Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
-# Advanced Midnight Commander patches
-#changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-1.diff
-Patch6:		a%{name}-1.diff
-#changed from:	http://www1.mplayerhq.hu/~arpi/amc/amc-2.diff
-Patch7:		a%{name}-2.diff
 Patch8:		%{name}-mc.ext.patch
 Patch9:		%{name}-mo.patch
 Patch10:	%{name}-localenames.patch
@@ -63,6 +53,7 @@ Patch17:	%{name}-nolibs.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-look-and-feel.patch
+Patch23:	%{name}-utf8-8bit-hex.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -234,7 +225,7 @@ Commander. Вона забезпечу╓ доступ до в╕ддалено╖ файлово╖ системи
 %prep
 %setup -q -a3 -n %{name}-%{snap}
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
@@ -242,9 +233,6 @@ cp -f vfs/extfs/{rpm,srpm}
 #%patch4 -p1
 # UPDATE ME (translation)
 # %patch5 -p1
-# UPDATED AMC PATCHES available on mc list
-#%patch6 -p1
-#%patch7 -p1
 %patch8 -p1
 # M-o patch
 #%patch9 -p1
@@ -259,7 +247,10 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch17 -p1
 %patch20 -p1
 %patch21 -p1
-%{?with_utf8:%patch22 -p1}
+%if %{with utf8}
+%patch22 -p1
+%patch23 -p1
+%endif
 
 mv -f po/{no,nb}.po
 
