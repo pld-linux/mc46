@@ -1,4 +1,4 @@
-# TODO: check spec-syntax patch
+# TODO: check spec-syntax,pl,mo patches
 #
 # Conditional build:
 %bcond_with	ext2undel	# with ext2 undelete fs
