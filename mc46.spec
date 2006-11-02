@@ -125,10 +125,9 @@ GPM ¤ò»È¤Ã¤Æ¤¤¤ë¾ì¹ç¡¢¥Þ¥¦¥¹¤¬»È¤¨¤Þ¤¹¡£ Midnight Commander ¤Ë¤Ï¡¢ FTP
 
 %description -l pl
 Midnight Commander jest wizualn± pow³ok± podobn± do Norton Commandera.
-Pracuje w trybie tekstowym, ale ma tak¿e wspomaganie dla myszki. Jest
-super ;) MC ma wbudowanego klienta FTP, mo¿e zagl±daæ do
-skompresowanego archiwum tarowego, do *.zip oraz *.rpm. Teraz równie¿
-pracuje z urz±dzeniami /dev/pts/{0-2048} - standard Unix98.
+Pracuje w trybie tekstowym, ale ma tak¿e obs³ugê myszki. Jest super ;)
+MC ma wbudowanego klienta FTP, mo¿e zagl±daæ do skompresowanych
+archiwów tar i zip, a tak¿e ogl±daæ pliki w pakietach RPM.
 
 %description -l pt_BR
 Midnight Commander é um interpretador de comandos visual que mais
