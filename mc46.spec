@@ -22,7 +22,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{ssnap}.1
+Release:	0.%{ssnap}.2
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
@@ -55,6 +55,7 @@ Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-look-and-feel.patch
 Patch23:	%{name}-utf8-8bit-hex.patch
+Patch24:	%{name}-bash-3.2.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -251,6 +252,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch22 -p1
 %patch23 -p1
 %endif
+%patch24 -p1
 
 mv -f po/{no,nb}.po
 
