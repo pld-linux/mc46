@@ -82,7 +82,7 @@ Requires:	pam >= 0.77.3
 Requires:	sed
 Requires:	setup >= 2.4.6-2
 Obsoletes:	tkmc
-Conflicts:	bash < 3.2
+Conflicts:	bash < 2.05b
 Conflicts:	rpm < 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
