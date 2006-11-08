@@ -19,7 +19,7 @@ Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -64,6 +64,7 @@ Patch19:	%{name}-symcrash.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-view.patch
+Patch23:	%{name}-bash-3.2.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -260,6 +261,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch20 -p1
 %patch21 -p1
 %{?with_utf8:%patch22 -p1}
+%patch23 -p1
 
 mv -f po/{no,nb}.po
 
