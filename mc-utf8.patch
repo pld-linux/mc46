@@ -169,7 +169,7 @@
  #include "global.h"
  #include "tty.h"
  #include "menu.h"
-@@ -50,34 +52,96 @@ create_menu (const char *name, menu_entr
+@@ -50,35 +52,96 @@ create_menu (const char *name, menu_entr
  {
      Menu *menu;
      const char *cp;
