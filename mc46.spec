@@ -261,7 +261,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch20 -p1
 %patch21 -p1
 %{?with_utf8:%patch22 -p1}
-%patch23 -p1
+%patch23 -p2
 
 mv -f po/{no,nb}.po
 
