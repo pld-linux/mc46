@@ -253,7 +253,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch22 -p1
 %patch23 -p1
 %endif
-%patch24 -p1
+%patch24 -p2
 
 mv -f po/{no,nb}.po
 
