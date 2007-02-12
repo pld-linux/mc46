@@ -10,16 +10,16 @@
 %define	snap	2006-09-25-14
 %define ssnap	%(echo %{snap} | tr - .)
 Summary:	A user-friendly file manager and visual shell
-Summary(de):	Visuelle Shell Midnight Commander
-Summary(es):	Interpretador de comandos visual Midnight Commander
-Summary(fr):	Un gestionnaire de fichiers puissant et agréable en mode console
-Summary(ja):	»È¤¤¤ä¤¹¤¤¥Õ¥¡¥¤¥ë¥Ş¥Í¡¼¥¸¥ã¤È¥Ó¥¸¥å¥¢¥ë¥·¥§¥ë
-Summary(pl):	Midnight Commander - pow³oka wizualna
-Summary(pt_BR):	Interpretador de comandos visual Midnight Commander
-Summary(ru):	äÉÓĞÅÔŞÅÒ ÆÁÊÌÏ× Midnight Commander
-Summary(tr):	Midnight Commander görsel kabuğu
-Summary(uk):	äÉÓĞÅÔŞÅÒ ÆÁÊÌ¦× Midnight Commander
-Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼ş¹ÜÀíÆ÷ºÍĞéÄâShell
+Summary(de.UTF-8):   Visuelle Shell Midnight Commander
+Summary(es.UTF-8):   Interpretador de comandos visual Midnight Commander
+Summary(fr.UTF-8):   Un gestionnaire de fichiers puissant et agrÃ©able en mode console
+Summary(ja.UTF-8):   ä½¿ã„ã‚„ã™ã„ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ã¨ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ã‚·ã‚§ãƒ«
+Summary(pl.UTF-8):   Midnight Commander - powÅ‚oka wizualna
+Summary(pt_BR.UTF-8):   Interpretador de comandos visual Midnight Commander
+Summary(ru.UTF-8):   Ğ”Ğ¸ÑĞ¿ĞµÑ‚Ñ‡ĞµÑ€ Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ² Midnight Commander
+Summary(tr.UTF-8):   Midnight Commander gÃ¶rsel kabuÄŸu
+Summary(uk.UTF-8):   Ğ”Ğ¸ÑĞ¿ĞµÑ‚Ñ‡ĞµÑ€ Ñ„Ğ°Ğ¹Ğ»Ñ–Ğ² Midnight Commander
+Summary(zh_CN.UTF-8):   ä¸€ä¸ªæ–¹ä¾¿å®ç”¨çš„æ–‡ä»¶ç®¡ç†å™¨å’Œè™šæ‹ŸShell
 Name:		mc
 Version:	4.6.2
 Release:	0.%{ssnap}.2
@@ -94,69 +94,69 @@ with way more features. It is text mode, but also includes mouse
 support if you are running GPM. Its coolest feature is the ability to
 FTP, view tar, zip files, and poke into RPMs for specific files. :-)
 
-%description -l de
-Midnight Commander ist ein Visual-Shell, ähnlich einem Dateimanager,
-aber mit zusätzlichen Funktionen. Es läuft im Textmodus, kann jedoch
-eine Maus unterstützen, wenn GPM betrieben wird. Seine coolsten
-Fähigkeiten sind die FTP-Option, das Einsehen von tar- und zip-Dateien
+%description -l de.UTF-8
+Midnight Commander ist ein Visual-Shell, Ã¤hnlich einem Dateimanager,
+aber mit zusÃ¤tzlichen Funktionen. Es lÃ¤uft im Textmodus, kann jedoch
+eine Maus unterstÃ¼tzen, wenn GPM betrieben wird. Seine coolsten
+FÃ¤higkeiten sind die FTP-Option, das Einsehen von tar- und zip-Dateien
 und das Herausfischen von spezifischen Dateien aus RPMs.
 
-%description -l es
-Midnight Commander es un interpretador de comandos visual que más
+%description -l es.UTF-8
+Midnight Commander es un interpretador de comandos visual que mÃ¡s
 parece un administrador de archivos, solamente con varias
-características a más. Es un programa en modo texto, pero incluye
-soporte para ratón, si estuviera ejecutando GPM o en una ventana
-xterm. Su característica más genial es la habilidad de cotillear en
-RPMs buscando archivos específicos. :-)
+caracterÃ­sticas a mÃ¡s. Es un programa en modo texto, pero incluye
+soporte para ratÃ³n, si estuviera ejecutando GPM o en una ventana
+xterm. Su caracterÃ­stica mÃ¡s genial es la habilidad de cotillear en
+RPMs buscando archivos especÃ­ficos. :-)
 
-%description -l fr
+%description -l fr.UTF-8
 Midnight Commander est une interface pour la ligne de commande qui
 tient beaucoup du gestionnaire de fichiers, mais est bien plus
-puissant. Il fonctionne en mode console (texte), mais peut être
-contrôlé à la souris si GPM est présent. Ses caractéristiques les plus
-remarquables sont la possibilité de se connecter à un serveur FTP, de
+puissant. Il fonctionne en mode console (texte), mais peut Ãªtre
+contrÃ´lÃ© Ã  la souris si GPM est prÃ©sent. Ses caractÃ©ristiques les plus
+remarquables sont la possibilitÃ© de se connecter Ã  un serveur FTP, de
 visualiser des archives tar, de compresser des fichiers avec zip, de
-récupérer des fichiers dans les packages RPM, et tout ceci simplement.
+rÃ©cupÃ©rer des fichiers dans les packages RPM, et tout ceci simplement.
 
-%description -l ja
-Midnight Commander ¤Ï¤¤¤í¤¤¤í¤Êµ¡Ç½¤ò»ı¤Ã¤¿¥Õ¥¡¥¤¥ë¥Ş¥Í¡¼¥¸¥ã·ó
-¥Ó¥¸¥å¥¢¥ë¥·¥§¥ë¤Ç¤¹¡£¤³¤ì¤Ï¥Æ¥­¥¹¥È¥â¡¼¥É¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Ç¤¹¤¬¡¢
-GPM ¤ò»È¤Ã¤Æ¤¤¤ë¾ì¹ç¡¢¥Ş¥¦¥¹¤¬»È¤¨¤Ş¤¹¡£ Midnight Commander ¤Ë¤Ï¡¢ FTP
-¤ËÀÜÂ³¤Ç¤­¤¿¤ê¡¢ tar ¤ä zip ¤ä RPM ¤ÎÃæ¤¬¸«¤¨¤ë¤Ê¤É¡¢¥¯¡¼¥ë¤Êµ¡Ç½
-¤¬¤¢¤ê¤Ş¤¹¡£
+%description -l ja.UTF-8
+Midnight Commander ã¯ã„ã‚ã„ã‚ãªæ©Ÿèƒ½ã‚’æŒã£ãŸãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£å…¼
+ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ã‚·ã‚§ãƒ«ã§ã™ã€‚ã“ã‚Œã¯ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã§ã™ãŒã€
+GPM ã‚’ä½¿ã£ã¦ã„ã‚‹å ´åˆã€ãƒã‚¦ã‚¹ãŒä½¿ãˆã¾ã™ã€‚ Midnight Commander ã«ã¯ã€ FTP
+ã«æ¥ç¶šã§ããŸã‚Šã€ tar ã‚„ zip ã‚„ RPM ã®ä¸­ãŒè¦‹ãˆã‚‹ãªã©ã€ã‚¯ãƒ¼ãƒ«ãªæ©Ÿèƒ½
+ãŒã‚ã‚Šã¾ã™ã€‚
 
-%description -l pl
-Midnight Commander jest wizualn± pow³ok± podobn± do Norton Commandera.
-Pracuje w trybie tekstowym, ale ma tak¿e obs³ugê myszki. Jest super ;)
-MC ma wbudowanego klienta FTP, mo¿e zagl±daæ do skompresowanych
-archiwów tar i zip, a tak¿e ogl±daæ pliki w pakietach RPM.
+%description -l pl.UTF-8
+Midnight Commander jest wizualnÄ… powÅ‚okÄ… podobnÄ… do Norton Commandera.
+Pracuje w trybie tekstowym, ale ma takÅ¼e obsÅ‚ugÄ™ myszki. Jest super ;)
+MC ma wbudowanego klienta FTP, moÅ¼e zaglÄ…daÄ‡ do skompresowanych
+archiwÃ³w tar i zip, a takÅ¼e oglÄ…daÄ‡ pliki w pakietach RPM.
 
-%description -l pt_BR
-Midnight Commander é um interpretador de comandos visual que mais
-parece um gerenciador de arquivos, somente com várias características
-a mais. Ele é um programa de modo texto, mas inclui suporte para mouse
-se você estiver rodando GPM ou em uma janela xterm. Sua característica
-mais legal é a habilidade de bisbilhotar em RPMs procurando arquivos
-específicos. :-)
+%description -l pt_BR.UTF-8
+Midnight Commander Ã© um interpretador de comandos visual que mais
+parece um gerenciador de arquivos, somente com vÃ¡rias caracterÃ­sticas
+a mais. Ele Ã© um programa de modo texto, mas inclui suporte para mouse
+se vocÃª estiver rodando GPM ou em uma janela xterm. Sua caracterÃ­stica
+mais legal Ã© a habilidade de bisbilhotar em RPMs procurando arquivos
+especÃ­ficos. :-)
 
-%description -l tr
-Midnight Commander bir dosya yöneticisine çok benzeyen ancak daha
-yetenekli bir görsel kabuktur. Metin ekranda çalışır ve GPM
-çalışıyorsa fare desteği vardır. En hoş özellikleri FTP yapabilmesi,
-tar, zip ve RPM dosyalarının içeriklerini gösterebilmesidir.
+%description -l tr.UTF-8
+Midnight Commander bir dosya yÃ¶neticisine Ã§ok benzeyen ancak daha
+yetenekli bir gÃ¶rsel kabuktur. Metin ekranda Ã§alÄ±ÅŸÄ±r ve GPM
+Ã§alÄ±ÅŸÄ±yorsa fare desteÄŸi vardÄ±r. En hoÅŸ Ã¶zellikleri FTP yapabilmesi,
+tar, zip ve RPM dosyalarÄ±nÄ±n iÃ§eriklerini gÃ¶sterebilmesidir.
 
 %package -n mcserv
 Summary:	Server for the Midnight Commander network file management system
-Summary(de):	Midnight Commander File-Server
-Summary(es):	Servidor de archivos del Midnight Commander
-Summary(fr):	Serveur réseau pour le gestionnaire de fichiers Midnight Commander
-Summary(ja):	Midnight Commander ¤Ç¥Í¥Ã¥È¥ï¡¼¥¯¥Õ¥¡¥¤¥ë¥Ş¥Í¡¼¥¸¥á¥ó¥È¤ò¹Ô¤¦¥µ¡¼¥Ğ
-Summary(pl):	Serwer plików Midnight Commandera
-Summary(pt_BR):	Servidor de arquivos do Midnight Commander
-Summary(ru):	Midnight Commander ÆÁÊÌ-ÓÅÒ×ÅÒ
-Summary(tr):	Midnight Commander dosya sunucusu
-Summary(uk):	Midnight Commander ÆÁÊÌ-ÓÅÒ×ÅÒ
-Summary(zh_CN):	mc ÍøÂçÎÄ¼ş¹ÜÀíÏµÍ³µÄ·şÎñÆ÷¡£
+Summary(de.UTF-8):   Midnight Commander File-Server
+Summary(es.UTF-8):   Servidor de archivos del Midnight Commander
+Summary(fr.UTF-8):   Serveur rÃ©seau pour le gestionnaire de fichiers Midnight Commander
+Summary(ja.UTF-8):   Midnight Commander ã§ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ¡ãƒ³ãƒˆã‚’è¡Œã†ã‚µãƒ¼ãƒ
+Summary(pl.UTF-8):   Serwer plikÃ³w Midnight Commandera
+Summary(pt_BR.UTF-8):   Servidor de arquivos do Midnight Commander
+Summary(ru.UTF-8):   Midnight Commander Ñ„Ğ°Ğ¹Ğ»-ÑĞµÑ€Ğ²ĞµÑ€
+Summary(tr.UTF-8):   Midnight Commander dosya sunucusu
+Summary(uk.UTF-8):   Midnight Commander Ñ„Ğ°Ğ¹Ğ»-ÑĞµÑ€Ğ²ĞµÑ€
+Summary(zh_CN.UTF-8):   mc ç½‘ç»œæ–‡ä»¶ç®¡ç†ç³»ç»Ÿçš„æœåŠ¡å™¨ã€‚
 Group:		Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	pam >= 0.66
@@ -170,59 +170,59 @@ is only possible if the remote machine is running the mcserv server
 program. Mcserv provides clients running Midnight Commander with
 access to the host's file systems.
 
-%description -n mcserv -l de
-mcserv ist das Server-Programm für das Netzwerkdateisystem Midnight
-Commander. Es ermöglicht den Zugriff auf das Host-Dateisystem für
-Clients, die das Midnight-Dateisystem ausführen (z.Zt. nur Midnight
+%description -n mcserv -l de.UTF-8
+mcserv ist das Server-Programm fÃ¼r das Netzwerkdateisystem Midnight
+Commander. Es ermÃ¶glicht den Zugriff auf das Host-Dateisystem fÃ¼r
+Clients, die das Midnight-Dateisystem ausfÃ¼hren (z.Zt. nur Midnight
 Commander file manager).
 
-%description -n mcserv -l es
+%description -n mcserv -l es.UTF-8
 Mcserv es un servidor para el sistema de archivos en red del Midnight
 Commander. Permite que clientes usando el mc accedan remotamente al
-sistema de archivos de la máquina en que está ejecutando.
+sistema de archivos de la mÃ¡quina en que estÃ¡ ejecutando.
 
-%description -n mcserv -l fr
-Le système de gestion de fichier Midnight Commander vous permet de
-manipuler des fichiers sur une machine distante comme si ils étaient
+%description -n mcserv -l fr.UTF-8
+Le systÃ¨me de gestion de fichier Midnight Commander vous permet de
+manipuler des fichiers sur une machine distante comme si ils Ã©taient
 sur votre propre machine. Ceci est possible seulement si la machine
-distante possède le programme mcserv et que celui-ci est activé.
+distante possÃ¨de le programme mcserv et que celui-ci est activÃ©.
 Mcserv apporte aux machines clientes qui font tourner Midnight
-Commander un accès aux fichiers situés sur l'hôte.
+Commander un accÃ¨s aux fichiers situÃ©s sur l'hÃ´te.
 
-%description -n mcserv -l ja
+%description -n mcserv -l ja.UTF-8
 Midnight Commander
-¤Î¥Õ¥¡¥¤¥ë´ÉÍı¥·¥¹¥Æ¥à¤Ï¡¢¥ê¥â¡¼¥È¥Ş¥·¥ó¤Ë¤¢¤ë¥Õ¥¡¥¤¥ë¤ò
-¥í¡¼¥«¥ë¤Ë¤¢¤ë¤«¤Î¤è¤¦¤Ë°·¤¦¤³¤È¤¬¤Ç¤­¤Ş¤¹¡£¤³¤Îµ¡Ç½¤Ï mcserv
-¥×¥í¥°¥é¥à¤ò ¼Â¹Ô¤·¤Æ¤¤¤ë¥ê¥â¡¼¥È¥Ş¥·¥ó¤ËÂĞ¤·¤Æ¤Î¤ßÆ¯¤­¤Ş¤¹¡£ Mcserv
-¤Ï Midnight Commander
-¥¯¥é¥¤¥¢¥ó¥È¤ËÂĞ¤·¤Æ¡¢¤³¤Î¥Û¥¹¥È¤Î¥Õ¥¡¥¤¥ë¥·¥¹¥Æ¥à¤òÄó¶¡¤·¤Ş¤¹¡£
+ã®ãƒ•ã‚¡ã‚¤ãƒ«ç®¡ç†ã‚·ã‚¹ãƒ†ãƒ ã¯ã€ãƒªãƒ¢ãƒ¼ãƒˆãƒã‚·ãƒ³ã«ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’
+ãƒ­ãƒ¼ã‚«ãƒ«ã«ã‚ã‚‹ã‹ã®ã‚ˆã†ã«æ‰±ã†ã“ã¨ãŒã§ãã¾ã™ã€‚ã“ã®æ©Ÿèƒ½ã¯ mcserv
+ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’ å®Ÿè¡Œã—ã¦ã„ã‚‹ãƒªãƒ¢ãƒ¼ãƒˆãƒã‚·ãƒ³ã«å¯¾ã—ã¦ã®ã¿åƒãã¾ã™ã€‚ Mcserv
+ã¯ Midnight Commander
+ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«å¯¾ã—ã¦ã€ã“ã®ãƒ›ã‚¹ãƒˆã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚·ã‚¹ãƒ†ãƒ ã‚’æä¾›ã—ã¾ã™ã€‚
 
-%description -n mcserv -l pl
-Mcserv jest aplikacj± dla sieciowego systemu plików Midnight
-Commandera. Pozwala na dostêp do systemu plików dla klienta
-pracuj±cego pod MC i u¿ywaj±cego jego systemu plików.
+%description -n mcserv -l pl.UTF-8
+Mcserv jest aplikacjÄ… dla sieciowego systemu plikÃ³w Midnight
+Commandera. Pozwala na dostÄ™p do systemu plikÃ³w dla klienta
+pracujÄ…cego pod MC i uÅ¼ywajÄ…cego jego systemu plikÃ³w.
 
-%description -n mcserv -l pt_BR
-Mcserv é um servidor para o sistema de arquivos em rede do Midnight
+%description -n mcserv -l pt_BR.UTF-8
+Mcserv Ã© um servidor para o sistema de arquivos em rede do Midnight
 Commander. Ele permite que clientes usando o mc acessem remotamente o
-sistema de arquivos da máquina em que está rodando.
+sistema de arquivos da mÃ¡quina em que estÃ¡ rodando.
 
-%description -n mcserv -l ru
-mcserv - ÜÔÏ ÓÅÒ×ÅÒÎÁÑ ĞÒÏÇÒÁÍÍÁ ÄÌÑ ÓÅÔÅ×ÏÊ ÆÁÊÌÏ×ÏÊ ÓÉÓÔÅÍÙ Midnight
-Commander. ïÎÁ ÏÂÅÓĞÅŞÉ×ÁÅÔ ÄÏÓÔÕĞ Ë ÕÄÁÌÅÎÎÏÊ ÆÁÊÌÏ×ÏÊ ÓÉÓÔÅÍÅ
-ËÌÉÅÎÔÁÍ, ĞÏÄÄÅÒÖÉ×ÁÀİÉÍ ÆÁÊÌÏ×ÕÀ ÓÉÓÔÅÍÕ Midnight Commander (×
-ÎÁÓÔÏÑİÅÅ ×ÒÅÍÑ ÔÏÌØËÏ ÓÏÂÓÔ×ÅÎÎÏ Midnight Commander).
+%description -n mcserv -l ru.UTF-8
+mcserv - ÑÑ‚Ğ¾ ÑĞµÑ€Ğ²ĞµÑ€Ğ½Ğ°Ñ Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼Ğ° Ğ´Ğ»Ñ ÑĞµÑ‚ĞµĞ²Ğ¾Ğ¹ Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ²Ğ¾Ğ¹ ÑĞ¸ÑÑ‚ĞµĞ¼Ñ‹ Midnight
+Commander. ĞĞ½Ğ° Ğ¾Ğ±ĞµÑĞ¿ĞµÑ‡Ğ¸Ğ²Ğ°ĞµÑ‚ Ğ´Ğ¾ÑÑ‚ÑƒĞ¿ Ğº ÑƒĞ´Ğ°Ğ»ĞµĞ½Ğ½Ğ¾Ğ¹ Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ²Ğ¾Ğ¹ ÑĞ¸ÑÑ‚ĞµĞ¼Ğµ
+ĞºĞ»Ğ¸ĞµĞ½Ñ‚Ğ°Ğ¼, Ğ¿Ğ¾Ğ´Ğ´ĞµÑ€Ğ¶Ğ¸Ğ²Ğ°ÑÑ‰Ğ¸Ğ¼ Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ²ÑƒÑ ÑĞ¸ÑÑ‚ĞµĞ¼Ñƒ Midnight Commander (Ğ²
+Ğ½Ğ°ÑÑ‚Ğ¾ÑÑ‰ĞµĞµ Ğ²Ñ€ĞµĞ¼Ñ Ñ‚Ğ¾Ğ»ÑŒĞºĞ¾ ÑĞ¾Ğ±ÑÑ‚Ğ²ĞµĞ½Ğ½Ğ¾ Midnight Commander).
 
-%description -n mcserv -l tr
-mcserv, Midnight Commander ağ dosya sisteminin sunucu programıdır.
-Midnight dosya sistemini çalıştıran istemcilerin sunucu dosya
-sistemine erişimini sağlar.
+%description -n mcserv -l tr.UTF-8
+mcserv, Midnight Commander aÄŸ dosya sisteminin sunucu programÄ±dÄ±r.
+Midnight dosya sistemini Ã§alÄ±ÅŸtÄ±ran istemcilerin sunucu dosya
+sistemine eriÅŸimini saÄŸlar.
 
-%description -n mcserv -l uk
-mcserv - ÃÅ ÓÅÒ×ÅÒÎÁ ĞÒÏÇÒÁÍÁ ÄÌÑ ÍÅÒÅÖÅ×Ï§ ÆÁÊÌÏ×Ï§ ÓÉÓÔÅÍÉ Midnight
-Commander. ÷ÏÎÁ ÚÁÂÅÚĞÅŞÕ¤ ÄÏÓÔÕĞ ÄÏ ×¦ÄÄÁÌÅÎÏ§ ÆÁÊÌÏ×Ï§ ÓÉÓÔÅÍÉ
-ËÌ¦¤ÎÔÁÍ, İÏ Ğ¦ÄÔÒÉÍÕÀÔØ ÆÁÊÌÏ×Õ ÓÉÓÔÅÍÕ Midnight Commander (ÎÁÒÁÚ¦
-Ô¦ÌØËÉ ×ÌÁÓÎÅ Midnight Commander).
+%description -n mcserv -l uk.UTF-8
+mcserv - Ñ†Ğµ ÑĞµÑ€Ğ²ĞµÑ€Ğ½Ğ° Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ° Ğ´Ğ»Ñ Ğ¼ĞµÑ€ĞµĞ¶ĞµĞ²Ğ¾Ñ— Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ²Ğ¾Ñ— ÑĞ¸ÑÑ‚ĞµĞ¼Ğ¸ Midnight
+Commander. Ğ’Ğ¾Ğ½Ğ° Ğ·Ğ°Ğ±ĞµĞ·Ğ¿ĞµÑ‡ÑƒÑ” Ğ´Ğ¾ÑÑ‚ÑƒĞ¿ Ğ´Ğ¾ Ğ²Ñ–Ğ´Ğ´Ğ°Ğ»ĞµĞ½Ğ¾Ñ— Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ²Ğ¾Ñ— ÑĞ¸ÑÑ‚ĞµĞ¼Ğ¸
+ĞºĞ»Ñ–Ñ”Ğ½Ñ‚Ğ°Ğ¼, Ñ‰Ğ¾ Ğ¿Ñ–Ğ´Ñ‚Ñ€Ğ¸Ğ¼ÑƒÑÑ‚ÑŒ Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ²Ñƒ ÑĞ¸ÑÑ‚ĞµĞ¼Ñƒ Midnight Commander (Ğ½Ğ°Ñ€Ğ°Ğ·Ñ–
+Ñ‚Ñ–Ğ»ÑŒĞºĞ¸ Ğ²Ğ»Ğ°ÑĞ½Ğµ Midnight Commander).
 
 %prep
 %setup -q -a3 -n %{name}-%{snap}
