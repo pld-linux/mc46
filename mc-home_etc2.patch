@@ -175,8 +175,8 @@ diff -urN mc-4.6.1-pre1.org/slang/sltermin.c mc-4.6.1-pre1/slang/sltermin.c
     /* If we are on a termcap based system, use termcap */
     if (0 == tcap_getent (term, ti)) return ti;
  
--   if (NULL != (home = getenv ("HOME")))
-+   if (NULL != (home = getenv("HOME_ETC") ? getenv("HOME_ETC") : getenv ("HOME")))
+-   if (NULL != (home = _pSLsecure_getenv ("HOME")))
++   if (NULL != (home = _pSLsecure_getenv ("HOME_ETC") ? _pSLsecure_getenv("HOME_ETC") : _pSLsecure_getenv("HOME")))
       {
  	strncpy (home_ti, home, sizeof (home_ti) - 11);
  	home_ti [sizeof(home_ti) - 11] = 0;
@@ -450,30 +450,30 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      case 'k':			/* block file name */
      case 'b':			/* block file name / strip extension */  {
  	    if (edit_widget) {
--		char *file = g_strconcat (home_dir, BLOCK_FILE, (char *) NULL);
-+		char *file = g_strconcat (etc_dir, BLOCK_FILE, (char *) NULL);
+-		char *file = g_strconcat (home_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL);
++		char *file = g_strconcat (etc_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL);
  		fname = (*quote_func) (file, 0);
  		g_free (file);
  		return fname;
 --- ./edit/editwidget.c.org	2005-06-13 14:12:20.457172440 +0200
 +++ ./edit/editwidget.c	2005-06-13 14:12:38.053497392 +0200
 @@ -176,7 +176,7 @@
- 		sizeof (int));
-     }
-     if (!made_directory) {
--	mkdir (catstrs (home_dir, EDIT_DIR, (char *) NULL), 0700);
-+	mkdir (catstrs (etc_dir, EDIT_DIR, (char *) NULL), 0700);
- 	made_directory = 1;
-     }
+     WButtonBar *edit_bar;
  
+     if (!made_directory) {
+-	char *dir = concat_dir_and_file (home_dir, EDIT_DIR);
++	char *dir = concat_dir_and_file (etc_dir, EDIT_DIR);
+ 	made_directory = (mkdir (dir, 0700) != -1 || errno == EEXIST);
+ 	g_free (dir);
+     }
 --- ./edit/editcmd.c.org	2005-06-13 14:10:53.448399784 +0200
 +++ ./edit/editcmd.c	2005-06-13 14:12:04.249636360 +0200
 @@ -585,7 +585,7 @@
  {
      char *filename;
      int file;
--    filename = catstrs (home_dir, MACRO_FILE, (char *) NULL);
-+    filename = catstrs (etc_dir, MACRO_FILE, (char *) NULL);
+-    filename = catstrs (home_dir, PATH_SEP_STR MACRO_FILE, (char *) NULL);
++    filename = catstrs (etc_dir, PATH_SEP_STR MACRO_FILE, (char *) NULL);
      if ((file = open (filename, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
  	return 0;
      close (file);
@@ -481,8 +481,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      if (saved_macros_loaded)
  	if ((j = macro_exists (k)) < 0)
  	    return 0;
--    g = fopen (catstrs (home_dir, TEMP_FILE, (char *) NULL), "w");
-+    g = fopen (catstrs (etc_dir, TEMP_FILE, (char *) NULL), "w");
+-    g = fopen (catstrs (home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL), "w");
++    g = fopen (catstrs (etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL), "w");
      if (!g) {
  /* This heads the delete macro error dialog box */
  	edit_error_dialog (_(" Delete macro "),
@@ -490,17 +490,17 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      }
      fclose (f);
      fclose (g);
--    if (rename (catstrs (home_dir, TEMP_FILE, (char *) NULL), catstrs (home_dir, MACRO_FILE, (char *) NULL)) == -1) {
-+    if (rename (catstrs (etc_dir, TEMP_FILE, (char *) NULL), catstrs (etc_dir, MACRO_FILE, (char *) NULL)) == -1) {
- /* This heads the delete macro error dialog box */
+-    if (rename (catstrs (home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL), catstrs (home_dir, PATH_SEP_STR MACRO_FILE, (char *) NULL)) == -1) {
++    if (rename (catstrs (etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL), catstrs (etc_dir, PATH_SEP_STR MACRO_FILE, (char *) NULL)) == -1) {
  	edit_error_dialog (_(" Delete macro "),
  	   get_sys_error (_(" Cannot overwrite macro file ")));
+ 	return 1;
 @@ -2208,7 +2208,7 @@
  /* copies a block to clipboard file */
  static int edit_save_block_to_clip_file (WEdit * edit, long start, long finish)
  {
--    return edit_save_block (edit, catstrs (home_dir, CLIP_FILE, (char *) NULL), start, finish);
-+    return edit_save_block (edit, catstrs (etc_dir, CLIP_FILE, (char *) NULL), start, finish);
+-    return edit_save_block (edit, catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL), start, finish);
++    return edit_save_block (edit, catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL), start, finish);
  }
  
  
@@ -508,8 +508,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  
  void edit_paste_from_X_buf_cmd (WEdit * edit)
  {
--    edit_insert_file (edit, catstrs (home_dir, CLIP_FILE, (char *) NULL));
-+    edit_insert_file (edit, catstrs (etc_dir, CLIP_FILE, (char *) NULL));
+-    edit_insert_file (edit, catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL));
++    edit_insert_file (edit, catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL));
  }
  
  
@@ -517,8 +517,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      if (eval_marks (edit, &start_mark, &end_mark))
  	return 1;
      exp =
--	edit_get_save_file (catstrs (home_dir, CLIP_FILE, (char *) NULL),
-+	edit_get_save_file (catstrs (etc_dir, CLIP_FILE, (char *) NULL),
+-	edit_get_save_file (catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
++	edit_get_save_file (catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
  			    _(" Save Block "));
      edit_push_action (edit, KEY_PRESS + edit->start_display);
      if (exp) {
@@ -526,8 +526,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  int
  edit_insert_file_cmd (WEdit *edit)
  {
--    char *exp = edit_get_load_file (catstrs (home_dir, CLIP_FILE, (char *) NULL),
-+    char *exp = edit_get_load_file (catstrs (etc_dir, CLIP_FILE, (char *) NULL),
+-    char *exp = edit_get_load_file (catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
++    char *exp = edit_get_load_file (catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
  				    _(" Insert File "));
      edit_push_action (edit, KEY_PRESS + edit->start_display);
      if (exp) {
@@ -535,8 +535,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	edit_error_dialog (_(" Sort block "), _(" You must first highlight a block of text. "));
  	return 0;
      }
--    edit_save_block (edit, catstrs (home_dir, BLOCK_FILE, (char *) NULL), start_mark, end_mark);
-+    edit_save_block (edit, catstrs (etc_dir, BLOCK_FILE, (char *) NULL), start_mark, end_mark);
+-    edit_save_block (edit, catstrs (home_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL), start_mark, end_mark);
++    edit_save_block (edit, catstrs (etc_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL), start_mark, end_mark);
  
      exp = old ? old : "";
  
@@ -544,8 +544,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      g_free (old);
      old = exp;
  
--    e = system (catstrs (" sort ", exp, " ", home_dir, BLOCK_FILE, " > ", home_dir, TEMP_FILE, (char *) NULL));
-+    e = system (catstrs (" sort ", exp, " ", etc_dir, BLOCK_FILE, " > ", etc_dir, TEMP_FILE, (char *) NULL));
+-    e = system (catstrs (" sort ", exp, " ", home_dir, PATH_SEP_STR BLOCK_FILE, " > ", home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
++    e = system (catstrs (" sort ", exp, " ", etc_dir, PATH_SEP_STR BLOCK_FILE, " > ", etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
      if (e) {
  	if (e == -1 || e == 127) {
  	    edit_error_dialog (_(" Sort "), 
@@ -553,8 +553,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  
      if (edit_block_delete_cmd (edit))
  	return 1;
--    edit_insert_file (edit, catstrs (home_dir, TEMP_FILE, (char *) NULL));
-+    edit_insert_file (edit, catstrs (etc_dir, TEMP_FILE, (char *) NULL));
+-    edit_insert_file (edit, catstrs (home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
++    edit_insert_file (edit, catstrs (etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
      return 0;
  }
  
@@ -562,8 +562,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      if (!exp)
  	return 1;
  
--    e = system (catstrs (exp, " > ", home_dir, TEMP_FILE, (char *) NULL));
-+    e = system (catstrs (exp, " > ", etc_dir, TEMP_FILE, (char *) NULL));
+-    e = system (catstrs (exp, " > ", home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
++    e = system (catstrs (exp, " > ", etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
      g_free (exp);
  
      if (e) {
@@ -571,8 +571,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  
      edit->force |= REDRAW_COMPLETELY;
  
--    edit_insert_file (edit, catstrs (home_dir, TEMP_FILE, (char *) NULL));
-+    edit_insert_file (edit, catstrs (etc_dir, TEMP_FILE, (char *) NULL));
+-    edit_insert_file (edit, catstrs (home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
++    edit_insert_file (edit, catstrs (etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
      return 0;
  }
  
@@ -580,10 +580,10 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      char *quoted_name = NULL;
  
      o = catstrs (mc_home, shell_cmd, (char *) NULL);	/* original source script */
--    h = catstrs (home_dir, EDIT_DIR, shell_cmd, (char *) NULL);	/* home script */
--    b = catstrs (home_dir, BLOCK_FILE, (char *) NULL);	/* block file */
-+    h = catstrs (etc_dir, EDIT_DIR, shell_cmd, (char *) NULL);	/* home script */
-+    b = catstrs (etc_dir, BLOCK_FILE, (char *) NULL);	/* block file */
+-    h = catstrs (home_dir, PATH_SEP_STR EDIT_DIR, shell_cmd, (char *) NULL);	/* home script */
+-    b = catstrs (home_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL);	/* block file */
++    h = catstrs (etc_dir, PATH_SEP_STR EDIT_DIR, shell_cmd, (char *) NULL);	/* home script */
++    b = catstrs (etc_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL);	/* block file */
  
      if (!(script_home = fopen (h, "r"))) {
  	if (!(script_home = fopen (h, "w"))) {
@@ -591,10 +591,10 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	 *   $3 - file where error messages should be put
  	 *        (for compatibility with old scripts).
  	 */
--	system (catstrs (" ", home_dir, EDIT_DIR, shell_cmd, " ", quoted_name,
--			 " ", home_dir, BLOCK_FILE " /dev/null", (char *) NULL));
-+	system (catstrs (" ", etc_dir, EDIT_DIR, shell_cmd, " ", quoted_name,
-+			 " ", etc_dir, BLOCK_FILE " /dev/null", (char *) NULL));
+-	system (catstrs (" ", home_dir, PATH_SEP_STR EDIT_DIR, shell_cmd, " ", quoted_name,
+-			 " ", home_dir, PATH_SEP_STR BLOCK_FILE " /dev/null", (char *) NULL));
++	system (catstrs (" ", etc_dir, PATH_SEP_STR EDIT_DIR, shell_cmd, " ", quoted_name,
++			 " ", etc_dir, PATH_SEP_STR BLOCK_FILE " /dev/null", (char *) NULL));
  
      } else {
  	/*
@@ -602,8 +602,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	 * Arguments:
  	 *   $1 - name of the edited file.
  	 */
--	system (catstrs (" ", home_dir, EDIT_DIR, shell_cmd, " ",
-+	system (catstrs (" ", etc_dir, EDIT_DIR, shell_cmd, " ",
+-	system (catstrs (" ", home_dir, PATH_SEP_STR EDIT_DIR, shell_cmd, " ",
++	system (catstrs (" ", etc_dir, PATH_SEP_STR EDIT_DIR, shell_cmd, " ",
  			 quoted_name, (char *) NULL));
      }
      g_free (quoted_name);
@@ -613,8 +613,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	return fopen (filename, "r");
  
      g_free (error_file_name);
--    error_file_name = g_strconcat (home_dir, EDIT_DIR PATH_SEP_STR,
-+    error_file_name = g_strconcat (etc_dir, EDIT_DIR PATH_SEP_STR,
+-    error_file_name = g_strconcat (home_dir, PATH_SEP_STR EDIT_DIR PATH_SEP_STR,
++    error_file_name = g_strconcat (etc_dir, PATH_SEP_STR EDIT_DIR PATH_SEP_STR,
  				   filename, (char *) NULL);
      f = fopen (error_file_name, "r");
      if (f)
@@ -622,9 +622,9 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	if (!*edit->filename && !type)
  	    return;
      }
--    f = catstrs (home_dir, SYNTAX_FILE, (char *) NULL);
-+    f = catstrs (etc_dir, SYNTAX_FILE, (char *) NULL);
-     r = edit_read_syntax_file (edit, names, f, edit ? edit->filename : 0,
+-    f = concat_dir_and_file (home_dir, SYNTAX_FILE);
++    f = concat_dir_and_file (etc_dir, SYNTAX_FILE);
+     r = edit_read_syntax_file (edit, pnames, f, edit ? edit->filename : 0,
  			       get_first_editor_line (edit), type);
      if (r == -1) {
 --- ./edit/edit.c.org	2005-06-13 14:09:12.420758320 +0200
@@ -633,8 +633,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      int nomark;
      struct stat status;
      long start_mark, end_mark;
--    char *block_file = catstrs (home_dir, BLOCK_FILE, (char *) NULL);
-+    char *block_file = catstrs (etc_dir, BLOCK_FILE, 0);
+-    char *block_file = concat_dir_and_file (home_dir, BLOCK_FILE);
++    char *block_file = concat_dir_and_file (etc_dir, BLOCK_FILE);
      int rc = 0;
  
      nomark = eval_marks (edit, &start_mark, &end_mark);
