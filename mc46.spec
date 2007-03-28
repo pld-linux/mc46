@@ -7,7 +7,7 @@
 %bcond_without	x		# without text edit in X support
 %bcond_without	utf8		# utf8
 #
-%define	snap	2006-09-25-14
+%define	snap	2007-03-09-18
 %define ssnap	%(echo %{snap} | tr - .)
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
@@ -22,11 +22,11 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{ssnap}.2
+Release:	0.%{ssnap}.1
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
-# Source0-md5:	166770dd758526b2a013a6978a8bb54a
+# Source0-md5:	0f80a36a605da8b2ad9cedfc6131982a
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -41,7 +41,6 @@ Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch8:		%{name}-mc.ext.patch
-Patch9:		%{name}-mo.patch
 Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
@@ -55,7 +54,6 @@ Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-look-and-feel.patch
 Patch23:	%{name}-utf8-8bit-hex.patch
-Patch24:	%{name}-bash-3.2.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -227,17 +225,13 @@ Commander. Вона забезпечує доступ до віддаленої 
 %prep
 %setup -q -a3 -n %{name}-%{snap}
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
-# UPDATE ME (home-etc)
-#%patch4 -p1
-# UPDATE ME (translation)
-# %patch5 -p1
+%patch4 -p1
+%patch5 -p1
 %patch8 -p1
-# M-o patch
-#%patch9 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
 %patch12 -p1
@@ -253,7 +247,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch22 -p1
 %patch23 -p1
 %endif
-%patch24 -p2
 
 mv -f po/{no,nb}.po
 
