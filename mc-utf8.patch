@@ -4475,7 +4475,7 @@
      int color;
      int i, book_mark = -1;
  
-@@ -287,66 +300,96 @@
+@@ -287,62 +300,92 @@
  
  	if (row <= edit->total_lines - edit->start_line) {
  	    while (col <= end_col - edit->start_col) {
@@ -4505,14 +4505,9 @@
 +		    p->style |= MOD_BOLD;
  		c = edit_get_byte (edit, q);
  /* we don't use bg for mc - fg contains both */
- 		if (book_mark == -1) {
- 		    edit_get_syntax_color (edit, q, &color);
--		    *p |= color << 16;
-+		    p->style |= color << 16;
- 		} else {
--		    *p |= book_mark << 16;
-+		    p->style |= book_mark << 16;
- 		}
+ 		edit_get_syntax_color (edit, q, &color);
+-		*p |= color << 16;
++		p->style |= color << 16;
  		q++;
  		switch (c) {
  		case '\n':
@@ -4797,12 +4792,12 @@
      if (edit_load_file (edit)) {
  	/* edit_load_file already gives an error message */
  	if (to_free)
-@@ -689,13 +790,23 @@
+@@ -689,14 +790,23 @@
  {
      unsigned long sp = edit->stack_pointer;
      unsigned long spm1;
 -    long *t;
-+  
+ 
 +    struct action *t; 
 +    mc_wchar_t ch = 0; 
 +
