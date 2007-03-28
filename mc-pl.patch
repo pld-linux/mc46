@@ -19,20 +19,19 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: edit/editmenu.c:412 edit/editmenu.c:426
  msgid " Sear/Repl "
-@@ -783,11 +783,11 @@
+@@ -783,10 +783,10 @@
+ msgstr "Zast±p"
  
- #: edit/editwidget.c:291 src/file.c:803 src/screen.c:2188 src/tree.c:975
  msgid "Copy"
 -msgstr "Skopiuj"
 +msgstr "Kopiuj"
  
- #: edit/editwidget.c:292
  msgid "Move"
 -msgstr "Przen."
 +msgstr "Przesuñ"
  
- #: edit/editwidget.c:294 src/screen.c:2191
  msgid "Delete"
+ msgstr "Usuñ"
 @@ -926,7 +926,7 @@
  
  #: src/boxes.c:138
@@ -42,48 +41,45 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/boxes.c:278
  msgid "&Reverse"
-@@ -1034,15 +1034,15 @@
+@@ -1034,13 +1034,13 @@
+ msgstr "cd"
  
- #: src/boxes.c:837
  msgid "Symbolic link filename:"
 -msgstr "Nazwa dowi±zania symbolicznego:"
 +msgstr "Nazwa skrótu:"
  
- #: src/boxes.c:841
  msgid "Existing filename (filename symlink will point to):"
 -msgstr "Istniej±ca nazwa pliku (plik docelowy dowi±zania):"
 +msgstr "Istniej±ca nazwa pliku (plik docelowy skrótu):"
  
- #: src/boxes.c:848
  msgid "Symbolic link"
 -msgstr "Dowi±zanie symboliczne"
 +msgstr "Skrót"
  
- #: src/boxes.c:881
  msgid "Running "
-@@ -1229,11 +1229,11 @@
+ msgstr "Uruchomiony"
+@@ -1229,10 +1229,10 @@
+ msgstr " Polecenie chown"
  
- #: src/chown.c:178
  msgid "<Unknown user>"
 -msgstr "<Nieznany u¿ytkownik>"
 +msgstr "<Nieznany>"
  
- #: src/chown.c:179
  msgid "<Unknown group>"
 -msgstr "<Nieznana grupa>"
 +msgstr "<Nieznana>"
  
- #: src/cmd.c:194
  msgid "Files tagged, want to cd?"
+ msgstr "Zaznaczono pliki, zmieniæ katalog?"
 @@ -1245,7 +1245,7 @@
+ msgstr "Nie mo¿na zmieniæ katalogu"
  
- #: src/cmd.c:233
  msgid " View file "
 -msgstr " Podgl±d pliku "
 +msgstr " Poka¿ plik "
  
- #: src/cmd.c:233
  msgid " Filename:"
+ msgstr " Nazwa pliku:"
 @@ -1289,7 +1289,7 @@
  
  #: src/cmd.c:596
@@ -111,20 +107,19 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/cmd.c:625
  msgid " Which menu file do you want to edit? "
-@@ -1313,11 +1313,11 @@
+@@ -1313,10 +1313,10 @@
+ msgstr " Który plik menu chcesz zmodyfikowaæ? "
  
- #: src/cmd.c:597
  msgid "&Local"
 -msgstr "Lokalne"
 +msgstr "&Lokalne"
  
- #: src/cmd.c:597
  msgid "&Home"
 -msgstr "Prywatne"
 +msgstr "&W³asne"
  
- #: src/cmd.c:699
  msgid "Syntax file edit"
+ msgstr "Modyfikacja pliku ze sk³adni±"
 @@ -1372,7 +1372,7 @@
  #: src/cmd.c:939
  #, c-format
@@ -134,44 +129,39 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/cmd.c:940
  msgid " Link "
-@@ -1386,31 +1386,31 @@
- #: src/cmd.c:938
+@@ -1386,26 +1386,26 @@
+ 
  #, c-format
  msgid " symlink: %s "
 -msgstr " dowi±zanie symboliczne: %s "
 +msgstr " skrót: %s "
  
- #: src/cmd.c:974
  #, c-format
  msgid " Symlink `%s' points to: "
 -msgstr " Dowi±zanie symboliczne '%s' wskazuje na: "
 +msgstr " Skrót '%s' wskazuje na: "
  
- #: src/cmd.c:979
  msgid " Edit symlink "
 -msgstr " Zmodyfikuj dowi±zanie symboliczne "
 +msgstr " Zmodyfikuj skrót "
  
- #: src/cmd.c:984
  #, c-format
  msgid " edit symlink, unable to remove %s: %s "
 -msgstr " modyfikacja dowi±zania symbolicznego, nie mo¿na usun±æ %s: %s "
 +msgstr " modyfikacja skrótu, nie mo¿na usun±æ %s: %s "
  
- #: src/cmd.c:988
  #, c-format
  msgid " edit symlink: %s "
 -msgstr " modyfikacja dowi±zania symbolicznego: %s"
 +msgstr " modyfikacja skrótu: %s"
  
- #: src/cmd.c:999
  #, c-format
  msgid "`%s' is not a symbolic link"
 -msgstr "\"%s\" nie jest dowi±zaniem symbolicznym"
 +msgstr "\"%s\" nie jest skrótem"
  
- #: src/cmd.c:1155
  #, c-format
+ msgid " Cannot chdir to %s "
 @@ -1604,7 +1604,7 @@
  
  #: src/file.c:122 src/tree.c:593
@@ -229,58 +219,53 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/filegui.c:766
  msgid "&Dive into subdir if exists"
-@@ -2168,11 +2168,11 @@
+@@ -2168,10 +2168,10 @@
+ msgstr "Filtruj"
  
- #: src/find.c:117
  msgid "&View - F3"
 -msgstr "Podgl±d - F3"
 +msgstr "Poka¿ - F3"
  
- #: src/find.c:118
  msgid "&Edit - F4"
 -msgstr "Edycja - F4"
 +msgstr "Edytuj - F4"
  
- #: src/find.c:183
- msgid "Start at:"
-@@ -2683,15 +2683,15 @@
+ msgid "find Re&cursively"
+ msgstr "znajd¼ Re&kurencyjnie"
+@@ -2683,13 +2683,13 @@
+ msgstr "Widok filtrowany   M-!"
  
- #: src/main.c:849
  msgid "&Edit               F4"
 -msgstr "Edycja              F4"
 +msgstr "Edytuj              F4"
  
- #: src/main.c:850
  msgid "&Copy               F5"
 -msgstr "Skopiuj             F5"
 +msgstr "Kopiuj              F5"
  
- #: src/main.c:851
  msgid "c&Hmod           C-x c"
 -msgstr "Chmod            C-x c"
 +msgstr "Uprawnienia      C-x c"
  
- #: src/main.c:852
  msgid "&Link            C-x l"
-@@ -2707,15 +2707,15 @@
+ msgstr "Dowi±zanie       C-x l"
+@@ -2707,13 +2707,13 @@
+ msgstr "Modyf. dowi±z. C-x X-s"
  
- #: src/main.c:855
  msgid "ch&Own           C-x o"
 -msgstr "Chown            C-x o"
 +msgstr "W³asno¶æ         C-x o"
  
- #: src/main.c:856
  msgid "&Advanced chown       "
 -msgstr "Zaawansowane chown    "
 +msgstr "Uprawnienia i w³asno¶æ"
  
- #: src/main.c:857
  msgid "&Rename/Move        F6"
 -msgstr "Nazwa/Przenie¶      F6"
 +msgstr "Nazwa/Przesuñ       F6"
  
- #: src/main.c:853
  msgid "&Mkdir              F7"
+ msgstr "Utwórz katalog      F7"
 @@ -2727,7 +2727,7 @@
  
  #: src/main.c:855
@@ -308,20 +293,19 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/main.c:2218
  msgid " Notice "
-@@ -3225,11 +3225,11 @@
+@@ -3225,10 +3225,10 @@
+ msgstr "[urz]"
  
- #: src/screen.c:201
  msgid "UP--DIR"
 -msgstr "NADRZEDN"
 +msgstr " WY¯EJ "
  
- #: src/screen.c:222
  msgid "SYMLINK"
 -msgstr "DOW-SYMB"
 +msgstr "SKRÓT"
  
- #: src/screen.c:226
  msgid "SUB-DIR"
+ msgstr "PODKATAL"
 @@ -3253,7 +3253,7 @@
  
  #: src/screen.c:412
@@ -340,20 +324,19 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/screen.c:419
  msgid "Group"
-@@ -3315,11 +3315,11 @@
+@@ -3315,10 +3315,10 @@
+ msgstr "Podgl."
  
- #: src/screen.c:2208 src/view.c:2280
  msgid "Edit"
 -msgstr "Edycja"
 +msgstr "Edytuj"
  
- #: src/screen.c:2210 src/tree.c:980
  msgid "RenMov"
 -msgstr "Przen."
 +msgstr "Przesuñ"
  
- #: src/screen.c:2211 src/tree.c:984
  msgid "Mkdir"
+ msgstr "Utwórz"
 @@ -3445,7 +3445,7 @@
  #: src/tree.c:591
  #, c-format
@@ -363,17 +346,16 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #: src/tree.c:632
  #, c-format
-@@ -4205,11 +4205,11 @@
+@@ -4205,10 +4205,10 @@
+ msgstr "ftpfs: operacja CWD nie powiod³a siê."
  
- #: vfs/ftpfs.c:1109 vfs/ftpfs.c:1116
  msgid "ftpfs: couldn't resolve symlink"
 -msgstr "ftpts: nie mo¿na odnale¼æ pliku docelowego dowi±zania symbolicznego"
 +msgstr "ftpts: nie mo¿na odnale¼æ pliku docelowego skrótu"
  
- #: vfs/ftpfs.c:1167
  msgid "Resolving symlink..."
 -msgstr "Analizowanie dowi±zañ symbolicznych..."
 +msgstr "Analizowanie skrótów..."
  
- #: vfs/ftpfs.c:1189
  #, c-format
+ msgid "ftpfs: Reading FTP directory %s... %s%s"
