@@ -159,7 +159,7 @@ Group:		Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	pam >= 0.99.7.1-1
 Requires:	portmap
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.1.5
 
 %description -n mcserv
 The Midnight Commander file management system will allow you to
