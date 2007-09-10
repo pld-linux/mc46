@@ -48,7 +48,8 @@ Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.suse.de/~nadvornik/mc.html
 Patch13:	%{name}-utf8.patch
 Patch14:	%{name}-vhdl-syntax.patch
-
+Patch15:	%{name}-ipv6.patch
+Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
 Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
@@ -239,7 +240,8 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch13 -p1
 %endif
 %patch14 -p1
-
+%patch15 -p1
+%patch16 -p1
 %patch17 -p1
 %patch20 -p1
 %patch21 -p1
