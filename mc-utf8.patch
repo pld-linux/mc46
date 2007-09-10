@@ -3712,7 +3712,7 @@
 +#ifdef UTF8
 +		mc_wchar_t *winput2 = mbstr_to_wchar(input2);
 +#endif /* UTF8 */
- 		if (replace_scanf || replace_regexp) {
+ 		if (replace_scanf) {
 -		    char repl_str[MAX_REPL_LEN + 2];
 +		    mc_wchar_t repl_str[MAX_REPL_LEN + 2];
  		    int ret = 0;
