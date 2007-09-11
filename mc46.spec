@@ -1,4 +1,6 @@
-# TODO: check spec-syntax,mo patches
+# TODO:
+# - UTF-8 patch still broken (file view breaks all non-ascii characters when using non-UTF locale)
+# - check spec-syntax,mo patches
 # - update ancient X11_WWW (or drop if it's no longer used)
 #
 # Conditional build:
