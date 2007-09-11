@@ -1,25 +1,42 @@
-diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
---- mc-4.6.1-pre1.org/po/pl.po	2004-06-06 23:19:35.911438080 +0200
-+++ mc-4.6.1-pre1/po/pl.po	2004-06-06 23:29:24.442967688 +0200
-@@ -333,7 +333,7 @@
+--- mc-2007-06-23-14/po/pl.po.orig	2007-06-23 16:43:07.000000000 +0200
++++ mc-2007-06-23-14/po/pl.po	2007-09-11 20:38:53.399189827 +0200
+@@ -69,7 +69,7 @@
+ msgstr "Ostrze¿enie"
  
- #: edit/editcmd.c:2202
+ msgid " File has hard-links. Detach before saving? "
+-msgstr ""
++msgstr " Plik zawiera dowi±zania sta³e. Od³±czyæ przy zapisie? "
+ 
+ msgid "&Yes"
+ msgstr "&Tak"
+@@ -81,7 +81,7 @@
+ msgstr "&Anuluj"
+ 
+ msgid "The file has been modified in the meantime. Save anyway?"
+-msgstr ""
++msgstr "Plik zosta³ w miêdzyczasie zmodyfikowany. Zapisaæ mimo to?"
+ 
+ msgid " Error writing to pipe: "
+ msgstr " B³±d przy zapisie do potoku: "
+@@ -264,7 +264,7 @@
+ msgstr " Ta opcja nie jest zaimplementowana. "
+ 
  msgid " Copy to clipboard "
 -msgstr " Skopiuj do schowka "
 +msgstr " Kopiuj do schowka "
  
- #: edit/editcmd.c:2202 edit/editcmd.c:2215
  msgid " Unable to save to file. "
-@@ -686,7 +686,7 @@
+ msgstr " Nie mo¿na zapisaæ do pliku. "
+@@ -540,7 +540,7 @@
+ msgstr " Plik "
  
- #: edit/editmenu.c:410 edit/editmenu.c:424
  msgid " Edit "
 -msgstr " Edycja "
 +msgstr " Edytuj "
  
- #: edit/editmenu.c:412 edit/editmenu.c:426
  msgid " Sear/Repl "
-@@ -783,10 +783,10 @@
+ msgstr " Szuk/Zast "
+@@ -618,10 +618,10 @@
  msgstr "Zast±p"
  
  msgid "Copy"
@@ -32,16 +49,27 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "Delete"
  msgstr "Usuñ"
-@@ -926,7 +926,7 @@
+@@ -777,7 +777,7 @@
+ msgstr "Tryb wy¶wietlania"
  
- #: src/boxes.c:138
  msgid "user &Mini status"
 -msgstr "Do&wolny krótki stan"
 +msgstr "&W³asny krótki status"
  
- #: src/boxes.c:278
  msgid "&Reverse"
-@@ -1034,13 +1034,13 @@
+ msgstr "Od&wrócony"
+@@ -788,9 +788,8 @@
+ msgid "Sort order"
+ msgstr "Porz±dek sortowania"
+ 
+-#, fuzzy
+ msgid " confirm di&Rectory hotlist delete "
+-msgstr "Podrêczne &katalogi      C-\\"
++msgstr " Potwierdzenie usuniêcia podrêcznych katalogów "
+ 
+ msgid " confirm &Exit "
+ msgstr " Potwierdzanie zakoñczenia "
+@@ -865,13 +864,13 @@
  msgstr "cd"
  
  msgid "Symbolic link filename:"
@@ -58,7 +86,7 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "Running "
  msgstr "Uruchomiony"
-@@ -1229,10 +1229,10 @@
+@@ -1012,10 +1011,10 @@
  msgstr " Polecenie chown"
  
  msgid "<Unknown user>"
@@ -71,7 +99,7 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "Files tagged, want to cd?"
  msgstr "Zaznaczono pliki, zmieniæ katalog?"
-@@ -1245,7 +1245,7 @@
+@@ -1024,7 +1023,7 @@
  msgstr "Nie mo¿na zmieniæ katalogu"
  
  msgid " View file "
@@ -80,34 +108,28 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid " Filename:"
  msgstr " Nazwa pliku:"
-@@ -1289,7 +1289,7 @@
+@@ -1057,28 +1056,28 @@
+ msgstr " Odznacz "
  
- #: src/cmd.c:596
  msgid "Extension file edit"
 -msgstr "Zmodyfikuj plik rozszerzeñ"
 +msgstr "Edytuj plik rozszerzeñ"
  
- #: src/cmd.c:597
  msgid " Which extension file you want to edit? "
-@@ -1297,7 +1297,7 @@
+ msgstr " Który plik rozszerzeñ chcesz zmodyfikowaæ? "
  
- #: src/cmd.c:598 src/cmd.c:701
  msgid "&User"
 -msgstr "U¿ytkownik"
 +msgstr "&W³asne"
  
- #: src/cmd.c:598 src/cmd.c:627 src/cmd.c:701
  msgid "&System Wide"
-@@ -1305,7 +1305,7 @@
+ msgstr "&Systemowe"
  
- #: src/cmd.c:624
  msgid " Menu edit "
 -msgstr " Modyfikacja menu "
 +msgstr " Edytuj menu "
  
- #: src/cmd.c:625
  msgid " Which menu file do you want to edit? "
-@@ -1313,10 +1313,10 @@
  msgstr " Który plik menu chcesz zmodyfikowaæ? "
  
  msgid "&Local"
@@ -120,16 +142,16 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "Syntax file edit"
  msgstr "Modyfikacja pliku ze sk³adni±"
-@@ -1372,7 +1372,7 @@
- #: src/cmd.c:939
+@@ -1121,7 +1120,7 @@
+ 
  #, c-format
  msgid "Link %s to:"
 -msgstr "Dowi±zanie %s do:"
 +msgstr "Skrót %s do:"
  
- #: src/cmd.c:940
  msgid " Link "
-@@ -1386,26 +1386,26 @@
+ msgstr " Dowi±¿ "
+@@ -1132,26 +1131,26 @@
  
  #, c-format
  msgid " symlink: %s "
@@ -162,16 +184,16 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #, c-format
  msgid " Cannot chdir to %s "
-@@ -1604,7 +1604,7 @@
+@@ -1280,7 +1279,7 @@
+ "z %smc.ext lub napisaæ samemu, opieraj±c siê na zawarto¶ci tego pliku."
  
- #: src/file.c:122 src/tree.c:593
  msgid " Copy "
 -msgstr " Skopiuj "
 +msgstr " Kopiuj "
  
- #: src/file.c:123 src/tree.c:634
  msgid " Move "
-@@ -1637,9 +1637,9 @@
+ msgstr " Przenie¶ "
+@@ -1307,16 +1306,16 @@
  "\n"
  " Option Stable Symlinks will be disabled "
  msgstr ""
@@ -181,9 +203,8 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
 -" Opcja \"Zachowanie dowi±zañ symbolicznych\" zostanie deaktywowana "
 +" Opcja \"Zachowanie skrótow\" zostanie deaktywowana "
  
- #: src/file.c:419
  #, c-format
-@@ -1647,7 +1647,7 @@
+ msgid ""
  " Cannot create target symlink \"%s\" \n"
  " %s "
  msgstr ""
@@ -191,8 +212,8 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
 +" Nie mo¿na utworzyæ skrótu \"%s\" \n"
  " %s "
  
- #: src/file.c:493
-@@ -1816,7 +1816,7 @@
+ #, c-format
+@@ -1463,7 +1462,7 @@
  " Cannot copy cyclic symbolic link \n"
  " `%s' "
  msgstr ""
@@ -200,26 +221,26 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
 +" Nie mo¿na skopiowaæ zapêtlonego skrótu \n"
  " '%s' "
  
- #: src/file.c:945 src/file.c:1985 src/tree.c:648
-@@ -2111,7 +2111,7 @@
+ #, c-format
+@@ -1710,7 +1709,7 @@
+ msgstr "Zachowanie atrybutów"
  
- #: src/filegui.c:730
  msgid "follow &Links"
 -msgstr "Pod±¿anie za dowi±zaniami"
 +msgstr "Pod±¿anie za skrótami"
  
- #: src/filegui.c:732
  msgid "to:"
-@@ -2127,7 +2127,7 @@
+ msgstr "do:"
+@@ -1722,7 +1721,7 @@
+ msgstr "W tle"
  
- #: src/filegui.c:764
  msgid "&Stable Symlinks"
 -msgstr "Zachowanie dowi±zañ symbolicznych"
 +msgstr "Zachowywanie skrótów"
  
- #: src/filegui.c:766
  msgid "&Dive into subdir if exists"
-@@ -2168,10 +2168,10 @@
+ msgstr "Schodzenie do podkatalogów"
+@@ -1754,10 +1753,10 @@
  msgstr "Filtruj"
  
  msgid "&View - F3"
@@ -232,7 +253,16 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "find Re&cursively"
  msgstr "znajd¼ Re&kurencyjnie"
-@@ -2683,13 +2683,13 @@
+@@ -1888,6 +1887,8 @@
+ "\n"
+ " Are you sure you want to remove this entry?"
+ msgstr ""
++"\n"
++" Czy na pewno usun±æ ten element?"
+ 
+ msgid ""
+ "\n"
+@@ -2164,13 +2165,13 @@
  msgstr "Widok filtrowany   M-!"
  
  msgid "&Edit               F4"
@@ -249,7 +279,7 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "&Link            C-x l"
  msgstr "Dowi±zanie       C-x l"
-@@ -2707,13 +2707,13 @@
+@@ -2182,13 +2183,13 @@
  msgstr "Modyf. dowi±z. C-x X-s"
  
  msgid "ch&Own           C-x o"
@@ -266,34 +296,34 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "&Mkdir              F7"
  msgstr "Utwórz katalog      F7"
-@@ -2727,7 +2727,7 @@
+@@ -2197,7 +2198,7 @@
+ msgstr "Usuñ                F8"
  
- #: src/main.c:855
  msgid "&Quick cd          M-c"
 -msgstr "Szybka zmiana kat. M-c"
 +msgstr "Id¼ do katalogu    M-c"
  
- #: src/main.c:857
  msgid "select &Group      M-+"
-@@ -2795,7 +2795,7 @@
+ msgstr "Zaznacz grupê      M-+"
+@@ -2248,7 +2249,7 @@
+ msgstr "&Odtwórz pliki (tylko ext2fs)"
  
- #: src/main.c:890
  msgid "&Listing format edit"
 -msgstr "Edycja formatu wy¶wietlania"
 +msgstr "Edytuj formatu wy¶wietlania"
  
- #: src/main.c:895
  msgid "Edit &extension file"
-@@ -3035,7 +3035,7 @@
+ msgstr "Zmodyfikuj plik &rozszerzeñ"
+@@ -2450,7 +2451,7 @@
+ msgstr "Wywo³uje podgl±d pliku"
  
- #: src/main.c:2004
  msgid "Edits one file"
 -msgstr "Modyfikuje plik"
 +msgstr "Edytuje plik"
  
- #: src/main.c:2218
  msgid " Notice "
-@@ -3225,10 +3225,10 @@
+ msgstr " Uwaga "
+@@ -2598,10 +2599,10 @@
  msgstr "[urz]"
  
  msgid "UP--DIR"
@@ -306,25 +336,49 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "SUB-DIR"
  msgstr "PODKATAL"
-@@ -3253,7 +3253,7 @@
+@@ -2619,7 +2620,7 @@
+ msgstr "CzasZ"
  
- #: src/screen.c:412
  msgid "Permission"
 -msgstr "Uprawnienia"
 +msgstr "Prawa"
  
- #: src/screen.c:413
  msgid "Perm"
-@@ -3277,7 +3277,7 @@
+ msgstr "Prawa"
+@@ -2637,24 +2638,24 @@
+ msgstr "GID"
  
- #: src/screen.c:418
  msgid "Owner"
 -msgstr "W³a¶ciciel"
 +msgstr "W³asno¶æ"
  
- #: src/screen.c:419
  msgid "Group"
-@@ -3315,10 +3315,10 @@
+ msgstr "Grupa"
+ 
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s byte"
+ msgid_plural "%s bytes"
+-msgstr[0] "%s bajtów"
+-msgstr[1] "%s bajtów"
++msgstr[0] "%s bajt"
++msgstr[1] "%s bajty"
+ msgstr[2] "%s bajtów"
+ 
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s in %d file"
+ msgid_plural "%s in %d files"
+-msgstr[0] "%s bajtów w %d pliku"
+-msgstr[1] "%s bajtów w %d pliku"
+-msgstr[2] "%s bajtów w %d pliku"
++msgstr[0] "%s w %d pliku"
++msgstr[1] "%s w %d plikach"
++msgstr[2] "%s w %d plikach"
+ 
+ msgid "<readlink failed>"
+ msgstr "<readlink() nie powiod³a siê>"
+@@ -2672,10 +2673,10 @@
  msgstr "Podgl."
  
  msgid "Edit"
@@ -337,16 +391,40 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  msgid "Mkdir"
  msgstr "Utwórz"
-@@ -3445,7 +3445,7 @@
- #: src/tree.c:591
+@@ -2779,7 +2780,7 @@
+ 
  #, c-format
  msgid "Copy \"%s\" directory to:"
 -msgstr "Skopiuj katalog \"%s\" do:"
 +msgstr "Kopiuj katalog \"%s\" do:"
  
- #: src/tree.c:632
  #, c-format
-@@ -4205,10 +4205,10 @@
+ msgid "Move \"%s\" directory to:"
+@@ -2862,10 +2863,10 @@
+ msgstr " Menu u¿ytkownika"
+ 
+ msgid "%b %e %H:%M"
+-msgstr "%e %b %H:%M"
++msgstr "%d.%m %H:%M"
+ 
+ msgid "%b %e  %Y"
+-msgstr "%e %b  %Y"
++msgstr "%d.%m.%Y "
+ 
+ #, c-format
+ msgid "%s is not a directory\n"
+@@ -2985,9 +2986,8 @@
+ msgid " Goto Address "
+ msgstr " Przejd¼ pod adres "
+ 
+-#, fuzzy
+ msgid " Invalid address "
+-msgstr " Niew³a¶ciwe has³o "
++msgstr " Nieprawid³owy adres "
+ 
+ msgid " Enter regexp:"
+ msgstr " Wprowad¼ wyra¿enie regularne: "
+@@ -3406,10 +3406,10 @@
  msgstr "ftpfs: operacja CWD nie powiod³a siê."
  
  msgid "ftpfs: couldn't resolve symlink"
@@ -359,3 +437,162 @@ diff -urN mc-4.6.1-pre1.org/po/pl.po mc-4.6.1-pre1/po/pl.po
  
  #, c-format
  msgid "ftpfs: Reading FTP directory %s... %s%s"
+@@ -3623,158 +3623,3 @@
+ 
+ msgid "Changes to file lost"
+ msgstr "Utracono zmiany w pliku"
+-
+-#~ msgid "&Type"
+-#~ msgstr "&Typ"
+-
+-#~ msgid "&Links"
+-#~ msgstr "&Liczba dowi±zañ"
+-
+-#~ msgid "N&GID"
+-#~ msgstr "N&GID"
+-
+-#~ msgid "N&UID"
+-#~ msgstr "N&UID"
+-
+-#~ msgid "&Owner"
+-#~ msgstr "W³a¶ciciel"
+-
+-#~ msgid "&Group"
+-#~ msgstr "Grupa"
+-
+-#~ msgid "%s bytes in %d files"
+-#~ msgstr "%s bajtów w %d plikach"
+-
+-#~ msgid " (%ld blocks)"
+-#~ msgstr " (%ld bloków)"
+-
+-#~ msgid " Cannot open file for reading: "
+-#~ msgstr " Otwarcie pliku do odczytu nie powiod³o siê: "
+-
+-#~ msgid " Not an ordinary file: "
+-#~ msgstr " To nie jest zwyk³y plik: "
+-
+-#~ msgid "Format of the "
+-#~ msgstr "Format "
+-
+-#~ msgid ""
+-#~ " file has changed\n"
+-#~ "with version 3.0. You may want either to\n"
+-#~ "copy it from "
+-#~ msgstr ""
+-#~ " uleg³ zmianie\n"
+-#~ "wraz z wersj± 3.0. Mo¿esz skopiowaæ zawarto¶æ\n"
+-#~ "z pliku "
+-
+-#~ msgid ""
+-#~ "mc.ext or use that\n"
+-#~ "file as an example of how to write it.\n"
+-#~ msgstr ""
+-#~ "mc.ext lub u¿yæ go jako przyk³adu\n"
+-#~ "do utworzenia w³asnego.\n"
+-
+-#~ msgid "mc.ext will be used for this moment."
+-#~ msgstr "zostanie wykorzystany mc.ext."
+-
+-#~ msgid " Cannot open file "
+-#~ msgstr " Nie mo¿na otworzyæ pliku "
+-
+-#~ msgid "Col %d"
+-#~ msgstr "Kol %d"
+-
+-#~ msgid "  [grow]"
+-#~ msgstr "[przyrost]"
+-
+-#~ msgid "Ascii"
+-#~ msgstr "Ascii"
+-
+-#~ msgid "Hex"
+-#~ msgstr "Hex"
+-
+-#~ msgid "Goto"
+-#~ msgstr "Id¼Do"
+-
+-#~ msgid "Line"
+-#~ msgstr "Wiersz"
+-
+-#~ msgid "RxSrch"
+-#~ msgstr "SzkWR"
+-
+-#~ msgid "EdHex"
+-#~ msgstr "EdHex"
+-
+-#~ msgid "EdText"
+-#~ msgstr "EdTkst"
+-
+-#~ msgid "UnWrap"
+-#~ msgstr "Odwiñ"
+-
+-#~ msgid "Wrap"
+-#~ msgstr "Zawiñ"
+-
+-#~ msgid "HxSrch"
+-#~ msgstr "SzkHx"
+-
+-#~ msgid "Raw"
+-#~ msgstr "Surowy"
+-
+-#~ msgid "Parse"
+-#~ msgstr "Analiz"
+-
+-#~ msgid "Unform"
+-#~ msgstr "BezFrm"
+-
+-#~ msgid "Format"
+-#~ msgstr "Format"
+-
+-#~ msgid "User menu available only in mcedit invoked from mc"
+-#~ msgstr "Menu u¿ytkownika dostêpne tylko po uruchomieniu mcedit z mc"
+-
+-#~ msgid " Socket source routing setup "
+-#~ msgstr " Ustawienia trasowania przez ¼ród³o "
+-
+-#~ msgid " Enter host name to use as a source routing hop: "
+-#~ msgstr ""
+-#~ " Wprowad¼ nazwê komputera wykorzystywanego przy trasowaniu przez ¼ród³o: "
+-
+-#~ msgid " Host name "
+-#~ msgstr " Nazwa hosta "
+-
+-#~ msgid " Error while looking up IP address "
+-#~ msgstr " B³±d podczas wyszukiwania adresu IP "
+-
+-#~ msgid ""
+-#~ "\n"
+-#~ "\n"
+-#~ "\n"
+-#~ "refresh stack underflow!\n"
+-#~ "\n"
+-#~ "\n"
+-#~ msgstr ""
+-#~ "\n"
+-#~ "\n"
+-#~ "\n"
+-#~ "przepe³nienie stosu od¶wie¿ania!\n"
+-#~ "\n"
+-#~ "\n"
+-
+-#~ msgid " Listing format edit "
+-#~ msgstr " Edycja formatu wy¶wietlania "
+-
+-#~ msgid " New mode is \"%s\" "
+-#~ msgstr " Nowym trybem jest \"%s\" "
+-
+-#~ msgid "&Drive...       M-d"
+-#~ msgstr "Napêd...        M-d"
+-
+-#~ msgid "Use to debug the background code"
+-#~ msgstr "U¿ywane do ¶ledzenia kodu pracuj±cego w tle"
+-
+-#~ msgid "Force subshell execution"
+-#~ msgstr "Wymusza wykonywanie programów w podpow³oce"
+-
+-#~ msgid " No action taken "
+-#~ msgstr " Nie podjêto akcji "
+-
+-#~ msgid " Cannot set source routing (%s)"
+-#~ msgstr " Nie mo¿na ustawiæ trasowania przez ¼ród³o (%s)"
