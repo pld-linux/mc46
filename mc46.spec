@@ -1,4 +1,5 @@
-# TODO: check spec-syntax,pl,mo patches
+# TODO: check spec-syntax,mo patches
+# - update ancient X11_WWW (or drop if it's no longer used)
 #
 # Conditional build:
 %bcond_with	ext2undel	# with ext2 undelete fs
@@ -23,7 +24,7 @@ Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
 Release:	0.%{ssnap}.1
-License:	GPL
+License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
 # Source0-md5:	3d4e56a1152564331abe82e6570898ad
@@ -251,6 +252,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %endif
 
 mv -f po/{no,nb}.po
+rm -f po/stamp-po
 
 %if %{with utf8}
 # convert files in /lib to UTF-8
@@ -277,7 +279,6 @@ mv -f mc.hint.uk.tmp mc.hint.uk
 iconv -f big5 -t utf8 < mc.hint.zh > mc.hint.zh.tmp
 mv -f mc.hint.zh.tmp mc.hint.zh
 cd ..
-
 
 # convert man pages in /doc to UTF-8
 cd doc
