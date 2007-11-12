@@ -19,7 +19,7 @@ Summary(uk):	äÉÓÐÅÔÞÅÒ ÆÁÊÌ¦× Midnight Commander
 Summary(zh_CN):	Ò»¸ö·½±ãÊµÓÃµÄÎÄ¼þ¹ÜÀíÆ÷ºÍÐéÄâShell
 Name:		mc
 Version:	4.6.1
-Release:	9
+Release:	10
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/%{name}-%{version}.tar.gz
@@ -83,7 +83,7 @@ BuildRequires:	slang-devel >= 1:2.0.0
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
-%{?with_x:BuildRequires:	XFree86-devel}
+%{?with_x:BuildRequires:	xorg-lib-libX11-devel}
 %{?with_ext2undel:BuildRequires:	e2fsprogs-devel}
 # Needed? %%{?with_perl_vfs:Requires:	perl-base}
 Requires:	file
