@@ -83,6 +83,11 @@ Requires:	file
 Requires:	pam >= 0.77.3
 Requires:	sed
 Requires:	setup >= 2.4.6-2
+Suggests:	bzip2
+Suggests:	gzip
+Suggests:	lynx
+Suggests:	tar
+Suggests:	unzip
 Obsoletes:	tkmc
 Conflicts:	bash < 2.05b
 Conflicts:	rpm < 4.0
