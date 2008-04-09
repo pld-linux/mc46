@@ -1,0 +1,14 @@
+diff -ur mc-2007-06-23-14.orig/src/find.c mc-2007-06-23-14/src/find.c
+--- mc-2007-06-23-14.orig/src/find.c	2008-04-09 17:53:11.000000000 +0200
++++ mc-2007-06-23-14/src/find.c	2008-04-09 18:36:30.000000000 +0200
+@@ -140,8 +140,8 @@
+ /* FIXME: r should be local variable */
+ static regex_t *r; /* Pointer to compiled content_pattern */
+  
+-static int case_sensitive = 1;
+-static gboolean find_regex_flag = TRUE;
++static int case_sensitive = 0;
++static gboolean find_regex_flag = FALSE;
+ static int find_recursively = 1;
+ 
+ /*
