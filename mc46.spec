@@ -10,8 +10,7 @@
 %bcond_without	x		# without text edit in X support
 %bcond_without	utf8		# utf8
 #
-%define	snap	2007-06-23-14
-%define ssnap	%(echo %{snap} | tr - .)
+%define	snap	pre1
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -25,11 +24,11 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{ssnap}.3
+Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Applications/Shells
-Source0:	http://www.ibiblio.org/pub/Linux/utils/file/managers/mc/snapshots/%{name}-%{snap}.tar.gz
-# Source0-md5:	3d4e56a1152564331abe82e6570898ad
+Source0:	ftp://ftp.gnu.org/gnu/mc/%{name}-%{version}-%{snap}.tar.gz
+# Source0-md5:	7626c446f016b09fd1210f00b9d0c292
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -54,7 +53,6 @@ Patch14:	%{name}-vhdl-syntax.patch
 Patch15:	%{name}-ipv6.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
-Patch20:	%{name}-uglydir.patch
 Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-look-and-feel.patch
 Patch23:	%{name}-utf8-8bit-hex.patch
@@ -233,7 +231,7 @@ Commander. Вона забезпечує доступ до віддаленої 
 тільки власне Midnight Commander).
 
 %prep
-%setup -q -a3 -n %{name}-%{snap}
+%setup -q -a3 -n %{name}-%{version}-%{snap}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -252,7 +250,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch20 -p1
+
 %patch21 -p1
 %if %{with utf8}
 %patch22 -p1
