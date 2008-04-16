@@ -78,7 +78,7 @@
 +#else
 +    if (color) attrset (MARKED_COLOR);
 +    if (is_utf8)
-+	SLsmg_write_string("▴");
++	SLsmg_write_string("↑");
 +    else
 +        addch ('^');
 +    if (color) attrset (NORMAL_COLOR);
@@ -98,7 +98,7 @@
 +#else
 +    if (color) attrset (MARKED_COLOR);
 +    if (is_utf8)
-+	SLsmg_write_string("▾");
++	SLsmg_write_string("↓");
      else
 -	addch ('v');
 +	addch('v');
@@ -136,7 +136,7 @@
 +        else {
 +            if (color) attrset (MARKED_COLOR);
 +            if (is_utf8)
-+		SLsmg_write_string("◈");
++		SLsmg_write_string("▮");
 +	    else
 +		addch('*');
 +            if (color) attrset (NORMAL_COLOR);
