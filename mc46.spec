@@ -84,6 +84,7 @@ Requires:	setup >= 2.4.6-2
 Suggests:	bzip2
 Suggests:	gzip
 Suggests:	lynx
+Suggests:	p7zip-standalone
 Suggests:	tar
 Suggests:	unzip
 Obsoletes:	tkmc
