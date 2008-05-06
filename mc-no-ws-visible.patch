@@ -1,0 +1,185 @@
+diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
+--- mc-4.6.2-pre1.orig/edit/editdraw.c	2007-08-27 14:06:03.000000000 +0200
++++ mc-4.6.2-pre1/edit/editdraw.c	2008-05-05 12:00:49.000000000 +0200
+@@ -51,7 +51,6 @@
+ #define MOD_BOLD		(1 << 9)
+ #define MOD_MARKED		(1 << 10)
+ #define MOD_CURSOR		(1 << 11)
+-#define MOD_WHITESPACE		(1 << 12)
+ 
+ #define FONT_OFFSET_X 0
+ #define FONT_OFFSET_Y 0
+@@ -244,27 +243,12 @@ print_to_widget (WEdit *edit, long row, 
+ 	    color = 0;
+ 	}
+ 
+-	if (style & MOD_WHITESPACE) {
+-	    if (style & MOD_MARKED) {
+-		textchar = ' ';
+-		set_color (EDITOR_MARKED_COLOR);
+-	    } else {
+-#if 0
+-		if (color != EDITOR_NORMAL_COLOR) {
+-		    textchar = ' ';
+-		    lowlevel_set_color (color);
+-		} else
+-#endif
+-		    set_color (EDITOR_WHITESPACE_COLOR);
+-	    }
++	if (style & MOD_BOLD) {
++	    set_color (EDITOR_BOLD_COLOR);
++	} else if (style & MOD_MARKED) {
++	    set_color (EDITOR_MARKED_COLOR);
+ 	} else {
+-	    if (style & MOD_BOLD) {
+-		set_color (EDITOR_BOLD_COLOR);
+-	    } else if (style & MOD_MARKED) {
+-		set_color (EDITOR_MARKED_COLOR);
+-	    } else {
+-		lowlevel_set_color (color);
+-	    }
++	    lowlevel_set_color (color);
+ 	}
+ 
+ 	addch (textchar);
+@@ -272,8 +256,6 @@ print_to_widget (WEdit *edit, long row, 
+     }
+ }
+ 
+-int visible_tabs = 1, visible_tws = 1;
+-
+ /* b is a pointer to the beginning of the line */
+ static void
+ edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
+@@ -281,7 +263,7 @@ edit_draw_this_line (WEdit *edit, long b
+ {
+     static unsigned int line[MAX_LINE_LEN];
+     unsigned int *p = line;
+-    long m1 = 0, m2 = 0, q, c1, c2, tws;
++    long m1 = 0, m2 = 0, q, c1, c2;
+     int col, start_col_real;
+     unsigned int c;
+     int color;
+@@ -299,13 +281,6 @@ edit_draw_this_line (WEdit *edit, long b
+ 	eval_marks (edit, &m1, &m2);
+ 
+ 	if (row <= edit->total_lines - edit->start_line) {
+-	    if (use_colors && visible_tws) {
+-		tws = edit_eol (edit, b);
+-		while (tws > b && ((c = edit_get_byte (edit, tws - 1)) == ' '
+-				   || c == '\t'))
+-		    tws--;
+-	    }
+-
+ 	    while (col <= end_col - edit->start_col) {
+ 		*p = 0;
+ 		if (q == edit->curs1)
+@@ -328,6 +303,7 @@ edit_draw_this_line (WEdit *edit, long b
+ /* we don't use bg for mc - fg contains both */
+ 		edit_get_syntax_color (edit, q, &color);
+ 		*p |= color << 16;
++		q++;
+ 		switch (c) {
+ 		case '\n':
+ 		    col = end_col - edit->start_col + 1;	/* quit */
+@@ -335,38 +311,12 @@ edit_draw_this_line (WEdit *edit, long b
+ 		    break;
+ 		case '\t':
+ 		    i = TAB_SIZE - ((int) col % TAB_SIZE);
++		    *p |= ' ';
++		    c = *(p++) & ~MOD_CURSOR;
+ 		    col += i;
+-		    if (use_colors && visible_tabs) {
+-			c = (*p & ~MOD_CURSOR) | MOD_WHITESPACE;
+-			if (i > 2) {
+-			    *(p++) |= '<' | MOD_WHITESPACE;
+-			    while (--i > 1)
+-				*(p++) = c | '-';
+-			    *(p++) = c | '>';
+-			} else if (i > 1) {
+-			    *(p++) |= '<' | MOD_WHITESPACE;
+-			    *(p++) = c | '>';
+-			} else
+-			    *(p++) |= '>' | MOD_WHITESPACE;
+-		    } else if (use_colors && visible_tws && q >= tws) {
+-			*p |= '.' | MOD_WHITESPACE;
+-			c = *(p++) & ~MOD_CURSOR;
+-			while (--i)
+-			    *(p++) = c;
+-		    } else {
+-			*p |= ' ';
+-			c = *(p++) & ~MOD_CURSOR;
+-			while (--i)
+-			    *(p++) = c;
+-		    }
++		    while (--i)
++			*(p++) = c;
+ 		    break;
+-		case ' ':
+-		    if (use_colors && visible_tws && q >= tws) {
+-			*(p++) |= '.' | MOD_WHITESPACE;
+-			col++;
+-			break;
+-		    }
+-		    /* fallthrough */
+ 		default:
+ 		    c = convert_to_display_c (c);
+ 
+@@ -392,7 +342,6 @@ edit_draw_this_line (WEdit *edit, long b
+ 		    col++;
+ 		    break;
+ 		}
+-		q++;
+ 	    }
+ 	}
+     } else {
+diff -urNp mc-4.6.2-pre1.orig/src/color.c mc-4.6.2-pre1/src/color.c
+--- mc-4.6.2-pre1.orig/src/color.c	2007-08-27 14:06:02.000000000 +0200
++++ mc-4.6.2-pre1/src/color.c	2008-05-05 12:00:49.000000000 +0200
+@@ -99,10 +99,9 @@ static struct colorpair color_map [] = {
+     { "editnormal=",     0, 0 },	/* normal */       /* 34 */
+     { "editbold=",       0, 0 },	/* search->found */
+     { "editmarked=",     0, 0 },	/* marked/selected */
+-    { "editwhitespace=", 0, 0 },	/* whitespace */
+ 
+-/* error dialog colors start at 38 */
+-    { "errdhotnormal=",  0, 0 }, /* Error dialog normal/hot */ /* 38 */
++/* error dialog colors start at 37 */
++    { "errdhotnormal=",  0, 0 }, /* Error dialog normal/hot */ /* 37 */
+     { "errdhotfocus=",   0, 0 }, /* Error dialog focused/hot */
+ };
+ 
+@@ -165,7 +164,6 @@ static const char *default_colors =
+ "editnormal=lightgray,blue:"
+ "editbold=yellow,blue:"
+ "editmarked=black,cyan:"
+-"editwhitespace=brightblue,blue:"
+ "errdhotnormal=yellow,red:"
+ "errdhotfocus=yellow,lightgray";
+ 
+diff -urNp mc-4.6.2-pre1.orig/src/color.h mc-4.6.2-pre1/src/color.h
+--- mc-4.6.2-pre1.orig/src/color.h	2007-08-27 14:06:02.000000000 +0200
++++ mc-4.6.2-pre1/src/color.h	2008-05-05 12:00:49.000000000 +0200
+@@ -71,19 +71,17 @@ extern int alarm_colors[4];
+ #define DEFAULT_COLOR      IF_COLOR (DEFAULT_COLOR_INDEX, 0)
+ 
+ /*
+- * editor colors - only 4 for normal, search->found, select, and whitespace
+- * respectively
++ * editor colors - only 3 for normal, search->found, and select, respectively
+  * Last is defined to view color.
+  */
+ #define EDITOR_NORMAL_COLOR_INDEX    34
+ #define EDITOR_NORMAL_COLOR          IF_COLOR (EDITOR_NORMAL_COLOR_INDEX, 0)
+ #define EDITOR_BOLD_COLOR            IF_COLOR (35, A_BOLD)
+ #define EDITOR_MARKED_COLOR          IF_COLOR (36, A_REVERSE)
+-#define EDITOR_WHITESPACE_COLOR      IF_COLOR (37, 0 /* irrelevant */)
+ 
+ /* Error dialog colors */
+-#define ERROR_HOT_NORMAL   IF_COLOR (38, 0)
+-#define ERROR_HOT_FOCUS    IF_COLOR (39, 0)
++#define ERROR_HOT_NORMAL   IF_COLOR (37, 0)
++#define ERROR_HOT_FOCUS    IF_COLOR (38, 0)
+ 
+ #ifdef HAVE_SLANG
+ #   define CTYPE const char *
