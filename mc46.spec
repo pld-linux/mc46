@@ -23,7 +23,7 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/gnu/mc/%{name}-%{version}-%{snap}.tar.gz
@@ -41,6 +41,7 @@ Patch2:		%{name}-urar.patch
 Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
+Patch6:		%{name}-no-ws-visible.patch
 Patch8:		%{name}-mc.ext.patch
 Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
@@ -239,6 +240,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch8 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
