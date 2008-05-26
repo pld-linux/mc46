@@ -86,6 +86,7 @@ Suggests:	bzip2
 Suggests:	gzip
 Suggests:	lynx
 Suggests:	p7zip-standalone
+Suggests:	rpm-utils
 Suggests:	tar
 Suggests:	unzip
 Obsoletes:	tkmc
