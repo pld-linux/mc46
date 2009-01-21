@@ -1,0 +1,160 @@
+diff -uNr mc-4.6.2-pre1/syntax.orig/awk.syntax mc-4.6.2-pre1/syntax/awk.syntax
+--- mc-4.6.2-pre1/syntax.orig/awk.syntax	1970-01-01 01:00:00.000000000 +0100
++++ mc-4.6.2-pre1/syntax/awk.syntax	2009-01-21 21:17:57.895509334 +0100
+@@ -0,0 +1,132 @@
++# This is Cooledit syntax-file for
++# awk file.
++# Created by Andres Farfan, <nafraf@linuxmail.org>
++# Feel free to copy & modify this.
++# 09/2004
++
++wholechars abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_
++
++# default colors
++context default
++
++#Reserved Keywords 1
++  keyword  whole  AMNOISE	white
++  keyword  whole  BEGIN		white
++  keyword  whole  END		white
++  keyword  whole  break		white
++  keyword  whole  continue	white
++  keyword  whole  do		white
++  keyword  whole  else		white
++  keyword  whole  exit		white
++  keyword  whole  for		white
++  keyword  whole  func		white
++  keyword  whole  function	white
++  keyword  whole  if		white
++  keyword  whole  in		white
++  keyword  whole  next		white
++  keyword  whole  nextfile	white
++  keyword  whole  return	white
++  keyword  whole  while		white
++
++#Reserved Keywords 2
++  keyword  whole  and		yellow
++  keyword  whole  asort		yellow
++  keyword  whole  asorti	yellow
++  keyword  whole  atan2		yellow
++  keyword  whole  bindtextdomain yellow
++  keyword  whole  close		yellow
++  keyword  whole  compl		yellow
++  keyword  whole  cos		yellow
++  keyword  whole  dcgettext	yellow
++  keyword  whole  dcngettext	yellow
++  keyword  whole  delete	yellow
++  keyword  whole  exp		yellow
++  keyword  whole  extension	yellow
++  keyword  whole  fflush	yellow
++  keyword  whole  gensub	yellow
++  keyword  whole  getline	yellow
++  keyword  whole  gsub		yellow
++  keyword  whole  index		yellow
++  keyword  whole  int		yellow
++  keyword  whole  length	yellow
++  keyword  whole  log		yellow
++  keyword  whole  lshift	yellow
++  keyword  whole  match		yellow
++  keyword  whole  mktime	yellow
++  keyword  whole  or		yellow
++  keyword  whole  print		yellow
++  keyword  whole  printf	yellow
++  keyword  whole  rand		yellow
++  keyword  whole  rshift	yellow
++  keyword  whole  sin		yellow
++  keyword  whole  split		yellow
++  keyword  whole  sprintf	yellow
++  keyword  whole  sqrt		yellow
++  keyword  whole  srand		yellow
++  keyword  whole  strftime	yellow
++  keyword  whole  strtonum	yellow
++  keyword  whole  sub		yellow
++  keyword  whole  substr	yellow
++  keyword  whole  system	yellow
++  keyword  whole  systime	yellow
++  keyword  whole  tolower	yellow
++  keyword  whole  toupper	yellow
++  keyword  whole  xor		yellow
++
++#Reserved Keywords 3
++  keyword  whole  ARGC		yellow
++  keyword  whole  ARGIND	yellow
++  keyword  whole  ARGV		yellow
++  keyword  whole  BINMODE	yellow
++  keyword  whole  CONVFMT	yellow
++  keyword  whole  ENVIRON	yellow
++  keyword  whole  ERRNO		yellow
++  keyword  whole  FIELDWIDTHS	yellow
++  keyword  whole  FILENAME	yellow
++  keyword  whole  FNR		yellow
++  keyword  whole  FS		yellow
++  keyword  whole  IGNORECASE	yellow
++  keyword  whole  LINT		yellow
++  keyword  whole  NF		yellow
++  keyword  whole  NR		yellow
++  keyword  whole  OFMT		yellow
++  keyword  whole  OFS		yellow
++  keyword  whole  ORS		yellow
++  keyword  whole  PROCINFO	yellow
++  keyword  whole  RLENGTH	yellow
++  keyword  whole  RS		yellow
++  keyword  whole  RSTART	yellow
++  keyword  whole  RT		yellow
++  keyword  whole  SUBSEP	yellow
++  keyword  whole  TEXTDOMAIN	yellow
++
++
++    keyword > yellow
++    keyword < yellow
++    keyword \+ yellow
++    keyword - yellow
++    keyword \* yellow
++    keyword / yellow
++    keyword % yellow
++    keyword = yellow
++    keyword != yellow
++    keyword == yellow
++    keyword { brightcyan/
++    keyword } brightcyan/
++    keyword ( brightcyan/
++    keyword ) brightcyan/
++    keyword [ brightcyan/
++    keyword ] brightcyan/
++    keyword , brightcyan/
++    keyword : brightcyan/
++    keyword ? brightcyan/
++    keyword ; brightmagenta/
++
++
++#comments
++context linestart # \n brown/24
++
++
++#Equations
++context " " green/
++
+diff -uNr mc-4.6.2-pre1/syntax.orig/Makefile.am mc-4.6.2-pre1/syntax/Makefile.am
+--- mc-4.6.2-pre1/syntax.orig/Makefile.am	2009-01-21 21:32:22.000000000 +0100
++++ mc-4.6.2-pre1/syntax/Makefile.am	2009-01-21 21:34:57.887056808 +0100
+@@ -3,6 +3,7 @@
+ 	ada95.syntax		\
+ 	aspx.syntax		\
+ 	assembler.syntax	\
++	awk.syntax		\
+ 	c.syntax		\
+ 	changelog.syntax	\
+ 	cs.syntax		\
+diff -uNr mc-4.6.2-pre1/syntax.orig/Syntax mc-4.6.2-pre1/syntax/Syntax
+--- mc-4.6.2-pre1/syntax.orig/Syntax	2009-01-21 21:32:49.000000000 +0100
++++ mc-4.6.2-pre1/syntax/Syntax	2009-01-21 21:35:43.263821731 +0100
+@@ -135,6 +135,9 @@
+ 
+ file ..\*\\.([Aa][Ss][Mm]|s|S)$ ASM\sProgram
+ include assembler.syntax
++
++file ..\*\\.(awk|AWK)$ AWK\sProgram
++include awk.syntax
+  
+ file ..\*\\.([Pp][Oo][Vv])$ POV\sScript
+ include povray.syntax
