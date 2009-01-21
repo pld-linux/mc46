@@ -9,17 +9,6 @@ diff -uNr mc-2006-05-10-21/syntax.orig/Makefile.am mc-2006-05-10-21/syntax/Makef
  	unknown.syntax		\
  	xml.syntax
  
-diff -uNr mc-2006-05-10-21/syntax.orig/Makefile.in mc-2006-05-10-21/syntax/Makefile.in
---- mc-2006-05-10-21/syntax.orig/Makefile.in	2006-05-31 15:06:50.000000000 +0200
-+++ mc-2006-05-10-21/syntax/Makefile.in	2006-05-31 15:08:30.546816500 +0200
-@@ -278,6 +278,7 @@
- 	syntax.syntax		\
- 	tcl.syntax		\
- 	texinfo.syntax		\
-+	vhdl.syntax		\
- 	unknown.syntax		\
- 	xml.syntax
- 
 diff -uNr mc-2006-05-10-21/syntax.orig/Syntax mc-2006-05-10-21/syntax/Syntax
 --- mc-2006-05-10-21/syntax.orig/Syntax	2006-05-31 15:06:51.000000000 +0200
 +++ mc-2006-05-10-21/syntax/Syntax	2006-05-31 15:10:11.465123500 +0200
@@ -27,162 +16,193 @@ diff -uNr mc-2006-05-10-21/syntax.orig/Syntax mc-2006-05-10-21/syntax/Syntax
  file users CVS\suser\slist
  include cvs-userlist.syntax
  
-+file ..\*\\.(hdl|vhdl|HDL|VHDL)$ VHDL\sProgram
++file ..\*\\.(vhdl|vhd|VHDL|VHD)$ VHDL\sProgram
 +include vhdl.syntax
 +
  file .\* unknown
  include unknown.syntax
-diff -uNr mc-2006-05-10-21/syntax.orig/vhdl.syntax mc-2006-05-10-21/syntax/vhdl.syntax
---- mc-2006-05-10-21/syntax.orig/vhdl.syntax	1970-01-01 01:00:00.000000000 +0100
-+++ mc-2006-05-10-21/syntax/vhdl.syntax	2006-05-31 14:56:44.000000000 +0200
-@@ -0,0 +1,150 @@
-+# Adam Pribyl, based on ADA
-+# missing
-+# generate, disconnect, group, guarded, impure, inertial, linkage, literal, new, on, others, postponed, pure, register, reject, select, shared, sli, transport, unaffected, units
+diff -uNr mc-4.6.2-pre1/syntax.orig/vhdl.syntax mc-4.6.2-pre1/syntax/vhdl.syntax
+--- mc-4.6.2-pre1/syntax.orig/vhdl.syntax	1970-01-01 01:00:00.000000000 +0100
++++ mc-4.6.2-pre1/syntax/vhdl.syntax	2009-01-21 21:19:34.000000000 +0100
+@@ -0,0 +1,181 @@
++# This is Cooledit syntax-file for verilog
++# Created by Andres Farfan, <nafraf@linuxmail.org>
++# Feel free to copy & modify this.
++# 09/2004
++
++wholechars abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_
 +
 +
-+#wholechars abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.\\[]{}
-+
-+#ignore case?!
-+
++# default colors
 +context default
 +
-+	keyword whole with	yellow
-+	keyword whole use	yellow
-+	keyword whole is	yellow
-+	keyword whole of	yellow
-+	keyword whole range	yellow
-+	keyword whole abs	yellow
-+	keyword whole delta	yellow
-+	keyword whole return	yellow
-+	keyword whole next	yellow
-+	keyword whole null	yellow
-+	keyword whole after	yellow
-+	keyword whole array	yellow
-+	keyword whole downto	yellow
-+	keyword whole to	yellow
++#Preprocessor keywords
++  keyword  whole	#define		brightred/
++  keyword  whole	#elif		brightred/
++  keyword  whole	#else		brightred/
++  keyword  whole	#endif		brightred/
++  keyword  whole	#if		brightred/
++  keyword  whole	#ifdef		brightred/
++  keyword  whole	#ifndef		brightred/
++  keyword  whole	#include	brightred/
++  keyword  whole	#pragma		brightred/
++  keyword  whole	#undef		brightred/
++  keyword  whole	defined		brightred/
 +
-+# prevents - keyword from interfering with comment
-+	keyword --	brown
++#Keywords 1
++  keyword  whole  abs	 	yellow/
++  keyword  whole  access	yellow/
++  keyword  whole  after	 	yellow/
++  keyword  whole  alias	 	yellow/
++  keyword  whole  all	 	yellow/
++  keyword  whole  and	 	yellow/
++  keyword  whole  architecture	yellow/
++  keyword  whole  array	 	yellow/
++  keyword  whole  assert	yellow/
++  keyword  whole  attribute	yellow/
++  keyword  whole  begin	 	yellow/
++  keyword  whole  block	 	yellow/
++  keyword  whole  body	 	yellow/
++  keyword  whole  buffer	yellow/
++  keyword  whole  bus	 	yellow/
++  keyword  whole  case	 	yellow/
++  keyword  whole  component	yellow/
++  keyword  whole  configuration	yellow/
++  keyword  whole  constant	yellow/
++  keyword  whole  disconnect	yellow/
++  keyword  whole  downto	yellow/
++  keyword  whole  else	 	yellow/
++  keyword  whole  elsif	 	yellow/
++  keyword  whole  end	 	yellow/
++  keyword  whole  entity	yellow/
++  keyword  whole  exit	 	yellow/
++  keyword  whole  file	 	yellow/
++  keyword  whole  for	 	yellow/
++  keyword  whole  function	yellow/
++  keyword  whole  generate	 yellow/
++  keyword  whole  generic	 yellow/
++  keyword  whole  group	 yellow/
++  keyword  whole  guarded	 yellow/
++  keyword  whole  if	 yellow/
++  keyword  whole  impure	 yellow/
++  keyword  whole  in	 yellow/
++  keyword  whole  inertial	 yellow/
++  keyword  whole  inout	 yellow/
++  keyword  whole  is	 yellow/
++  keyword  whole  label	 yellow/
++  keyword  whole  library	 yellow/
++  keyword  whole  linkage	 yellow/
++  keyword  whole  literal	 yellow/
++  keyword  whole  loop	 yellow/
++  keyword  whole  map	 yellow/
++  keyword  whole  mod	 yellow/
++  keyword  whole  nand	 yellow/
++  keyword  whole  new	 yellow/
++  keyword  whole  next	 yellow/
++  keyword  whole  nor	 yellow/
++  keyword  whole  not	 yellow/
++  keyword  whole  null	 yellow/
++  keyword  whole  of	 yellow/
++  keyword  whole  on	 yellow/
++  keyword  whole  open	 yellow/
++  keyword  whole  or	 yellow/
++  keyword  whole  others	 yellow/
++  keyword  whole  out	 	 yellow/
++  keyword  whole  package	 yellow/
++  keyword  whole  port	 	 yellow/
++  keyword  whole  postponed	 yellow/
++  keyword  whole  procedure	 yellow/
++  keyword  whole  process	 yellow/
++  keyword  whole  pure	 yellow/
++  keyword  whole  range	 yellow/
++  keyword  whole  record	 yellow/
++  keyword  whole  register	 yellow/
++  keyword  whole  reject	 yellow/
++  keyword  whole  rem	 yellow/
++  keyword  whole  report	 yellow/
++  keyword  whole  return	 yellow/
++  keyword  whole  rol	 yellow/
++  keyword  whole  ror	 yellow/
++  keyword  whole  select	 yellow/
++  keyword  whole  severity	 yellow/
++  keyword  whole  signal	 yellow/
++  keyword  whole  shared	 yellow/
++  keyword  whole  sla	 	 yellow/
++  keyword  whole  sll	 	 yellow/
++  keyword  whole  sra	 	 yellow/
++  keyword  whole  srl	 	 yellow/
++  keyword  whole  subtype	 yellow/
++  keyword  whole  then	 	 yellow/
++  keyword  whole  to	 	 yellow/
++  keyword  whole  transport	 yellow/
++  keyword  whole  type	 yellow/
++  keyword  whole  unaffected	 yellow/
++  keyword  whole  units	 yellow/
++  keyword  whole  until	 yellow/
++  keyword  whole  use	 yellow/
++  keyword  whole  variable	 yellow/
++  keyword  whole  wait	 yellow/
++  keyword  whole  when	 yellow/
++  keyword  whole  while	 yellow/
++  keyword  whole  xnor	 yellow/
++  keyword  whole  xor	 yellow/
++  
++#Keywords 2
++  keyword  whole  `base	 yellow/
++  keyword  whole  `left	 yellow/
++  keyword  whole  `right	 yellow/
++  keyword  whole  `high	 yellow/
++  keyword  whole  `low	 yellow/
++  keyword  whole  `ascending	 yellow/
++  keyword  whole  `image	 yellow/
++  keyword  whole  `value	 yellow/
++  keyword  whole  `pos	 yellow/
++  keyword  whole  `val	 yellow/
++  keyword  whole  `succ	 yellow/
++  keyword  whole  `pred	 yellow/
++  keyword  whole  `leftof	 yellow/
++  keyword  whole  `rightof	 yellow/
++  keyword  whole  `range	 yellow/
++  keyword  whole  `reverse_range	 yellow/
++  keyword  whole  `length	 yellow/
++  keyword  whole  `delayed	 yellow/
++  keyword  whole  `stable	 yellow/
++  keyword  whole  `quiet	 yellow/
++  keyword  whole  `transaction	 yellow/
++  keyword  whole  `event	 yellow/
++  keyword  whole  `last_event	 yellow/
++  keyword  whole  `last_active	 yellow/
++  keyword  whole  `last_value	 yellow/
++  keyword  whole  `driving	 yellow/
++  keyword  whole  `driving_value	 yellow/
++  keyword  whole  `simple_name	 yellow/
++  keyword  whole  `instance_name	 yellow/
++  keyword  whole  `path_name	 yellow/
 +
-+# expressions
-+	keyword :=	brightgreen
-+	keyword .	brightgreen
-+	keyword ;	brightgreen
-+	keyword ..	brightgreen
-+	keyword :	brightgreen
-+	keyword (	brightgreen
-+	keyword )	brightgreen
-+	keyword \+	brightgreen
-+	keyword -	brightgreen
-+	keyword /	brightgreen
-+	keyword \*	brightgreen
-+	keyword \*\*	brightgreen
-+	keyword #	brightgreen
-+	keyword =>	brightgreen
-+	keyword <=	brightgreen
-+	keyword >=	brightgreen
-+	keyword ,	brightgreen
-+	keyword '	brightgreen
-+	keyword =	brightgreen
-+	keyword /=	brightgreen
 +
-+# operators
-+	keyword whole sll	green
-+	keyword whole srl	green
-+	keyword whole sla	green
-+	keyword whole sra	green
-+	keyword whole rol	green
-+	keyword whole ror	green
-+	keyword whole rem	green
-+	keyword whole mod	green
-+	keyword whole not	green
-+	keyword whole and	green
-+	keyword whole nand	green
-+	keyword whole or	green
-+	keyword whole xor	green
-+	keyword whole nor	green
-+	keyword whole xnor	green
-+	
-+# sequential statements
-+	keyword whole begin	brightred
-+	keyword whole end	brightred
-+	keyword whole exit	brightred
-+	keyword whole for	brightred
-+	keyword whole while	brightred
-+	keyword whole if	brightred
-+	keyword whole then	brightred
-+	keyword whole else	brightred
-+	keyword whole case	brightred
-+	keyword whole when	brightred
-+	keyword whole elsif	brightred
-+	keyword whole assert	brightred
-+	keyword	whole wait	brightred
-+	keyword	whole open	brightred
-+	keyword whole loop	brightred
-+	keyword whole until	brightred
++    keyword > yellow
++    keyword < yellow
++    keyword \+ yellow
++    keyword - yellow
++    keyword \* yellow
++    keyword / yellow
++    keyword % yellow
++    keyword = yellow
++    keyword != yellow
++    keyword == yellow
++    keyword { brightcyan
++    keyword } brightcyan
++    keyword ( brightcyan
++    keyword ) brightcyan
++    keyword [ brightcyan
++    keyword ] brightcyan
++    keyword , brightcyan
++    keyword : brightcyan
++    keyword ? brightcyan
++    keyword ; brightmagenta
 +
-+# parallel statements
-+	keyword whole block	brightred
 +
-+# predefined types
-+	keyword whole integer	cyan
-+	keyword whole natural	cyan
-+	keyword whole positive	cyan
-+	keyword whole string	cyan
-+	keyword whole character	cyan
-+	keyword whole boolean	cyan
-+	keyword whole real	cyan
-+	keyword whole bit	cyan
-+	keyword whole bit_vector	cyan
-+	keyword whole time	cyan
++context exclusive -- \n brown/
++    spellcheck
 +
-+# declarations
-+	keyword whole type	brightcyan
-+	keyword whole subtype	brightcyan
-+
-+	keyword whole variable	brightcyan
-+	keyword whole signal	brightcyan
-+	keyword whole constant	brightcyan
-+	keyword whole file	brightcyan
-+
-+	keyword whole port	brightcyan
-+	keyword whole map	brightcyan
-+	keyword whole label	brightcyan
-+	keyword whole record	brightcyan
-+	keyword whole generic	brightcyan
-+	keyword whole alias	brightcyan
-+	keyword whole attribute	brightcyan
-+	
-+
-+	keyword whole in	white
-+	keyword whole out	white
-+	keyword whole inout	white
-+	keyword whole buffer	white
-+	keyword whole bus	white
-+	
-+# library units
-+	keyword whole library	magenta
-+	keyword whole entity	magenta
-+	keyword whole architecture	magenta
-+	keyword whole package	magenta
-+	keyword whole body	magenta
-+	keyword whole procedure	magenta
-+	keyword whole function	magenta
-+	keyword whole configuration	magenta
-+	keyword whole component	magenta
-+	keyword whole generic	magenta
-+	keyword whole process	magenta
-+
-+# reports
-+	keyword whole report	red
-+	keyword whole severity	red
-+	keyword whole note	red
-+	keyword whole warning	red
-+	keyword whole error	red
-+	keyword whole failure	red
-+	
-+
-+context exclusive -- \n	brown
-+context " "	green/green
-+
++context " " green/
