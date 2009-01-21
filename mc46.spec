@@ -23,7 +23,7 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{snap}.3
+Release:	0.%{snap}.4
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/gnu/mc/%{name}-%{version}-%{snap}.tar.gz
@@ -57,6 +57,8 @@ Patch21:	%{name}-userhost.patch
 Patch22:	%{name}-utf8-look-and-feel.patch
 Patch23:	%{name}-utf8-8bit-hex.patch
 Patch24:	%{name}-find_options.patch
+Patch25:	%{name}-verilog-syntax.patch
+Patch26:	%{name}-awk-syntax.patch
 URL:		http://www.ibiblio.org/mc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -260,6 +262,8 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch23 -p1
 %endif
 %patch24 -p1
+%patch25 -p1
+%patch26 -p1
 
 mv -f po/{no,nb}.po
 rm -f po/stamp-po
@@ -324,7 +328,7 @@ cd ..
 %endif
 
 rm -f syntax/Syntax.orig
-sed -i 's:|hxx|:|hh|hpp|hxx|:' syntax/Syntax
+sed -i 's:|hxx|:|hh|hpp|hxx|tcc|:' syntax/Syntax
 
 %build
 %{__gettextize}
