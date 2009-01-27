@@ -59,7 +59,7 @@ Patch23:	%{name}-utf8-8bit-hex.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
 Patch26:	%{name}-awk-syntax.patch
-URL:		http://www.ibiblio.org/mc/
+URL:		http://www.midnight-commander.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
