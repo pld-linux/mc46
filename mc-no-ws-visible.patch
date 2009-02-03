@@ -70,8 +70,8 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  		    break;
  		case '\t':
  		    i = TAB_SIZE - ((int) col % TAB_SIZE);
-+		    *p |= ' ';
-+		    c = *(p++) & ~MOD_CURSOR;
++		    p->ch |= ' ';
++		    c = p->style & ~MOD_CURSOR;
  		    col += i;
 -		    if (use_colors && visible_tabs) {
 -			c = (p->style & ~MOD_CURSOR) | MOD_WHITESPACE;
