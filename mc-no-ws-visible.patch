@@ -119,7 +119,7 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 -			}
 -		    }
 +		    while (--i)
-+			*(p++) = c;
++			p->style = c;
  		    break;
 -		case ' ':
 -		    if (use_colors && visible_tws && q >= tws) {
