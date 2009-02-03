@@ -1,7 +1,7 @@
 diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 --- mc-4.6.2-pre1.orig/edit/editdraw.c	2007-08-27 14:06:03.000000000 +0200
 +++ mc-4.6.2-pre1/edit/editdraw.c	2008-05-05 12:00:49.000000000 +0200
-@@ -51,7 +51,6 @@
+@@ -52,7 +52,6 @@
  #define MOD_BOLD		(1 << 9)
  #define MOD_MARKED		(1 << 10)
  #define MOD_CURSOR		(1 << 11)
@@ -9,7 +9,7 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  
  #define FONT_OFFSET_X 0
  #define FONT_OFFSET_Y 0
-@@ -244,27 +243,12 @@ print_to_widget (WEdit *edit, long row, 
+@@ -265,27 +264,12 @@
  	    color = 0;
  	}
  
@@ -40,9 +40,9 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 -	    }
 +	    lowlevel_set_color (color);
  	}
- 
- 	addch (textchar);
-@@ -272,8 +256,6 @@ print_to_widget (WEdit *edit, long row, 
+ #ifdef UTF8
+ 	SLsmg_write_nwchars(&textchar, 1);
+@@ -296,8 +280,6 @@
      }
  }
  
@@ -51,19 +51,11 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  /* b is a pointer to the beginning of the line */
  static void
  edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
-@@ -281,7 +263,7 @@ edit_draw_this_line (WEdit *edit, long b
- {
-     static unsigned int line[MAX_LINE_LEN];
-     unsigned int *p = line;
--    long m1 = 0, m2 = 0, q, c1, c2, tws;
-+    long m1 = 0, m2 = 0, q, c1, c2;
-     int col, start_col_real;
-     unsigned int c;
-     int color;
-@@ -299,13 +281,6 @@ edit_draw_this_line (WEdit *edit, long b
+@@ -323,14 +305,6 @@
  	eval_marks (edit, &m1, &m2);
  
  	if (row <= edit->total_lines - edit->start_line) {
+-		long tws;
 -	    if (use_colors && visible_tws) {
 -		tws = edit_eol (edit, b);
 -		while (tws > b && ((c = edit_get_byte (edit, tws - 1)) == ' '
@@ -72,17 +64,9 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 -	    }
 -
  	    while (col <= end_col - edit->start_col) {
- 		*p = 0;
- 		if (q == edit->curs1)
-@@ -328,6 +303,7 @@ edit_draw_this_line (WEdit *edit, long b
- /* we don't use bg for mc - fg contains both */
- 		edit_get_syntax_color (edit, q, &color);
- 		*p |= color << 16;
-+		q++;
- 		switch (c) {
- 		case '\n':
- 		    col = end_col - edit->start_col + 1;	/* quit */
-@@ -335,38 +311,12 @@ edit_draw_this_line (WEdit *edit, long b
+ 		p->ch = 0;
+ 		p->style = 0;
+@@ -362,62 +336,12 @@
  		    break;
  		case '\t':
  		    i = TAB_SIZE - ((int) col % TAB_SIZE);
@@ -90,34 +74,58 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 +		    c = *(p++) & ~MOD_CURSOR;
  		    col += i;
 -		    if (use_colors && visible_tabs) {
--			c = (*p & ~MOD_CURSOR) | MOD_WHITESPACE;
+-			c = (p->style & ~MOD_CURSOR) | MOD_WHITESPACE;
 -			if (i > 2) {
--			    *(p++) |= '<' | MOD_WHITESPACE;
--			    while (--i > 1)
--				*(p++) = c | '-';
--			    *(p++) = c | '>';
+-			    p->ch = '<';
+-			    p->style |= MOD_WHITESPACE;
+-			    p++;
+-			    while (--i > 1) {
+-				p->ch = '-';
+-				p->style = c;
+-				p++;
+-			    }
+-			    p->ch = '>';
+-			    p->style = c;
+-			    p++;
 -			} else if (i > 1) {
--			    *(p++) |= '<' | MOD_WHITESPACE;
--			    *(p++) = c | '>';
--			} else
--			    *(p++) |= '>' | MOD_WHITESPACE;
+-			    p->ch = '<';
+-			    p->style |= MOD_WHITESPACE;
+-			    p++;
+-			    p->ch = '>';
+-			    p->style = c;
+-			    p++;
+-			} else {
+-			    p->ch = '>';
+-			    p->style |= MOD_WHITESPACE;
+-			    p++;
+-			}
 -		    } else if (use_colors && visible_tws && q >= tws) {
--			*p |= '.' | MOD_WHITESPACE;
--			c = *(p++) & ~MOD_CURSOR;
--			while (--i)
--			    *(p++) = c;
+-			p->ch = '.';
+-			p->style |= MOD_WHITESPACE;
+-			c = p->style & ~MOD_CURSOR;
+-			p++;
+-			while (--i) {
+-			    p->ch = '.';
+-			    p->style = c;
+-			    p++;
+-			}
 -		    } else {
--			*p |= ' ';
--			c = *(p++) & ~MOD_CURSOR;
--			while (--i)
--			    *(p++) = c;
+-			p->ch = ' ';
+-			c = p->style & ~MOD_CURSOR;
+-			p++;
+-			while (--i) {
+-			    p->ch = ' '; p->style = c;
+-			    p++;
+-			}
 -		    }
 +		    while (--i)
 +			*(p++) = c;
  		    break;
 -		case ' ':
 -		    if (use_colors && visible_tws && q >= tws) {
--			*(p++) |= '.' | MOD_WHITESPACE;
+-			p->ch = '.';
+-			p->style |= MOD_WHITESPACE;
+-			p++;
 -			col++;
 -			break;
 -		    }
@@ -125,7 +133,7 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  		default:
  		    c = convert_to_display_c (c);
  
-@@ -392,7 +342,6 @@ edit_draw_this_line (WEdit *edit, long b
+@@ -468,7 +392,6 @@
  		    col++;
  		    break;
  		}

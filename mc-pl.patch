@@ -1,6 +1,6 @@
 --- mc-2007-06-23-14/po/pl.po.orig	2007-06-23 16:43:07.000000000 +0200
 +++ mc-2007-06-23-14/po/pl.po	2007-09-11 20:38:53.399189827 +0200
-@@ -69,7 +69,7 @@
+@@ -66,7 +66,7 @@
  msgstr "Ostrze¿enie"
  
  msgid " File has hard-links. Detach before saving? "
@@ -9,7 +9,7 @@
  
  msgid "&Yes"
  msgstr "&Tak"
-@@ -81,7 +81,7 @@
+@@ -78,7 +78,7 @@
  msgstr "&Anuluj"
  
  msgid "The file has been modified in the meantime. Save anyway?"
@@ -18,7 +18,7 @@
  
  msgid " Error writing to pipe: "
  msgstr " B³±d przy zapisie do potoku: "
-@@ -264,7 +264,7 @@
+@@ -261,7 +261,7 @@
  msgstr " Ta opcja nie jest zaimplementowana. "
  
  msgid " Copy to clipboard "
@@ -108,7 +108,7 @@
  
  msgid " Filename:"
  msgstr " Nazwa pliku:"
-@@ -1057,28 +1056,28 @@
+@@ -1057,25 +1056,25 @@
  msgstr " Odznacz "
  
  msgid "Extension file edit"
@@ -136,13 +136,9 @@
 -msgstr "Lokalne"
 +msgstr "&Lokalne"
  
- msgid "&Home"
--msgstr "Prywatne"
-+msgstr "&W³asne"
- 
  msgid "Syntax file edit"
  msgstr "Modyfikacja pliku ze sk³adni±"
-@@ -1121,7 +1120,7 @@
+@@ -1118,7 +1117,7 @@
  
  #, c-format
  msgid "Link %s to:"
@@ -151,7 +147,7 @@
  
  msgid " Link "
  msgstr " Dowi±¿ "
-@@ -1132,26 +1131,26 @@
+@@ -1129,26 +1128,26 @@
  
  #, c-format
  msgid " symlink: %s "
@@ -184,7 +180,7 @@
  
  #, c-format
  msgid " Cannot chdir to %s "
-@@ -1280,7 +1279,7 @@
+@@ -1278,7 +1277,7 @@
  "z %smc.ext lub napisaæ samemu, opieraj±c siê na zawarto¶ci tego pliku."
  
  msgid " Copy "
@@ -193,7 +189,7 @@
  
  msgid " Move "
  msgstr " Przenie¶ "
-@@ -1307,16 +1306,16 @@
+@@ -1305,16 +1304,16 @@
  "\n"
  " Option Stable Symlinks will be disabled "
  msgstr ""
@@ -213,7 +209,7 @@
  " %s "
  
  #, c-format
-@@ -1463,7 +1462,7 @@
+@@ -1461,7 +1460,7 @@
  " Cannot copy cyclic symbolic link \n"
  " `%s' "
  msgstr ""
@@ -222,7 +218,7 @@
  " '%s' "
  
  #, c-format
-@@ -1710,7 +1709,7 @@
+@@ -1708,7 +1707,7 @@
  msgstr "Zachowanie atrybutów"
  
  msgid "follow &Links"
@@ -231,7 +227,7 @@
  
  msgid "to:"
  msgstr "do:"
-@@ -1722,7 +1721,7 @@
+@@ -1720,7 +1719,7 @@
  msgstr "W tle"
  
  msgid "&Stable Symlinks"
@@ -240,7 +236,7 @@
  
  msgid "&Dive into subdir if exists"
  msgstr "Schodzenie do podkatalogów"
-@@ -1754,10 +1753,10 @@
+@@ -1752,10 +1751,10 @@
  msgstr "Filtruj"
  
  msgid "&View - F3"
@@ -251,9 +247,9 @@
 -msgstr "Edycja - F4"
 +msgstr "Edytuj - F4"
  
- msgid "find Re&cursively"
- msgstr "znajd¼ Re&kurencyjnie"
-@@ -1888,6 +1887,8 @@
+ #, fuzzy
+ msgid "&Find recursively"
+@@ -1887,6 +1886,8 @@
  "\n"
  " Are you sure you want to remove this entry?"
  msgstr ""
@@ -262,7 +258,7 @@
  
  msgid ""
  "\n"
-@@ -2164,13 +2165,13 @@
+@@ -2162,13 +2163,13 @@
  msgstr "Widok filtrowany   M-!"
  
  msgid "&Edit               F4"
@@ -279,7 +275,7 @@
  
  msgid "&Link            C-x l"
  msgstr "Dowi±zanie       C-x l"
-@@ -2182,13 +2183,13 @@
+@@ -2180,13 +2181,13 @@
  msgstr "Modyf. dowi±z. C-x X-s"
  
  msgid "ch&Own           C-x o"
@@ -296,7 +292,7 @@
  
  msgid "&Mkdir              F7"
  msgstr "Utwórz katalog      F7"
-@@ -2197,7 +2198,7 @@
+@@ -2195,7 +2196,7 @@
  msgstr "Usuñ                F8"
  
  msgid "&Quick cd          M-c"
@@ -305,7 +301,7 @@
  
  msgid "select &Group      M-+"
  msgstr "Zaznacz grupê      M-+"
-@@ -2248,7 +2249,7 @@
+@@ -2246,7 +2247,7 @@
  msgstr "&Odtwórz pliki (tylko ext2fs)"
  
  msgid "&Listing format edit"
@@ -314,16 +310,16 @@
  
  msgid "Edit &extension file"
  msgstr "Zmodyfikuj plik &rozszerzeñ"
-@@ -2450,7 +2451,7 @@
+@@ -2448,7 +2449,7 @@
  msgstr "Wywo³uje podgl±d pliku"
  
  msgid "Edits one file"
 -msgstr "Modyfikuje plik"
 +msgstr "Edytuje plik"
  
- msgid " Notice "
- msgstr " Uwaga "
-@@ -2598,10 +2599,10 @@
+ msgid "safe de&Lete"
+ msgstr "Bezpieczne usuwanie"
+@@ -2584,10 +2585,10 @@
  msgstr "[urz]"
  
  msgid "UP--DIR"
@@ -336,7 +332,7 @@
  
  msgid "SUB-DIR"
  msgstr "PODKATAL"
-@@ -2619,7 +2620,7 @@
+@@ -2605,7 +2606,7 @@
  msgstr "CzasZ"
  
  msgid "Permission"
@@ -345,7 +341,7 @@
  
  msgid "Perm"
  msgstr "Prawa"
-@@ -2637,24 +2638,24 @@
+@@ -2623,24 +2624,24 @@
  msgstr "GID"
  
  msgid "Owner"
@@ -378,7 +374,7 @@
  
  msgid "<readlink failed>"
  msgstr "<readlink() nie powiod³a siê>"
-@@ -2672,10 +2673,10 @@
+@@ -2658,10 +2659,10 @@
  msgstr "Podgl."
  
  msgid "Edit"
@@ -391,7 +387,7 @@
  
  msgid "Mkdir"
  msgstr "Utwórz"
-@@ -2779,7 +2780,7 @@
+@@ -2765,7 +2766,7 @@
  
  #, c-format
  msgid "Copy \"%s\" directory to:"
@@ -400,7 +396,7 @@
  
  #, c-format
  msgid "Move \"%s\" directory to:"
-@@ -2862,10 +2863,10 @@
+@@ -2848,10 +2849,10 @@
  msgstr " Menu u¿ytkownika"
  
  msgid "%b %e %H:%M"
@@ -411,9 +407,9 @@
 -msgstr "%e.%m.%Y "
 +msgstr "%d.%m.%Y "
  
- #, c-format
- msgid "%s is not a directory\n"
-@@ -2985,9 +2986,8 @@
+ msgid "(invalid)"
+ msgstr ""
+@@ -2974,9 +2975,8 @@
  msgid " Goto Address "
  msgstr " Przejd¼ pod adres "
  
@@ -424,7 +420,7 @@
  
  msgid " Enter regexp:"
  msgstr " Wprowad¼ wyra¿enie regularne: "
-@@ -3406,10 +3406,10 @@
+@@ -3395,10 +3395,10 @@
  msgstr "ftpfs: operacja CWD nie powiod³a siê."
  
  msgid "ftpfs: couldn't resolve symlink"
@@ -437,10 +433,13 @@
  
  #, c-format
  msgid "ftpfs: Reading FTP directory %s... %s%s"
-@@ -3623,158 +3623,3 @@
+@@ -3612,176 +3612,3 @@
  
  msgid "Changes to file lost"
  msgstr "Utracono zmiany w pliku"
+-
+-#~ msgid "&Home"
+-#~ msgstr "Prywatne"
 -
 -#~ msgid "&Type"
 -#~ msgstr "&Typ"
@@ -459,6 +458,21 @@
 -
 -#~ msgid "&Group"
 -#~ msgstr "Grupa"
+-
+-#~ msgid "MC was unable to write ~/"
+-#~ msgstr "Nie mo¿na zapisaæ pliku ~/"
+-
+-#~ msgid " Notice "
+-#~ msgstr " Uwaga "
+-
+-#~ msgid ""
+-#~ " The Midnight Commander configuration files \n"
+-#~ " are now stored in the ~/.mc directory, the \n"
+-#~ " files have been moved now\n"
+-#~ msgstr ""
+-#~ " Pliki konfiguracyjne Midnight Commandera bêd± \n"
+-#~ " przechowywane w katalogu ~/.mc. Pliki zosta³y \n"
+-#~ " w³a¶nie do niego przeniesione.\n"
 -
 -#~ msgid "%s bytes in %d files"
 -#~ msgstr "%s bajtów w %d plikach"
