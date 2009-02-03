@@ -183,30 +183,30 @@ diff -urN mc-4.6.1-pre1.org/slang/sltermin.c mc-4.6.1-pre1/slang/sltermin.c
 diff -urN mc-4.6.1-pre1.org/src/cmd.c mc-4.6.1-pre1/src/cmd.c
 --- mc-4.6.1-pre1.org/src/cmd.c	2004-06-06 23:19:35.633480336 +0200
 +++ mc-4.6.1-pre1/src/cmd.c	2004-06-06 23:20:01.455554784 +0200
-@@ -600,7 +600,7 @@
-     extdir = concat_dir_and_file (mc_home, MC_LIB_EXT);
+@@ -588,7 +588,7 @@
+     extdir = mhl_str_dir_plus_file (mc_home, MC_LIB_EXT);
  
      if (dir == 0){
--	buffer = concat_dir_and_file (home_dir, MC_USER_EXT);
-+	buffer = concat_dir_and_file (etc_dir, MC_USER_EXT);
+-	buffer = mhl_str_dir_plus_file (home_dir, MC_USER_EXT);
++	buffer = mhl_str_dir_plus_file (etc_dir, MC_USER_EXT);
  	check_for_default (extdir, buffer);
  	do_edit (buffer);
  	g_free (buffer);
-@@ -636,7 +636,7 @@
+@@ -624,7 +624,7 @@
  	    break;
  
  	case 1:
--	    buffer = concat_dir_and_file (home_dir, where ? CEDIT_HOME_MENU : MC_HOME_MENU);
-+	    buffer = concat_dir_and_file (etc_dir, where ? CEDIT_HOME_MENU : MC_HOME_MENU);
+-	    buffer = mhl_str_dir_plus_file (home_dir, where ? CEDIT_HOME_MENU : MC_HOME_MENU);
++	    buffer = mhl_str_dir_plus_file (etc_dir, where ? CEDIT_HOME_MENU : MC_HOME_MENU);
  	    check_for_default (menufile, buffer);
  	    break;
  	
-@@ -703,7 +703,7 @@
-     extdir = concat_dir_and_file (mc_home, "syntax" PATH_SEP_STR "Syntax");
+@@ -691,7 +691,7 @@
+     extdir = mhl_str_dir_plus_file (mc_home, "syntax" PATH_SEP_STR "Syntax");
  
      if (dir == 0) {
--	buffer = concat_dir_and_file (home_dir, SYNTAX_FILE);
-+	buffer = concat_dir_and_file (etc_dir, SYNTAX_FILE);
+-	buffer = mhl_str_dir_plus_file (home_dir, SYNTAX_FILE);
++	buffer = mhl_str_dir_plus_file (etc_dir, SYNTAX_FILE);
  	check_for_default (extdir, buffer);
  	do_edit (buffer);
  	g_free (buffer);
@@ -217,8 +217,8 @@ diff -urN mc-4.6.1-pre1.org/src/ext.c mc-4.6.1-pre1/src/ext.c
  	int mc_user_ext = 1;
  	int home_error = 0;
  
--	extension_file = concat_dir_and_file (home_dir, MC_USER_EXT);
-+	extension_file = concat_dir_and_file (etc_dir, MC_USER_EXT);
+-	extension_file = mhl_str_dir_plus_file (home_dir, MC_USER_EXT);
++	extension_file = mhl_str_dir_plus_file (etc_dir, MC_USER_EXT);
  	if (!exist_file (extension_file)) {
  	    g_free (extension_file);
  	  check_stock_mc_ext:
@@ -229,8 +229,8 @@ diff -urN mc-4.6.1-pre1.org/src/hotlist.c mc-4.6.1-pre1/src/hotlist.c
      }
  
      if (!hotlist_file_name)
--	hotlist_file_name = concat_dir_and_file (home_dir, HOTLIST_FILENAME);
-+	hotlist_file_name = concat_dir_and_file (etc_dir, HOTLIST_FILENAME);
+-	hotlist_file_name = mhl_str_dir_plus_file (home_dir, HOTLIST_FILENAME);
++	hotlist_file_name = mhl_str_dir_plus_file (etc_dir, HOTLIST_FILENAME);
      
      hotlist	       = new_hotlist ();
      hotlist->type      = HL_TYPE_GROUP;
@@ -251,8 +251,8 @@ diff -urN mc-4.6.1-pre1.org/src/main.c mc-4.6.1-pre1/src/main.c
  {
      struct stat s;
      int move = 0;
--    char *mc_dir = concat_dir_and_file (home_dir, ".mc");
-+    char *mc_dir = concat_dir_and_file (etc_dir, ".mc");
+-    char *mc_dir = mhl_str_dir_plus_file (home_dir, ".mc");
++    char *mc_dir = mhl_str_dir_plus_file (etc_dir, ".mc");
  
      if (stat (mc_dir, &s) && (errno == ENOENT)
  	&& (mkdir (mc_dir, 0777) != -1)) {
@@ -293,8 +293,8 @@ diff -urN mc-4.6.1-pre1.org/src/setup.c mc-4.6.1-pre1/src/setup.c
      int  i;
      char buffer [BUF_TINY];
  
--    profile = concat_dir_and_file (home_dir, PROFILE_NAME);
-+    profile = concat_dir_and_file (etc_dir, PROFILE_NAME);
+-    profile = mhl_str_dir_plus_file (home_dir, PROFILE_NAME);
++    profile = mhl_str_dir_plus_file (etc_dir, PROFILE_NAME);
  
      /* Save integer options */
      for (i = 0; layout [i].opt_name; i++){
@@ -302,8 +302,8 @@ diff -urN mc-4.6.1-pre1.org/src/setup.c mc-4.6.1-pre1/src/setup.c
      char *profile;
      int  i;
  
--    profile = concat_dir_and_file (home_dir, PROFILE_NAME);
-+    profile = concat_dir_and_file (etc_dir, PROFILE_NAME);
+-    profile = mhl_str_dir_plus_file (home_dir, PROFILE_NAME);
++    profile = mhl_str_dir_plus_file (etc_dir, PROFILE_NAME);
  
      /* Save integer options */
      for (i = 0; options [i].opt_name; i++)
@@ -311,8 +311,8 @@ diff -urN mc-4.6.1-pre1.org/src/setup.c mc-4.6.1-pre1/src/setup.c
      char *profile;
  
      saving_setup = 1;
--    profile = concat_dir_and_file (home_dir, PROFILE_NAME);
-+    profile = concat_dir_and_file (etc_dir, PROFILE_NAME);
+-    profile = mhl_str_dir_plus_file (home_dir, PROFILE_NAME);
++    profile = mhl_str_dir_plus_file (etc_dir, PROFILE_NAME);
  
      save_configure ();
  
@@ -320,10 +320,10 @@ diff -urN mc-4.6.1-pre1.org/src/setup.c mc-4.6.1-pre1/src/setup.c
      if (profile_name)
  	    return profile_name;
  
--    profile = concat_dir_and_file (home_dir, PROFILE_NAME);
-+    profile = concat_dir_and_file (etc_dir, PROFILE_NAME);
+-    profile = mhl_str_dir_plus_file (home_dir, PROFILE_NAME);
++    profile = mhl_str_dir_plus_file (etc_dir, PROFILE_NAME);
      if (!exist_file (profile)){
- 	inifile = concat_dir_and_file (mc_home, "mc.ini");
+ 	inifile = mhl_str_dir_plus_file (mc_home, "mc.ini");
  	if (exist_file (inifile)){
 diff -urN mc-4.6.1-pre1.org/src/treestore.c mc-4.6.1-pre1/src/treestore.c
 --- mc-4.6.1-pre1.org/src/treestore.c	2004-06-06 23:19:35.666475320 +0200
@@ -332,8 +332,8 @@ diff -urN mc-4.6.1-pre1.org/src/treestore.c mc-4.6.1-pre1/src/treestore.c
      char *name;
      int retval;
  
--    name = concat_dir_and_file(home_dir, MC_TREE);
-+    name = concat_dir_and_file(etc_dir, MC_TREE);
+-    name = mhl_str_dir_plus_file(home_dir, MC_TREE);
++    name = mhl_str_dir_plus_file(etc_dir, MC_TREE);
      retval = tree_store_load_from(name);
      g_free(name);
  
@@ -341,8 +341,8 @@ diff -urN mc-4.6.1-pre1.org/src/treestore.c mc-4.6.1-pre1/src/treestore.c
      char *name;
      int retval;
  
--    tmp = concat_dir_and_file(home_dir, MC_TREE_TMP);
-+    tmp = concat_dir_and_file(etc_dir, MC_TREE_TMP);
+-    tmp = mhl_str_dir_plus_file(home_dir, MC_TREE_TMP);
++    tmp = mhl_str_dir_plus_file(etc_dir, MC_TREE_TMP);
      retval = tree_store_save_to(tmp);
  
      if (retval) {
@@ -350,8 +350,8 @@ diff -urN mc-4.6.1-pre1.org/src/treestore.c mc-4.6.1-pre1/src/treestore.c
  	return retval;
      }
  
--    name = concat_dir_and_file(home_dir, MC_TREE);
-+    name = concat_dir_and_file(etc_dir, MC_TREE);
+-    name = mhl_str_dir_plus_file(home_dir, MC_TREE);
++    name = mhl_str_dir_plus_file(etc_dir, MC_TREE);
      retval = rename(tmp, name);
  
      g_free(tmp);
@@ -361,12 +361,12 @@ diff -urN mc-4.6.1-pre1.org/src/user.c mc-4.6.1-pre1/src/user.c
 @@ -699,7 +699,7 @@
      if (!exist_file (menu) || !menu_file_own (menu)){
  	g_free (menu);
-         menu = concat_dir_and_file \
+         menu = mhl_str_dir_plus_file \
 -                            (home_dir, edit_widget ? CEDIT_HOME_MENU : MC_HOME_MENU);
 +                            (etc_dir, edit_widget ? CEDIT_HOME_MENU : MC_HOME_MENU);
  	if (!exist_file (menu)){
  	    g_free (menu);
- 	    menu = concat_dir_and_file \
+ 	    menu = mhl_str_dir_plus_file \
 diff -urN mc-4.6.1-pre1.org/src/util.c mc-4.6.1-pre1/src/util.c
 --- mc-4.6.1-pre1.org/src/util.c	2004-06-06 23:19:35.638479576 +0200
 +++ mc-4.6.1-pre1/src/util.c	2004-06-06 23:20:01.506547032 +0200
@@ -374,8 +374,8 @@ diff -urN mc-4.6.1-pre1.org/src/util.c mc-4.6.1-pre1/src/util.c
      *column = 0;
  
      /* open file with positions */
--    fn = concat_dir_and_file (home_dir, MC_FILEPOS);
-+    fn = concat_dir_and_file (etc_dir, MC_FILEPOS);
+-    fn = mhl_str_dir_plus_file (home_dir, MC_FILEPOS);
++    fn = mhl_str_dir_plus_file (etc_dir, MC_FILEPOS);
      f = fopen (fn, "r");
      g_free (fn);
      if (!f)
@@ -383,10 +383,10 @@ diff -urN mc-4.6.1-pre1.org/src/util.c mc-4.6.1-pre1/src/util.c
  
      len = strlen (filename);
  
--    tmp = concat_dir_and_file (home_dir, MC_FILEPOS_TMP);
--    fn = concat_dir_and_file (home_dir, MC_FILEPOS);
-+    tmp = concat_dir_and_file (etc_dir, MC_FILEPOS_TMP);
-+    fn = concat_dir_and_file (etc_dir, MC_FILEPOS);
+-    tmp = mhl_str_dir_plus_file (home_dir, MC_FILEPOS_TMP);
+-    fn = mhl_str_dir_plus_file (home_dir, MC_FILEPOS);
++    tmp = mhl_str_dir_plus_file (etc_dir, MC_FILEPOS_TMP);
++    fn = mhl_str_dir_plus_file (etc_dir, MC_FILEPOS);
  
      /* open temporary file */
      t = fopen (tmp, "w");
@@ -397,8 +397,8 @@ diff -urN mc-4.6.1-pre1.org/src/widget.c mc-4.6.1-pre1/src/widget.c
  	return NULL;
      if (!*input_name)
  	return NULL;
--    profile = concat_dir_and_file (home_dir, HISTORY_FILE_NAME);
-+    profile = concat_dir_and_file (etc_dir, HISTORY_FILE_NAME);
+-    profile = mhl_str_dir_plus_file (home_dir, HISTORY_FILE_NAME);
++    profile = mhl_str_dir_plus_file (etc_dir, HISTORY_FILE_NAME);
      for (i = 0;; i++) {
  	char key_name[BUF_TINY];
  	char this_entry[BUF_LARGE];
@@ -406,8 +406,8 @@ diff -urN mc-4.6.1-pre1.org/src/widget.c mc-4.6.1-pre1/src/widget.c
      if (!num_history_items_recorded)	/* this is how to disable */
  	return;
  
--    profile = concat_dir_and_file (home_dir, HISTORY_FILE_NAME);
-+    profile = concat_dir_and_file (etc_dir, HISTORY_FILE_NAME);
+-    profile = mhl_str_dir_plus_file (home_dir, HISTORY_FILE_NAME);
++    profile = mhl_str_dir_plus_file (etc_dir, HISTORY_FILE_NAME);
  
      if ((i = open (profile, O_CREAT | O_EXCL, S_IRUSR | S_IWUSR)) != -1)
  	close (i);
@@ -418,8 +418,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      }
  
      /* Load current .netrc */
--    netrcname = concat_dir_and_file (home_dir, ".netrc");
-+    netrcname = concat_dir_and_file (etc_dir, ".netrc");
+-    netrcname = mhl_str_dir_plus_file (home_dir, ".netrc");
++    netrcname = mhl_str_dir_plus_file (etc_dir, ".netrc");
      netrcp = netrc = load_file (netrcname);
      if (netrc == NULL) {
  	g_free (netrcname);
@@ -428,7 +428,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
 @@ -2111,7 +2111,7 @@
  do_mc_filename_rename (const char *mc_dir, const char *o_name, const char *n_name)
  {
-     char *full_o_name = concat_dir_and_file (home_dir, o_name);
+     char *full_o_name = mhl_str_dir_plus_file (home_dir, o_name);
 -    char *full_n_name = g_strconcat (home_dir, MC_BASE, n_name, (char *) NULL);
 +    char *full_n_name = g_strconcat (etc_dir, MC_BASE, n_name, (char *) NULL);
      int move;
@@ -461,8 +461,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      WButtonBar *edit_bar;
  
      if (!made_directory) {
--	char *dir = concat_dir_and_file (home_dir, EDIT_DIR);
-+	char *dir = concat_dir_and_file (etc_dir, EDIT_DIR);
+-	char *dir = mhl_str_dir_plus_file (home_dir, EDIT_DIR);
++	char *dir = mhl_str_dir_plus_file (etc_dir, EDIT_DIR);
  	made_directory = (mkdir (dir, 0700) != -1 || errno == EEXIST);
  	g_free (dir);
      }
@@ -622,8 +622,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	if (!*edit->filename && !type)
  	    return;
      }
--    f = concat_dir_and_file (home_dir, SYNTAX_FILE);
-+    f = concat_dir_and_file (etc_dir, SYNTAX_FILE);
+-    f = mhl_str_dir_plus_file (home_dir, SYNTAX_FILE);
++    f = mhl_str_dir_plus_file (etc_dir, SYNTAX_FILE);
      r = edit_read_syntax_file (edit, pnames, f, edit ? edit->filename : 0,
  			       get_first_editor_line (edit), type);
      if (r == -1) {
@@ -633,8 +633,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      int nomark;
      struct stat status;
      long start_mark, end_mark;
--    char *block_file = concat_dir_and_file (home_dir, BLOCK_FILE);
-+    char *block_file = concat_dir_and_file (etc_dir, BLOCK_FILE);
+-    char *block_file = mhl_str_dir_plus_file (home_dir, BLOCK_FILE);
++    char *block_file = mhl_str_dir_plus_file (etc_dir, BLOCK_FILE);
      int rc = 0;
  
      nomark = eval_marks (edit, &start_mark, &end_mark);
