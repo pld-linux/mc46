@@ -1,0 +1,11 @@
+--- mc-4.6.2/vfs/mcfs.c.orig	2009-02-01 20:30:21.000000000 +0100
++++ mc-4.6.2/vfs/mcfs.c	2009-02-03 23:49:21.000000000 +0100
+@@ -49,6 +49,8 @@
+ #endif
+ #endif
+ 
++#include <mhl/string.h>
++
+ #include "../src/global.h"
+ #include "../src/tty.h"		/* enable/disable interrupt key */
+ #include "../src/wtools.h"	/* message() */
