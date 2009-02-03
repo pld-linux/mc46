@@ -247,15 +247,6 @@ diff -urN mc-4.6.1-pre1.org/src/main.c mc-4.6.1-pre1/src/main.c
  /* The home directory */
  char *home_dir;
  
-@@ -2104,7 +2107,7 @@
- {
-     struct stat s;
-     int move = 0;
--    char *mc_dir = mhl_str_dir_plus_file (home_dir, ".mc");
-+    char *mc_dir = mhl_str_dir_plus_file (etc_dir, ".mc");
- 
-     if (stat (mc_dir, &s) && (errno == ENOENT)
- 	&& (mkdir (mc_dir, 0777) != -1)) {
 @@ -2142,11 +2145,13 @@
      OS_Setup ();
  
@@ -423,17 +414,6 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      netrcp = netrc = load_file (netrcname);
      if (netrc == NULL) {
  	g_free (netrcname);
---- ./src/main.c.org	2005-06-13 14:15:51.545082200 +0200
-+++ ./src/main.c	2005-06-13 14:18:11.569795208 +0200
-@@ -2111,7 +2111,7 @@
- do_mc_filename_rename (const char *mc_dir, const char *o_name, const char *n_name)
- {
-     char *full_o_name = mhl_str_dir_plus_file (home_dir, o_name);
--    char *full_n_name = g_strconcat (home_dir, MC_BASE, n_name, (char *) NULL);
-+    char *full_n_name = g_strconcat (etc_dir, MC_BASE, n_name, (char *) NULL);
-     int move;
- 
-     move = 0 == rename (full_o_name, full_n_name);
 --- ./src/global.h.org	2005-06-13 14:14:31.432261200 +0200
 +++ ./src/global.h	2005-06-13 14:15:29.690404616 +0200
 @@ -157,6 +157,7 @@
@@ -468,25 +448,25 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      }
 --- ./edit/editcmd.c.org	2005-06-13 14:10:53.448399784 +0200
 +++ ./edit/editcmd.c	2005-06-13 14:12:04.249636360 +0200
-@@ -585,7 +585,7 @@
+@@ -649,7 +649,7 @@
  {
-     char *filename;
+     const char *filename;
      int file;
 -    filename = catstrs (home_dir, PATH_SEP_STR MACRO_FILE, (char *) NULL);
 +    filename = catstrs (etc_dir, PATH_SEP_STR MACRO_FILE, (char *) NULL);
      if ((file = open (filename, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
  	return 0;
      close (file);
-@@ -621,7 +621,7 @@
+@@ -687,7 +687,7 @@
      if (saved_macros_loaded)
  	if ((j = macro_exists (k)) < 0)
  	    return 0;
 -    g = fopen (catstrs (home_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL), "w");
 +    g = fopen (catstrs (etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL), "w");
      if (!g) {
- /* This heads the delete macro error dialog box */
  	edit_error_dialog (_(" Delete macro "),
-@@ -655,7 +655,7 @@
+ 		 get_sys_error (_(" Cannot open temp file ")));
+@@ -717,7 +717,7 @@
      }
      fclose (f);
      fclose (g);
@@ -495,7 +475,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  	edit_error_dialog (_(" Delete macro "),
  	   get_sys_error (_(" Cannot overwrite macro file ")));
  	return 1;
-@@ -2208,7 +2208,7 @@
+@@ -2281,7 +2281,7 @@
  /* copies a block to clipboard file */
  static int edit_save_block_to_clip_file (WEdit * edit, long start, long finish)
  {
@@ -504,7 +484,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  }
  
  
-@@ -2245,7 +2245,7 @@
+@@ -2320,7 +2320,7 @@
  
  void edit_paste_from_X_buf_cmd (WEdit * edit)
  {
@@ -513,34 +493,34 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  }
  
  
-@@ -2297,7 +2297,7 @@
-     if (eval_marks (edit, &start_mark, &end_mark))
- 	return 1;
+@@ -2375,7 +2375,7 @@
      exp =
--	edit_get_save_file (catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
-+	edit_get_save_file (catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
- 			    _(" Save Block "));
+ 	input_expand_dialog (_(" Save Block "), _(" Enter file name: "),
+ 			     MC_HISTORY_EDIT_SAVE_BLOCK, 
+-			    catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL));
++			    catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL));
      edit_push_action (edit, KEY_PRESS + edit->start_display);
      if (exp) {
-@@ -2326,7 +2326,7 @@
- int
- edit_insert_file_cmd (WEdit *edit)
+ 	if (!*exp) {
+@@ -2405,7 +2405,7 @@
  {
--    char *exp = edit_get_load_file (catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
-+    char *exp = edit_get_load_file (catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL),
- 				    _(" Insert File "));
+     char *exp = input_expand_dialog (_(" Insert File "), _(" Enter file name: "),
+ 				     MC_HISTORY_EDIT_INSERT_FILE,
+-				     catstrs (home_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL));
++				     catstrs (etc_dir, PATH_SEP_STR CLIP_FILE, (char *) NULL));
      edit_push_action (edit, KEY_PRESS + edit->start_display);
      if (exp) {
-@@ -2362,7 +2362,7 @@
+ 	if (!*exp) {
+@@ -2440,7 +2440,7 @@
  	edit_error_dialog (_(" Sort block "), _(" You must first highlight a block of text. "));
  	return 0;
      }
 -    edit_save_block (edit, catstrs (home_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL), start_mark, end_mark);
 +    edit_save_block (edit, catstrs (etc_dir, PATH_SEP_STR BLOCK_FILE, (char *) NULL), start_mark, end_mark);
  
-     exp = old ? old : "";
- 
-@@ -2374,7 +2374,7 @@
+     exp = input_dialog (_(" Run Sort "),
+ 	_(" Enter sort options (see manpage) separated by whitespace: "),
+@@ -2451,7 +2451,7 @@
      g_free (old);
      old = exp;
  
@@ -548,8 +528,8 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
 +    e = system (catstrs (" sort ", exp, " ", etc_dir, PATH_SEP_STR BLOCK_FILE, " > ", etc_dir, PATH_SEP_STR TEMP_FILE, (char *) NULL));
      if (e) {
  	if (e == -1 || e == 127) {
- 	    edit_error_dialog (_(" Sort "), 
-@@ -2392,7 +2392,7 @@
+ 	    edit_error_dialog (_(" Sort "),
+@@ -2469,7 +2469,7 @@
  
      if (edit_block_delete_cmd (edit))
  	return 1;
@@ -558,7 +538,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      return 0;
  }
  
-@@ -2413,7 +2413,7 @@
+@@ -2491,7 +2491,7 @@
      if (!exp)
  	return 1;
  
@@ -567,7 +547,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      g_free (exp);
  
      if (e) {
-@@ -2424,7 +2424,7 @@
+@@ -2502,7 +2502,7 @@
  
      edit->force |= REDRAW_COMPLETELY;
  
@@ -576,7 +556,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      return 0;
  }
  
-@@ -2445,8 +2445,8 @@
+@@ -2523,8 +2523,8 @@
      char *quoted_name = NULL;
  
      o = catstrs (mc_home, shell_cmd, (char *) NULL);	/* original source script */
@@ -587,7 +567,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  
      if (!(script_home = fopen (h, "r"))) {
  	if (!(script_home = fopen (h, "w"))) {
-@@ -2498,8 +2498,8 @@
+@@ -2576,8 +2576,8 @@
  	 *   $3 - file where error messages should be put
  	 *        (for compatibility with old scripts).
  	 */
@@ -598,7 +578,7 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
  
      } else {
  	/*
-@@ -2507,7 +2507,7 @@
+@@ -2585,7 +2585,7 @@
  	 * Arguments:
  	 *   $1 - name of the edited file.
  	 */
@@ -638,3 +618,14 @@ diff -urN mc-4.6.1-pre1.org/vfs/ftpfs.c mc-4.6.1-pre1/vfs/ftpfs.c
      int rc = 0;
  
      nomark = eval_marks (edit, &start_mark, &end_mark);
+--- ./edit/usermap.c.orig	2009-02-01 20:30:21.000000000 +0100
++++ ./edit/usermap.c	2009-02-04 00:38:01.000000000 +0100
+@@ -597,7 +597,7 @@
+     if (edit_key_emulation != EDIT_KEY_EMULATION_USER)
+ 	return TRUE;
+ 
+-    file = mhl_str_dir_plus_file(home_dir, MC_USERMAP);
++    file = mhl_str_dir_plus_file(etc_dir, MC_USERMAP);
+ 
+     if (stat(file, &s) < 0) {
+ 	char *msg = g_strdup_printf(_("%s not found!"), file);
