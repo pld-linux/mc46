@@ -9,7 +9,7 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  
  #define FONT_OFFSET_X 0
  #define FONT_OFFSET_Y 0
-@@ -265,27 +264,12 @@
+@@ -245,27 +244,12 @@
  	    color = 0;
  	}
  
@@ -40,9 +40,9 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 -	    }
 +	    lowlevel_set_color (color);
  	}
- #ifdef UTF8
- 	SLsmg_write_nwchars(&textchar, 1);
-@@ -296,8 +280,6 @@
+ 
+ 	addch (textchar);
+@@ -273,8 +257,6 @@
      }
  }
  
@@ -51,7 +51,7 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  /* b is a pointer to the beginning of the line */
  static void
  edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
-@@ -323,14 +305,6 @@
+@@ -300,14 +282,6 @@
  	eval_marks (edit, &m1, &m2);
  
  	if (row <= edit->total_lines - edit->start_line) {
@@ -64,9 +64,9 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 -	    }
 -
  	    while (col <= end_col - edit->start_col) {
- 		p->ch = 0;
- 		p->style = 0;
-@@ -362,62 +336,12 @@
+ 		*p = 0;
+ 		if (q == edit->curs1)
+@@ -337,38 +311,12 @@
  		    break;
  		case '\t':
  		    i = TAB_SIZE - ((int) col % TAB_SIZE);
@@ -74,58 +74,34 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
 +		    c = p->style & ~MOD_CURSOR;
  		    col += i;
 -		    if (use_colors && visible_tabs) {
--			c = (p->style & ~MOD_CURSOR) | MOD_WHITESPACE;
+-			c = (*p & ~MOD_CURSOR) | MOD_WHITESPACE;
 -			if (i > 2) {
--			    p->ch = '<';
--			    p->style |= MOD_WHITESPACE;
--			    p++;
--			    while (--i > 1) {
--				p->ch = '-';
--				p->style = c;
--				p++;
--			    }
--			    p->ch = '>';
--			    p->style = c;
--			    p++;
+-			    *(p++) |= '<' | MOD_WHITESPACE;
+-			    while (--i > 1)
+-				*(p++) = c | '-';
+-			    *(p++) = c | '>';
 -			} else if (i > 1) {
--			    p->ch = '<';
--			    p->style |= MOD_WHITESPACE;
--			    p++;
--			    p->ch = '>';
--			    p->style = c;
--			    p++;
--			} else {
--			    p->ch = '>';
--			    p->style |= MOD_WHITESPACE;
--			    p++;
--			}
+-			    *(p++) |= '<' | MOD_WHITESPACE;
+-			    *(p++) = c | '>';
+-			} else
+-			    *(p++) |= '>' | MOD_WHITESPACE;
 -		    } else if (use_colors && visible_tws && q >= tws) {
--			p->ch = '.';
--			p->style |= MOD_WHITESPACE;
--			c = p->style & ~MOD_CURSOR;
--			p++;
--			while (--i) {
--			    p->ch = '.';
--			    p->style = c;
--			    p++;
--			}
+-			*p |= '.' | MOD_WHITESPACE;
+-			c = *(p++) & ~MOD_CURSOR;
+-			while (--i)
+-			    *(p++) = c;
 -		    } else {
--			p->ch = ' ';
--			c = p->style & ~MOD_CURSOR;
--			p++;
--			while (--i) {
--			    p->ch = ' '; p->style = c;
--			    p++;
--			}
+-			*p |= ' ';
+-			c = *(p++) & ~MOD_CURSOR;
+-			while (--i)
+-			    *(p++) = c;
 -		    }
 +		    while (--i)
 +			p->style = c;
  		    break;
 -		case ' ':
 -		    if (use_colors && visible_tws && q >= tws) {
--			p->ch = '.';
--			p->style |= MOD_WHITESPACE;
--			p++;
+-			*(p++) |= '.' | MOD_WHITESPACE;
 -			col++;
 -			break;
 -		    }
@@ -133,7 +109,7 @@ diff -urNp mc-4.6.2-pre1.orig/edit/editdraw.c mc-4.6.2-pre1/edit/editdraw.c
  		default:
  		    c = convert_to_display_c (c);
  
-@@ -468,7 +392,6 @@
+@@ -394,7 +342,6 @@
  		    col++;
  		    break;
  		}
