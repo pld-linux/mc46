@@ -41,7 +41,7 @@ Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
-Patch6:		%{name}-mhl.patch
+Patch7:		%{name}-mhl.patch
 Patch8:		%{name}-mc.ext.patch
 Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
