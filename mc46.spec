@@ -9,7 +9,6 @@
 %bcond_without	x		# without text edit in X support
 %bcond_without	utf8		# utf8
 #
-%define	snap	pre1
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -23,11 +22,11 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	0.%{snap}.4
+Release:	0.1
 License:	GPL v2+
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnu.org/gnu/mc/%{name}-%{version}-%{snap}.tar.gz
-# Source0-md5:	7626c446f016b09fd1210f00b9d0c292
+Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}.tar.gz
+# Source0-md5:	ec92966f4d0c8b50c344fe901859ae2a
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -42,20 +41,19 @@ Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
+Patch6:		%{name}-mhl.patch
 Patch8:		%{name}-mc.ext.patch
 Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
-# http://www.suse.de/~nadvornik/mc.html
-Patch13:	%{name}-utf8.patch
+# http://www.midnight-commander.org/downloads/mc-4.6.2-utf8.patch.gz
+Patch13:	%{name}-%{version}-utf8.patch
 Patch14:	%{name}-vhdl-syntax.patch
 Patch15:	%{name}-ipv6.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
 Patch21:	%{name}-userhost.patch
-Patch22:	%{name}-utf8-look-and-feel.patch
-Patch23:	%{name}-utf8-8bit-hex.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
 Patch26:	%{name}-awk-syntax.patch
@@ -235,7 +233,7 @@ Commander. Вона забезпечує доступ до віддаленої 
 тільки власне Midnight Commander).
 
 %prep
-%setup -q -a3 -n %{name}-%{version}-%{snap}
+%setup -q -a3 -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -244,6 +242,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 %patch8 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
@@ -257,10 +256,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch17 -p1
 
 %patch21 -p1
-%if %{with utf8}
-%patch22 -p1
-%patch23 -p1
-%endif
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
@@ -336,8 +331,8 @@ sed -i 's:|hxx|:|hh|hpp|hxx|tcc|:' syntax/Syntax
 %{__autoconf}
 %{__automake}
 X11_WWW="
-if [ -f /usr/bin/netscape ]; then
-	netscape;
+if [ -f /usr/bin/iceweasel ]; then
+	iceweasel;
 else
 	if [ -f /usr/bin/galeon ]; then
 		galeon
@@ -355,6 +350,7 @@ CFLAGS="-DUTF8 %{rpmcflags}"
 export CFLAGS
 %endif
 %configure \
+	--enable-dependency-tracking \
 	--enable-charset \
 	--with%{!?debug:out}-debug \
 	--with%{!?with_ext2undel:out}-ext2undel \
