@@ -1977,7 +1977,7 @@ diff --git a/edit/editdraw.c b/edit/editdraw.c
 index 86ea3f9..654f0b3 100644
 --- a/edit/editdraw.c
 +++ b/edit/editdraw.c
-@@ -70,11 +70,26 @@
+@@ -71,11 +71,26 @@ static void status_string (WEdit * edit, char *s, int w)
       * as decimal and as hex.
       */
      if (edit->curs1 < edit->last_byte) {
@@ -2007,7 +2007,7 @@ index 86ea3f9..654f0b3 100644
      } else {
  	strcpy (byte_str, "<EOF>");
      }
-@@ -206,11 +221,16 @@
+@@ -207,11 +222,16 @@ void edit_scroll_screen_over_cursor (WEdit * edit)
  #define lowlevel_set_color(x) attrset(MY_COLOR_PAIR(color))
  #endif
  
@@ -2026,7 +2026,7 @@ index 86ea3f9..654f0b3 100644
  
      int x = start_col_real + EDIT_TEXT_HORIZONTAL_OFFSET;
      int x1 = start_col + EDIT_TEXT_HORIZONTAL_OFFSET;
-@@ -224,9 +244,9 @@
+@@ -225,9 +245,9 @@ print_to_widget (WEdit *edit, long row, int start_col, int start_col_real,
      edit_move (x1 + FONT_OFFSET_X, y + FONT_OFFSET_Y);
      p = line;
  
@@ -2038,7 +2038,7 @@ index 86ea3f9..654f0b3 100644
  	int color;
  
  	if (cols_to_skip) {
-@@ -235,9 +255,9 @@
+@@ -236,9 +256,9 @@ print_to_widget (WEdit *edit, long row, int start_col, int start_col_real,
  	    continue;
  	}
  
@@ -2051,9 +2051,9 @@ index 86ea3f9..654f0b3 100644
  
  	if (style & MOD_ABNORMAL) {
  	    /* Non-printable - use black background */
-@@ -251,8 +271,11 @@
- 	} else {
- 	    lowlevel_set_color (color);
+@@ -267,8 +287,11 @@ print_to_widget (WEdit *edit, long row, int start_col, int start_col_real,
+ 		lowlevel_set_color (color);
+ 	    }
  	}
 -
 +#ifdef UTF8
@@ -2064,7 +2064,7 @@ index 86ea3f9..654f0b3 100644
  	p++;
      }
  }
-@@ -262,11 +285,11 @@
+@@ -280,11 +303,11 @@ static void
  edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
  		     long end_col)
  {
@@ -2079,9 +2079,9 @@ index 86ea3f9..654f0b3 100644
      int color;
      int i;
  
-@@ -283,31 +306,33 @@
+@@ -309,62 +332,88 @@ edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
+ 	    }
  
- 	if (row <= edit->total_lines - edit->start_line) {
  	    while (col <= end_col - edit->start_col) {
 -		*p = 0;
 +		p->ch = 0;
@@ -2121,7 +2121,80 @@ index 86ea3f9..654f0b3 100644
  		    break;
  		case '\t':
  		    i = TAB_SIZE - ((int) col % TAB_SIZE);
-@@ -322,22 +347,47 @@
+ 		    col += i;
+ 		    if (use_colors && visible_tabs) {
+-			c = (*p & ~MOD_CURSOR) | MOD_WHITESPACE;
++			c = (p->style & ~MOD_CURSOR) | MOD_WHITESPACE;
+ 			if (i > 2) {
+-			    *(p++) |= '<' | MOD_WHITESPACE;
+-			    while (--i > 1)
+-				*(p++) = c | '-';
+-			    *(p++) = c | '>';
++			    p->ch = '<';
++			    p->style |= MOD_WHITESPACE;
++			    p++;
++			    while (--i > 1) {
++				p->ch = '-';
++				p->style = c;
++				p++;
++			    }
++			    p->ch = '>';
++			    p->style = c;
++			    p++;
+ 			} else if (i > 1) {
+-			    *(p++) |= '<' | MOD_WHITESPACE;
+-			    *(p++) = c | '>';
+-			} else
+-			    *(p++) |= '>' | MOD_WHITESPACE;
++			    p->ch = '<';
++			    p->style |= MOD_WHITESPACE;
++			    p++;
++			    p->ch = '>';
++			    p->style = c;
++			    p++;
++			} else {
++			    p->ch = '>';
++			    p->style |= MOD_WHITESPACE;
++			    p++;
++			}
+ 		    } else if (use_colors && visible_tws && q >= tws) {
+-			*p |= '.' | MOD_WHITESPACE;
+-			c = *(p++) & ~MOD_CURSOR;
+-			while (--i)
+-			    *(p++) = c;
++			p->ch = '.';
++			p->style |= MOD_WHITESPACE;
++			c = p->style & ~MOD_CURSOR;
++			p++;
++			while (--i) {
++			    p->ch = '.';
++			    p->style = c;
++			    p++;
++			}
+ 		    } else {
+-			*p |= ' ';
+-			c = *(p++) & ~MOD_CURSOR;
+-			while (--i)
+-			    *(p++) = c;
++			p->ch = ' ';
++			c = p->style & ~MOD_CURSOR;
++			p++;
++			while (--i) {
++			    p->ch = ' '; p->style = c;
++			    p++;
++			}
+ 		    }
+ 		    break;
+ 		case ' ':
+ 		    if (use_colors && visible_tws && q >= tws) {
+-			*(p++) |= '.' | MOD_WHITESPACE;
++			p->ch = '.';
++			p->style |= MOD_WHITESPACE;
++			p++;
+ 			col++;
+ 			break;
+ 		    }
+@@ -374,22 +423,47 @@ edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
  
  		    /* Caret notation for control characters */
  		    if (c < 32) {
@@ -2176,7 +2249,7 @@ index 86ea3f9..654f0b3 100644
  		    }
  		    col++;
  		    break;
-@@ -347,7 +397,7 @@
+@@ -400,7 +474,7 @@ edit_draw_this_line (WEdit *edit, long b, long row, long start_col,
      } else {
  	start_col_real = start_col = 0;
      }
