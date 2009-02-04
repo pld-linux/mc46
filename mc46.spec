@@ -54,6 +54,7 @@ Patch15:	%{name}-ipv6.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
 Patch21:	%{name}-userhost.patch
+Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
 Patch26:	%{name}-awk-syntax.patch
 URL:		http://www.midnight-commander.org/
@@ -253,8 +254,10 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-
 %patch21 -p1
+%if "%{pld_release}" == "ti"
+%patch24 -p1
+%endif
 %patch25 -p1
 %patch26 -p1
 
