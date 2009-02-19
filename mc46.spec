@@ -22,7 +22,7 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}.tar.gz
@@ -57,6 +57,7 @@ Patch21:	%{name}-userhost.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
 Patch26:	%{name}-awk-syntax.patch
+Patch27:	%{name}-term.patch
 URL:		http://www.midnight-commander.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -260,6 +261,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %endif
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
 
 mv -f po/{no,nb}.po
 rm -f po/stamp-po
