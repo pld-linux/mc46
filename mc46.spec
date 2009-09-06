@@ -35,7 +35,6 @@ Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
 Source8:	%{name}.png
 Patch0:		%{name}-rpmfs.patch
-Patch2:		%{name}-urar.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
@@ -220,7 +219,6 @@ Commander. Вона забезпечує доступ до віддаленої 
 %prep
 %setup -q -a3 -n %{name}-%{version}-%{snap}
 %patch0 -p1
-%patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch4 -p1
