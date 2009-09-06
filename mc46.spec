@@ -42,7 +42,6 @@ Patch6:		%{name}-no-ws-visible.patch
 Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
-Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
@@ -230,7 +229,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch6 -p1
 %{!?with_perl_vfs:%patch11 -p1}
 %patch12 -p1
-%patch16 -p1
 %patch17 -p1
 %if "%{pld_release}" == "ti"
 %patch24 -p1
