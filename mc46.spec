@@ -45,7 +45,6 @@ Patch11:	%{name}-noperl-vfs.patch
 Patch12:	%{name}-pld-developerfriendly.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
-Patch21:	%{name}-userhost.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
 URL:		http://www.midnight-commander.org/
@@ -236,10 +235,7 @@ cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch12 -p1
 %patch16 -p1
-# doesn't apply
-#%patch17 -p1
-# doesn't apply
-#%patch21 -p1
+%patch17 -p1
 %if "%{pld_release}" == "ti"
 %patch24 -p1
 %endif
