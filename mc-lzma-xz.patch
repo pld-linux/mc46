@@ -1,0 +1,232 @@
+diff -ur mc-4.6.2.org/edit/edit.c mc-4.6.2/edit/edit.c
+--- mc-4.6.2.org/edit/edit.c	2009-07-28 21:28:44.818864356 +0200
++++ mc-4.6.2/edit/edit.c	2009-07-28 21:30:46.847810605 +0200
+@@ -188,6 +188,8 @@
+ static const struct edit_filters {
+     const char *read, *write, *extension;
+ } all_filters[] = {
++    { "lzma -cd %s 2>&1",   "lzma > %s",   ".lzma" },
++    { "xz -cd %s 2>&1",   "xz > %s",   ".xz" },
+     { "bzip2 -cd %s 2>&1",  "bzip2 > %s",  ".bz2" },
+     { "gzip -cd %s 2>&1",   "gzip > %s",   ".gz"  },
+     { "gzip -cd %s 2>&1",   "gzip > %s",   ".Z"   }
+diff -ur mc-4.6.2.org/src/util.c mc-4.6.2/src/util.c
+--- mc-4.6.2.org/src/util.c	2009-07-28 21:28:44.862024724 +0200
++++ mc-4.6.2/src/util.c	2009-07-28 21:35:42.938596627 +0200
+@@ -1247,7 +1247,7 @@
+ enum compression_type
+ get_compression_type (int fd)
+ {
+-    unsigned char magic[4];
++    unsigned char magic[16];
+ 
+     /* Read the magic signature */
+     if (mc_read (fd, (char *) magic, 4) != 4)
+@@ -1291,6 +1291,36 @@
+ 	    return COMPRESSION_BZIP2;
+ 	}
+     }
++
++	/* XZ */
++	if (magic[0] == 0xFD && magic[1] == '7' && magic[2] == 'z'
++	&& magic[3] == 'X' && magic[4] == 'Z' && magic[5] == 0x00)
++		return COMPRESSION_XZ;
++
++    /* LZMA files; both LZMA_Alone and LZMA utils formats. The LZMA_Alone
++     * format is used by the LZMA_Alone tool from LZMA SDK. The LZMA utils
++     * format is the default format of LZMA utils 4.32.1 and later. */
++    if (magic[0] < 0xE1 || (magic[0] == 0xFF && magic[1] == 'L' &&
++	magic[2] == 'Z' && magic[3] == 'M')) {
++	if (mc_read (fd, (char *) magic + 4, 9) == 9) {
++	    /* LZMA utils format */
++	    if (magic[0] == 0xFF && magic[4] == 'A' && magic[5] == 0x00)
++		return COMPRESSION_LZMA;
++	    /* The LZMA_Alone format has no magic bytes, thus we
++	     * need to play a wizard. This can give false positives,
++	     * thus the detection below should be removed when
++	     * the newer LZMA utils format has got popular. */
++	    if (magic[0] < 0xE1 && magic[4] < 0x20 &&
++		((magic[10] == 0x00 && magic[11] == 0x00 &&
++		  magic[12] == 0x00) ||
++		 (magic[5] == 0xFF && magic[6] == 0xFF &&
++		  magic[7] == 0xFF && magic[8] == 0xFF &&
++		  magic[9] == 0xFF && magic[10] == 0xFF &&
++		  magic[11] == 0xFF && magic[12] == 0xFF)))
++		return COMPRESSION_LZMA;
++	}
++    }
++
+     return 0;
+ }
+ 
+@@ -1301,6 +1331,8 @@
+ 	case COMPRESSION_GZIP: return "#ugz";
+ 	case COMPRESSION_BZIP:   return "#ubz";
+ 	case COMPRESSION_BZIP2:  return "#ubz2";
++	case COMPRESSION_LZMA:  return "#ulzma";
++	case COMPRESSION_XZ: return "#uxz";
+ 	}
+ 	/* Should never reach this place */
+ 	fprintf (stderr, "Fatal: decompress_extension called with an unknown argument\n");
+diff -ur mc-4.6.2.org/src/util.h mc-4.6.2/src/util.h
+--- mc-4.6.2.org/src/util.h	2009-07-28 21:28:44.862024724 +0200
++++ mc-4.6.2/src/util.h	2009-07-28 21:40:19.917753889 +0200
+@@ -185,7 +185,9 @@
+ 	COMPRESSION_NONE,
+ 	COMPRESSION_GZIP,
+ 	COMPRESSION_BZIP,
+-	COMPRESSION_BZIP2
++	COMPRESSION_BZIP2,
++	COMPRESSION_LZMA,
++	COMPRESSION_XZ
+ };
+ 
+ /* Looks for ``magic'' bytes at the start of the VFS file to guess the
+diff -ur mc-4.6.2.org/vfs/extfs/iso9660.in mc-4.6.2/vfs/extfs/iso9660.in
+--- mc-4.6.2.org/vfs/extfs/iso9660.in	2009-02-01 20:30:21.000000000 +0100
++++ mc-4.6.2/vfs/extfs/iso9660.in	2009-07-28 21:36:20.894952063 +0200
+@@ -29,8 +29,10 @@
+ mcisofs_list () {
+ # left as a reminder to implement compressed image support =)
+ case "$1" in
++  *.lzma) MYCAT="lzma -dc";;
+   *.bz2) MYCAT="bzip2 -dc";;
+   *.gz)  MYCAT="gzip -dc";;
++  *.xz)  MYCAT="xz -dc";;
+   *.z)   MYCAT="gzip -dc";;
+   *.Z)   MYCAT="gzip -dc";;
+   *)     MYCAT="cat";;
+diff -ur mc-4.6.2.org/vfs/extfs/lslR.in mc-4.6.2/vfs/extfs/lslR.in
+--- mc-4.6.2.org/vfs/extfs/lslR.in	2009-02-01 20:30:21.000000000 +0100
++++ mc-4.6.2/vfs/extfs/lslR.in	2009-07-28 21:36:38.021992219 +0200
+@@ -12,8 +12,10 @@
+ 
+ mclslRfs_list () {
+ case "$1" in
++  *.lzma) MYCAT="lzma -dc";;
+   *.bz2) MYCAT="bzip2 -dc";;
+   *.gz)  MYCAT="gzip -dc";;
++  *.xz)  MYCAT="xz -dc";;
+   *.z)   MYCAT="gzip -dc";;
+   *.Z)   MYCAT="gzip -dc";;
+   *)     MYCAT="cat";;
+diff -ur mc-4.6.2.org/vfs/extfs/mailfs.in mc-4.6.2/vfs/extfs/mailfs.in
+--- mc-4.6.2.org/vfs/extfs/mailfs.in	2009-02-01 20:30:21.000000000 +0100
++++ mc-4.6.2/vfs/extfs/mailfs.in	2009-07-28 21:37:24.467790210 +0200
+@@ -7,6 +7,8 @@
+ 
+ $zcat="zcat";                 # gunzip to stdout
+ $bzcat="bzip2 -dc";           # bunzip2 to stdout
++$lzcat="lzma -dc";            # unlzma to stdout
++$xzcat="xz -dc";              # unxz to stdout
+ $file="file";                 # "file" command
+ $TZ='GMT';                    # default timezone (for Date module)
+ 
+@@ -182,6 +184,10 @@
+     exit 1 unless (open IN, "$zcat $mbox_qname|");
+ } elsif (/bzip/) {
+     exit 1 unless (open IN, "$bzcat $mbox_qname|");
++} elsif (/lzma/) {
++    exit 1 unless (open IN, "$lzcat $mbox_qname|");
++} elsif (/xz/) {
++    exit 1 unless (open IN, "$xzcat $mbox_qname|");
+ } else {
+     exit 1 unless (open IN, "<$mbox_name");
+ }
+diff -ur mc-4.6.2.org/vfs/extfs/patchfs.in mc-4.6.2/vfs/extfs/patchfs.in
+--- mc-4.6.2.org/vfs/extfs/patchfs.in	2009-02-01 20:30:21.000000000 +0100
++++ mc-4.6.2/vfs/extfs/patchfs.in	2009-07-28 21:38:32.688805498 +0200
+@@ -12,6 +12,8 @@
+ use File::Temp 'tempfile';
+ 
+ # standard binaries
++my $lzma = 'lzma';
++my $xz = 'xz';
+ my $bzip = 'bzip2';
+ my $gzip = 'gzip';
+ my $fileutil = 'file';
+@@ -70,10 +72,14 @@
+     my ($qfname)=(quotemeta $_[0]);
+ 
+     $_=`$fileutil $qfname`;
+-    if (/bzip/) {
++    if (/lzma/) {
++	return "$lzma -dc $qfname";
++    } elsif (/bzip/) {
+ 	return "$bzip -dc $qfname";
+     } elsif (/gzip/) {
+ 	return "$gzip -dc $qfname";
++    } elsif (/xz/)
++	return "$xz -dc $qfname";
+     } else {
+ 	return "cat $qfname";
+     }
+@@ -86,10 +92,14 @@
+     my ($sep) = $append ? '>>' : '>';
+ 
+     $_=`$fileutil $qfname`;
+-    if (/bzip/) {
++    if (/lzma/) {
++	return "$lzma -c $sep $qfname";
++    } elsif (/bzip/) {
+ 	return "$bzip -c $sep $qfname";
+     } elsif (/gzip/) {
+ 	return "$gzip -c $sep $qfname";
++    } elsif (/xz/) {
++	return "$xz -c $sep $qfname";
+     } else {
+ 	return "cat $sep $qfname";
+     }
+diff -ur mc-4.6.2.org/vfs/extfs/sfs.ini mc-4.6.2/vfs/extfs/sfs.ini
+--- mc-4.6.2.org/vfs/extfs/sfs.ini	2009-02-01 20:30:21.000000000 +0100
++++ mc-4.6.2/vfs/extfs/sfs.ini	2009-07-28 21:39:06.275468719 +0200
+@@ -10,6 +10,10 @@
+ ubz/1	bzip -d < %1 > %3
+ bz2/1	bzip2 < %1 > %3
+ ubz2/1	bzip2 -d < %1 > %3
++lzma/1	lzma < %1 > %3
++ulzma/1	lzma -d < %1 > %3
++xz/1	xz < %1 > %3
++uxz/1	xz -d < %1 > %3
+ tar/1	tar cf %3 %1
+ tgz/1	tar czf %3 %1
+ uhtml/1	lynx -force_html -dump %1 > %3
+--- mc-4.6.2/lib/mc.ext.in.org	2009-07-28 21:41:16.635664578 +0200
++++ mc-4.6.2/lib/mc.ext.in	2009-07-28 21:47:46.008125132 +0200
+@@ -119,6 +119,14 @@
+ 	Open=%cd %p#utar
+ 	View=%view{ascii} bzip2 -dc %f 2>/dev/null | tar tvvf -
+ 
++regex/\.t(ar\.xz)$
++	Open=%cd %p#uxz
++	View=%view{ascii} xz -dc %f 2>/dev/null | tar tvvf -
++
++
++
++
++
+ # .tar.F - used in QNX
+ regex/\.tar\.F$
+ 	# Open=%cd %p#utar
+@@ -181,6 +189,10 @@
+ 	Open=%cd %p#patchfs
+ 	View=%view{ascii} bzip2 -dc %f 2>/dev/null
+ 
++regex/\.(diff|patch)(\.xz)$
++	Open=%cd %p#patchfs
++	View=%view{ascii} xz -dc %f 2>/dev/null
++
+ regex/\.(diff|patch)(\.(gz|Z))$
+ 	Open=%cd %p#patchfs
+ 	View=%view{ascii} gzip -dc %f 2>/dev/null
+@@ -555,6 +567,10 @@
+ regex/\.bz2?$
+ 	View=%view{ascii} bzip2 -dc %f 2>/dev/null
+ 
++# xz
++regex/\.xz$
++	View=%view{ascii} xz -dc %f 2>/dev/null
++
+ # bzip
+ type/^bzip
+ 	Open=bzip -dc %f | %var{PAGER:more}

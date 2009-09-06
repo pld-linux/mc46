@@ -5,10 +5,11 @@
 # Conditional build:
 %bcond_with	ext2undel	# with ext2 undelete fs
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
+%bcond_with	mcfs
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_without	utf8		# utf8
 #
+%define	snap	pre2
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -21,12 +22,12 @@ Summary(tr.UTF-8):	Midnight Commander görsel kabuğu
 Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
-Version:	4.6.2
-Release:	3
+Version:	4.7.0
+Release:	0.1
 License:	GPL v2+
 Group:		Applications/Shells
-Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	ec92966f4d0c8b50c344fe901859ae2a
+Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}-%{snap}.tar.bz2
+# Source0-md5:	347d0144709ed342302787e314146eef
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -48,7 +49,7 @@ Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.midnight-commander.org/downloads/mc-4.6.2-utf8.patch.gz
-Patch13:	%{name}-%{version}-utf8.patch
+Patch13:	%{name}-4.6.2-utf8.patch
 Patch14:	%{name}-vhdl-syntax.patch
 Patch15:	%{name}-ipv6.patch
 Patch16:	%{name}-refresh.patch
@@ -70,9 +71,6 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
-%if %{with utf8}
-BuildRequires:	slang-devel >= 1:2.0.0
-%endif
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
@@ -234,98 +232,53 @@ Commander. Вона забезпечує доступ до віддаленої 
 тільки власне Midnight Commander).
 
 %prep
-%setup -q -a3 -n %{name}-%{version}
-%patch0 -p1
-%patch1 -p1
+%setup -q -a3 -n %{name}-%{version}-%{snap}
+# nie naklada sie
+#%patch0 -p1
+# applied
+#%patch1 -p1
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+# looks applied
+#%patch3 -p1
+# doesn't apply
+#%patch4 -p1
+# doesn't apply
+#%patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch10 -p1
+# doesn't apply
+#%patch8 -p1
+# doesn't apply
+#%patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
-%patch12 -p1
+# doesn't apply
+#%patch12 -p1
 %if %{with utf8}
-%patch13 -p1
+# doesn't apply
+#%patch13 -p1
 %endif
-%patch14 -p1
-%patch15 -p1
+# looks applied
+#%patch14 -p1
+# obsolete
+#%patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch21 -p1
+# doesn't apply
+#%patch17 -p1
+# doesn't apply
+#%patch21 -p1
 %if "%{pld_release}" == "ti"
 %patch24 -p1
 %endif
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
+# doesn't apply
+#%patch25 -p1
+# looks applied
+#%patch26 -p1
+# obsolete
+#%patch27 -p1
 
-mv -f po/{no,nb}.po
 rm -f po/stamp-po
 
-%if %{with utf8}
-# convert files in /lib to UTF-8
-cd lib
-for i in mc.hint mc.hint.es mc.hint.it mc.hint.nl; do
-	iconv -f iso-8859-1 -t utf-8 < ${i} > ${i}.tmp
-	mv -f ${i}.tmp ${i}
-done
-
-for i in mc.hint.cs mc.hint.hu mc.hint.pl; do
-	iconv -f iso-8859-2 -t utf-8 < ${i} > ${i}.tmp
-	mv -f ${i}.tmp ${i}
-done
-
-for i in mc.hint.sr mc.menu.sr; do
-	iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
-	mv -f ${i}.tmp ${i}
-done
-
-iconv -f koi8-r -t utf8 < mc.hint.ru > mc.hint.ru.tmp
-mv -f mc.hint.ru.tmp mc.hint.ru
-iconv -f koi8-u -t utf8 < mc.hint.uk > mc.hint.uk.tmp
-mv -f mc.hint.uk.tmp mc.hint.uk
-iconv -f big5 -t utf8 < mc.hint.zh > mc.hint.zh.tmp
-mv -f mc.hint.zh.tmp mc.hint.zh
-cd ..
-
-# convert man pages in /doc to UTF-8
-cd doc
-
-cd ru
-for i in mc.1.in xnc.hlp; do
-	iconv -f koi8-r -t utf-8 < ${i} > ${i}.tmp
-	mv -f ${i}.tmp ${i}
-done
-cd ..
-
-cd sr
-for i in mc.1.in mcserv.8.in xnc.hlp; do
-	iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
-	mv -f ${i}.tmp ${i}
-done
-cd ..
-
-for d in es it; do
-	for i in mc.1.in xnc.hlp; do
-		iconv -f iso-8859-3 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
-		mv -f ${d}/${i}.tmp ${d}/${i}
-	done
-done
-
-for d in hu pl; do
-	for i in mc.1.in xnc.hlp; do
-		iconv -f iso-8859-2 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
-		mv -f ${d}/${i}.tmp ${d}/${i}
-	done
-done
-cd ..
-%endif
-
-rm -f syntax/Syntax.orig
 sed -i 's:|hxx|:|hh|hpp|hxx|tcc|:' syntax/Syntax
 
 %build
@@ -348,23 +301,20 @@ else
 	fi;
 fi"
 
-%if %{with utf8}
-CFLAGS="-DUTF8 %{rpmcflags}"
-export CFLAGS
-%endif
 %configure \
+	CPPFLAGS="%{rpmcppflags} -I/usr/include/ncursesw" \
 	--enable-dependency-tracking \
 	--enable-charset \
 	--with%{!?debug:out}-debug \
 	--with%{!?with_ext2undel:out}-ext2undel \
 	--with%{!?with_x:out}-x \
 	--with-vfs \
-	--with-mcfs \
+	%{?with_mcfs:--enable-vfs-mcfs} \
 	%{?with_samba:--with-samba} \
 	--with-configdir=/etc/samba \
 	--with-codepagedir=/etc/samba/codepages \
 	--with-gpm-mouse \
-	--with-screen=%{?!with_utf8:mc}slang \
+	--with-screen=ncurses \
 	--with-edit
 
 %{__make}
@@ -377,8 +327,6 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_pixmapsdir},%{_desktopdir}} \
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install doc/mcserv.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/mcserv
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/mcserv
@@ -395,7 +343,7 @@ for a in es pl ; do
 	done
 done
 
-install lib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/shrc.d
+install contrib/{mc.sh,mc.csh} $RPM_BUILD_ROOT/etc/shrc.d
 
 %find_lang %{name}
 
@@ -414,20 +362,17 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc FAQ NEWS README
+%doc NEWS README
 %attr(755,root,root) %{_bindir}/mc*
 %config /etc/shrc.d/*
 %attr(755,root,root) %{_libdir}/mc/cons.saver
 %dir %{_libdir}/mc
-
+%attr(755,root,root) %{_libdir}/mc/*.sh
+%attr(755,root,root) %{_libdir}/mc/*.csh
 %dir %{_datadir}/mc
 
-%{_datadir}/mc/bin
 %{_datadir}/mc/syntax
 
-%{_datadir}/mc/mc.ext
-%{_datadir}/mc/cedit*
-%{_datadir}/mc/edit.*
 %{_datadir}/mc/mc.hlp
 %lang(es) %{_datadir}/mc/mc.hlp.es
 %lang(hu) %{_datadir}/mc/mc.hlp.hu
@@ -435,8 +380,6 @@ fi
 %lang(pl) %{_datadir}/mc/mc.hlp.pl
 %lang(ru) %{_datadir}/mc/mc.hlp.ru
 %lang(sr) %{_datadir}/mc/mc.hlp.sr
-%{_datadir}/mc/mc.lib
-%{_datadir}/mc/mc.menu
 %lang(sr) %{_datadir}/mc/mc.menu.sr
 %{_datadir}/mc/mc.hint
 %lang(cs) %{_datadir}/mc/mc.hint.cs
@@ -452,18 +395,14 @@ fi
 
 %dir %{_datadir}/mc/extfs
 %{_datadir}/mc/extfs/README
-%{_datadir}/mc/extfs/extfs.ini
-%{_datadir}/mc/extfs/sfs.ini
 %if %{with perl_vfs}
 %attr(755,root,root) %{_datadir}/mc/extfs/a
 %attr(755,root,root) %{_datadir}/mc/extfs/apt
 %attr(755,root,root) %{_datadir}/mc/extfs/deb*
 %attr(755,root,root) %{_datadir}/mc/extfs/dpkg
-#%attr(755,root,root) %{_datadir}/mc/extfs/ftplist
 %attr(755,root,root) %{_datadir}/mc/extfs/mailfs
 %attr(755,root,root) %{_datadir}/mc/extfs/patchfs
 %attr(755,root,root) %{_datadir}/mc/extfs/rpms
-#%attr(755,root,root) %{_datadir}/mc/extfs/ucpio
 %attr(755,root,root) %{_datadir}/mc/extfs/uzip
 %endif
 %attr(755,root,root) %{_datadir}/mc/extfs/audio
@@ -476,6 +415,8 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/u7z
 %attr(755,root,root) %{_datadir}/mc/extfs/ualz
 %attr(755,root,root) %{_datadir}/mc/extfs/uar*
+%attr(755,root,root) %{_datadir}/mc/extfs/uace
+%attr(755,root,root) %{_datadir}/mc/extfs/uc1541
 %attr(755,root,root) %{_datadir}/mc/extfs/uha
 %attr(755,root,root) %{_datadir}/mc/extfs/ulha
 %attr(755,root,root) %{_datadir}/mc/extfs/urar
@@ -483,8 +424,6 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/srpm
 %{_desktopdir}/mc.desktop
 %{_pixmapsdir}/mc.png
-
-%{_datadir}/mc/mc.charsets
 
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
@@ -494,6 +433,13 @@ fi
 %lang(ru) %{_mandir}/ru/man1/*
 %lang(sr) %{_mandir}/sr/man1/*
 
+%dir %{_sysconfdir}/mc
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/Syntax
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/*.*
+%dir %{_sysconfdir}/mc/extfs
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/extfs/*.*
+
+%if %{with mcfs}
 %files -n mcserv
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
@@ -505,3 +451,4 @@ fi
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
 %lang(sr) %{_mandir}/sr/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
+%endif
