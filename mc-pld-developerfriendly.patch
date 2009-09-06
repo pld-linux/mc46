@@ -25,56 +25,15 @@ diff -urN mc-2006-02-24-22.org/syntax/cvs-userlist.syntax mc-2006-02-24-22/synta
 diff -urN mc-2006-02-24-22.org/syntax/Makefile.am mc-2006-02-24-22/syntax/Makefile.am
 --- mc-2006-02-24-22.org/syntax/Makefile.am	2006-01-30 18:01:58.000000000 +0100
 +++ mc-2006-02-24-22/syntax/Makefile.am	2006-02-28 17:38:02.617073750 +0100
-@@ -6,13 +6,14 @@
- 	awk.syntax		\
- 	c.syntax		\
- 	changelog.syntax	\
-- 	debian-changelog.syntax \
-- 	debian-control.syntax   \
-+	debian-changelog.syntax \
-+	debian-control.syntax   \
- 	debian-description.syntax \
-- 	debian-sources-list.syntax \
-+	debian-sources-list.syntax \
+@@ -11,6 +11,7 @@
+ 	debian-sources-list.syntax \
  	cs.syntax		\
  	css.syntax		\
--  cxx.syntax      \
 +	cvs-userlist.syntax	\
-+	cxx.syntax		\
+ 	cxx.syntax		\
  	d.syntax		\
  	diff.syntax		\
- 	dos.syntax		\
 @@ -35,6 +36,7 @@
- 	pascal.syntax		\
- 	perl.syntax		\
- 	php.syntax		\
-+	pld-update-todo.syntax	\
- 	po.syntax		\
- 	povray.syntax		\
- 	python.syntax		\
-diff -urN mc-2006-02-24-22.org/syntax/Makefile.in mc-2006-02-24-22/syntax/Makefile.in
---- mc-2006-02-24-22.org/syntax/Makefile.in	2006-02-24 23:36:58.000000000 +0100
-+++ mc-2006-02-24-22/syntax/Makefile.in	2006-02-28 17:38:24.266426750 +0100
-@@ -229,13 +229,14 @@
- 	assembler.syntax	\
- 	c.syntax		\
- 	changelog.syntax	\
-- 	debian-changelog.syntax \
-- 	debian-control.syntax   \
-+	debian-changelog.syntax \
-+	debian-control.syntax   \
- 	debian-description.syntax \
-- 	debian-sources-list.syntax \
-+	debian-sources-list.syntax \
- 	cs.syntax		\
- 	css.syntax		\
--  cxx.syntax      \
-+	cvs-userlist.syntax	\
-+	cxx.syntax		\
- 	d.syntax		\
- 	diff.syntax		\
- 	dos.syntax		\
-@@ -258,6 +259,7 @@
  	pascal.syntax		\
  	perl.syntax		\
  	php.syntax		\

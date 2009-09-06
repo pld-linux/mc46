@@ -232,8 +232,7 @@ cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch8 -p1
 %{!?with_perl_vfs:%patch11 -p1}
-# doesn't apply
-#%patch12 -p1
+%patch12 -p1
 %patch16 -p1
 %patch17 -p1
 %if "%{pld_release}" == "ti"
