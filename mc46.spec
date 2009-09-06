@@ -46,8 +46,6 @@ Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
-# http://www.midnight-commander.org/downloads/mc-4.6.2-utf8.patch.gz
-Patch13:	%{name}-4.6.2-utf8.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
 Patch21:	%{name}-userhost.patch
@@ -244,10 +242,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %{!?with_perl_vfs:%patch11 -p1}
 # doesn't apply
 #%patch12 -p1
-%if %{with utf8}
-# doesn't apply
-#%patch13 -p1
-%endif
 %patch16 -p1
 # doesn't apply
 #%patch17 -p1
