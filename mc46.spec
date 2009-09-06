@@ -239,8 +239,7 @@ cp -f vfs/extfs/{rpm,srpm}
 %if "%{pld_release}" == "ti"
 %patch24 -p1
 %endif
-# doesn't apply
-#%patch25 -p1
+%patch25 -p1
 
 rm -f po/stamp-po
 

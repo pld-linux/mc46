@@ -12,14 +12,14 @@ diff -uNr mc-4.6.2-pre1/syntax.orig/Makefile.am mc-4.6.2-pre1/syntax/Makefile.am
 diff -uNr mc-4.6.2-pre1/syntax.orig/Syntax mc-4.6.2-pre1/syntax/Syntax
 --- mc-4.6.2-pre1/syntax.orig/Syntax	2009-01-21 21:31:50.000000000 +0100
 +++ mc-4.6.2-pre1/syntax/Syntax	2009-01-21 21:32:49.072508606 +0100
-@@ -154,6 +154,9 @@
- file users CVS\suser\slist
- include cvs-userlist.syntax
+@@ -193,6 +193,9 @@
+ file ..\*\\.(n|N)$ Nemerle\sProgram
+ include nemerle.syntax
  
 +file ..\*\\.(v|V)$ Verilog\sProgram
 +include verilog.syntax
 +
- file ..\*\\.(vhdl|vhd|VHDL|VHD)$ VHDL\sProgram
+ file ..\*\\.(hdl|vhd|vdhl|HDL|VHD|VHDL)$ VHDL\sDevice\sDescription
  include vhdl.syntax
  
 diff -uNr mc-4.6.2-pre1/syntax.orig/verilog.syntax mc-4.6.2-pre1/syntax/verilog.syntax
