@@ -5,7 +5,6 @@
 # Conditional build:
 %bcond_with	ext2undel	# with ext2 undelete fs
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
-%bcond_with	mcfs
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
 #
@@ -40,7 +39,6 @@ Patch2:		%{name}-urar.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
-Patch7:		%{name}-mhl.patch
 Patch8:		%{name}-mc.ext.patch
 Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
@@ -234,7 +232,6 @@ cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch5 -p1
 %patch6 -p1
-%patch7 -p1
 # doesn't apply
 #%patch8 -p1
 # doesn't apply
@@ -285,7 +282,8 @@ fi"
 	--with%{!?with_ext2undel:out}-ext2undel \
 	--with%{!?with_x:out}-x \
 	--with-vfs \
-	%{?with_mcfs:--enable-vfs-mcfs} \
+	--enable-vfs-mcfs \
+	--enable-mcserver \
 	%{?with_samba:--with-samba} \
 	--with-configdir=/etc/samba \
 	--with-codepagedir=/etc/samba/codepages \
@@ -415,7 +413,6 @@ fi
 %dir %{_sysconfdir}/mc/extfs
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/extfs/*.*
 
-%if %{with mcfs}
 %files -n mcserv
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
@@ -427,4 +424,3 @@ fi
 %lang(pl) %{_mandir}/pl/man8/mcserv.8*
 %lang(sr) %{_mandir}/sr/man8/mcserv.8*
 %attr(755,root,root) %{_sbindir}/mcserv
-%endif
