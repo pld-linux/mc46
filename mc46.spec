@@ -395,14 +395,14 @@ fi
 %lang(sr) %{_mandir}/sr/man1/*
 
 %dir %{_sysconfdir}/mc
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/Syntax
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/*.*
+%config(noreplace) %verify(not md5 mtime size) /etc/mc/Syntax
+%config(noreplace) %verify(not md5 mtime size) /etc/mc/*.*
 %dir %{_sysconfdir}/mc/extfs
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/mc/extfs/*.*
+%config(noreplace) %verify(not md5 mtime size) /etc/mc/extfs/*.*
 
 %files -n mcserv
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
 
 %attr(754,root,root) /etc/rc.d/init.d/mcserv
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mcserv
