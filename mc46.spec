@@ -39,7 +39,6 @@ Patch2:		%{name}-urar.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
-Patch8:		%{name}-mc.ext.patch
 Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
 Patch12:	%{name}-pld-developerfriendly.patch
@@ -229,8 +228,6 @@ cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch5 -p1
 %patch6 -p1
-# doesn't apply
-#%patch8 -p1
 %{!?with_perl_vfs:%patch11 -p1}
 %patch12 -p1
 %patch16 -p1
