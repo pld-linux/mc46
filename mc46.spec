@@ -223,8 +223,7 @@ Commander. Вона забезпечує доступ до віддаленої 
 
 %prep
 %setup -q -a3 -n %{name}-%{version}-%{snap}
-# nie naklada sie
-#%patch0 -p1
+%patch0 -p1
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply

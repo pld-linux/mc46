@@ -1,6 +1,5 @@
-diff -ur mc-2007-03-09-18.orig/vfs/extfs/rpm mc-2007-03-09-18/vfs/extfs/rpm
---- mc-2007-03-09-18.orig/vfs/extfs/rpm	2006-11-01 18:31:20.000000000 +0100
-+++ mc-2007-03-09-18/vfs/extfs/rpm	2007-03-29 17:59:32.000000000 +0200
+--- mc-4.7.0-pre2/vfs/extfs/rpm.org	2009-06-15 23:18:22.000000000 +0200
++++ mc-4.7.0-pre2/vfs/extfs/rpm	2009-09-06 18:33:26.968564752 +0200
 @@ -50,7 +50,11 @@
      echo "-r-xr-xr-x   1 root     root    39 $DATE INSTALL"
      echo "-r-xr-xr-x   1 root     root    39 $DATE UPGRADE"
@@ -66,27 +65,7 @@ diff -ur mc-2007-03-09-18.orig/vfs/extfs/rpm mc-2007-03-09-18/vfs/extfs/rpm
       echo "$FILEPREF 0 $DATE INFO/SCRIPTS/ALL"
      fi
      if test "$MCFASTRPM" = 0 ; then
-@@ -95,10 +120,6 @@
- 	 echo "$FILEPREF 0 $DATE INFO/PACKAGER"
-      test "`$RPM -qp --qf \"%{URL}\" \"$f\"`" = "(none)" ||
- 	 echo "$FILEPREF 0 $DATE INFO/URL"
--     test "`$RPM -qp --qf \"%{SERIAL}\" \"$f\"`" = "(none)" ||
--	 echo "$FILEPREF 0 $DATE INFO/SERIAL"
--     test "`$RPM -qp --qf \"%{COPYRIGHT}\" \"$f\"`" = "(none)" ||
--	 echo "$FILEPREF 0 $DATE INFO/COPYRIGHT"
-      test "`$RPM -qp --qf \"%{EPOCH}\" \"$f\"`" = "(none)" ||
- 	 echo "$FILEPREF 0 $DATE INFO/EPOCH"
-      test "`$RPM -qp --qf \"%{LICENSE}\" \"$f\"`" = "(none)" ||
-@@ -106,8 +127,6 @@
-     else
- 	 echo "$FILEPREF 0 $DATE INFO/PACKAGER"
- 	 echo "$FILEPREF 0 $DATE INFO/URL"
--	 echo "$FILEPREF 0 $DATE INFO/SERIAL"
--	 echo "$FILEPREF 0 $DATE INFO/COPYRIGHT"
- 	 echo "$FILEPREF 0 $DATE INFO/EPOCH"
- 	 echo "$FILEPREF 0 $DATE INFO/LICENSE"
-     fi
-@@ -146,6 +165,7 @@
+@@ -140,6 +165,7 @@
  	UPGRADE) echo "# Run this to upgrade this RPM package" > "$3"; exit 0;;
  	ERROR) $RPM -qip "$f" > /dev/null 2> "$3"; exit 0;;
  	INFO/NAME-VERSION-RELEASE)	$RPM -qp --qf "%{NAME}-%{VERSION}-%{RELEASE}\n" "$f" > "$3"; exit 0;;
@@ -94,15 +73,7 @@ diff -ur mc-2007-03-09-18.orig/vfs/extfs/rpm mc-2007-03-09-18/vfs/extfs/rpm
  	INFO/RELEASE)		$RPM -qp --qf "%{RELEASE}\n" "$f" > "$3"; exit 0;;
  	INFO/GROUP)		$RPM -qp --qf "%{GROUP}\n" "$f" > "$3"; exit 0;;
  	INFO/DISTRIBUTION) 	$RPM -qp --qf "%{DISTRIBUTION}\n" "$f" > "$3"; exit 0;;
-@@ -156,18 +176,23 @@
- 	INFO/PACKAGER)		$RPM -qp --qf "%{PACKAGER}\n" "$f" > "$3"; exit 0;;
- 	INFO/URL)		$RPM -qp --qf "%{URL}\n" "$f" >"$3"; exit 0;;
- 	INFO/BUILDTIME)		$RPM -qp --qf "%{BUILDTIME:date}\n" "$f" >"$3"; exit 0;;
--	INFO/SERIAL)		$RPM -qp --qf "%{SERIAL}\n" "$f" >"$3"; exit 0;;
--	INFO/COPYRIGHT)		$RPM -qp --qf "%{COPYRIGHT}\n" "$f" >"$3"; exit 0;;
- 	INFO/EPOCH)		$RPM -qp --qf "%{EPOCH}\n" "$f" >"$3"; exit 0;;
- 	INFO/LICENSE)		$RPM -qp --qf "%{LICENSE}\n" "$f" >"$3"; exit 0;;
- 	INFO/RPMVERSION)	$RPM -qp --qf "%{RPMVERSION}\n" "$f" >"$3"; exit 0;;
+@@ -156,10 +182,17 @@
  	INFO/REQUIRENAME)	$RPM -qp --qf "[%{REQUIRENAME} %{REQUIREFLAGS:depflags} %{REQUIREVERSION}\n]" "$f" >"$3"; exit 0;;
  	INFO/PROVIDES)		$RPM -qp --qf "[%{PROVIDES}\n]" "$f" >"$3"; exit 0;;
  	INFO/SCRIPTS/PREIN)	$RPM -qp --qf "%{RPMTAG_PREIN}\n" "$f" >"$3"; exit 0;;
