@@ -36,9 +36,7 @@ Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
 Source8:	%{name}.png
 Patch0:		%{name}-rpmfs.patch
-Patch1:		%{name}-spec-syntax.patch
 Patch2:		%{name}-urar.patch
-Patch3:		%{name}-srpm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
@@ -50,15 +48,11 @@ Patch11:	%{name}-noperl-vfs.patch
 Patch12:	%{name}-pld-developerfriendly.patch
 # http://www.midnight-commander.org/downloads/mc-4.6.2-utf8.patch.gz
 Patch13:	%{name}-4.6.2-utf8.patch
-Patch14:	%{name}-vhdl-syntax.patch
-Patch15:	%{name}-ipv6.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
 Patch21:	%{name}-userhost.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
-Patch26:	%{name}-awk-syntax.patch
-Patch27:	%{name}-term.patch
 URL:		http://www.midnight-commander.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -235,12 +229,8 @@ Commander. Вона забезпечує доступ до віддаленої 
 %setup -q -a3 -n %{name}-%{version}-%{snap}
 # nie naklada sie
 #%patch0 -p1
-# applied
-#%patch1 -p1
 %patch2 -p1
 cp -f vfs/extfs/{rpm,srpm}
-# looks applied
-#%patch3 -p1
 # doesn't apply
 #%patch4 -p1
 # doesn't apply
@@ -258,10 +248,6 @@ cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch13 -p1
 %endif
-# looks applied
-#%patch14 -p1
-# obsolete
-#%patch15 -p1
 %patch16 -p1
 # doesn't apply
 #%patch17 -p1
@@ -272,10 +258,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %endif
 # doesn't apply
 #%patch25 -p1
-# looks applied
-#%patch26 -p1
-# obsolete
-#%patch27 -p1
 
 rm -f po/stamp-po
 
