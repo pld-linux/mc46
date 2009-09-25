@@ -22,7 +22,7 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.7.0
-Release:	0.2
+Release:	0.3
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}-%{snap}.tar.bz2
@@ -50,7 +50,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
 BuildRequires:	indent
-BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	slang-devel >= 2.2.1
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
@@ -258,7 +258,6 @@ else
 fi"
 
 %configure \
-	CPPFLAGS="%{rpmcppflags} -I/usr/include/ncursesw" \
 	--enable-dependency-tracking \
 	--enable-charset \
 	--with%{!?debug:out}-debug \
@@ -271,7 +270,7 @@ fi"
 	--with-configdir=/etc/samba \
 	--with-codepagedir=/etc/samba/codepages \
 	--with-gpm-mouse \
-	--with-screen=ncursesw \
+	--with-screen=slang \
 	--with-edit
 
 %{__make}
