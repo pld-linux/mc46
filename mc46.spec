@@ -8,7 +8,7 @@
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
 #
-%define	snap	pre2
+%define	snap	pre3
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -26,7 +26,7 @@ Release:	0.3
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	347d0144709ed342302787e314146eef
+# Source0-md5:	8f5f84a2858c8aaecee7a221a9428370
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -43,19 +43,19 @@ Patch11:	%{name}-noperl-vfs.patch
 Patch12:	%{name}-pld-developerfriendly.patch
 Patch17:	%{name}-nolibs.patch
 Patch24:	%{name}-find_options.patch
-Patch25:	%{name}-verilog-syntax.patch
 URL:		http://www.midnight-commander.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
 BuildRequires:	indent
-BuildRequires:	slang-devel >= 2.2.1
+BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
+BuildRequires:	slang-devel >= 2.2.1
 %ifnarch s390 s390x
 BuildRequires:	gpm-devel
 %endif
@@ -78,7 +78,7 @@ Conflicts:	bash < 2.05b
 Conflicts:	rpm < 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		specflags_ia32	 -fomit-frame-pointer
+%define		specflags_ia32	-fomit-frame-pointer
 
 %description
 Midnight Commander is a visual shell much like a file manager, only
@@ -231,7 +231,6 @@ cp -f vfs/extfs/{rpm,srpm}
 %if "%{pld_release}" == "ti"
 %patch24 -p1
 %endif
-%patch25 -p1
 
 rm -f po/stamp-po
 
@@ -239,6 +238,7 @@ sed -i 's:|hxx|:|hh|hpp|hxx|tcc|:' syntax/Syntax
 
 %build
 %{__gettextize}
+%{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
@@ -327,6 +327,7 @@ fi
 %attr(755,root,root) %{_libdir}/mc/*.csh
 %dir %{_datadir}/mc
 
+%{_datadir}/mc/skins
 %{_datadir}/mc/syntax
 
 %{_datadir}/mc/mc.hlp
@@ -397,7 +398,7 @@ fi
 
 %files -n mcserv
 %defattr(644,root,root,755)
-%attr(640,root,root)  %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/*
 %attr(754,root,root) /etc/rc.d/init.d/mcserv
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mcserv
 %{_mandir}/man8/mcserv.8*
