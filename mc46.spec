@@ -23,6 +23,7 @@ Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
 Release:	3
+Epoch:		1
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}.tar.gz
