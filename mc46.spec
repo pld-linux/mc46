@@ -339,7 +339,6 @@ fi
 %lang(pl) %{_datadir}/mc/mc.hlp.pl
 %lang(ru) %{_datadir}/mc/mc.hlp.ru
 %lang(sr) %{_datadir}/mc/mc.hlp.sr
-%lang(sr) %{_datadir}/mc/mc.menu.sr
 %{_datadir}/mc/mc.hint
 %lang(cs) %{_datadir}/mc/mc.hint.cs
 %lang(es) %{_datadir}/mc/mc.hint.es
@@ -376,6 +375,7 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/uar*
 %attr(755,root,root) %{_datadir}/mc/extfs/uace
 %attr(755,root,root) %{_datadir}/mc/extfs/uc1541
+%attr(755,root,root) %{_datadir}/mc/extfs/ucab
 %attr(755,root,root) %{_datadir}/mc/extfs/uha
 %attr(755,root,root) %{_datadir}/mc/extfs/ulha
 %attr(755,root,root) %{_datadir}/mc/extfs/urar
