@@ -8,7 +8,7 @@
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
 #
-%define	snap	pre3
+%define	snap	pre4
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -22,11 +22,11 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.7.0
-Release:	0.5
+Release:	0.6
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	8f5f84a2858c8aaecee7a221a9428370
+# Source0-md5:	7bdc0ac4fe57c19a6bf2fd3e8894a073
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
