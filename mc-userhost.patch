@@ -34,13 +34,13 @@
 --- mc-4.6.1a/src/main.h.viewfile	2005-09-05 04:10:48.000000000 +0200
 +++ mc-4.6.1a/src/main.h	2005-10-17 14:41:46.000000000 +0200
 @@ -69,6 +69,7 @@
+ extern int use_file_to_check_type;
+ extern int vfs_use_limit;
+ extern int alternate_plus_minus;
++extern char *xterm_title_str;
  extern int only_leading_plus_minus;
  extern int output_starts_shell;
  extern int midnight_shutdown;
-+extern char *xterm_title_str;
- extern gboolean is_utf8;
- extern char cmd_buf [512];
- extern const char *shell;
 --- mc-4.6.1a/src/view.c.viewfile	2005-10-17 14:41:46.000000000 +0200
 +++ mc-4.6.1a/src/view.c	2005-10-17 15:11:54.000000000 +0200
 @@ -3344,6 +3344,11 @@ mc_internal_viewer (const char *command,
