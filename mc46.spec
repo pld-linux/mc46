@@ -22,7 +22,7 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.6.2
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Shells
@@ -44,6 +44,7 @@ Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
 Patch7:		%{name}-mhl.patch
 Patch8:		%{name}-mc.ext.patch
+Patch9:		fish_vfs_date.patch
 Patch10:	%{name}-localenames.patch
 Patch11:	%{name}-noperl-vfs.patch
 # at now syntax highligthing for PLD-update-TODO and CVSROOT/users
@@ -54,6 +55,7 @@ Patch14:	%{name}-vhdl-syntax.patch
 Patch15:	%{name}-ipv6.patch
 Patch16:	%{name}-refresh.patch
 Patch17:	%{name}-nolibs.patch
+Patch18:	256-backward-word-off-by-one.patch
 Patch21:	%{name}-userhost.patch
 Patch24:	%{name}-find_options.patch
 Patch25:	%{name}-verilog-syntax.patch
@@ -246,11 +248,13 @@ cp -f vfs/extfs/{rpm,srpm}
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %patch10 -p1
 %{!?with_perl_vfs:%patch11 -p1}
 %patch12 -p1
 %if %{with utf8}
 %patch13 -p1
+%patch18 -p0
 %endif
 %patch14 -p1
 %patch15 -p1
