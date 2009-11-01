@@ -1,0 +1,13 @@
+diff --git a/vfs/fish.c b/vfs/fish.c
+index ec29975..c16a760 100644
+--- a/vfs/fish.c	2009-02-01 20:30:21.000000000 +0100
++++ b/vfs/fish.c	2009-11-01 18:41:24.000000000 +0100
+@@ -391,7 +391,7 @@ fish_dir_load(struct vfs_class *me, stru
+ 		   "if (opendir ( DIR, $dirname )) {\n"
+ 		   "while( (my $filename = readdir(DIR))){\n"
+ 		   "my ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks) = lstat(\"$dirname/$filename\");\n"
+-		   "my $mloctime= scalar localtime $mtime;\n"
++		   "$mloctime= strftime(\"%%m-%%d-%%Y %%H:%%M\", localtime $mtime);\n"
+ 		   "my $shell_escape_regex= s/([;<>\\*\\|`&\\$!#\\(\\)\\[\\]\\{\\}:'\\''\"\\ \\\\])/\\\\$1/g;\n"
+ 		   "my $e_filename = $filename;\n"
+ 		   "$e_filename =~ $shell_escape_regex;\n"
