@@ -7,7 +7,7 @@ index ec29975..c16a760 100644
  		   "while( (my $filename = readdir(DIR))){\n"
  		   "my ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks) = lstat(\"$dirname/$filename\");\n"
 -		   "my $mloctime= scalar localtime $mtime;\n"
-+		   "$mloctime= strftime(\"%%m-%%d-%%Y %%H:%%M\", localtime $mtime);\n"
++		   "my $mloctime= strftime(\"%%m-%%d-%%Y %%H:%%M\", localtime $mtime);\n"
  		   "my $shell_escape_regex= s/([;<>\\*\\|`&\\$!#\\(\\)\\[\\]\\{\\}:'\\''\"\\ \\\\])/\\\\$1/g;\n"
  		   "my $e_filename = $filename;\n"
  		   "$e_filename =~ $shell_escape_regex;\n"
