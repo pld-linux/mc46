@@ -1,0 +1,12 @@
+diff -urNp mc-4.7.0-pre4.orig/src/tty/tty-slang.c mc-4.7.0-pre4/src/tty/tty-slang.c
+--- mc-4.7.0-pre4.orig/src/tty/tty-slang.c	2009-11-07 16:29:08.000000000 +0100
++++ mc-4.7.0-pre4/src/tty/tty-slang.c	2009-11-07 16:28:50.000000000 +0100
+@@ -499,7 +499,7 @@ tty_set_alt_charset (gboolean alt_charse
+ void
+ tty_display_8bit (gboolean what)
+ {
+-    SLsmg_Display_Eight_Bit = what ? 128 : 160;
++    SLsmg_Display_Eight_Bit = what & xterm_flag ? 128 : 160;
+ }
+ 
+ void

@@ -22,7 +22,7 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.7.0
-Release:	0.7
+Release:	0.8
 License:	GPL v2+
 Group:		Applications/Shells
 Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}-%{snap}.tar.bz2
@@ -35,6 +35,7 @@ Source6:	%{name}serv.sysconfig
 Source7:	%{name}.desktop
 Source8:	%{name}.png
 Patch0:		%{name}-rpmfs.patch
+Patch1:		slang-8bit_xterm.patch
 Patch4:		%{name}-home_etc2.patch
 Patch5:		%{name}-pl.patch
 Patch6:		%{name}-no-ws-visible.patch
@@ -219,6 +220,7 @@ Commander. Вона забезпечує доступ до віддаленої 
 %prep
 %setup -q -a3 -n %{name}-%{version}-%{snap}
 %patch0 -p1
+%patch1 -p1
 cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch4 -p1
@@ -259,7 +261,7 @@ fi"
 
 %configure \
 	--enable-dependency-tracking \
-	--disable-charset \
+	--enable-charset \
 	--with%{!?debug:out}-debug \
 	--with%{!?with_ext2undel:out}-ext2undel \
 	--with%{!?with_x:out}-x \
