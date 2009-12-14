@@ -45,6 +45,7 @@ Patch12:	%{name}-pld-developerfriendly.patch
 Patch17:	%{name}-nolibs.patch
 Patch24:	%{name}-find_options.patch
 URL:		http://www.midnight-commander.org/
+BuildRequires:	It's broken, see changelog!
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
