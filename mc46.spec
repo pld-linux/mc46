@@ -7,7 +7,7 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
-%bcond_with	blocker		# it's not a bug, it's a feature
+%bcond_without	blocker		# it's not a bug, it's a feature
 #
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
@@ -372,6 +372,7 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/iso9660
 %attr(755,root,root) %{_datadir}/mc/extfs/lslR
 %attr(755,root,root) %{_datadir}/mc/extfs/rpm
+%attr(755,root,root) %{_datadir}/mc/extfs/s3
 %attr(755,root,root) %{_datadir}/mc/extfs/trpm
 %attr(755,root,root) %{_datadir}/mc/extfs/u7z
 %attr(755,root,root) %{_datadir}/mc/extfs/ualz
