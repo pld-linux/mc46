@@ -7,8 +7,8 @@
 %bcond_without	perl_vfs	# without perl depending vfs'es -- to avoid perl autoreq
 %bcond_with	samba		# with SAMBA vfs support
 %bcond_without	x		# without text edit in X support
+%bcond_with	blocker		# it's not a bug, it's a feature
 #
-%define	snap	pre4
 Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -22,11 +22,11 @@ Summary(uk.UTF-8):	Диспетчер файлів Midnight Commander
 Summary(zh_CN.UTF-8):	一个方便实用的文件管理器和虚拟Shell
 Name:		mc
 Version:	4.7.0
-Release:	0.9
+Release:	1
 License:	GPL v2+
 Group:		Applications/Shells
-Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	7bdc0ac4fe57c19a6bf2fd3e8894a073
+Source0:	http://www.midnight-commander.org/downloads/%{name}-%{version}.tar.bz2
+# Source0-md5:	fbb8c47179b8fd40104e4d52aeb49659
 Source1:	%{name}serv.pamd
 Source2:	%{name}serv.init
 Source3:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
@@ -45,7 +45,7 @@ Patch12:	%{name}-pld-developerfriendly.patch
 Patch17:	%{name}-nolibs.patch
 Patch24:	%{name}-find_options.patch
 URL:		http://www.midnight-commander.org/
-BuildRequires:	It's broken, see changelog!
+%{?with_blocker:BuildRequires:	rpmbuild_blocker}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -219,10 +219,10 @@ Commander. Вона забезпечує доступ до віддаленої 
 тільки власне Midnight Commander).
 
 %prep
-%setup -q -a3 -n %{name}-%{version}-%{snap}
-%patch0 -p1
+%setup -q -a3 -n %{name}-%{version}
+#rpm wrapper rewritten
+#%patch0 -p1
 %patch1 -p1
-cp -f vfs/extfs/{rpm,srpm}
 # doesn't apply
 #%patch4 -p1
 # doesn't apply
@@ -383,7 +383,6 @@ fi
 %attr(755,root,root) %{_datadir}/mc/extfs/ulha
 %attr(755,root,root) %{_datadir}/mc/extfs/urar
 %attr(755,root,root) %{_datadir}/mc/extfs/uzoo
-%attr(755,root,root) %{_datadir}/mc/extfs/srpm
 %{_desktopdir}/mc.desktop
 %{_pixmapsdir}/mc.png
 
