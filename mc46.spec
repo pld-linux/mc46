@@ -13,6 +13,7 @@ Summary:	A user-friendly file manager and visual shell
 Summary(de.UTF-8):	Visuelle Shell Midnight Commander
 Summary(es.UTF-8):	Interpretador de comandos visual Midnight Commander
 Summary(fr.UTF-8):	Un gestionnaire de fichiers puissant et agréable en mode console
+Summary(hu.UTF-8):	Egy felhasználóbarát fájlkezelő és vizuális shell
 Summary(ja.UTF-8):	使いやすいファイルマネージャとビジュアルシェル
 Summary(pl.UTF-8):	Midnight Commander - powłoka wizualna
 Summary(pt_BR.UTF-8):	Interpretador de comandos visual Midnight Commander
@@ -112,12 +113,16 @@ remarquables sont la possibilité de se connecter à un serveur FTP, de
 visualiser des archives tar, de compresser des fichiers avec zip, de
 récupérer des fichiers dans les packages RPM, et tout ceci simplement.
 
+%description -l hu.UTF-8
+Midnight Commander egy vizuális shell, lényegében egy fájlkezelő
+sok-sok lehetőséggel. Szöveges módú, de az egeret is támogatja, ha fut
+a GPM. A legjobb lehetőség az FTP elérése, tar, zip és RPM fájlok
+kezelése.
+
 %description -l ja.UTF-8
 Midnight Commander はいろいろな機能を持ったファイルマネージャ兼
-ビジュアルシェルです。これはテキストモードのアプリケーションですが、
-GPM を使っている場合、マウスが使えます。 Midnight Commander には、 FTP
-に接続できたり、 tar や zip や RPM の中が見えるなど、クールな機能
-があります。
+ビジュアルシェルです。これはテキストモードのアプリケーションですが、 GPM を使っている場合、マウスが使えます。 Midnight
+Commander には、 FTP に接続できたり、 tar や zip や RPM の中が見えるなど、クールな機能 があります。
 
 %description -l pl.UTF-8
 Midnight Commander jest wizualną powłoką podobną do Norton Commandera.
@@ -144,6 +149,7 @@ Summary:	Server for the Midnight Commander network file management system
 Summary(de.UTF-8):	Midnight Commander File-Server
 Summary(es.UTF-8):	Servidor de archivos del Midnight Commander
 Summary(fr.UTF-8):	Serveur réseau pour le gestionnaire de fichiers Midnight Commander
+Summary(hu.UTF-8):	Midnight Commander Fájlszerver
 Summary(ja.UTF-8):	Midnight Commander でネットワークファイルマネージメントを行うサーバ
 Summary(pl.UTF-8):	Serwer plików Midnight Commandera
 Summary(pt_BR.UTF-8):	Servidor de arquivos do Midnight Commander
@@ -182,6 +188,12 @@ sur votre propre machine. Ceci est possible seulement si la machine
 distante possède le programme mcserv et que celui-ci est activé.
 Mcserv apporte aux machines clientes qui font tourner Midnight
 Commander un accès aux fichiers situés sur l'hôte.
+
+%description -n mcserv -l hu.UTF-8
+A Midnight Commander fájlkezelő rendszer lehetőséget nyújt a távoli
+gépen fájlok módosításához. Ez akkor lehetséges, ha a távoli gépen fut
+az mcserv szerver program. Az mcserv-vel a futó Midnight Commander
+kliensként csatlakozik a távoli gép fájlrendszeréhez.
 
 %description -n mcserv -l ja.UTF-8
 Midnight Commander
