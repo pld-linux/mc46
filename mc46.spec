@@ -49,7 +49,7 @@ URL:		http://www.midnight-commander.org/
 %{?with_blocker:BuildRequires:	rpmbuild_blocker}
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel
 BuildRequires:	indent
 BuildRequires:	libtool
