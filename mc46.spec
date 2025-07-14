@@ -234,17 +234,17 @@ Commander. Вона забезпечує доступ до віддаленої 
 %setup -q -a3 -n %{name}-%{version}
 #rpm wrapper rewritten
 #%patch0 -p1
-%patch1 -p1
+%patch -P1 -p1
 # doesn't apply
 #%patch4 -p1
 # doesn't apply
 #%patch5 -p1
-%patch6 -p1
+%patch -P6 -p1
 %{!?with_perl_vfs:%patch11 -p1}
-%patch12 -p1
-%patch17 -p1
+%patch -P12 -p1
+%patch -P17 -p1
 %if "%{pld_release}" == "ti"
-%patch24 -p1
+%patch -P24 -p1
 %endif
 
 rm -f po/stamp-po
