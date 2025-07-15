@@ -233,12 +233,12 @@ Commander. Вона забезпечує доступ до віддаленої 
 %prep
 %setup -q -a3 -n %{name}-%{version}
 #rpm wrapper rewritten
-#%patch0 -p1
+#%%patch0 -p1
 %patch -P1 -p1
 # doesn't apply
-#%patch4 -p1
+#%%patch4 -p1
 # doesn't apply
-#%patch5 -p1
+#%%patch5 -p1
 %patch -P6 -p1
 %{!?with_perl_vfs:%patch11 -p1}
 %patch -P12 -p1
